@@ -186,3 +186,18 @@ export type TabMeProfileStackParamList = {
 }
 export type TabMeProfileStackScreenProps<T extends keyof TabMeProfileStackParamList> =
   NativeStackScreenProps<TabMeProfileStackParamList, T>
+
+export type TabMePreferencesStackParamList = {
+  'Tab-Me-Preferences-Root': undefined
+  'Tab-Me-Preferences-Filters': undefined
+  'Tab-Me-Preferences-Filter':
+    | {
+        type: 'add'
+      }
+    | {
+        type: 'edit'
+        filter: Mastodon.Filter<'v2'>
+      }
+}
+export type TabMePreferencesStackScreenProps<T extends keyof TabMePreferencesStackParamList> =
+  NativeStackScreenProps<TabMePreferencesStackParamList, T>

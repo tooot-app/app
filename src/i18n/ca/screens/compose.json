@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Descriu el contingut per a persones amb discapacitat visual",
           "placeholder": "Pots afegir una descripció, també conegut com a text alternatiu, als teus fitxers perquè siguin accessibles a més persones, també aquelles amb discapacitat visual.\n\nLes bones descripcions han de ser concises, però que s'expressin tot el que surt als fitxers amb exactitud per poder entendre el seu context."
-        },
-        "imageFocus": "Arrossega el cercle per a canviar el seu punt d'atenció"
+        }
       }
     },
     "draftsList": {

@@ -32,33 +32,25 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({ naviga
             )
           }}
         >
-          {({ route, navigation }) => (
-            <TabMeProfileRoot messageRef={messageRef} route={route} navigation={navigation} />
-          )}
+          {props => <TabMeProfileRoot messageRef={messageRef} {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Name'
           options={{ title: t('me.stacks.profileName.name') }}
         >
-          {({ route, navigation }) => (
-            <TabMeProfileName messageRef={messageRef} route={route} navigation={navigation} />
-          )}
+          {props => <TabMeProfileName messageRef={messageRef} {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Note'
           options={{ title: t('me.stacks.profileNote.name') }}
         >
-          {({ route, navigation }) => (
-            <TabMeProfileNote messageRef={messageRef} route={route} navigation={navigation} />
-          )}
+          {props => <TabMeProfileNote messageRef={messageRef} {...props} />}
         </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Fields'
           options={{ title: t('me.stacks.profileFields.name') }}
         >
-          {({ route, navigation }) => (
-            <TabMeProfileFields messageRef={messageRef} route={route} navigation={navigation} />
-          )}
+          {props => <TabMeProfileFields messageRef={messageRef} {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
 

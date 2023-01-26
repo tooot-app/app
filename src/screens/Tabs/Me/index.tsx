@@ -104,11 +104,7 @@ const TabMe: React.FC = () => {
       <Stack.Screen
         name='Tab-Me-Preferences'
         component={TabMePreferences}
-        options={({ navigation }: any) => ({
-          presentation: 'modal',
-          title: t('me.stacks.preferences.name'),
-          headerLeft: () => <HeaderLeft content='chevron-down' onPress={() => navigation.pop(1)} />
-        })}
+        options={{ headerShown: false, presentation: 'modal' }}
       />
       <Stack.Screen
         name='Tab-Me-Profile'
@@ -154,7 +150,9 @@ const TabMe: React.FC = () => {
           presentation: 'modal',
           headerShown: true,
           title: t('me.stacks.switch.name'),
-          headerLeft: () => <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
+          headerLeft: () => (
+            <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
+          )
         })}
       />
 

@@ -69,6 +69,18 @@
       "push": {
         "name": "推播通知"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "編輯個人檔案"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "App 設定"
-      },
-      "webSettings": {
-        "name": "更多帳號設定"
       },
       "switch": {
         "name": "切換帳號"
@@ -125,6 +134,84 @@
         "message": "此操作無法還原。"
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} 已更新",
@@ -149,17 +236,6 @@
           "title": "描述資料",
           "total_one": "{{count}} 項",
           "total_other": "{{count}} 項"
-        },
-        "visibility": {
-          "title": "嘟文預設公開範圍",
-          "options": {
-            "public": "公開",
-            "unlisted": "不公開",
-            "private": "僅限跟隨者"
-          }
-        },
-        "sensitive": {
-          "title": "媒體預設標為敏感"
         },
         "lock": {
           "title": "鎖定帳號",

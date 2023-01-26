@@ -125,7 +125,11 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           >
             <CustomText
               fontStyle='M'
-              style={{ color: colors.primaryDefault, paddingRight: StyleConstants.Spacing.M }}
+              style={{
+                flex: 1,
+                color: colors.primaryDefault,
+                paddingRight: StyleConstants.Spacing.M
+              }}
               numberOfLines={2}
             >
               {t('screenTabs:shared.report.forward.heading', {
@@ -140,15 +144,11 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           </View>
         ) : null}
 
-        <CustomText
-          fontStyle='M'
-          style={{ color: colors.primaryDefault, marginBottom: StyleConstants.Spacing.S }}
-        >
-          {t('screenTabs:shared.report.reasons.heading')}
-        </CustomText>
-        <View style={{ marginLeft: StyleConstants.Spacing.M }}>
-          <Selections options={categories} setOptions={setCategories} />
-        </View>
+        <Selections
+          title={t('screenTabs:shared.report.reasons.heading')}
+          options={categories}
+          setOptions={setCategories}
+        />
 
         {categories[1].selected || comment.length ? (
           <>
@@ -200,26 +200,13 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
         ) : null}
 
         {rules.length ? (
-          <>
-            <CustomText
-              fontStyle='M'
-              style={{
-                color: categories[2].selected ? colors.primaryDefault : colors.disabled,
-                marginTop: StyleConstants.Spacing.M,
-                marginBottom: StyleConstants.Spacing.S
-              }}
-            >
-              {t('screenTabs:shared.report.violatedRules.heading')}
-            </CustomText>
-            <View style={{ marginLeft: StyleConstants.Spacing.M }}>
-              <Selections
-                disabled={!categories[2].selected}
-                multiple
-                options={rules}
-                setOptions={setRules}
-              />
-            </View>
-          </>
+          <Selections
+            title={t('screenTabs:shared.report.violatedRules.heading')}
+            disabled={!categories[2].selected}
+            multiple
+            options={rules}
+            setOptions={setRules}
+          />
         ) : null}
       </View>
     </ScrollView>

@@ -32,7 +32,7 @@
       },
       "update": "ブーストしたトゥートが編集されました",
       "admin.sign_up": "{{name}} がインスタンスに参加しました",
-      "admin.report": ""
+      "admin.report": "{{name}} が報告しました:"
     },
     "actions": {
       "reply": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "このトゥートをブックマークに追加",
         "function": "ブックマークトゥート"
       },
-      "openReport": ""
+      "openReport": "報告を開く"
     },
     "actionsUsers": {
       "reblogged_by": {
@@ -83,7 +83,7 @@
         "text": "読み込みエラー",
         "button": "リモートリンクを試す"
       },
-      "altText": ""
+      "altText": "代替テキスト"
     },
     "avatar": {
       "accessibilityLabel": "{{name}}のアバター",
@@ -93,10 +93,10 @@
       "expandHint": "内容を非表示にする"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "表示する",
+      "match_v1": "フィルター: {{phrase}}",
+      "match_v2_one": "フィルター: {{filters}}",
+      "match_v2_other": "フィルター ({{count}}): {{filters}}"
     },
     "fullConversation": "スレッドを読む",
     "translate": {
@@ -116,14 +116,14 @@
             "accessibilityHint": "ユーザーのアカウント名"
           }
         },
-        "application": "",
+        "application": "{{application}} より",
         "edited": {
           "accessibilityLabel": "トゥートが編集されました"
         },
         "muted": {
           "accessibilityLabel": "トゥートがミュートされました"
         },
-        "replies": "",
+        "replies": "返信先: <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "トゥートはダイレクトメッセージです"

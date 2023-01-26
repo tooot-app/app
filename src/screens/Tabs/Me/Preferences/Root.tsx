@@ -1,21 +1,26 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
-import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import browserPackage from '@utils/helpers/browserPackage'
-import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { TabMePreferencesStackScreenProps } from '@utils/navigation/navigators'
+import { useFiltersQuery } from '@utils/queryHooks/filters'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
-import React, { useRef } from 'react'
+import React, { RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const TabMePreferences: React.FC<TabMeProfileStackScreenProps<'Tab-Me-Profile-Root'>> = () => {
+const TabMePreferencesRoot: React.FC<
+  TabMePreferencesStackScreenProps<'Tab-Me-Preferences-Root'> & {
+    messageRef: RefObject<FlashMessage>
+  }
+> = ({ navigation, messageRef }) => {
   const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
 
@@ -25,7 +30,7 @@ const TabMePreferences: React.FC<TabMeProfileStackScreenProps<'Tab-Me-Profile-Ro
 
   const { data, isFetching, refetch } = usePreferencesQuery()
 
-  const messageRef = useRef<FlashMessage>(null)
+  const { data: filters, isFetching: filtersIsFetching } = useFiltersQuery<'v2'>({ version: 'v2' })
 
   return (
     <ScrollView>
@@ -149,10 +154,23 @@ const TabMePreferences: React.FC<TabMeProfileStackScreenProps<'Tab-Me-Profile-Ro
           />
         ) : null}
       </MenuContainer>
-
-      <Message ref={messageRef} />
+      {featureCheck('filter_server_side') ? (
+        <MenuContainer>
+          <MenuRow
+            title={t('screenTabs:me.preferences.filters.title')}
+            content={t('screenTabs:me.preferences.filters.content', {
+              count: filters?.filter(filter =>
+                filter.expires_at ? new Date(filter.expires_at) > new Date() : true
+              ).length
+            })}
+            loading={filtersIsFetching}
+            iconBack='chevron-right'
+            onPress={() => navigation.navigate('Tab-Me-Preferences-Filters')}
+          />
+        </MenuContainer>
+      ) : null}
     </ScrollView>
   )
 }
 
-export default TabMePreferences
+export default TabMePreferencesRoot

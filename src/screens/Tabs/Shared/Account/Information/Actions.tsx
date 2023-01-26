@@ -48,7 +48,9 @@ const AccountInformationActions: React.FC = () => {
           disabled={account === undefined}
           content='sliders'
           style={{ marginLeft: StyleConstants.Spacing.S }}
-          onPress={() => navigation.navigate('Tab-Me-Preferences')}
+          onPress={() =>
+            navigation.navigate('Tab-Me-Preferences', { screen: 'Tab-Me-Preferences-Root' })
+          }
         />
       </View>
     )

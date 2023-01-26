@@ -16,12 +16,12 @@
       "action_true": "사용자 뮤트 해제"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "특정 계정에서 팔로우...",
+      "succeed_default": "@{{source}} 계정에서 @{{target}} 계정을 팔로우 했어요.",
+      "succeed_locked": "@{{source}} 계정에서 @{{target}} 계정의 팔로우 승인을 요청했어요.",
+      "failed": "특정 계정에서 팔로우"
     },
-    "blockReport": "",
+    "blockReport": "차단 및 신고...",
     "block": {
       "action_false": "사용자 차단",
       "action_true": "사용자 차단 해제",

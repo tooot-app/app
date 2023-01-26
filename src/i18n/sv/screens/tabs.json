@@ -69,6 +69,18 @@
       "push": {
         "name": "Pushnotiser"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "Redigera profil"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Appinställningar"
-      },
-      "webSettings": {
-        "name": "Fler kontoinställningar"
       },
       "switch": {
         "name": "Byt konto"
@@ -125,6 +134,84 @@
         "message": "Denna åtgärd kan inte ångras."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} uppdaterades",
@@ -149,17 +236,6 @@
           "title": "Metadata",
           "total_one": "{{count}} fält",
           "total_other": "{{count}} fält"
-        },
-        "visibility": {
-          "title": "Inläggssynlighet",
-          "options": {
-            "public": "Offentlig",
-            "unlisted": "Olistad",
-            "private": "Endast följare"
-          }
-        },
-        "sensitive": {
-          "title": "Publicerar känslig media"
         },
         "lock": {
           "title": "Lås konto",
@@ -374,7 +450,7 @@
         "statuses": "Inlägg"
       },
       "notFound": "Kan inte hitta <bold>{{searchTerm}}</bold>-relaterade {{type}}",
-      "noResult": ""
+      "noResult": "Kan inte hitta något, försök med en annan sökning"
     },
     "toot": {
       "name": "Diskussioner",

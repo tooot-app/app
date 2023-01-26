@@ -69,6 +69,18 @@
       "push": {
         "name": "Push Melding"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "Profiel bewerken"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "App Instellingen"
-      },
-      "webSettings": {
-        "name": "Meer Accountinstellingen"
       },
       "switch": {
         "name": "Account wisselen"
@@ -125,6 +134,84 @@
         "message": "Deze actie kan niet worden hersteld."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} bijgewerkt",
@@ -149,17 +236,6 @@
           "title": "Metadata",
           "total_one": "{{count}} veld",
           "total_other": "{{count}} velden"
-        },
-        "visibility": {
-          "title": "Post zichtbaarheid",
-          "options": {
-            "public": "Openbaar",
-            "unlisted": "Niet openbaar",
-            "private": "Alleen volgers"
-          }
-        },
-        "sensitive": {
-          "title": "Posten van gevoelige media"
         },
         "lock": {
           "title": "Account vergrendelen",

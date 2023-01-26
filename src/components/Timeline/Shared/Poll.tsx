@@ -133,7 +133,7 @@ const TimelinePoll: React.FC = () => {
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon
             style={{
-              paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+              marginTop: (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2,
               marginRight: StyleConstants.Spacing.S
             }}
             name={
@@ -205,7 +205,7 @@ const TimelinePoll: React.FC = () => {
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon
             style={{
-              paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+              marginTop: (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2,
               marginRight: StyleConstants.Spacing.S
             }}
             name={isSelected(index)}
