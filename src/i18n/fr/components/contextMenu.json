@@ -54,6 +54,15 @@
       }
     }
   },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
+    }
+  },
   "share": {
     "status": {
       "action": "Partager le pouet"
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Pouet épinglé",
       "action_true": "Détacher le pouet"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }
