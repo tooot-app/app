@@ -211,7 +211,7 @@
       },
       "keywords": "Coincidències per aquestes paraules claus",
       "keyword": "Paraula clau",
-      "statuses": ""
+      "statuses": "Coincideixen aquestes publicacions"
     },
     "profile": {
       "feedback": {
@@ -400,14 +400,14 @@
       "name": "Multimèdia de <0 /><1></1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Afegeix al filtre",
+      "existed": "Existia sota aquests filtres"
     },
     "history": {
       "name": "Edita l'historial"
     },
     "report": {
-      "name": "Denuncia {{acct}}",
+      "name": "Denúncia a {{acct}}",
       "report": "Denúncia",
       "forward": {
         "heading": "Envia anònimament al servidor remot {{instance}}"

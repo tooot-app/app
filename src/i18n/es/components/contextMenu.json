@@ -6,7 +6,7 @@
       "action_false": "Seguir usuario",
       "action_true": "Dejar de seguir usuario"
     },
-    "inLists": "",
+    "inLists": "Listas que contienen el usuario...",
     "showBoosts": {
       "action_false": "Mostrar los impulsos del usuario",
       "action_true": "Ocultar los impulsos del usuario"
@@ -21,7 +21,7 @@
       "succeed_locked": "Enviado la solicitud de seguimiento a @{{target}} como {{source}}, pendiente de aprobación",
       "failed": "Seguir como"
     },
-    "blockReport": "",
+    "blockReport": "Bloquear y denunciar",
     "block": {
       "action_false": "Bloquear usuario",
       "action_true": "Desbloquear usuario",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Seguir",
+      "action_true": "Dejar de seguir"
     },
     "filter": {
-      "action": ""
+      "action": "Filtrar la etiqueta..."
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "Desfijar toot"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Filtrar la publicación...",
+      "action_true": "Gestiona los filtros..."
     }
   }
 }

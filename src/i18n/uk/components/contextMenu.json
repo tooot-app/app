@@ -6,7 +6,7 @@
       "action_false": "Підписатися на користувача",
       "action_true": "Відписатися від користувача"
     },
-    "inLists": "",
+    "inLists": "Списки, в яких є користувач ...",
     "showBoosts": {
       "action_false": "Показати передмухи користувача",
       "action_true": "Приховати передмухи користувача"
@@ -16,12 +16,12 @@
       "action_true": "Зняти заглушення з користувача"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "Стежити як ...",
       "succeed_default": "Тепер ви стежите за @{{target}} з @{{source}}",
       "succeed_locked": "Запит на стеження за @{{target}} з {{source}} надіслано, очікується затвердження",
       "failed": "Стежити як"
     },
-    "blockReport": "",
+    "blockReport": "Заблокувати й поскаржитися",
     "block": {
       "action_false": "Заблокувати користувача",
       "action_true": "Розблокувати користувача",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Підписатися",
+      "action_true": "Відписатися"
     },
     "filter": {
-      "action": ""
+      "action": "Фільтрувати хештеґ ..."
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "Відкріпити дмух"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Фільтрувати дмух ...",
+      "action_true": "Керувати фільтрами ..."
     }
   }
 }

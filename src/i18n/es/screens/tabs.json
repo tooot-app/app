@@ -70,16 +70,16 @@
         "name": "Notificaciones push"
       },
       "preferences": {
-        "name": ""
+        "name": "Preferencias"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Todos los filtros de contenido"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Crear filtro"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Editar filtro"
       },
       "profile": {
         "name": "Editar perfil"
@@ -136,82 +136,82 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Visibilidad de publicación predeterminada",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Público",
+          "unlisted": "No listado",
+          "private": "Solo seguidores"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Marcar el contenido multimedia como sensibles por defecto"
       },
       "media": {
-        "title": "",
+        "title": "Mostrar el contenido multimedia",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Ocultar los contenidos multimedia marcados como sensibles",
+          "show_all": "Mostrar siempre el contenido multimedia",
+          "hide_all": "Siempre ocultar el contenido multimedia"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Siempre expandir las publicaciones marcadas con advertencias de contenido"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Reproduce automáticamente los GIF"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Filtros de contenido",
+        "content": "{{count}} activo"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Actualizar ajustes",
+        "description": "Los ajustes a continuación solo se pueden actualizar mediante la interfaz web"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "Expirado",
+      "keywords_one": "{{count}} palabra clave",
+      "keywords_other": "{{count}} palabras clave",
+      "statuses_one": "{{count}} publicación",
+      "statuses_other": "{{count}} publicaciones",
+      "context": "Se aplica en <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Seguidos y listas",
+        "notifications": "Notificación",
+        "public": "Federado",
+        "thread": "Conversación",
+        "account": "Perfil"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Nombre",
+      "expiration": "Vencimiento",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Nunca",
+        "1800": "Después de 30 minutos",
+        "3600": "Después de 1 hora",
+        "43200": "Después de 12 horas",
+        "86400": "Después de 1 día",
+        "604800": "Después de 1 semana",
+        "18144000": "Después de 1 mes"
       },
-      "context": "",
+      "context": "Se aplica en",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Seguidos y listas",
+        "notifications": "Notificación",
+        "public": "Cronología federada",
+        "thread": "Vista de conversación",
+        "account": "Vista de perfil"
       },
-      "action": "",
+      "action": "Al coincidir",
       "actions": {
         "warn": "",
-        "hide": ""
+        "hide": "Oculto completamente"
       },
-      "keywords": "",
-      "keyword": "",
-      "statuses": ""
+      "keywords": "Coincide con estas palabras clave",
+      "keyword": "Palabra clave",
+      "statuses": "Coincide con estas publicaciones"
     },
     "profile": {
       "feedback": {
@@ -400,8 +400,8 @@
       "name": "Multimedia de <0 /><1></1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Añadir al filtro",
+      "existed": "Existe en estos filtros"
     },
     "history": {
       "name": "Historial de ediciones"
