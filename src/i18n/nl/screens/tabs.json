@@ -70,16 +70,16 @@
         "name": "Push Melding"
       },
       "preferences": {
-        "name": ""
+        "name": "Voorkeuren"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Alle inhoudsfilters"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Filter Maken"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Bewerk filter"
       },
       "profile": {
         "name": "Profiel bewerken"
@@ -136,32 +136,32 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Standaard zichtbaarheid van berichten",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Openbaar",
+          "unlisted": "Niet openbaar",
+          "private": "Alleen volgers"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Media standaard als gevoelig markeren"
       },
       "media": {
-        "title": "",
+        "title": "Mediaweergave",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Als gevoelig gemarkeerde media verbergen",
+          "show_all": "Media altijd tonen",
+          "hide_all": "Media altijd verbergen"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Altijd toots met tekstwaarschuwingen uitklappen"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "GIF automatisch afspelen in toots"
       },
       "filters": {
-        "title": "",
+        "title": "Inhoud Filters",
         "content": ""
       },
       "web_only": {
@@ -211,7 +211,7 @@
       },
       "keywords": "",
       "keyword": "",
-      "statuses": ""
+      "statuses": "Komt overeen met deze toots"
     },
     "profile": {
       "feedback": {
@@ -400,8 +400,8 @@
       "name": "<0 /><1>'s media</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Toevoegen aan filter",
+      "existed": "Bestaat in deze filters"
     },
     "history": {
       "name": "Geschiedenis bewerken"
