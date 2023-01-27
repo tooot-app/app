@@ -4,7 +4,7 @@ import ComponentHashtag from '@components/Hashtag'
 import { displayMessage } from '@components/Message'
 import ComponentSeparator from '@components/Separator'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
-import { useFollowedTagsQuery, useTagsMutation } from '@utils/queryHooks/tags'
+import { useFollowedTagsQuery, useTagMutation } from '@utils/queryHooks/tags'
 import { flattenPages } from '@utils/queryHooks/utils'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,7 @@ import { FlatList } from 'react-native-gesture-handler'
 const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> = ({
   navigation
 }) => {
-  const { t } = useTranslation(['common', 'screenTabs'])
+  const { t } = useTranslation(['common', 'screenTabs', 'componentContextMenu'])
 
   const { data, fetchNextPage, refetch } = useFollowedTagsQuery()
   const flattenData = flattenPages(data)
@@ -24,7 +24,7 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
     }
   }, [flattenData.length])
 
-  const mutation = useTagsMutation({
+  const mutation = useTagMutation({
     onSuccess: () => {
       haptics('Light')
       refetch()
@@ -33,9 +33,10 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
       displayMessage({
         type: 'error',
         message: t('common:message.error.message', {
-          function: to
-            ? t('screenTabs:shared.hashtag.follow')
-            : t('screenTabs:shared.hashtag.unfollow')
+          function: t('componentContextMenu:hashtag.follow.action', {
+            defaultValue: 'false',
+            context: to.toString()
+          })
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -58,8 +59,11 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
           children={
             <Button
               type='text'
-              content={t('screenTabs:shared.hashtag.unfollow')}
-              onPress={() => mutation.mutate({ tag: item.name, to: !item.following })}
+              content={t('componentContextMenu:hashtag.follow.action', {
+                defaultValue: 'fase',
+                context: 'false'
+              })}
+              onPress={() => mutation.mutate({ tag_name: item.name, to: !item.following })}
             />
           }
         />

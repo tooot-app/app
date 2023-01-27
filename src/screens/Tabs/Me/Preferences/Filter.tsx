@@ -4,22 +4,24 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import Hr from '@components/Hr'
 import ComponentInput from '@components/Input'
 import { MenuRow } from '@components/Menu'
+import { ModalScrollView } from '@components/ModalScrollView'
 import Selections from '@components/Selections'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import apiInstance from '@utils/api/instance'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import browserPackage from '@utils/helpers/browserPackage'
 import { TabMePreferencesStackScreenProps } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
 import { QueryKeyFilters } from '@utils/queryHooks/filters'
+import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useEffect, useState } from 'react'
+import * as WebBrowser from 'expo-web-browser'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { KeyboardAvoidingView, Platform, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { ScrollView } from 'react-native-gesture-handler'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 const TabMePreferencesFilter: React.FC<
   TabMePreferencesStackScreenProps<'Tab-Me-Preferences-Filter'> & {
@@ -101,7 +103,11 @@ const TabMePreferencesFilter: React.FC<
   ])
 
   const [keywords, setKeywords] = useState<string[]>(
-    params.type === 'edit' ? params.filter.keywords.map(({ keyword }) => keyword) : []
+    params.type === 'edit'
+      ? params.filter.keywords.length
+        ? params.filter.keywords.map(({ keyword }) => keyword)
+        : ['']
+      : ['']
   )
 
   useEffect(() => {
@@ -152,6 +158,48 @@ const TabMePreferencesFilter: React.FC<
                   })
                 break
               case 'edit':
+                isLoading = true
+                await apiInstance({
+                  method: 'put',
+                  version: 'v2',
+                  url: `filters/${params.filter.id}`,
+                  body: {
+                    title: titleState[0],
+                    context: contexts
+                      .filter(context => context.selected)
+                      .map(context => context.type),
+                    filter_action: actions.filter(
+                      action => action.type === 'hide' && action.selected
+                    ).length
+                      ? 'hide'
+                      : 'warn',
+                    ...(parseInt(expiration) && {
+                      expires_in: parseInt(expiration)
+                    }),
+                    ...(keywords.filter(keyword => keyword.length).length
+                      ? {
+                          keywords_attributes: keywords
+                            .filter(keyword => keyword.length)
+                            .map(keyword => ({ keyword, whole_word: true }))
+                        }
+                      : params.filter.keywords.length && {
+                          keywords_attributes: params.filter.keywords.map(keyword => ({
+                            ...keyword,
+                            _destroy: true
+                          }))
+                        })
+                  }
+                })
+                  .then(() => {
+                    isLoading = false
+                    const queryKey: QueryKeyFilters = ['Filters', { version: 'v2' }]
+                    queryClient.refetchQueries(queryKey)
+                    navigation.navigate('Tab-Me-Preferences-Filters')
+                  })
+                  .catch(() => {
+                    isLoading = false
+                    haptics('Error')
+                  })
                 break
             }
           }}
@@ -160,105 +208,132 @@ const TabMePreferencesFilter: React.FC<
     })
   }, [titleState[0], expiration, contexts, actions, keywords])
 
+  const scrollViewRef = useRef<ScrollView>(null)
+
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
-        <ScrollView style={{ padding: StyleConstants.Spacing.Global.PagePadding }}>
-          <ComponentInput title={t('screenTabs:me.preferencesFilter.name')} value={titleState} />
+    <ModalScrollView ref={scrollViewRef}>
+      <ComponentInput title={t('screenTabs:me.preferencesFilter.name')} value={titleState} />
+      <MenuRow
+        title={t('screenTabs:me.preferencesFilter.expiration')}
+        content={t(`screenTabs:me.preferencesFilter.expirationOptions.${expiration}`)}
+        iconBack='chevron-right'
+        onPress={() =>
+          showActionSheetWithOptions(
+            {
+              title: t('screenTabs:me.preferencesFilter.expiration'),
+              options: [
+                ...expirations.map(opt =>
+                  t(`screenTabs:me.preferencesFilter.expirationOptions.${opt}`)
+                ),
+                t('common:buttons.cancel')
+              ],
+              cancelButtonIndex: expirations.length,
+              ...androidActionSheetStyles(colors)
+            },
+            (selectedIndex: number) => {
+              selectedIndex < expirations.length && setExpiration(expirations[selectedIndex])
+            }
+          )
+        }
+      />
+      <Hr />
+
+      <Selections
+        title={t('screenTabs:me.preferencesFilter.context')}
+        multiple
+        invalid={!contexts.filter(context => context.selected).length}
+        options={contexts}
+        setOptions={setContexts}
+      />
+      <Selections
+        title={t('screenTabs:me.preferencesFilter.action')}
+        options={actions}
+        setOptions={setActions}
+      />
+      <Hr style={{ marginVertical: StyleConstants.Spacing.M }} />
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <CustomText
+          fontStyle='M'
+          children={t('screenTabs:me.preferencesFilter.keywords')}
+          style={{ color: colors.primaryDefault }}
+        />
+        <CustomText
+          style={{ marginHorizontal: StyleConstants.Spacing.M, color: colors.secondary }}
+          children={t('screenTabs:me.preferencesFilters.keywords', { count: keywords.length })}
+        />
+      </View>
+      <View
+        style={{
+          marginTop: StyleConstants.Spacing.M,
+          marginBottom: StyleConstants.Spacing.S
+        }}
+      >
+        {[...Array(keywords.length)].map((_, i) => (
+          <ComponentInput
+            key={i}
+            title={t('screenTabs:me.preferencesFilter.keyword')}
+            value={[
+              keywords[i],
+              k => setKeywords(keywords.map((curr, ii) => (i === ii ? k : curr)))
+            ]}
+          />
+        ))}
+      </View>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginRight: StyleConstants.Spacing.M
+        }}
+      >
+        <Button
+          onPress={() => setKeywords(keywords.slice(0, keywords.length - 1))}
+          type='icon'
+          content='minus'
+          round
+          disabled={keywords.length < 1}
+          style={{ marginRight: StyleConstants.Spacing.M }}
+        />
+        <Button
+          onPress={() => {
+            setKeywords([...keywords, ''])
+            setTimeout(() => scrollViewRef.current?.scrollToEnd(), 50)
+          }}
+          type='icon'
+          content='plus'
+          round
+        />
+      </View>
+
+      {params.type === 'edit' && params.filter.statuses?.length ? (
+        <>
+          <Hr style={{ marginVertical: StyleConstants.Spacing.M }} />
           <MenuRow
-            title={t('screenTabs:me.preferencesFilter.expiration')}
-            content={t(`screenTabs:me.preferencesFilter.expirationOptions.${expiration}`)}
-            iconBack='chevron-right'
-            onPress={() =>
-              showActionSheetWithOptions(
+            title={t('screenTabs:me.preferencesFilter.statuses')}
+            content={t('screenTabs:me.preferencesFilters.statuses', {
+              count: params.filter.statuses.length
+            })}
+            iconBack='external-link'
+            onPress={async () =>
+              WebBrowser.openAuthSessionAsync(
+                `https://${getAccountStorage.string('auth.domain')}/filters/${
+                  params.filter.id
+                }/statuses`,
+                'tooot://tooot',
                 {
-                  title: t('screenTabs:me.preferencesFilter.expiration'),
-                  options: [
-                    ...expirations.map(opt =>
-                      t(`screenTabs:me.preferencesFilter.expirationOptions.${opt}`)
-                    ),
-                    t('common:buttons.cancel')
-                  ],
-                  cancelButtonIndex: expirations.length,
-                  ...androidActionSheetStyles(colors)
-                },
-                (selectedIndex: number) => {
-                  selectedIndex < expirations.length && setExpiration(expirations[selectedIndex])
+                  ...(await browserPackage()),
+                  dismissButtonStyle: 'done',
+                  readerMode: false
                 }
               )
             }
           />
-          <Hr />
-
-          <Selections
-            title={t('screenTabs:me.preferencesFilter.context')}
-            multiple
-            invalid={!contexts.filter(context => context.selected).length}
-            options={contexts}
-            setOptions={setContexts}
-          />
-          <Selections
-            title={t('screenTabs:me.preferencesFilter.action')}
-            options={actions}
-            setOptions={setActions}
-          />
-          <Hr style={{ marginVertical: StyleConstants.Spacing.M }} />
-
-          <CustomText
-            fontStyle='M'
-            children={t('screenTabs:me.preferencesFilter.keywords')}
-            style={{ color: colors.primaryDefault }}
-          />
-          <View
-            style={{
-              marginTop: StyleConstants.Spacing.M,
-              marginBottom: StyleConstants.Spacing.S
-            }}
-          >
-            {[...Array(keywords.length)].map((_, i) => (
-              <ComponentInput
-                key={i}
-                title={t('screenTabs:me.preferencesFilter.keyword')}
-                value={[
-                  keywords[i],
-                  k => setKeywords(keywords.map((curr, ii) => (i === ii ? k : curr)))
-                ]}
-              />
-            ))}
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              marginRight: StyleConstants.Spacing.M
-            }}
-          >
-            <Button
-              onPress={() => setKeywords(keywords.slice(0, keywords.length - 1))}
-              type='icon'
-              content='minus'
-              round
-              disabled={keywords.length < 1}
-            />
-            <CustomText
-              style={{ marginHorizontal: StyleConstants.Spacing.M, color: colors.secondary }}
-              children={keywords.length}
-            />
-            <Button
-              onPress={() => setKeywords([...keywords, ''])}
-              type='icon'
-              content='plus'
-              round
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+        </>
+      ) : null}
+    </ModalScrollView>
   )
 }
 

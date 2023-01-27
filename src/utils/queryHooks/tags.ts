@@ -60,32 +60,33 @@ const useFollowedTagsQuery = (
   )
 }
 
-export type QueryKeyTags = ['Tags', { tag: string }]
-const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyTags>) => {
-  const { tag } = queryKey[1]
+export type QueryKeyTag = ['Tag', { tag_name: string }]
+const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyTag>) => {
+  const { tag_name } = queryKey[1]
 
-  const res = await apiInstance<Mastodon.Tag>({ method: 'get', url: `tags/${tag}` })
+  const res = await apiInstance<Mastodon.Tag>({ method: 'get', url: `tags/${tag_name}` })
   return res.body
 }
-const useTagsQuery = ({
-  options,
-  ...queryKeyParams
-}: QueryKeyTags[1] & {
+const useTagQuery = ({
+  tag_name,
+  options
+}: {
+  tag_name: Mastodon.Tag['name']
   options?: UseQueryOptions<Mastodon.Tag, AxiosError>
 }) => {
-  const queryKey: QueryKeyTags = ['Tags', { ...queryKeyParams }]
+  const queryKey: QueryKeyTag = ['Tag', { tag_name }]
   return useQuery(queryKey, queryFunction, options)
 }
 
-type MutationVarsAnnouncement = { tag: string; to: boolean }
-const mutationFunction = async ({ tag, to }: MutationVarsAnnouncement) => {
+type MutationVarsTag = { tag_name: Mastodon.Tag['name']; to: boolean }
+const mutationFunction = async ({ tag_name, to }: MutationVarsTag) => {
   return apiInstance<{}>({
     method: 'post',
-    url: `tags/${tag}/${to ? 'follow' : 'unfollow'}`
+    url: `tags/${tag_name}/${to ? 'follow' : 'unfollow'}`
   })
 }
-const useTagsMutation = (options: UseMutationOptions<{}, AxiosError, MutationVarsAnnouncement>) => {
+const useTagMutation = (options: UseMutationOptions<{}, AxiosError, MutationVarsTag>) => {
   return useMutation(mutationFunction, options)
 }
 
-export { useFollowedTagsQuery, useTagsQuery, useTagsMutation }
+export { useFollowedTagsQuery, useTagQuery, useTagMutation }

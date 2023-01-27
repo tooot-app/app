@@ -9,6 +9,7 @@ import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
 import React from 'react'
+import TabSharedFilter from './Filter'
 
 const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNavigator> }) => {
   return (
@@ -27,6 +28,12 @@ const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNaviga
         key='Tab-Shared-Attachments'
         name='Tab-Shared-Attachments'
         component={TabSharedAttachments}
+      />
+      <Stack.Screen
+        key='Tab-Shared-Filter'
+        name='Tab-Shared-Filter'
+        component={TabSharedFilter}
+        options={{ presentation: 'modal' }}
       />
       <Stack.Screen
         key='Tab-Shared-Hashtag'

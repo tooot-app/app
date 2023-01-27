@@ -16,7 +16,7 @@
       "action_true": "Dejar de silenciar al usuario"
     },
     "followAs": {
-      "trigger": "Seguir como...",
+      "trigger": "",
       "succeed_default": "Siguiendo @{{target}} como @{{source}}",
       "succeed_locked": "Enviado la solicitud de seguimiento a @{{target}} como {{source}}, pendiente de aprobación",
       "failed": "Seguir como"

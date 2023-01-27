@@ -231,6 +231,22 @@ const menuStatus = ({
         context: (status.pinned || false).toString()
       }),
       icon: status.pinned ? 'pin.slash' : 'pin'
+    },
+    {
+      type: 'item',
+      key: 'status-filter',
+      props: {
+        // @ts-ignore
+        onSelect: () => navigation.navigate('Tab-Shared-Filter', { source: 'status', status, queryKey }),
+        disabled: false,
+        destructive: false,
+        hidden: !('filtered' in status)
+      },
+      title: t('componentContextMenu:status.filter.action', {
+        defaultValue: 'false',
+        context: (!!status.filtered?.length).toString()
+      }),
+      icon: status.pinned ? 'rectangle.badge.checkmark' : 'rectangle.badge.xmark'
     }
   ])
 

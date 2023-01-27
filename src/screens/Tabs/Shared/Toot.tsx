@@ -66,7 +66,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           />
         </Pressable>
       ),
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+      headerBackVisible: false
     })
     navigation.setParams({ toot, queryKey: queryKey.local })
   }, [hasRemoteContent])
@@ -313,6 +314,55 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         const curr = item._level || 0
         const next = query.data?.pages[0].body[index + 1]?._level || 0
 
+        const height = heights[index] || 300
+        let path = ''
+
+        if (curr > 1 || next > 1) {
+          Array.from({ length: curr }).forEach((_, i) => {
+            if (i > MAX_LEVEL) return null
+
+            const lastLine = curr === i + 1
+            if (lastLine) {
+              if (curr === prev + 1 || curr === next - 1) {
+                if (curr > next) return
+
+                path =
+                  path +
+                  ` M ${curr * StyleConstants.Spacing.S + ARC} ${
+                    StyleConstants.Spacing.M + StyleConstants.Avatar.XS / 2
+                  } ` +
+                  `a ${ARC} ${ARC} 0 0 0 -${ARC} ${ARC} ` +
+                  `v ${height}`
+              } else {
+                if (i >= curr - 2) return
+
+                path =
+                  path +
+                  ` M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
+                  `v ${
+                    height -
+                    (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L) / 2 -
+                    StyleConstants.Avatar.XS / 2
+                  } ` +
+                  `a ${ARC} ${ARC} 0 0 0 ${ARC} ${ARC}`
+              }
+            } else {
+              if (i >= next - 1) {
+                path =
+                  path +
+                  ` M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
+                  `v ${
+                    height -
+                    (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L * 1.35) / 2
+                  } ` +
+                  `h ${ARC}`
+              } else {
+                path = path + ` M ${(i + 1) * StyleConstants.Spacing.S} 0 ` + `v ${height}`
+              }
+            }
+          })
+        }
+
         return (
           <View
             style={{ paddingLeft: Math.min(curr - 1, MAX_LEVEL) * StyleConstants.Spacing.S }}
@@ -322,89 +372,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               }
             }) => setHeights({ ...heights, [index]: height })}
           >
-            {curr > 1 || next > 1
-              ? [...new Array(curr)].map((_, i) => {
-                  if (i > MAX_LEVEL) return null
-
-                  const lastLine = curr === i + 1
-                  if (lastLine) {
-                    if (curr === prev + 1 || curr === next - 1) {
-                      if (curr > next) {
-                        return null
-                      }
-                      return (
-                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
-                          <Path
-                            d={
-                              `M ${curr * StyleConstants.Spacing.S + ARC} ${
-                                StyleConstants.Spacing.M + StyleConstants.Avatar.XS / 2
-                              } ` +
-                              `a ${ARC} ${ARC} 0 0 0 -${ARC} ${ARC} ` +
-                              `v 999`
-                            }
-                            strokeWidth={1}
-                            stroke={colors.border}
-                            strokeOpacity={0.6}
-                          />
-                        </Svg>
-                      )
-                    } else {
-                      if (i >= curr - 2) return null
-                      return (
-                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
-                          <Path
-                            d={
-                              `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
-                              `v ${
-                                (heights[index] || 999) -
-                                (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L) / 2 -
-                                StyleConstants.Avatar.XS / 2
-                              } ` +
-                              `a ${ARC} ${ARC} 0 0 0 ${ARC} ${ARC}`
-                            }
-                            strokeWidth={1}
-                            stroke={colors.border}
-                            strokeOpacity={0.6}
-                          />
-                        </Svg>
-                      )
-                    }
-                  } else {
-                    if (i >= next - 1) {
-                      return (
-                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
-                          <Path
-                            d={
-                              `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
-                              `v ${
-                                (heights[index] || 999) -
-                                (StyleConstants.Spacing.S * 1.5 +
-                                  StyleConstants.Font.Size.L * 1.35) /
-                                  2
-                              } ` +
-                              `h ${ARC}`
-                            }
-                            strokeWidth={1}
-                            stroke={colors.border}
-                            strokeOpacity={0.6}
-                          />
-                        </Svg>
-                      )
-                    } else {
-                      return (
-                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
-                          <Path
-                            d={`M ${(i + 1) * StyleConstants.Spacing.S} 0 ` + `v 999`}
-                            strokeWidth={1}
-                            stroke={colors.border}
-                            strokeOpacity={0.6}
-                          />
-                        </Svg>
-                      )
-                    }
-                  }
-                })
-              : null}
+            {path.length ? (
+              <Svg style={{ position: 'absolute' }} fill='none'>
+                <Path d={path} strokeWidth={1} stroke={colors.border} strokeOpacity={0.6} />
+              </Svg>
+            ) : null}
             <TimelineDefault
               item={item}
               queryKey={item._remote ? queryKey.remote : queryKey.local}
