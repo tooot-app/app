@@ -162,55 +162,55 @@
       },
       "filters": {
         "title": "Inhoud Filters",
-        "content": ""
+        "content": "{{count}} actief"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Instellingen bijwerken",
+        "description": "Instellingen hieronder kunnen alleen met behulp van de webUI worden bijgewerkt"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "Verlopen",
+      "keywords_one": "{{count}} trefwoord",
+      "keywords_other": "{{count}} trefwoorden",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} toots",
+      "context": "Van toepassing in <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "volgend en lijsten",
+        "notifications": "melding",
+        "public": "gefedereerd",
+        "thread": "gesprek",
+        "account": "profiel"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Naam",
+      "expiration": "Vervaldatum",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Nooit",
+        "1800": "Na 30 minuten",
+        "3600": "Na 1 uur",
+        "43200": "Na 12 uur",
+        "86400": "Na 1 dag",
+        "604800": "Na 1 week",
+        "18144000": "Na 1 maand"
       },
-      "context": "",
+      "context": "Van toepassing in",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Volgend en lijsten",
+        "notifications": "Melding",
+        "public": "Federale tijdlijn",
+        "thread": "Gesprek weergave",
+        "account": "Profiel weergave"
       },
-      "action": "",
+      "action": "Bij een overeenkomst",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Ingeklapt maar kan worden onthuld",
+        "hide": "Volledig verborgen"
       },
-      "keywords": "",
-      "keyword": "",
+      "keywords": "Komt overeen met deze trefwoorden",
+      "keyword": "Trefwoord",
       "statuses": "Komt overeen met deze toots"
     },
     "profile": {
