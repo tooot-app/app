@@ -6,7 +6,7 @@
       "action_false": "",
       "action_true": ""
     },
-    "inLists": "",
+    "inLists": "Erabiltzaile hau zerrenda hauetan dago...",
     "showBoosts": {
       "action_false": "",
       "action_true": ""
@@ -16,12 +16,12 @@
       "action_true": ""
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "Honela jarraitu...",
       "succeed_default": "",
       "succeed_locked": "",
       "failed": ""
     },
-    "blockReport": "",
+    "blockReport": "Blokeatu eta salatu",
     "block": {
       "action_false": "",
       "action_true": "",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Jarraitu",
+      "action_true": "Jarraitzeari utzi"
     },
     "filter": {
-      "action": ""
+      "action": "Traola iragazi..."
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": ""
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Tuta iragazi...",
+      "action_true": "Iragazkiak kudeatu..."
     }
   }
 }
