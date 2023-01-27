@@ -211,7 +211,7 @@
       },
       "keywords": "符合這些關鍵字",
       "keyword": "關鍵字",
-      "statuses": ""
+      "statuses": "符合這些嘟文"
     },
     "profile": {
       "feedback": {
@@ -400,8 +400,8 @@
       "name": "<0 /><1>的媒體</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "新增至過濾器",
+      "existed": "已被過濾"
     },
     "history": {
       "name": "編輯歷史"

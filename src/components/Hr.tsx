@@ -12,7 +12,7 @@ const Hr: React.FC<{ style?: ViewStyle }> = ({ style }) => {
           borderTopColor: colors.border,
           borderTopWidth: 1,
           height: 1,
-          marginVertical: StyleConstants.Spacing.S
+          paddingVertical: StyleConstants.Spacing.S
         },
         style
       ]}

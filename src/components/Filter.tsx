@@ -2,7 +2,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { View } from 'react-native'
+import { View, ViewStyle } from 'react-native'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import Icon from './Icon'
 import CustomText from './Text'
@@ -11,9 +11,10 @@ export type Props = {
   onPress: () => void
   filter: Mastodon.Filter<'v2'>
   button?: React.ReactNode
+  style?: ViewStyle
 }
 
-export const Filter: React.FC<Props> = ({ onPress, filter, button }) => {
+export const Filter: React.FC<Props> = ({ onPress, filter, button, style }) => {
   const { t } = useTranslation(['common', 'screenTabs'])
   const { colors } = useTheme()
 
@@ -24,7 +25,8 @@ export const Filter: React.FC<Props> = ({ onPress, filter, button }) => {
           paddingVertical: StyleConstants.Spacing.S,
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: colors.backgroundDefault
+          backgroundColor: colors.backgroundDefault,
+          ...style
         }}
       >
         <View style={{ flex: 1 }}>
@@ -83,12 +85,7 @@ export const Filter: React.FC<Props> = ({ onPress, filter, button }) => {
                     {filter.context.map((c, index) => (
                       <Fragment key={index}>
                         <CustomText
-                          style={{
-                            color: colors.secondary,
-                            textDecorationColor: colors.disabled,
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: 'solid'
-                          }}
+                          style={{ color: colors.secondary }}
                           children={t(`screenTabs:me.preferencesFilters.contexts.${c}`)}
                         />
                         <CustomText children={t('common:separator')} />
