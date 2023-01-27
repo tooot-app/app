@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Describe media for the visually impaired",
           "placeholder": "You can add a description, sometimes called alt-text, to your media so they are accessible to even more people, including those who are blind or visually impaired.\n\nGood descriptions are concise, but present what is in your media accurately enough to understand their context."
-        },
-        "imageFocus": "Drag the focus circle to update focus point"
+        }
       }
     },
     "draftsList": {

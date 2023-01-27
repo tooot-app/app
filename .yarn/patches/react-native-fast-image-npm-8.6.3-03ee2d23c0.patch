@@ -1,5 +1,5 @@
 diff --git a/RNFastImage.podspec b/RNFastImage.podspec
-index db0fada63fc06191f8620d336d244edde6c3dba3..b6ffe6c77ab1fd5b821525f6f0b7363a13cba3a0 100644
+index db0fada63fc06191f8620d336d244edde6c3dba3..9c22c36f6978530da21afe143324ff79b4e96454 100644
 --- a/RNFastImage.podspec
 +++ b/RNFastImage.podspec
 @@ -16,6 +16,6 @@ Pod::Spec.new do |s|
@@ -8,7 +8,7 @@ index db0fada63fc06191f8620d336d244edde6c3dba3..b6ffe6c77ab1fd5b821525f6f0b7363a
    s.dependency 'React-Core'
 -  s.dependency 'SDWebImage', '~> 5.11.1'
 -  s.dependency 'SDWebImageWebPCoder', '~> 0.8.4'
-+  s.dependency 'SDWebImage', '~> 5.14.3'
++  s.dependency 'SDWebImage', '~> 5.15.0'
 +  s.dependency 'SDWebImageWebPCoder', '~> 0.9.1'
  end
 diff --git a/android/build.gradle b/android/build.gradle

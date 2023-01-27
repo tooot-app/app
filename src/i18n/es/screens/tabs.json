@@ -69,6 +69,18 @@
       "push": {
         "name": "Notificaciones push"
       },
+      "preferences": {
+        "name": "Preferencias"
+      },
+      "preferencesFilters": {
+        "name": "Todos los filtros de contenido"
+      },
+      "preferencesFilterAdd": {
+        "name": "Crear filtro"
+      },
+      "preferencesFilterEdit": {
+        "name": "Editar filtro"
+      },
       "profile": {
         "name": "Editar perfil"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Ajustes de la aplicación"
-      },
-      "webSettings": {
-        "name": "Más ajustes de la cuenta"
       },
       "switch": {
         "name": "Cambiar de cuenta"
@@ -125,6 +134,85 @@
         "message": "Esta acción no se podrá deshacer."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Visibilidad de publicación predeterminada",
+        "options": {
+          "public": "Público",
+          "unlisted": "No listado",
+          "private": "Solo seguidores"
+        }
+      },
+      "sensitive": {
+        "title": "Marcar el contenido multimedia como sensibles por defecto"
+      },
+      "media": {
+        "title": "Mostrar el contenido multimedia",
+        "options": {
+          "default": "Ocultar los contenidos multimedia marcados como sensibles",
+          "show_all": "Mostrar siempre el contenido multimedia",
+          "hide_all": "Siempre ocultar el contenido multimedia"
+        }
+      },
+      "spoilers": {
+        "title": "Siempre expandir las publicaciones marcadas con advertencias de contenido"
+      },
+      "autoplay_gifs": {
+        "title": "Reproduce automáticamente los GIF"
+      },
+      "filters": {
+        "title": "Filtros de contenido",
+        "content": "{{count}} activo"
+      },
+      "web_only": {
+        "title": "Actualizar ajustes",
+        "description": "Los ajustes a continuación solo se pueden actualizar mediante la interfaz web"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "Expirado",
+      "keywords_one": "{{count}} palabra clave",
+      "keywords_other": "{{count}} palabras clave",
+      "statuses_one": "{{count}} publicación",
+      "statuses_other": "{{count}} publicaciones",
+      "context": "Se aplica en <0 />",
+      "contexts": {
+        "home": "Seguidos y listas",
+        "notifications": "Notificación",
+        "public": "Federado",
+        "thread": "Conversación",
+        "account": "Perfil"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Nombre",
+      "expiration": "Vencimiento",
+      "expirationOptions": {
+        "0": "Nunca",
+        "1800": "Después de 30 minutos",
+        "3600": "Después de 1 hora",
+        "43200": "Después de 12 horas",
+        "86400": "Después de 1 día",
+        "604800": "Después de 1 semana",
+        "18144000": "Después de 1 mes"
+      },
+      "context": "Se aplica en",
+      "contexts": {
+        "home": "Seguidos y listas",
+        "notifications": "Notificación",
+        "public": "Cronología federada",
+        "thread": "Vista de conversación",
+        "account": "Vista de perfil"
+      },
+      "action": "Al coincidir",
+      "actions": {
+        "warn": "",
+        "hide": "Oculto completamente"
+      },
+      "keywords": "Coincide con estas palabras clave",
+      "keyword": "Palabra clave",
+      "statuses": "Coincide con estas publicaciones"
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} actualizado",
@@ -149,17 +237,6 @@
           "title": "Metadatos",
           "total_one": "{{count}} campo",
           "total_other": "{{count}} campos"
-        },
-        "visibility": {
-          "title": "Visibilidad de publicación",
-          "options": {
-            "public": "Público",
-            "unlisted": "No listado",
-            "private": "Solo seguidores"
-          }
-        },
-        "sensitive": {
-          "title": "Publicar contenido multimedia sensible"
         },
         "lock": {
           "title": "Hacer la cuenta privada",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "Multimedia de <0 /><1></1>"
     },
-    "hashtag": {
-      "follow": "Seguir",
-      "unfollow": "Dejar de seguir"
+    "filter": {
+      "name": "Añadir al filtro",
+      "existed": "Existe en estos filtros"
     },
     "history": {
       "name": "Historial de ediciones"

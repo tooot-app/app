@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Beskriv media för synskadade",
           "placeholder": "Du kan lägga till en beskrivning, som ibland kallas alternativtext, till dina medier så att de är tillgängliga för ännu fler, inklusive dem som är blinda eller synskadade.\n\nBra beskrivningar är kortfattade men presenterar vad som finns i dina medier tillräckligt noggrant för att beskriva deras sammanhang."
-        },
-        "imageFocus": "Dra i fokuscirkeln för att uppdatera fokuspunkten"
+        }
       }
     },
     "draftsList": {

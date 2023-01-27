@@ -93,7 +93,7 @@ const ComposeRootSuggestions: React.FC = () => {
                     props={{ onPress: () => onPress(`@${account.acct}`) }}
                     children={
                       <Icon
-                        name='Plus'
+                        name='plus'
                         size={StyleConstants.Font.Size.L}
                         color={colors.secondary}
                         style={{ marginLeft: 8 }}

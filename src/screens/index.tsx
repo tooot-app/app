@@ -248,7 +248,7 @@ const Screens: React.FC = () => {
               headerShadowVisible: false,
               headerTransparent: true,
               headerStyle: { backgroundColor: 'transparent' },
-              headerLeft: () => <HeaderLeft content='X' onPress={() => navigation.goBack()} />,
+              headerLeft: () => <HeaderLeft content='x' onPress={() => navigation.goBack()} />,
               title: t('screenAnnouncements:heading')
             })}
           />

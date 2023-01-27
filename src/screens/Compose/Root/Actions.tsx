@@ -60,13 +60,13 @@ const ComposeActions: React.FC = () => {
   const visibilityIcon = () => {
     switch (composeState.visibility) {
       case 'public':
-        return 'Globe'
+        return 'globe'
       case 'unlisted':
-        return 'Unlock'
+        return 'unlock'
       case 'private':
-        return 'Lock'
+        return 'lock'
       case 'direct':
-        return 'Mail'
+        return 'mail'
     }
   }
   const visibilityOnPress = () => {
@@ -162,7 +162,7 @@ const ComposeActions: React.FC = () => {
         }}
         style={styles.button}
         onPress={attachmentOnPress}
-        children={<Icon name='Camera' size={24} color={attachmentColor()} />}
+        children={<Icon name='camera' size={24} color={attachmentColor()} />}
       />
       <Pressable
         accessibilityRole='button'
@@ -174,7 +174,7 @@ const ComposeActions: React.FC = () => {
         }}
         style={styles.button}
         onPress={pollOnPress}
-        children={<Icon name='BarChart2' size={24} color={pollColor()} />}
+        children={<Icon name='bar-chart-2' size={24} color={pollColor()} />}
       />
       <Pressable
         accessibilityRole='button'
@@ -200,7 +200,7 @@ const ComposeActions: React.FC = () => {
         onPress={spoilerOnPress}
         children={
           <Icon
-            name='AlertTriangle'
+            name='alert-triangle'
             size={24}
             color={composeState.spoiler.active ? colors.primaryDefault : colors.secondary}
           />
@@ -216,7 +216,7 @@ const ComposeActions: React.FC = () => {
         }}
         style={styles.button}
         onPress={emojiOnPress}
-        children={<Icon name='Smile' size={24} color={emojiColor()} />}
+        children={<Icon name='smile' size={24} color={emojiColor()} />}
       />
     </View>
   )

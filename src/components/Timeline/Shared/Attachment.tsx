@@ -216,7 +216,7 @@ const TimelineAttachment = () => {
         ) : (
           <Button
             type='icon'
-            content='EyeOff'
+            content='eye-off'
             round
             overlay
             onPress={() => {

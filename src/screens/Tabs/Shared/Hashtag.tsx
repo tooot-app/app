@@ -1,85 +1,69 @@
-import haptics from '@components/haptics'
+import menuHashtag from '@components/contextMenu/hashtag'
 import { HeaderLeft, HeaderRight } from '@components/Header'
-import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
-import { useQueryClient } from '@tanstack/react-query'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
-import { QueryKeyFollowedTags, useTagsMutation, useTagsQuery } from '@utils/queryHooks/tags'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import React, { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { Fragment, useEffect } from 'react'
+import * as DropdownMenu from 'zeego/dropdown-menu'
 
 const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>> = ({
   navigation,
   route: {
-    params: { hashtag }
+    params: { tag_name }
   }
 }) => {
-  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', hashtag }]
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', tag_name }]
+
+  const canFollowTags = featureCheck('follow_tags')
+  const canFilterTag = featureCheck('filter_server_side')
+  const mHashtag = menuHashtag({ tag_name, queryKey })
 
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
-      title: `#${decodeURIComponent(hashtag)}`
+      title: `#${decodeURIComponent(tag_name)}`
     })
     navigation.setParams({ queryKey: queryKey })
   }, [])
 
-  const { t } = useTranslation(['common', 'screenTabs'])
-
-  const canFollowTags = featureCheck('follow_tags')
-  const { data, isFetching, refetch } = useTagsQuery({
-    tag: hashtag,
-    options: { enabled: canFollowTags }
-  })
-  const queryClient = useQueryClient()
-  const mutation = useTagsMutation({
-    onSuccess: () => {
-      haptics('Success')
-      refetch()
-      const queryKeyFollowedTags: QueryKeyFollowedTags = ['FollowedTags']
-      queryClient.invalidateQueries({ queryKey: queryKeyFollowedTags })
-    },
-    onError: (err: any, { to }) => {
-      displayMessage({
-        type: 'error',
-        message: t('common:message.error.message', {
-          function: to
-            ? t('screenTabs:shared.hashtag.follow')
-            : t('screenTabs:shared.hashtag.unfollow')
-        }),
-        ...(err.status &&
-          typeof err.status === 'number' &&
-          err.data &&
-          err.data.error &&
-          typeof err.data.error === 'string' && {
-            description: err.data.error
-          })
-      })
-    }
-  })
   useEffect(() => {
-    if (!canFollowTags) return
+    if (!canFollowTags && !canFilterTag) return
 
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRight
-          loading={isFetching || mutation.isLoading}
-          type='text'
-          content={
-            data?.following
-              ? t('screenTabs:shared.hashtag.unfollow')
-              : t('screenTabs:shared.hashtag.follow')
-          }
-          onPress={() =>
-            typeof data?.following === 'boolean' &&
-            mutation.mutate({ tag: hashtag, to: !data.following })
-          }
-        />
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <HeaderRight content='more-horizontal' onPress={() => {}} />
+          </DropdownMenu.Trigger>
+
+          <DropdownMenu.Content>
+            {[mHashtag].map((menu, i) => (
+              <Fragment key={i}>
+                {menu.map((group, index) => (
+                  <DropdownMenu.Group key={index}>
+                    {group.map(item => {
+                      switch (item.type) {
+                        case 'item':
+                          return (
+                            <DropdownMenu.Item key={item.key} {...item.props}>
+                              <DropdownMenu.ItemTitle children={item.title} />
+                              {item.icon ? (
+                                <DropdownMenu.ItemIcon ios={{ name: item.icon }} />
+                              ) : null}
+                            </DropdownMenu.Item>
+                          )
+                      }
+                    })}
+                  </DropdownMenu.Group>
+                ))}
+              </Fragment>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       )
     })
-  }, [canFollowTags, data?.following, isFetching])
+  }, [mHashtag])
 
   return <Timeline queryKey={queryKey} />
 }

@@ -42,9 +42,9 @@ const themeColors: {
     dark_darker: 'rgb(130, 130, 130)'
   },
   disabled: {
-    light: 'rgb(200, 200, 200)',
-    dark_lighter: 'rgb(120, 120, 120)',
-    dark_darker: 'rgb(66, 66, 66)'
+    light: 'rgb(220, 220, 220)',
+    dark_lighter: 'rgb(70, 70, 70)',
+    dark_darker: 'rgb(50, 50, 50)'
   },
   blue: {
     light: 'rgb(43, 144, 221)',

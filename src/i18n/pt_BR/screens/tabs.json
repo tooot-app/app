@@ -3,15 +3,15 @@
     "local": {
       "name": "Seguindo",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Mostrar boosts",
+        "showReplies": "Mostrar respostas"
       }
     },
     "public": {
       "segments": {
         "federated": "Global",
         "local": "Local",
-        "trending": ""
+        "trending": "Em alta"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtro",
       "accessibilityHint": "Filtrar notificações por tipos",
-      "title": ""
+      "title": "Mostrar notificações"
     }
   },
   "me": {
@@ -43,7 +43,7 @@
         "name": "Favoritos"
       },
       "followedTags": {
-        "name": ""
+        "name": "Hashtags seguidas"
       },
       "fontSize": {
         "name": "Tamanho da fonte do Toot"
@@ -55,10 +55,10 @@
         "name": "Lista: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Usuários na lista: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Criar uma lista"
       },
       "listEdit": {
         "name": ""
@@ -68,6 +68,18 @@
       },
       "push": {
         "name": "Notificação"
+      },
+      "preferences": {
+        "name": "Preferências"
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": "Criar um Filtro"
+      },
+      "preferencesFilterEdit": {
+        "name": "Editar Filtro"
       },
       "profile": {
         "name": "Editar Perfil"
@@ -84,9 +96,6 @@
       "settings": {
         "name": "Configurações do Aplicativo"
       },
-      "webSettings": {
-        "name": "Mais configurações"
-      },
       "switch": {
         "name": "Alterar Conta"
       }
@@ -102,28 +111,107 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Gerenciar usuários",
+      "error": "Excluir usuário da lista",
+      "empty": "Nenhum usuário adicionado a esta lista"
     },
     "listEdit": {
       "heading": "",
-      "title": "",
+      "title": "Título",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Mostrar respostas para:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Ninguém",
+          "list": "Membros da lista",
+          "followed": "Qualquer usuário seguido"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Excluir lista",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Excluir lista \"{{list}}\"?",
+        "message": "Esta ação não é reversível."
       }
+    },
+    "preferences": {
+      "visibility": {
+        "title": "Visibilidade padrão de postagem",
+        "options": {
+          "public": "Público",
+          "unlisted": "Não-listado",
+          "private": "Apenas seguidores"
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "Ocultar mídia marcada como sensível",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": "Expandir automaticamente toots com Aviso de Conteúdo"
+      },
+      "autoplay_gifs": {
+        "title": "Reproduzir GIF automaticamente nos toots"
+      },
+      "filters": {
+        "title": "Filtros de conteúdo",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "Nome",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "Nunca",
+        "1800": "Após 30 minutos",
+        "3600": "Após 1 hora",
+        "43200": "Após 12 horas",
+        "86400": "Após 1 dia",
+        "604800": "Após 1 semana",
+        "18144000": "Após 1 mês"
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": "",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -149,17 +237,6 @@
           "title": "Metadados",
           "total_one": "{{count}} campo",
           "total_other": "{{count}} campos"
-        },
-        "visibility": {
-          "title": "Visibilidade da Postagem",
-          "options": {
-            "public": "Público",
-            "unlisted": "Não listado",
-            "private": "Apenas seguidores"
-          }
-        },
-        "sensitive": {
-          "title": "Publicação de Mídia Sensiva"
         },
         "lock": {
           "title": "Trancar conta",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"
     },
-    "hashtag": {
-      "follow": "Seguir",
-      "unfollow": "Deixar de seguir"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Histórico de Edição"

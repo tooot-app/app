@@ -1,0 +1,8 @@
+{
+  "HTML": {
+    "accessibilityHint": "",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} lerro gehiago)",
+    "defaultHint": "Tut luzea"
+  }
+}

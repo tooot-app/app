@@ -69,6 +69,18 @@
       "push": {
         "name": "Powiadomienia Push"
       },
+      "preferences": {
+        "name": "Preferencje"
+      },
+      "preferencesFilters": {
+        "name": "Wszystkie filtry treści"
+      },
+      "preferencesFilterAdd": {
+        "name": "Utwórz filtr"
+      },
+      "preferencesFilterEdit": {
+        "name": "Edytuj filtr"
+      },
       "profile": {
         "name": "Edytuj profil"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Ustawienia"
-      },
-      "webSettings": {
-        "name": "Ustawienia konta"
       },
       "switch": {
         "name": "Przełącz konto"
@@ -125,6 +134,85 @@
         "message": "Nie będzie można cofnąć tej czynności."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Domyślna widoczność tootów",
+        "options": {
+          "public": "Publiczny",
+          "unlisted": "Niepubliczny",
+          "private": "Tylko obserwujący"
+        }
+      },
+      "sensitive": {
+        "title": "Domyślnie oznacz media jako wrażliwe"
+      },
+      "media": {
+        "title": "Wyświetlanie multimediów",
+        "options": {
+          "default": "Ukryj media oznaczone jako wrażliwe",
+          "show_all": "Zawsze pokazuj media",
+          "hide_all": "Zawsze ukrywaj media"
+        }
+      },
+      "spoilers": {
+        "title": "Automatycznie rozwijaj tooty z ostrzeżeniem o zawartości"
+      },
+      "autoplay_gifs": {
+        "title": "Autoodtwarzanie GIF w tootach"
+      },
+      "filters": {
+        "title": "Filtry treści",
+        "content": "{{count}} aktywnych"
+      },
+      "web_only": {
+        "title": "Ustawienia aktualizacji",
+        "description": "Poniższe ustawienia mogą być aktualizowane tylko przy użyciu interfejsu webowego"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "Wygasło",
+      "keywords_one": "{{count}} słowo kluczowe",
+      "keywords_other": "{{count}} słów kluczowych",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} tootów",
+      "context": "Użyto na <0 />",
+      "contexts": {
+        "home": "obserwujący i listy",
+        "notifications": "powiadomienie",
+        "public": "sfederowane",
+        "thread": "rozmowa",
+        "account": "profil"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Nazwa",
+      "expiration": "Wygaśnięcie",
+      "expirationOptions": {
+        "0": "Nigdy",
+        "1800": "Po 30 minutach",
+        "3600": "Po 1 godzinie",
+        "43200": "Po 12 godzinach",
+        "86400": "Po 1 dniu",
+        "604800": "Po tygodniu",
+        "18144000": "Po miesiącu"
+      },
+      "context": "Zastosuje na",
+      "contexts": {
+        "home": "Obserwujący i listy",
+        "notifications": "Powiadomienie",
+        "public": "Sfederowana oś czasu",
+        "thread": "Widok rozmów",
+        "account": "Widok profilu"
+      },
+      "action": "Gdy pasuje",
+      "actions": {
+        "warn": "Zwinięty, ale można go pokazać",
+        "hide": "Całkowicie ukryte"
+      },
+      "keywords": "Pasuje do tych słów kluczowych",
+      "keyword": "Słowo kluczowe",
+      "statuses": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "Zaktualizowano {{type}}",
@@ -149,17 +237,6 @@
           "title": "Metadane",
           "total_one": "Pole {{count}}",
           "total_other": "{{count}} pola"
-        },
-        "visibility": {
-          "title": "Domyślna widoczność tootków",
-          "options": {
-            "public": "Publiczne",
-            "unlisted": "Niepubliczne",
-            "private": "Tylko dla obserwujących"
-          }
-        },
-        "sensitive": {
-          "title": "Publikuję rzeczy 18+"
         },
         "lock": {
           "title": "Zablokuj konto",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1> multimedia </1>"
     },
-    "hashtag": {
-      "follow": "Obserwuj",
-      "unfollow": "Przestań obserwować"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Historia edycji"

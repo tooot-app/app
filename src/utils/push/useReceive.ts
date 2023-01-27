@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import pushUseNavigate from './useNavigate'
 
 const pushUseReceive = () => {
+  const [accountActive] = useGlobalStorage.string('account.active')
   const [accounts] = useGlobalStorage.object('accounts')
 
   useEffect(() => {
@@ -19,25 +20,25 @@ const pushUseReceive = () => {
         accountId: string
       }
 
-      const currAccount = accounts?.find(
-        account =>
-          account ===
-          generateAccountKey({ domain: payloadData.instanceUrl, id: payloadData.accountId })
-      )
+      const incomingAccount = generateAccountKey({
+        domain: payloadData.instanceUrl,
+        id: payloadData.accountId
+      })
+      const foundAccount = accounts?.find(account => account === incomingAccount)
       displayMessage({
         duration: 'long',
         message: notification.request.content.title!,
         description: notification.request.content.body!,
-        onPress: () => {
-          if (currAccount) {
-            setAccount(currAccount)
+        onPress: async () => {
+          if (foundAccount && foundAccount !== accountActive) {
+            await setAccount(foundAccount)
           }
           pushUseNavigate(payloadData.notification_id)
         }
       })
     })
     return () => subscription.remove()
-  }, [accounts])
+  }, [accountActive, accounts])
 }
 
 export default pushUseReceive

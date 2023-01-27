@@ -54,6 +54,15 @@
       }
     }
   },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
+    }
+  },
   "share": {
     "status": {
       "action": "Condividi toot"
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Fissa toot",
       "action_true": "Togli toot all'alto"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

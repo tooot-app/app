@@ -98,7 +98,7 @@
       "match_v2_one": "Filtrat per {{filters}}.",
       "match_v2_other": "Filtrat per {{count}} filtres, {{filters}}."
     },
-    "fullConversation": "Llegeix conversacions",
+    "fullConversation": "Llegeix converses",
     "translate": {
       "default": "Tradueix",
       "succeed": "Traduït per {{provider}} des de l'idioma {{source}}",

@@ -64,7 +64,7 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
         <HeaderRight
           accessibilityLabel={t('common.search.accessibilityLabel')}
           accessibilityHint={t('common.search.accessibilityHint')}
-          content='Search'
+          content='search'
           onPress={() => navigation.navigate('Tab-Shared-Search')}
         />
       )

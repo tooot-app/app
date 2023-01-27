@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { AccessibilityInfo, findNodeHandle, ScrollView, View } from 'react-native'
+import { AccessibilityInfo, findNodeHandle, ScrollView } from 'react-native'
 import ComposePosting from '../Posting'
 import ComposeActions from './Actions'
 import ComposeDrafts from './Drafts'

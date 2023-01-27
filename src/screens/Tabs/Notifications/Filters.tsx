@@ -26,7 +26,7 @@ const TabNotificationsFilters: React.FC<
       title: t('screenTabs:notifications.filters.title'),
       headerLeft: () => (
         <HeaderLeft
-          content='ChevronDown'
+          content='chevron-down'
           onPress={() => {
             if (changed) {
               Alert.alert(t('common:discard.title'), t('common:discard.message'), [

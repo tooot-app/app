@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Mô tả cho người khiếm thị",
           "placeholder": "Bạn có thể thêm mô tả hay còn gọi là văn bản thay thế cho media, để những người mù hoặc khiếm thị có thể tiếp cận dễ dàng hơn.\n\nBạn có thể giới thiệu tóm tắt hoặc mô tả bối cảnh của nội dung media mà bạn sắp tải lên."
-        },
-        "imageFocus": "Kéo thả vòng tròn để chọn phần hiển thị trên hình thu nhỏ"
+        }
       }
     },
     "draftsList": {

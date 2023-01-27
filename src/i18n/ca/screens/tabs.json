@@ -69,6 +69,18 @@
       "push": {
         "name": "Notificacions push"
       },
+      "preferences": {
+        "name": "Preferències"
+      },
+      "preferencesFilters": {
+        "name": "Tots els filtres de continguts"
+      },
+      "preferencesFilterAdd": {
+        "name": "Crea un filtre"
+      },
+      "preferencesFilterEdit": {
+        "name": "Edita el filtre"
+      },
       "profile": {
         "name": "Edita el teu perfil"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Configuració de l'aplicació"
-      },
-      "webSettings": {
-        "name": "Més configuracions del compte"
       },
       "switch": {
         "name": "Canvia de compte"
@@ -125,6 +134,85 @@
         "message": "Aquesta acció no es pot desfer."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Visibilitat de la publicació per defecte",
+        "options": {
+          "public": "Públic",
+          "unlisted": "Sense llistar",
+          "private": "Només als seguidors"
+        }
+      },
+      "sensitive": {
+        "title": "Marca el contingut com a sensible"
+      },
+      "media": {
+        "title": "Mostra el contingut multimèdia",
+        "options": {
+          "default": "Amaga el contingut multimèdia com a sensible",
+          "show_all": "Mostra sempre el contingut multimèdia",
+          "hide_all": "Amaga sempre el contingut multimèdia"
+        }
+      },
+      "spoilers": {
+        "title": "Amplia sempre el contingut amb alertes"
+      },
+      "autoplay_gifs": {
+        "title": "Autoreprodueix els GIF"
+      },
+      "filters": {
+        "title": "Filtres de continguts",
+        "content": "{{count}} actiu/s"
+      },
+      "web_only": {
+        "title": "Actualitza la configuració",
+        "description": "Les configuracions següents només es poden actualitzant fent servir el web"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "Caducat",
+      "keywords_one": "{{count}} paraula clau",
+      "keywords_other": "{{count}} paraules clau",
+      "statuses_one": "{{count}} publicació",
+      "statuses_other": "{{count}} publicacions",
+      "context": "Aplica a <0 />",
+      "contexts": {
+        "home": "Seguits i llistes",
+        "notifications": "Notificació",
+        "public": "federat",
+        "thread": "Conversa",
+        "account": "Perfil"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Nom",
+      "expiration": "Venciment",
+      "expirationOptions": {
+        "0": "Mai",
+        "1800": "Després de 30 minuts",
+        "3600": "Després d'una hora",
+        "43200": "Després de 12 hores",
+        "86400": "Després d'un dia",
+        "604800": "Després d'una setmana",
+        "18144000": "Després d'un mes"
+      },
+      "context": "Aplica a",
+      "contexts": {
+        "home": "Seguits i llistes",
+        "notifications": "Notificació",
+        "public": "Línia de temps federada",
+        "thread": "Vista de conversa",
+        "account": "Vista del perfil"
+      },
+      "action": "Quan coincideix",
+      "actions": {
+        "warn": "",
+        "hide": "Amagat completament"
+      },
+      "keywords": "Coincidències per aquestes paraules claus",
+      "keyword": "Paraula clau",
+      "statuses": "Coincideixen aquestes publicacions"
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} actualitzat",
@@ -149,17 +237,6 @@
           "title": "Metadades",
           "total_one": "{{count}} camp",
           "total_other": "{{count}} camps"
-        },
-        "visibility": {
-          "title": "Visibilitat",
-          "options": {
-            "public": "Públic",
-            "unlisted": "Sense llistar",
-            "private": "Només als seguidors"
-          }
-        },
-        "sensitive": {
-          "title": "Continguts multimèdia sensibles"
         },
         "lock": {
           "title": "Fes el compte privat",
@@ -322,15 +399,15 @@
     "attachments": {
       "name": "Multimèdia de <0 /><1></1>"
     },
-    "hashtag": {
-      "follow": "Segueix",
-      "unfollow": "Deixa de seguir"
+    "filter": {
+      "name": "Afegeix al filtre",
+      "existed": "Existia sota aquests filtres"
     },
     "history": {
       "name": "Edita l'historial"
     },
     "report": {
-      "name": "Denuncia {{acct}}",
+      "name": "Denúncia a {{acct}}",
       "report": "Denúncia",
       "forward": {
         "heading": "Envia anònimament al servidor remot {{instance}}"

@@ -8,8 +8,8 @@
     },
     "inLists": "",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "ブーストを表示する",
+      "action_true": "ブーストを非表示にする"
     },
     "mute": {
       "action_false": "ユーザーをミュート",
@@ -17,22 +17,22 @@
     },
     "followAs": {
       "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "succeed_default": "{{source}} として @{{target}} をフォローしました",
+      "succeed_locked": "{{source}} として @{{target}} へのフォロー申請を送りました。現在承認待ちです",
+      "failed": "別ユーザーとしてフォロー"
     },
     "blockReport": "",
     "block": {
       "action_false": "ユーザーをブロック",
       "action_true": "ユーザーのブロックを解除",
       "alert": {
-        "title": ""
+        "title": "@{{username}} をブロックしますか？"
       }
     },
     "reports": {
       "action": "ユーザーの報告とブロック",
       "alert": {
-        "title": ""
+        "title": "@{{username}} を通報し、ブロックしますか？"
       }
     }
   },
@@ -52,6 +52,15 @@
         "title": "インスタンス {{instance}} をブロックしますか？",
         "message": "ほとんどの場合、特定のユーザーをミュートまたはブロックすることができます。\n\nインスタンスをブロックすると、このインスタンスからフォロワーを含むすべてのコンテンツが削除されます！"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "トゥートを固定",
       "action_true": "トゥートの固定を解除"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

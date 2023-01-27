@@ -6,7 +6,7 @@
       "action_false": "跟隨使用者",
       "action_true": "取消跟隨使用者"
     },
-    "inLists": "包含使用者的列表",
+    "inLists": "包含使用者的列表 ...",
     "showBoosts": {
       "action_false": "顯示使用者的轉嘟",
       "action_true": "隱藏使用者的轉嘟"
@@ -16,12 +16,12 @@
       "action_true": "解除靜音使用者"
     },
     "followAs": {
-      "trigger": "跟隨...",
+      "trigger": "用其它帳號跟隨 ...",
       "succeed_default": "@{{source}} 正在跟隨 @{{target}}",
       "succeed_locked": "已從 {{source}} 發送跟隨請求至 @{{target}}，等待同意",
       "failed": "用其它帳號跟隨"
     },
-    "blockReport": "封鎖並檢舉…",
+    "blockReport": "封鎖並檢舉",
     "block": {
       "action_false": "封鎖使用者",
       "action_true": "解除封鎖使用者",
@@ -52,6 +52,15 @@
         "title": "確認封鎖站點 {{instance}}？",
         "message": "多數情況下，靜音或封鎖特定使用者即可。\n\n封鎖之後，來自此站點的所有內容將被移除。"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "跟隨",
+      "action_true": "取消跟隨"
+    },
+    "filter": {
+      "action": "過濾主題標籤 ..."
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "釘選嘟文",
       "action_true": "取消釘選嘟文"
+    },
+    "filter": {
+      "action_false": "過濾嘟文 ...",
+      "action_true": "管理過濾器 ..."
     }
   }
 }

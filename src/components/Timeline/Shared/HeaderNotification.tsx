@@ -81,7 +81,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                 <DropdownMenu.Root onOpenChange={setOpenChange}>
                   <DropdownMenu.Trigger>
                     <Icon
-                      name='MoreHorizontal'
+                      name='more-horizontal'
                       color={colors.secondary}
                       size={StyleConstants.Font.Size.L}
                     />

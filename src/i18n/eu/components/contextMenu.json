@@ -1,0 +1,106 @@
+{
+  "accessibilityHint": "",
+  "account": {
+    "title": "",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "inLists": "Erabiltzaile hau zerrenda hauetan dago...",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "followAs": {
+      "trigger": "Honela jarraitu...",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "Blokeatu eta salatu",
+    "block": {
+      "action_false": "",
+      "action_true": "",
+      "alert": {
+        "title": ""
+      }
+    },
+    "reports": {
+      "action": "",
+      "alert": {
+        "title": ""
+      }
+    }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "Jarraitu",
+      "action_true": "Jarraitzeari utzi"
+    },
+    "filter": {
+      "action": "Traola iragazi..."
+    }
+  },
+  "share": {
+    "status": {
+      "action": ""
+    },
+    "account": {
+      "action": ""
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": ""
+    },
+    "delete": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "pin": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action_false": "Tuta iragazi...",
+      "action_true": "Iragazkiak kudeatu..."
+    }
+  }
+}

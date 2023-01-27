@@ -69,6 +69,18 @@
       "push": {
         "name": "推送通知"
       },
+      "preferences": {
+        "name": "首选项"
+      },
+      "preferencesFilters": {
+        "name": "所有内容过滤器"
+      },
+      "preferencesFilterAdd": {
+        "name": "创建过滤器"
+      },
+      "preferencesFilterEdit": {
+        "name": "编辑过滤器"
+      },
       "profile": {
         "name": "修改个人资料"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "应用设置"
-      },
-      "webSettings": {
-        "name": "更多账户设置"
       },
       "switch": {
         "name": "切换账号"
@@ -125,6 +134,85 @@
         "message": "此操作不可恢复。"
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "默认发嘟可见性",
+        "options": {
+          "public": "公开",
+          "unlisted": "不公开",
+          "private": "仅关注者"
+        }
+      },
+      "sensitive": {
+        "title": "默认标记媒体为敏感内容"
+      },
+      "media": {
+        "title": "媒体显示",
+        "options": {
+          "default": "隐藏被标记为敏感的媒体",
+          "show_all": "总是显示所有媒体",
+          "hide_all": "总是隐藏所有媒体"
+        }
+      },
+      "spoilers": {
+        "title": "自动展开带内容警告的嘟文"
+      },
+      "autoplay_gifs": {
+        "title": "嘟文中自动播放GIF"
+      },
+      "filters": {
+        "title": "内容过滤器",
+        "content": "{{count}} 生效中"
+      },
+      "web_only": {
+        "title": "更新设置",
+        "description": "以下的设置仅可通过网页更新"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "已过期",
+      "keywords_one": "{{count}} 关键词",
+      "keywords_other": "{{count}} 关键词",
+      "statuses_one": "{{count}} 条嘟文",
+      "statuses_other": "{{count}} 条嘟文",
+      "context": "应用于<0 />",
+      "contexts": {
+        "home": "关注和列表",
+        "notifications": "通知",
+        "public": "跨站时间轴",
+        "thread": "对话",
+        "account": "个人资料"
+      }
+    },
+    "preferencesFilter": {
+      "name": "名称",
+      "expiration": "过期于",
+      "expirationOptions": {
+        "0": "从不",
+        "1800": "30分钟后",
+        "3600": "1小时后",
+        "43200": "12小时后",
+        "86400": "1天后",
+        "604800": "1周后",
+        "18144000": "1个月后"
+      },
+      "context": "应用于",
+      "contexts": {
+        "home": "关注和列表",
+        "notifications": "通知",
+        "public": "跨站时间轴",
+        "thread": "对话页面",
+        "account": "个人资料页面"
+      },
+      "action": "当匹配时",
+      "actions": {
+        "warn": "仅折叠，但可点击显示",
+        "hide": "完全隐藏"
+      },
+      "keywords": "匹配这些关键字",
+      "keyword": "关键字",
+      "statuses": "匹配这些嘟文"
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}}已更新",
@@ -149,17 +237,6 @@
           "title": "附加信息",
           "total_one": "{{count}}项",
           "total_other": "{{count}}项"
-        },
-        "visibility": {
-          "title": "嘟文默认可见范围",
-          "options": {
-            "public": "公开",
-            "unlisted": "不公开",
-            "private": "仅关注者"
-          }
-        },
-        "sensitive": {
-          "title": "媒体默认设为敏感"
         },
         "lock": {
           "title": "锁嘟",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
     },
-    "hashtag": {
-      "follow": "关注",
-      "unfollow": "取消关注"
+    "filter": {
+      "name": "添加至过滤器",
+      "existed": "已被过滤"
     },
     "history": {
       "name": "编辑历史"

@@ -1,6 +1,6 @@
 {
   "title": "Selecionar fonte de mídia",
-  "message": "",
+  "message": "Os dados EXIF ​​de mídia não são enviados",
   "options": {
     "image": "Enviar fotos",
     "image_max": "Carregar fotos (máx. {{max}})",

@@ -69,6 +69,18 @@
       "push": {
         "name": "Push Melding"
       },
+      "preferences": {
+        "name": "Voorkeuren"
+      },
+      "preferencesFilters": {
+        "name": "Alle inhoudsfilters"
+      },
+      "preferencesFilterAdd": {
+        "name": "Filter Maken"
+      },
+      "preferencesFilterEdit": {
+        "name": "Bewerk filter"
+      },
       "profile": {
         "name": "Profiel bewerken"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "App Instellingen"
-      },
-      "webSettings": {
-        "name": "Meer Accountinstellingen"
       },
       "switch": {
         "name": "Account wisselen"
@@ -125,6 +134,85 @@
         "message": "Deze actie kan niet worden hersteld."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Standaard zichtbaarheid van berichten",
+        "options": {
+          "public": "Openbaar",
+          "unlisted": "Niet openbaar",
+          "private": "Alleen volgers"
+        }
+      },
+      "sensitive": {
+        "title": "Media standaard als gevoelig markeren"
+      },
+      "media": {
+        "title": "Mediaweergave",
+        "options": {
+          "default": "Als gevoelig gemarkeerde media verbergen",
+          "show_all": "Media altijd tonen",
+          "hide_all": "Media altijd verbergen"
+        }
+      },
+      "spoilers": {
+        "title": "Altijd toots met tekstwaarschuwingen uitklappen"
+      },
+      "autoplay_gifs": {
+        "title": "GIF automatisch afspelen in toots"
+      },
+      "filters": {
+        "title": "Inhoud Filters",
+        "content": "{{count}} actief"
+      },
+      "web_only": {
+        "title": "Instellingen bijwerken",
+        "description": "Instellingen hieronder kunnen alleen met behulp van de webUI worden bijgewerkt"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "Verlopen",
+      "keywords_one": "{{count}} trefwoord",
+      "keywords_other": "{{count}} trefwoorden",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} toots",
+      "context": "Van toepassing in <0 />",
+      "contexts": {
+        "home": "volgend en lijsten",
+        "notifications": "melding",
+        "public": "gefedereerd",
+        "thread": "gesprek",
+        "account": "profiel"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Naam",
+      "expiration": "Vervaldatum",
+      "expirationOptions": {
+        "0": "Nooit",
+        "1800": "Na 30 minuten",
+        "3600": "Na 1 uur",
+        "43200": "Na 12 uur",
+        "86400": "Na 1 dag",
+        "604800": "Na 1 week",
+        "18144000": "Na 1 maand"
+      },
+      "context": "Van toepassing in",
+      "contexts": {
+        "home": "Volgend en lijsten",
+        "notifications": "Melding",
+        "public": "Federale tijdlijn",
+        "thread": "Gesprek weergave",
+        "account": "Profiel weergave"
+      },
+      "action": "Bij een overeenkomst",
+      "actions": {
+        "warn": "Ingeklapt maar kan worden onthuld",
+        "hide": "Volledig verborgen"
+      },
+      "keywords": "Komt overeen met deze trefwoorden",
+      "keyword": "Trefwoord",
+      "statuses": "Komt overeen met deze toots"
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} bijgewerkt",
@@ -149,17 +237,6 @@
           "title": "Metadata",
           "total_one": "{{count}} veld",
           "total_other": "{{count}} velden"
-        },
-        "visibility": {
-          "title": "Post zichtbaarheid",
-          "options": {
-            "public": "Openbaar",
-            "unlisted": "Niet openbaar",
-            "private": "Alleen volgers"
-          }
-        },
-        "sensitive": {
-          "title": "Posten van gevoelige media"
         },
         "lock": {
           "title": "Account vergrendelen",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
-    "hashtag": {
-      "follow": "Volg",
-      "unfollow": "Ontvolg"
+    "filter": {
+      "name": "Toevoegen aan filter",
+      "existed": "Bestaat in deze filters"
     },
     "history": {
       "name": "Geschiedenis bewerken"

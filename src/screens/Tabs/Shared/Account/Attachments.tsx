@@ -70,7 +70,7 @@ const AccountAttachments: React.FC = () => {
                     }}
                     children={
                       <Icon
-                        name='MoreHorizontal'
+                        name='more-horizontal'
                         color={colors.primaryOverlay}
                         size={StyleConstants.Font.Size.L * 1.5}
                       />

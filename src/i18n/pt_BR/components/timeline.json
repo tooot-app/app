@@ -42,9 +42,9 @@
         "accessibilityLabel": "Boost este toot",
         "function": "Boost toot",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Escolha a visibilidade do boost",
+          "public": "Boost público",
+          "unlisted": "Boost não-listado"
         }
       },
       "favourited": {
@@ -83,7 +83,7 @@
         "text": "Erro ao carregar",
         "button": "Experimente o link remoto"
       },
-      "altText": ""
+      "altText": "Texto Alternativo"
     },
     "avatar": {
       "accessibilityLabel": "Avatar de {{name}}",
@@ -93,10 +93,10 @@
       "expandHint": "Conteúdo oculto"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Exibir mesmo assim",
+      "match_v1": "Filtrado: {{phrase}}.",
+      "match_v2_one": "Filtrado por {{filters}}.",
+      "match_v2_other": "Filtrado por {{count}} filtros, {{filters}}."
     },
     "fullConversation": "Ler conversas",
     "translate": {
@@ -123,7 +123,7 @@
         "muted": {
           "accessibilityLabel": "Toot silenciado"
         },
-        "replies": "",
+        "replies": "Respostas <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Enviar uma mensagem direta"

@@ -1,0 +1,162 @@
+{
+  "empty": {
+    "error": {
+      "message": "Errorea kargatzean",
+      "button": "Berriro saiatu"
+    },
+    "success": {
+      "message": "Denbora-lerroa hutsik"
+    }
+  },
+  "end": {
+    "message": "Amaitu dugu, katilu bat <0 /> nahi?"
+  },
+  "lookback": {
+    "message": "Azkenekoz irakurria"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Berrienak hemendik hasita",
+    "refetch": "Azkenekora arte"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Finkatua",
+      "favourite": "{{name}}-(e)k zure tuta gogoko du",
+      "status": "{{name}}-(e)k tut bat bidali berri du",
+      "follow": "{{name}}-(e)k jarraitu zaitu",
+      "follow_request": "{{name}}-(e)k zu jarraitzeko eskaera egin du",
+      "poll": "Erantzun zenuen inkesta bat amaitu da",
+      "reblog": {
+        "default": "{{name}}-(e)k bultzatu du",
+        "notification": "{{name}}-(e)k zure tuta bultzatu du"
+      },
+      "update": "Bultzada editatua izan da",
+      "admin.sign_up": "{{name}} instantziara elkartu da",
+      "admin.report": "{{name}}-(e)k zera salatu du:"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Tut honi erantzun"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Tut hau bultzatu",
+        "function": "Tuta bultzatu",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "bookmarked": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "openReport": ""
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "favourited_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "history": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": ""
+      },
+      "unsupported": {
+        "text": "",
+        "button": ""
+      },
+      "altText": ""
+    },
+    "avatar": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    },
+    "content": {
+      "expandHint": ""
+    },
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
+    "fullConversation": "",
+    "translate": {
+      "default": "",
+      "succeed": "",
+      "failed": "",
+      "source_not_supported": "",
+      "target_not_supported": ""
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": ""
+          },
+          "account": {
+            "accessibilityHint": ""
+          }
+        },
+        "application": "",
+        "edited": {
+          "accessibilityLabel": ""
+        },
+        "muted": {
+          "accessibilityLabel": ""
+        },
+        "replies": "",
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": ""
+          },
+          "private": {
+            "accessibilityLabel": ""
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "",
+        "delete": {
+          "function": ""
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "",
+          "refresh": ""
+        },
+        "count": {
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
+        },
+        "expiration": {
+          "expired": "",
+          "until": ""
+        }
+      }
+    }
+  }
+}

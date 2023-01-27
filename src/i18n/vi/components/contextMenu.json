@@ -6,7 +6,7 @@
       "action_false": "Theo dõi người này",
       "action_true": "Ngưng theo dõi người này"
     },
-    "inLists": "Danh sách người",
+    "inLists": "",
     "showBoosts": {
       "action_false": "Hiển lượt đăng lại",
       "action_true": "Ẩn lượt đăng lại"
@@ -54,6 +54,15 @@
       }
     }
   },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
+    }
+  },
   "share": {
     "status": {
       "action": "Đăng lại"
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Tút ghim",
       "action_true": "Bỏ ghim tút"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

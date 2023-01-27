@@ -71,14 +71,14 @@ const ScreenImagesViewer = ({
           zIndex: 999
         }}
       >
-        <HeaderLeft content='X' native={false} background onPress={() => navigation.goBack()} />
+        <HeaderLeft content='x' native={false} background onPress={() => navigation.goBack()} />
         {!hideCounter ? (
           <HeaderCenter inverted content={`${currentIndex + 1} / ${imageUrls.length}`} />
         ) : null}
         <HeaderRight
           accessibilityLabel={t('screenImageViewer:content.actions.accessibilityLabel')}
           accessibilityHint={t('screenImageViewer:content.actions.accessibilityHint')}
-          content='MoreHorizontal'
+          content='more-horizontal'
           native={false}
           background
           onPress={() =>

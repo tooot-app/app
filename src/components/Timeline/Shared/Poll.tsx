@@ -117,10 +117,14 @@ const TimelinePoll: React.FC = () => {
     }
   }
 
-  const isSelected = (index: number): string =>
+  const isSelected = (index: number) =>
     allOptions[index]
-      ? `Check${poll.multiple ? 'Square' : 'Circle'}`
-      : `${poll.multiple ? 'Square' : 'Circle'}`
+      ? poll.multiple
+        ? 'check-square'
+        : 'check-circle'
+      : poll.multiple
+      ? 'square'
+      : 'circle'
 
   const pollBodyDisallow = () => {
     const maxValue = maxBy(poll.options, option => option.votes_count)?.votes_count
@@ -129,12 +133,12 @@ const TimelinePoll: React.FC = () => {
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon
             style={{
-              paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+              marginTop: (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2,
               marginRight: StyleConstants.Spacing.S
             }}
             name={
-              `${poll.own_votes?.includes(index) ? 'Check' : ''}${
-                poll.multiple ? 'Square' : 'Circle'
+              `${poll.own_votes?.includes(index) ? 'check-' : ''}${
+                poll.multiple ? 'square' : 'circle'
               }` as any
             }
             size={StyleConstants.Font.Size.M}
@@ -201,7 +205,7 @@ const TimelinePoll: React.FC = () => {
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon
             style={{
-              paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+              marginTop: (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2,
               marginRight: StyleConstants.Spacing.S
             }}
             name={isSelected(index)}

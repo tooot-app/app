@@ -69,6 +69,18 @@
       "push": {
         "name": "Push de notification"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "Modifier le profil"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Paramètres de l'application"
-      },
-      "webSettings": {
-        "name": "Plus de paramètres de compte"
       },
       "switch": {
         "name": "Passer sur un autre compte"
@@ -125,6 +134,85 @@
         "message": "Cette action ne peut être annulé."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": "",
+      "statuses": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} mis à jour",
@@ -149,17 +237,6 @@
           "title": "Metadonnés",
           "total_one": "Champ {{count}}",
           "total_other": "Champ {{count}}"
-        },
-        "visibility": {
-          "title": "Visibilité de la publication",
-          "options": {
-            "public": "Public",
-            "unlisted": "Non listé",
-            "private": "Abonné·e·s uniquement"
-          }
-        },
-        "sensitive": {
-          "title": "Publication de médias sensibles"
         },
         "lock": {
           "title": "Verrouiller le compte",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "Média de <0 /><1></1>"
     },
-    "hashtag": {
-      "follow": "Suivre",
-      "unfollow": "Ne plus suivre"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Modifier l'historique"

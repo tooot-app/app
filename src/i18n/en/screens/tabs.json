@@ -69,6 +69,18 @@
       "push": {
         "name": "Push Notification"
       },
+      "preferences": {
+        "name": "Preferences"
+      },
+      "preferencesFilters": {
+        "name": "All content filters"
+      },
+      "preferencesFilterAdd": {
+        "name": "Create a Filter"
+      },
+      "preferencesFilterEdit": {
+        "name": "Edit Filter"
+      },
       "profile": {
         "name": "Edit Profile"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "App Settings"
-      },
-      "webSettings": {
-        "name": "More Account Settings"
       },
       "switch": {
         "name": "Switch Account"
@@ -125,6 +134,85 @@
         "message": "This action is not recoverable."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Default posting visibility",
+        "options": {
+          "public": "Public",
+          "unlisted": "Unlisted",
+          "private": "Followers only"
+        }
+      },
+      "sensitive": {
+        "title": "Default mark media as sensitive"
+      },
+      "media": {
+        "title": "Media display",
+        "options": {
+          "default": "Hide media marked as sensitive",
+          "show_all": "Always show media",
+          "hide_all": "Always hide media"
+        }
+      },
+      "spoilers": {
+        "title": "Auto expand toots with content warning"
+      },
+      "autoplay_gifs": {
+        "title": "Autoplay GIF in toots"
+      },
+      "filters": {
+        "title": "Content filters",
+        "content": "{{count}} active"
+      },
+      "web_only": {
+        "title": "Update settings",
+        "description": "Settings below can only be updated using the web UI"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "Expired",
+      "keywords_one": "{{count}} keyword",
+      "keywords_other": "{{count}} keywords",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} toots",
+      "context": "Applies in <0 />",
+      "contexts": {
+        "home": "following and lists",
+        "notifications": "notification",
+        "public": "federated",
+        "thread": "conversation",
+        "account": "profile"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Name",
+      "expiration": "Expiration",
+      "expirationOptions": {
+        "0": "Never",
+        "1800": "After 30 minutes",
+        "3600": "After 1 hour",
+        "43200": "After 12 hours",
+        "86400": "After 1 day",
+        "604800": "After 1 week",
+        "18144000": "After 1 month"
+      },
+      "context": "Applies in",
+      "contexts": {
+        "home": "Following and lists",
+        "notifications": "Notification",
+        "public": "Federated timeline",
+        "thread": "Conversation view",
+        "account": "Profile view"
+      },
+      "action": "When matched",
+      "actions": {
+        "warn": "Collapsed but can be revealed",
+        "hide": "Hidden completely"
+      },
+      "keywords": "Matches for these keywords",
+      "keyword": "Keyword",
+      "statuses": "Matches these toots"
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} updated",
@@ -149,17 +237,6 @@
           "title": "Metadata",
           "total_one": "{{count}} field",
           "total_other": "{{count}} fields"
-        },
-        "visibility": {
-          "title": "Posting Visibility",
-          "options": {
-            "public": "Public",
-            "unlisted": "Unlisted",
-            "private": "Followers only"
-          }
-        },
-        "sensitive": {
-          "title": "Posting Media Sensitive"
         },
         "lock": {
           "title": "Lock Account",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
-    "hashtag": {
-      "follow": "Follow",
-      "unfollow": "Unfollow"
+    "filter": {
+      "name": "Add to filter",
+      "existed": "Existed in these filters"
     },
     "history": {
       "name": "Edit History"

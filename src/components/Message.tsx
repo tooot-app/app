@@ -54,13 +54,13 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
   const { colors, theme } = useTheme()
 
   enum iconMapping {
-    success = 'CheckCircle',
-    danger = 'XCircle',
-    warning = 'AlertCircle',
-    none = '',
-    default = '',
-    info = '',
-    auto = ''
+    success = 'check-circle',
+    danger = 'x-circle',
+    warning = 'alert-circle',
+    none = 'x',
+    default = 'x',
+    info = 'x',
+    auto = 'x'
   }
   enum colorMapping {
     success = 'blue',

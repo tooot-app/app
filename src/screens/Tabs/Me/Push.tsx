@@ -265,7 +265,7 @@ const TabMePush: React.FC = () => {
                 />
                 <MenuRow
                   title={t('me.push.howitworks')}
-                  iconBack='ExternalLink'
+                  iconBack='external-link'
                   onPress={async () =>
                     WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
                       ...(await browserPackage())
@@ -286,7 +286,7 @@ const TabMePush: React.FC = () => {
                 paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
               }}
             >
-              <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
+              <Icon name='frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
               <CustomText
                 fontStyle='M'
                 style={{
@@ -310,7 +310,7 @@ const TabMePush: React.FC = () => {
             paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
           }}
         >
-          <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
+          <Icon name='frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
           <CustomText
             fontStyle='M'
             style={{

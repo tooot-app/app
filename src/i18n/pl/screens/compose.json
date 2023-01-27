@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Opis dla niedowidzących",
           "placeholder": "Możesz dodać opis, czasami nazywany tekstem alternatywnym czy alt-text, dla Twoich mediów, dzięki czemu będą one dostępne dla jeszcze większej liczby osób, w tym dla osób niewidomych lub niedowidzących.\n\nDobre opisy są zwięzłe, ale prezentują to, co w twoich mediach jest wystarczająco dokładne, aby zrozumieć ich kontekst."
-        },
-        "imageFocus": "Przeciągnij okrąg ogniskowy, aby zaktualizować punkt ogniskowy"
+        }
       }
     },
     "draftsList": {

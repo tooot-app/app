@@ -1,3 +1,4 @@
+import type { RootStackParamList } from '@utils/navigation/navigators'
 import { RefObject } from 'react'
 import { Asset } from 'react-native-image-picker'
 
@@ -19,6 +20,7 @@ export type ComposeStateDraft = {
 }
 
 export type ComposeState = {
+  type: NonNullable<RootStackParamList['Screen-Compose']>['type'] | undefined
   dirty: boolean
   timestamp: number
   posting: boolean
@@ -44,14 +46,11 @@ export type ComposeState = {
   poll: {
     active: boolean
     total: number
-    options: {
-      [key: string]: string | undefined
-    }
+    options: (string | undefined)[]
     multiple: boolean
     expire: '300' | '1800' | '3600' | '21600' | '86400' | '259200' | '604800'
   }
   attachments: {
-    disallowEditing?: boolean // https://github.com/mastodon/mastodon/pull/20878
     sensitive: boolean
     uploads: ExtendedAttachment[]
   }

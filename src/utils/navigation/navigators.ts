@@ -99,7 +99,10 @@ export type TabSharedStackParamList = {
   }
   'Tab-Shared-Account-In-Lists': { account: Pick<Mastodon.Account, 'id' | 'username'> }
   'Tab-Shared-Attachments': { account: Mastodon.Account; queryKey?: QueryKeyTimeline }
-  'Tab-Shared-Hashtag': { hashtag: Mastodon.Tag['name']; queryKey?: QueryKeyTimeline }
+  'Tab-Shared-Filter':
+    | { source: 'status'; status: Mastodon.Status }
+    | { source: 'hashtag'; tag_name: Mastodon.Tag['name'] }
+  'Tab-Shared-Hashtag': { tag_name: Mastodon.Tag['name']; queryKey?: QueryKeyTimeline }
   'Tab-Shared-History': { status: Mastodon.Status; detectedLanguage: string }
   'Tab-Shared-Report': {
     account: Pick<Mastodon.Account, 'id' | 'acct' | 'username' | 'url'>
@@ -157,6 +160,7 @@ export type TabMeStackParamList = {
         key: string // To update title after successful mutation
       }
   'Tab-Me-List-List': undefined
+  'Tab-Me-Preferences': undefined
   'Tab-Me-Profile': undefined
   'Tab-Me-Push': undefined
   'Tab-Me-Settings': undefined
@@ -185,3 +189,18 @@ export type TabMeProfileStackParamList = {
 }
 export type TabMeProfileStackScreenProps<T extends keyof TabMeProfileStackParamList> =
   NativeStackScreenProps<TabMeProfileStackParamList, T>
+
+export type TabMePreferencesStackParamList = {
+  'Tab-Me-Preferences-Root': undefined
+  'Tab-Me-Preferences-Filters': undefined
+  'Tab-Me-Preferences-Filter':
+    | {
+        type: 'add'
+      }
+    | {
+        type: 'edit'
+        filter: Mastodon.Filter<'v2'>
+      }
+}
+export type TabMePreferencesStackScreenProps<T extends keyof TabMePreferencesStackParamList> =
+  NativeStackScreenProps<TabMePreferencesStackParamList, T>

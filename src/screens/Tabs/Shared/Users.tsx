@@ -115,7 +115,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
             }}
           >
             <Icon
-              name='AlertCircle'
+              name='alert-circle'
               color={colors.secondary}
               size={StyleConstants.Font.Size.M}
               style={{ marginRight: StyleConstants.Spacing.S }}

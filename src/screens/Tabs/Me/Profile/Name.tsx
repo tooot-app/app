@@ -44,7 +44,7 @@ const TabMeProfileName: React.FC<
     navigation.setOptions({
       headerLeft: () => (
         <HeaderLeft
-          content='X'
+          content='chevron-left'
           onPress={() => {
             if (dirty) {
               Alert.alert(t('common:discard.title'), t('common:discard.message'), [
@@ -68,7 +68,7 @@ const TabMeProfileName: React.FC<
         <HeaderRight
           disabled={!dirty}
           loading={status === 'loading'}
-          content='Save'
+          content='save'
           onPress={async () => {
             mutateAsync({
               messageRef,

@@ -54,6 +54,15 @@
       }
     }
   },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
+    }
+  },
   "share": {
     "status": {
       "action": "Κοινοποίηση ανάρτησης"
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Κρέμασμα ανάρτησης",
       "action_true": "Ξεκρέμασμα ανάρτησης"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

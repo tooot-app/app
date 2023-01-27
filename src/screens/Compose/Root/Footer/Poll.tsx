@@ -50,21 +50,12 @@ const ComposePoll: React.FC = () => {
           marginBottom: StyleConstants.Spacing.S
         }}
       >
-        {[...Array(total)].map((e, i) => {
-          const restOptions = Object.keys(options).filter(
-            o => parseInt(o) !== i && parseInt(o) < total
-          )
-          let hasConflict = false
-          restOptions.forEach(o => {
-            // @ts-ignore
-            if (options[o] === options[i]) {
-              hasConflict = true
-            }
-          })
+        {[...Array(total)].map((_, i) => {
+          const hasConflict = options.filter((_, ii) => ii !== i && ii < total).includes(options[i])
           return (
             <View key={i} style={styles.option}>
               <Icon
-                name={multiple ? 'Square' : 'Circle'}
+                name={multiple ? 'square' : 'circle'}
                 size={StyleConstants.Font.Size.L}
                 color={colors.secondary}
               />
@@ -92,14 +83,15 @@ const ComposePoll: React.FC = () => {
                 }
                 placeholderTextColor={colors.disabled}
                 maxLength={MAX_CHARS_PER_OPTION}
-                // @ts-ignore
                 value={options[i]}
-                onChangeText={e =>
+                onChangeText={e => {
+                  const newOptions = [...options]
+                  newOptions[i] = e
                   composeDispatch({
                     type: 'poll',
-                    payload: { options: { ...options, [i]: e } }
+                    payload: { options: [...newOptions] }
                   })
-                }
+                }}
               />
             </View>
           )
@@ -136,7 +128,7 @@ const ComposePoll: React.FC = () => {
               })
           }}
           type='icon'
-          content='Minus'
+          content='minus'
           round
           disabled={!(total > 2)}
         />
@@ -170,7 +162,7 @@ const ComposePoll: React.FC = () => {
               })
           }}
           type='icon'
-          content='Plus'
+          content='plus'
           round
           disabled={!(total < MAX_OPTIONS)}
         />
@@ -204,7 +196,7 @@ const ComposePoll: React.FC = () => {
               }
             )
           }
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
         />
         <MenuRow
           title={t('screenCompose:content.root.footer.poll.expiration.heading')}
@@ -244,7 +236,7 @@ const ComposePoll: React.FC = () => {
               }
             )
           }}
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
         />
       </View>
     </View>

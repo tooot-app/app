@@ -6,7 +6,7 @@
       "action_false": "Segueix l'usuari",
       "action_true": "Deixa de seguir l'usuari"
     },
-    "inLists": "Llistes que continguin l'usuari",
+    "inLists": "Llistes que hi sigui l'usuari...",
     "showBoosts": {
       "action_false": "Mostra els impulsos de l'usuari",
       "action_true": "Oculta els impulsos de l'usuari"
@@ -16,12 +16,12 @@
       "action_true": "Deixa de silenciar l'usuari"
     },
     "followAs": {
-      "trigger": "Segueix com...",
+      "trigger": "",
       "succeed_default": "Seguint a @{{target}} com @{{source}}",
       "succeed_locked": "Enviada la sol·licitud de seguiment a @{{target}} com {{source}}, pendent d'aprovar-la",
       "failed": "Segueix com"
     },
-    "blockReport": "Bloqueja i denuncia...",
+    "blockReport": "Bloqueja i denuncia",
     "block": {
       "action_false": "Bloqueja l'usuari",
       "action_true": "Deixa de bloquejar l'usuari",
@@ -52,6 +52,15 @@
         "title": "Vols bloquejar la instància {{instance}}?",
         "message": "Pots silenciar o bloquejar a un usuari.\n\nDesprés de bloquejar una instància, tot el seu contingut, amb els seus seguidors, seran esborrats!"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "Segueix",
+      "action_true": "Deixa de seguir"
+    },
+    "filter": {
+      "action": "Filtra l'etiqueta..."
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Fixa la publicació",
       "action_true": "Deixa de fixar la publicació"
+    },
+    "filter": {
+      "action_false": "Filtra la publicació...",
+      "action_true": "Gestiona els filtres..."
     }
   }
 }

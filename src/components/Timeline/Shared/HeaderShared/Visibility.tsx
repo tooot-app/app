@@ -16,7 +16,7 @@ const HeaderSharedVisibility: React.FC = () => {
       return (
         <Icon
           accessibilityLabel={t('shared.header.shared.visibility.private.accessibilityLabel')}
-          name='Unlock'
+          name='unlock'
           size={StyleConstants.Font.Size.S}
           color={colors.secondary}
           style={styles.visibility}
@@ -26,7 +26,7 @@ const HeaderSharedVisibility: React.FC = () => {
       return (
         <Icon
           accessibilityLabel={t('shared.header.shared.visibility.private.accessibilityLabel')}
-          name='Lock'
+          name='lock'
           size={StyleConstants.Font.Size.S}
           color={colors.secondary}
           style={styles.visibility}
@@ -36,7 +36,7 @@ const HeaderSharedVisibility: React.FC = () => {
       return (
         <Icon
           accessibilityLabel={t('shared.header.shared.visibility.direct.accessibilityLabel')}
-          name='Mail'
+          name='mail'
           size={StyleConstants.Font.Size.S}
           color={colors.secondary}
           style={styles.visibility}

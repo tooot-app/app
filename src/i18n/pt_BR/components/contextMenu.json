@@ -4,7 +4,7 @@
     "title": "Ações do Usuário",
     "following": {
       "action_false": "Seguir usuário",
-      "action_true": ""
+      "action_true": "Deixar de seguir usuário"
     },
     "inLists": "",
     "showBoosts": {
@@ -17,7 +17,7 @@
     },
     "followAs": {
       "trigger": "",
-      "succeed_default": "",
+      "succeed_default": "Agora seguindo @{{target}} com @{{source}}",
       "succeed_locked": "",
       "failed": ""
     },
@@ -26,13 +26,13 @@
       "action_false": "Bloquear usuário",
       "action_true": "Desbloquear usuário",
       "alert": {
-        "title": ""
+        "title": "Confirmar o bloqueio do usuário @{{username}} ?"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Denunciar e bloquear usuário",
       "alert": {
-        "title": ""
+        "title": "Confirmar denúncia e bloqueio do usuário @{{username}} ?"
       }
     }
   },
@@ -41,7 +41,7 @@
     "public": ""
   },
   "copy": {
-    "action": "",
+    "action": "Copiar toot",
     "succeed": "Copiado"
   },
   "instance": {
@@ -52,6 +52,15 @@
         "title": "Confirmar o bloqueio da instância {{instance}}?",
         "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Toot fixado",
       "action_true": "Desafixar toot"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

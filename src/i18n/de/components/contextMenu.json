@@ -6,7 +6,7 @@
       "action_false": "Folgen",
       "action_true": "Nutzer entfolgen"
     },
-    "inLists": "Listen mit Nutzern",
+    "inLists": "",
     "showBoosts": {
       "action_false": "",
       "action_true": ""
@@ -16,12 +16,12 @@
       "action_true": "Stummschaltung des Nutzers aufheben"
     },
     "followAs": {
-      "trigger": "Folgen als…",
+      "trigger": "",
       "succeed_default": "Folgt nun @{{target}} als @{{source}}",
       "succeed_locked": "Follower-Anfrage an @{{target}} mit {{source}} gesendet, Bestätigung ausstehend",
       "failed": "Folgen als…"
     },
-    "blockReport": "Blockieren und melden…",
+    "blockReport": "",
     "block": {
       "action_false": "Nutzer blockieren",
       "action_true": "User entblocken",
@@ -52,6 +52,15 @@
         "title": "{{instance}} wirklich blockieren?",
         "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Tröt anheften",
       "action_true": "Tröt nicht mehr anheften"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

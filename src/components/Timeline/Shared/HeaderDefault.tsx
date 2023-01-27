@@ -58,7 +58,7 @@ const TimelineHeaderDefault: React.FC = () => {
         >
           {isRemote ? (
             <Icon
-              name='Wifi'
+              name='wifi'
               size={StyleConstants.Font.Size.M}
               color={colors.secondary}
               style={{ marginRight: StyleConstants.Spacing.S }}
@@ -80,7 +80,7 @@ const TimelineHeaderDefault: React.FC = () => {
           <DropdownMenu.Root onOpenChange={setOpenChange}>
             <DropdownMenu.Trigger>
               <Icon
-                name='MoreHorizontal'
+                name='more-horizontal'
                 color={colors.secondary}
                 size={StyleConstants.Font.Size.L}
               />

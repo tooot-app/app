@@ -13,7 +13,6 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -127,11 +126,11 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
   const isPageNotifications = name === 'Tab-Notifications-Root'
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <>
       {!isPageNotifications && canFollowNotify && query.data?.following ? (
         <Button
           type='icon'
-          content={query.data.notifying ? 'BellOff' : 'Bell'}
+          content={query.data.notifying ? 'bell-off' : 'bell'}
           round
           onPress={() =>
             mutation.mutate({
@@ -155,7 +154,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         loading={query.isLoading || mutation.isLoading}
         disabled={query.isError || query.data?.blocked_by}
       />
-    </View>
+    </>
   )
 }
 

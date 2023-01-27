@@ -69,6 +69,18 @@
       "push": {
         "name": "Notifiche push"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "Modifica profilo"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Impostazioni app"
-      },
-      "webSettings": {
-        "name": "Altre impostazioni account"
       },
       "switch": {
         "name": "Cambia account"
@@ -125,6 +134,85 @@
         "message": ""
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": "",
+      "statuses": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} aggiornato",
@@ -149,17 +237,6 @@
           "title": "Metadati del profilo",
           "total_one": "{{count}} campo",
           "total_other": "{{count}} campi"
-        },
-        "visibility": {
-          "title": "Privacy dei post predefinita",
-          "options": {
-            "public": "Pubblico",
-            "unlisted": "Non listato",
-            "private": "Solo seguaci"
-          }
-        },
-        "sensitive": {
-          "title": "Segna sempre i media come sensibili"
         },
         "lock": {
           "title": "Blocca account",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "Media di <0 /><1>\"</1>"
     },
-    "hashtag": {
-      "follow": "Segui",
-      "unfollow": "Smetti di seguire"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Cronologia delle modifiche"

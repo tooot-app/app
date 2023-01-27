@@ -103,7 +103,7 @@ const ContentView: React.FC<{
                   paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
                   marginRight: StyleConstants.Spacing.S
                 }}
-                name={item.poll?.multiple ? 'Square' : 'Circle'}
+                name={item.poll?.multiple ? 'square' : 'circle'}
                 size={StyleConstants.Font.Size.M}
                 color={
                   prevItem?.poll?.multiple !== item.poll?.multiple ? colors.red : colors.disabled

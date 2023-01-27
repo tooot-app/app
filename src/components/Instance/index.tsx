@@ -235,12 +235,7 @@ const ComponentInstance: React.FC<Props> = ({
           />
         </View>
       ) : null}
-      <View
-        style={{
-          marginTop: StyleConstants.Spacing.L,
-          marginHorizontal: StyleConstants.Spacing.Global.PagePadding
-        }}
-      >
+      <View style={{ marginTop: StyleConstants.Spacing.L }}>
         <View
           style={{
             flexDirection: 'row',
@@ -345,7 +340,7 @@ const ComponentInstance: React.FC<Props> = ({
             }}
           >
             <Icon
-              name='Lock'
+              name='lock'
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
               style={{
@@ -365,7 +360,7 @@ const ComponentInstance: React.FC<Props> = ({
             }}
           >
             <Icon
-              name='CheckSquare'
+              name='check-square'
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
               style={{

@@ -6,7 +6,7 @@
       "action_false": "Obserwuj",
       "action_true": "Przestań obserwować"
     },
-    "inLists": "Listy zawierające użytkownika",
+    "inLists": "",
     "showBoosts": {
       "action_false": "Pokaż podbicia użytkownika",
       "action_true": "Ukryj podbicia użytkowników"
@@ -16,12 +16,12 @@
       "action_true": "Wyłącz wyciszenie"
     },
     "followAs": {
-      "trigger": "Obserwuj jako...",
+      "trigger": "",
       "succeed_default": "Teraz obserwujesz @{{target}} z @{{source}}",
       "succeed_locked": "Wysłano prośbę o obserwowanie do @{{target}} z {{source}}, oczekiwanie na zatwierdzenie",
       "failed": "Obserwuj jako"
     },
-    "blockReport": "Zablokuj i zgłoś...",
+    "blockReport": "",
     "block": {
       "action_false": "Zablokuj użytkownika",
       "action_true": "Odblokuj użytkownika",
@@ -52,6 +52,15 @@
         "title": "Na pewno zablokować {{instance}}?",
         "message": "Zazwyczaj wycisza się (albo blokuje) konkretnych użytkowników. \n\nGdy zablokujesz instancję, cała jej zawartość (włączając np. obserwujące Cię osoby, które do niej należą) zostanie usunięta!"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Przypnij wpis",
       "action_true": "Odepnij wpis"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

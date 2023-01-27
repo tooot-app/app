@@ -69,6 +69,18 @@
       "push": {
         "name": "Push-Benachrichtigung"
       },
+      "preferences": {
+        "name": "Einstellungen"
+      },
+      "preferencesFilters": {
+        "name": "Inhaltsfilter"
+      },
+      "preferencesFilterAdd": {
+        "name": "Filterregel erstellen"
+      },
+      "preferencesFilterEdit": {
+        "name": "Filter bearbeiten"
+      },
       "profile": {
         "name": "Profil bearbeiten"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "App-Einstellungen"
-      },
-      "webSettings": {
-        "name": "Kontoeinstellungen"
       },
       "switch": {
         "name": "Konto wechseln"
@@ -125,6 +134,85 @@
         "message": "Diese Aktion kann nicht rückgängig gemacht werden."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Standard-Einstellung für die Sichtbarkeit des Tröts",
+        "options": {
+          "public": "Öffentlich",
+          "unlisted": "Ungelistet",
+          "private": "Nur für Follower"
+        }
+      },
+      "sensitive": {
+        "title": "Medien immer als sensibel kennzeichnen"
+      },
+      "media": {
+        "title": "Medien-Anzeige",
+        "options": {
+          "default": "Als heikel gekennzeichnete Medien ausblenden",
+          "show_all": "Medien immer anzeigen",
+          "hide_all": "Medien immer verstecken"
+        }
+      },
+      "spoilers": {
+        "title": "Beiträge mit Inhaltswarnungen immer ausklappen"
+      },
+      "autoplay_gifs": {
+        "title": "GIFs automatisch abspielen"
+      },
+      "filters": {
+        "title": "Inhaltsfilter",
+        "content": "{{count}} aktiv"
+      },
+      "web_only": {
+        "title": "Einstellungen aktualisieren",
+        "description": "Nachfolgende Einstellungen können nur über das Web-Interface aktualisiert werden"
+      }
+    },
+    "preferencesFilters": {
+      "expired": "Abgelaufen",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "{{count}} Tröt",
+      "statuses_other": "{{count}} Tröts",
+      "context": "Läuft in <0 /> ab",
+      "contexts": {
+        "home": "Gefolgte und Listen",
+        "notifications": "Benachrichtigung",
+        "public": "Föderiert",
+        "thread": "Unterhaltung",
+        "account": "Profil"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Name",
+      "expiration": "Ablaufdatum",
+      "expirationOptions": {
+        "0": "Niemals",
+        "1800": "Nach 30 Minuten",
+        "3600": "Nach einer Stunde",
+        "43200": "Nach 12 Stunden",
+        "86400": "Nach einem Tag",
+        "604800": "Nach einer Woche",
+        "18144000": "Nach einem Monat"
+      },
+      "context": "",
+      "contexts": {
+        "home": "Gefolgte und Listen",
+        "notifications": "Benachrichtigung",
+        "public": "Föderierte Timeline",
+        "thread": "Unterhaltungsansicht",
+        "account": "Profilansicht"
+      },
+      "action": "Bei Übereinstimmung",
+      "actions": {
+        "warn": "Verdeckt, kann aber aufgedeckt werden",
+        "hide": "Vollständig verdeckt"
+      },
+      "keywords": "",
+      "keyword": "Stichwörter",
+      "statuses": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} aktualisiert",
@@ -149,17 +237,6 @@
           "title": "Metadaten",
           "total_one": "{{count}} Feld",
           "total_other": "{{count}} Felder"
-        },
-        "visibility": {
-          "title": "Sichtbarkeit des Beitrags",
-          "options": {
-            "public": "Öffentlich",
-            "unlisted": "Ungelistet",
-            "private": "Nur für Follower"
-          }
-        },
-        "sensitive": {
-          "title": "Expliziten Beitrag posten"
         },
         "lock": {
           "title": "Konto sperren",
@@ -322,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s Medien</1>"
     },
-    "hashtag": {
-      "follow": "Folgen",
-      "unfollow": "Entfolgen"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Bearbeitungsverlauf"

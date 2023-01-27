@@ -6,6 +6,7 @@ import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -104,9 +105,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
       >
         <FastImage
           style={{ width: '100%', height: '100%' }}
-          source={{
-            uri: item.local?.thumbnail || item.remote?.preview_url
-          }}
+          source={{ uri: item.local?.thumbnail || item.remote?.preview_url }}
         />
         {item.remote?.meta?.original?.duration ? (
           <CustomText
@@ -152,7 +151,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 attachment: index + 1
               })}
               type='icon'
-              content='X'
+              content='x'
               spacing='M'
               round
               overlay
@@ -165,21 +164,17 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 haptics('Success')
               }}
             />
-            {!composeState.attachments.disallowEditing ? (
+            {composeState.type === 'edit' && featureCheck('edit_media_details') ? (
               <Button
                 accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
                   attachment: index + 1
                 })}
                 type='icon'
-                content='Edit'
+                content='edit'
                 spacing='M'
                 round
                 overlay
-                onPress={() => {
-                  navigation.navigate('Screen-Compose-EditAttachment', {
-                    index
-                  })
-                }}
+                onPress={() => navigation.navigate('Screen-Compose-EditAttachment', { index })}
               />
             ) : null}
           </View>
@@ -208,7 +203,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         onPress={sensitiveOnPress}
       >
         <Icon
-          name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}
+          name={composeState.attachments.sensitive ? 'check-circle' : 'circle'}
           size={StyleConstants.Font.Size.L}
           color={colors.primaryDefault}
         />
@@ -256,7 +251,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
             >
               <Button
                 type='icon'
-                content='UploadCloud'
+                content='upload-cloud'
                 spacing='M'
                 round
                 overlay

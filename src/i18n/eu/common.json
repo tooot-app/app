@@ -1,0 +1,32 @@
+{
+  "buttons": {
+    "OK": "Ados",
+    "apply": "Aplikatu",
+    "cancel": "Utzi",
+    "discard": "Baztertu",
+    "continue": "Jarraitu",
+    "create": "Sortu",
+    "delete": "Ezabatu",
+    "done": "Eginda",
+    "confirm": "Berretsi"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Emoji pertsonalizatua {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} ongi burutu da"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}}-(e)k huts egin du, mesedez, saia zaitez berriro"
+    }
+  },
+  "separator": ", ",
+  "discard": {
+    "title": "Aldaketa ez da gorde",
+    "message": "Zuk eginiko aldaketa ez da gorde. Baztertu nahi al duzu?"
+  }
+}

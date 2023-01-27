@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Décrire cette photo pour les personnes malvoyantes",
           "placeholder": "Vous pouvez ajouter une description, parfois appelée alt-text, à vos médias afin qu'ils soient accessibles à un plus grand nombre de personnes, y compris celles qui sont aveugles ou malvoyantes.\n\nLes bonnes descriptions sont concises, ou présentent ce qui est dans vos médias avec suffisamment de précision pour comprendre leur contexte."
-        },
-        "imageFocus": "Faites glisser le cercle de focus pour mettre à jour le point de focus"
+        }
       }
     },
     "draftsList": {

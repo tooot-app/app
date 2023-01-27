@@ -12,6 +12,7 @@ import TabMeList from './List'
 import TabMeListAccounts from './List/Accounts'
 import TabMeListEdit from './List/Edit'
 import TabMeListList from './List/List'
+import TabMePreferences from './Preferences'
 import TabMeProfile from './Profile'
 import TabMePush from './Push'
 import TabMeRoot from './Root'
@@ -101,12 +102,14 @@ const TabMe: React.FC = () => {
         })}
       />
       <Stack.Screen
+        name='Tab-Me-Preferences'
+        component={TabMePreferences}
+        options={{ headerShown: false, presentation: 'modal' }}
+      />
+      <Stack.Screen
         name='Tab-Me-Profile'
         component={TabMeProfile}
-        options={{
-          headerShown: false,
-          presentation: 'modal'
-        }}
+        options={{ headerShown: false, presentation: 'modal' }}
       />
       <Stack.Screen
         name='Tab-Me-Push'
@@ -147,7 +150,9 @@ const TabMe: React.FC = () => {
           presentation: 'modal',
           headerShown: true,
           title: t('me.stacks.switch.name'),
-          headerLeft: () => <HeaderLeft content='ChevronDown' onPress={() => navigation.goBack()} />
+          headerLeft: () => (
+            <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
+          )
         })}
       />
 

@@ -1,4 +1,4 @@
-import Icon from '@components/Icon'
+import Icon, { IconName } from '@components/Icon'
 import { Loading } from '@components/Loading'
 import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
@@ -10,7 +10,7 @@ import { View } from 'react-native'
 import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
 
 export interface Props {
-  iconFront?: any
+  iconFront?: IconName
   iconFrontColor?: ColorDefinitions
 
   title: string
@@ -22,7 +22,7 @@ export interface Props {
   switchDisabled?: boolean
   switchOnValueChange?: () => void
 
-  iconBack?: 'ChevronRight' | 'ExternalLink' | 'Check'
+  iconBack?: 'chevron-right' | 'external-link' | 'check'
   iconBackColor?: ColorDefinitions
 
   loading?: boolean
@@ -44,7 +44,7 @@ const MenuRow: React.FC<Props> = ({
   loading = false,
   onPress
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const { screenReaderEnabled } = useAccessibility()
 
   return (

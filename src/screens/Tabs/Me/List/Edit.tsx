@@ -19,7 +19,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
   navigation,
   route: { params }
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
 
   const messageRef = useRef(null)
@@ -90,7 +90,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
           : t('screenTabs:me.stacks.listEdit.name'),
       headerLeft: () => (
         <HeaderLeft
-          content='X'
+          content='x'
           onPress={() => {
             if (params.type === 'edit' ? params.payload.title !== title : title.length) {
               Alert.alert(t('common:discard.title'), t('common:discard.message'), [
@@ -112,7 +112,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
       ),
       headerRight: () => (
         <HeaderRight
-          content='Save'
+          content='save'
           disabled={!title.length}
           loading={mutation.isLoading}
           onPress={() => {
@@ -147,18 +147,11 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
     <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
       <ComponentInput {...inputProps} autoFocus title={t('screenTabs:me.listEdit.title')} />
 
-      <CustomText
-        fontStyle='M'
-        fontWeight='Bold'
-        style={{
-          color: colors.primaryDefault,
-          marginBottom: StyleConstants.Spacing.XS,
-          marginTop: StyleConstants.Spacing.M
-        }}
-      >
-        {t('screenTabs:me.listEdit.repliesPolicy.heading')}
-      </CustomText>
-      <Selections options={options} setOptions={setOptions} />
+      <Selections
+        title={t('screenTabs:me.listEdit.repliesPolicy.heading')}
+        options={options}
+        setOptions={setOptions}
+      />
 
       <Message ref={messageRef} />
     </ScrollView>

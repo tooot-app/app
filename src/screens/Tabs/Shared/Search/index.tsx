@@ -24,11 +24,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
   const [searchTerm, setSearchTerm] = useState<string>('')
   useEffect(() => {
     navigation.setOptions({
-      ...(Platform.OS === 'ios'
-        ? {
-            headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
-          }
-        : { headerLeft: () => null }),
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
       headerTitle: () => {
         return (
           <View
@@ -77,7 +73,8 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
             />
           </View>
         )
-      }
+      },
+      headerBackVisible: false
     })
   }, [mode])
   useEffect(() => {
