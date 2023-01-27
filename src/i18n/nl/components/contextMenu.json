@@ -6,7 +6,7 @@
       "action_false": "Volg gebruiker",
       "action_true": "Ontvolg"
     },
-    "inLists": "",
+    "inLists": "Lijsten met gebruiker...",
     "showBoosts": {
       "action_false": "Boosts van gebruiker weergeven",
       "action_true": "Boosts van gebruiker verbergen"
@@ -16,12 +16,12 @@
       "action_true": "Dempen opheffen voor gebruiker"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "Volg als ...",
       "succeed_default": "Je volgt nu @{{target}} met @{{source}}",
       "succeed_locked": "Verstuurde het volgverzoek naar @{{target}} met {{source}}, in afwachting van goedkeuring",
       "failed": "Volg als"
     },
-    "blockReport": "",
+    "blockReport": "Blokkeren en rapporten",
     "block": {
       "action_false": "Gebruiker blokkeren",
       "action_true": "Gebruiker deblokkeren",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Volg",
+      "action_true": "Ontvolg"
     },
     "filter": {
-      "action": ""
+      "action": "Filter hashtag ..."
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "Toot losmaken"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Filter toot ...",
+      "action_true": "Filters beheren ..."
     }
   }
 }
