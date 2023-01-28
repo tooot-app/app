@@ -64,16 +64,19 @@ type MutationVarsProfile = MutationVarsProfileBase & {
 
 const mutationFunction = async ({ type, data }: MutationVarsProfile) => {
   const formData = new FormData()
+
   if (type === 'fields_attributes') {
-    if (!data.length) {
-      formData.append('fields_attributes[]', '')
-    } else {
-      const tempData = data as { name: string; value: string }[]
-      tempData.forEach((d, index) => {
-        formData.append(`fields_attributes[${index}][name]`, d.name)
-        formData.append(`fields_attributes[${index}][value]`, d.value)
-      })
+    const body: { fields_attributes: { name: string; value: string }[] } = {
+      fields_attributes: []
     }
+    if (data.length) {
+      body.fields_attributes = data as { name: string; value: string }[]
+    }
+    return apiInstance<AccountWithSource>({
+      method: 'patch',
+      url: 'accounts/update_credentials',
+      body
+    })
   } else if (type === 'avatar' || type === 'header') {
     formData.append(type, {
       uri: data,
@@ -84,7 +87,6 @@ const mutationFunction = async ({ type, data }: MutationVarsProfile) => {
     // @ts-ignore
     formData.append(type, data)
   }
-
   return apiInstance<AccountWithSource>({
     method: 'patch',
     url: 'accounts/update_credentials',

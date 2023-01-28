@@ -355,21 +355,19 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
     case 'updateStatusProperty':
       switch (params.payload.type) {
         case 'poll':
-          const formData = new FormData()
-          params.payload.action === 'vote' &&
-            params.payload.options?.forEach((option, index) => {
-              if (option) {
-                formData.append('choices[]', index.toString())
-              }
-            })
-
           return apiInstance<Mastodon.Poll>({
             method: params.payload.action === 'vote' ? 'post' : 'get',
             url:
               params.payload.action === 'vote'
                 ? `polls/${params.status.poll?.id}/votes`
                 : `polls/${params.status.poll?.id}`,
-            ...(params.payload.action === 'vote' && { body: formData })
+            ...(params.payload.action === 'vote' && {
+              body: {
+                choices: params.payload.options
+                  .map((option, index) => (option ? index.toString() : undefined))
+                  .filter(o => o)
+              }
+            })
           })
         default:
           let tootId = params.status.id
@@ -381,16 +379,14 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
               return Promise.reject('Fetching for remote toot failed')
             }
           }
-          const body = new FormData()
-          if (params.payload.type === 'reblogged') {
-            body.append('visibility', params.payload.visibility)
-          }
           return apiInstance<Mastodon.Status>({
             method: 'post',
             url: `statuses/${tootId}/${params.payload.to ? '' : 'un'}${
               MapPropertyToUrl[params.payload.type]
             }`,
-            ...(params.payload.type === 'reblogged' && { body })
+            ...(params.payload.type === 'reblogged' && {
+              body: { visibility: params.payload.visibility }
+            })
           })
       }
     case 'updateAccountProperty':

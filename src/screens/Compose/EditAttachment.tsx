@@ -48,22 +48,13 @@ const ComposeEditAttachment: React.FC<
             }
 
             setIsSubmitting(true)
-            const formData = new FormData()
-            if (theAttachment.description) {
-              formData.append('description', theAttachment.description)
-            }
-            if (theAttachment.meta?.focus?.x !== 0 || theAttachment.meta.focus.y !== 0) {
-              formData.append(
-                'focus',
-                `${theAttachment.meta?.focus?.x || 0},${-theAttachment.meta?.focus?.y || 0}`
-              )
-            }
+            const body = { description: theAttachment.description }
 
             theAttachment?.id &&
               apiInstance<Mastodon.Attachment>({
                 method: 'put',
                 url: `media/${theAttachment.id}`,
-                body: formData
+                body
               })
                 .then(() => {
                   haptics('Success')

@@ -291,11 +291,12 @@ export const removeAccount = async (account: string, warning: boolean = true) =>
     revokeDetails.client_secret &&
     revokeDetails.token
   ) {
-    const body = new FormData()
-    body.append('client_id', revokeDetails.client_id)
-    body.append('client_secret', revokeDetails.client_secret)
-    body.append('token', revokeDetails.token)
-    apiGeneral({ method: 'post', domain: revokeDetails.domain, url: '/oauth/revoke', body })
+    apiGeneral({
+      method: 'post',
+      domain: revokeDetails.domain,
+      url: '/oauth/revoke',
+      body: revokeDetails
+    })
   }
 
   const currAccounts: NonNullable<StorageGlobal['accounts']> =

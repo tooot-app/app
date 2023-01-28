@@ -102,20 +102,4 @@ export type PagedResponse<T = unknown> = {
   }
 }
 
-export const processBody = (body?: FormData | Object): FormData | Object | undefined => {
-  if (!body) return
-
-  if (body instanceof FormData) {
-    if ((body as FormData & { _parts: [][] })._parts?.length) {
-      return body
-    } else {
-      return
-    }
-  }
-
-  if (Object.keys(body).length) {
-    return body
-  }
-}
-
 export { ctx, handleError, userAgent }

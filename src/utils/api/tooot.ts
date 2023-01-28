@@ -1,6 +1,6 @@
 import { mapEnvironment } from '@utils/helpers/checkEnvironment'
 import axios from 'axios'
-import { ctx, handleError, processBody, userAgent } from './helpers'
+import { ctx, handleError, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -46,7 +46,7 @@ const apiTooot = async <T = unknown>({
       ...userAgent,
       ...headers
     },
-    data: processBody(body)
+    data: body
   })
     .then(response => {
       return Promise.resolve({
