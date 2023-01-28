@@ -74,16 +74,14 @@ const mutationFunction = async (params: MutationVarsRelationship) => {
         url: `follow_requests/${params.id}/${params.payload.action}`
       }).then(res => res.body)
     case 'outgoing':
-      const formData = new FormData()
-      typeof params.payload.reblogs === 'boolean' &&
-        formData.append('reblogs', params.payload.reblogs.toString())
-      typeof params.payload.notify === 'boolean' &&
-        formData.append('notify', params.payload.notify.toString())
+      const body: { reblogs?: boolean; notify?: boolean } = {}
+      typeof params.payload.reblogs === 'boolean' && (body.reblogs = params.payload.reblogs)
+      typeof params.payload.notify === 'boolean' && (body.notify = params.payload.notify)
 
       return apiInstance<Mastodon.Relationship>({
         method: 'post',
         url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${params.payload.action}`,
-        body: formData
+        body
       }).then(res => res.body)
   }
 }

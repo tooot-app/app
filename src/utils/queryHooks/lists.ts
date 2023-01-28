@@ -44,11 +44,11 @@ type MutationVarsLists =
     }
 
 const mutationFunction = async (params: MutationVarsLists) => {
-  const body = new FormData()
+  const body: { title?: string; replies_policy?: string } = {}
   switch (params.type) {
     case 'add':
-      body.append('title', params.payload.title)
-      body.append('replies_policy', params.payload.replies_policy)
+      body.title = params.payload.title
+      body.replies_policy = params.payload.replies_policy
 
       return apiInstance<Mastodon.List>({
         method: 'post',
@@ -56,8 +56,8 @@ const mutationFunction = async (params: MutationVarsLists) => {
         body
       }).then(res => res.body)
     case 'edit':
-      body.append('title', params.payload.title)
-      body.append('replies_policy', params.payload.replies_policy)
+      body.title = params.payload.title
+      body.replies_policy = params.payload.replies_policy
 
       return apiInstance<Mastodon.List>({
         method: 'put',
@@ -117,9 +117,9 @@ type AccountsMutationVarsLists = {
 }
 
 const accountsMutationFunction = async (params: AccountsMutationVarsLists) => {
-  const body = new FormData()
+  const body: { account_ids?: string[] } = {}
   for (const account of params.payload.accounts) {
-    body.append('account_ids[]', account)
+    body.account_ids = [account]
   }
   return apiInstance<{}>({
     method: params.type === 'add' ? 'post' : 'delete',

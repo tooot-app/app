@@ -1,14 +1,7 @@
 import { getAccountDetails } from '@utils/storage/actions'
 import { StorageGlobal } from '@utils/storage/global'
 import axios, { AxiosRequestConfig } from 'axios'
-import {
-  ctx,
-  handleError,
-  PagedResponse,
-  parseHeaderLinks,
-  processBody,
-  userAgent
-} from './helpers'
+import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
 
 export type Params = {
   account?: StorageGlobal['account.active']
@@ -50,7 +43,7 @@ const apiInstance = async <T = unknown>({
     method + ctx.blue(' -> ') + `/${url}` + (params ? ctx.blue(' -> ') : ''),
     params ? params : ''
   )
-
+  console.log('body', body)
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
@@ -61,9 +54,10 @@ const apiInstance = async <T = unknown>({
       Accept: 'application/json',
       ...userAgent,
       ...headers,
-      Authorization: `Bearer ${accountDetails['auth.token']}`
+      Authorization: `Bearer ${accountDetails['auth.token']}`,
+      ...(body && body instanceof FormData && { 'Content-Type': 'multipart/form-data' })
     },
-    data: processBody(body),
+    data: body,
     ...extras
   })
     .then(response => ({ body: response.data, links: parseHeaderLinks(response.headers.link) }))
