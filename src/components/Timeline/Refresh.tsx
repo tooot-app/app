@@ -17,6 +17,7 @@ import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -28,6 +29,7 @@ export interface Props {
   flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
   fetchingActive: React.MutableRefObject<boolean>
+  setFetchedCount: React.Dispatch<React.SetStateAction<number | null>>
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>
   disableRefresh?: boolean
@@ -42,6 +44,7 @@ const TimelineRefresh: React.FC<Props> = ({
   flRef,
   queryKey,
   fetchingActive,
+  setFetchedCount,
   scrollY,
   fetchingType,
   disableRefresh = false,
@@ -152,6 +155,8 @@ const TimelineRefresh: React.FC<Props> = ({
       meta: {}
     })
       .then(res => {
+        setFetchedCount(res.body.length)
+
         if (!res.body.length) return
 
         queryClient.setQueryData<

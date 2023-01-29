@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Newer from here",
-    "refetch": "To latest"
+    "refetch": "To latest",
+    "fetching": "Fetching newer toots ...",
+    "fetched": {
+      "none": "No newer toot",
+      "found": "Fetched {{count}} toots"
+    }
   },
   "shared": {
     "actioned": {
