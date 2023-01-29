@@ -35,6 +35,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     account,
     _local: true,
     options: {
+      placeholderData: (account._remote
+        ? { ...account, id: undefined }
+        : account) as Mastodon.Account,
       onSuccess: a => {
         if (account._remote) {
           setQueryKey([
