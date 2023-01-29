@@ -6,7 +6,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Platform, TextStyle } from 'react-native'
+import { ColorValue, Platform, TextStyle } from 'react-native'
 import FastImage from 'react-native-fast-image'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
@@ -15,6 +15,7 @@ export interface Props {
   content?: string
   emojis?: Mastodon.Emoji[]
   size?: 'S' | 'M' | 'L'
+  color?: ColorValue
   adaptiveSize?: boolean
   fontBold?: boolean
   style?: TextStyle
@@ -24,6 +25,7 @@ const ParseEmojis: React.FC<Props> = ({
   content,
   emojis,
   size = 'M',
+  color,
   adaptiveSize = false,
   fontBold = false,
   style
@@ -42,13 +44,13 @@ const ParseEmojis: React.FC<Props> = ({
     adaptiveSize ? adaptiveFontsize : 0
   )
 
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
 
   return (
     <CustomText
       style={[
         {
-          color: colors.primaryDefault,
+          color: color || colors.primaryDefault,
           fontSize: adaptedFontsize,
           lineHeight: adaptedLineheight
         },

@@ -15,6 +15,7 @@ type StatusContextType = {
   excludeMentions?: React.MutableRefObject<Mastodon.Mention[]>
 
   highlighted?: boolean
+  suppressSpoiler?: boolean
   inThread?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean

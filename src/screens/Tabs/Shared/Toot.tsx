@@ -346,8 +346,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             <TimelineDefault
               item={item}
               queryKey={item._remote ? queryKey.remote : queryKey.local}
-              highlighted={toot.id === item.id || item.id === 'cached'}
-              isConversation={toot.id !== item.id && item.id !== 'cached'}
+              highlighted={toot.id === item.id}
+              suppressSpoiler={
+                toot.id !== item.id &&
+                !!toot.spoiler_text?.length &&
+                toot.spoiler_text === item.spoiler_text
+              }
+              isConversation={toot.id !== item.id}
               noBackground
             />
             {/* <CustomText
