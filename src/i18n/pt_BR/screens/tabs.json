@@ -179,7 +179,7 @@
       "contexts": {
         "home": "",
         "notifications": "",
-        "public": "",
+        "public": "global",
         "thread": "",
         "account": ""
       }
@@ -200,7 +200,7 @@
       "contexts": {
         "home": "",
         "notifications": "",
-        "public": "",
+        "public": "Linha do tempo global",
         "thread": "",
         "account": ""
       },
@@ -407,22 +407,22 @@
       "name": "Histórico de Edição"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Denuncia {{acct}}",
+      "report": "Denunciar",
       "forward": {
-        "heading": ""
+        "heading": "Encaminhar anonimamente para o servidor remoto {{instance}}"
       },
       "reasons": {
-        "heading": "",
+        "heading": "O que há de errado com essa conta?",
         "spam": "É spam",
         "other": "É outra coisa",
         "violation": "Viola as regras do servidor"
       },
       "comment": {
-        "heading": ""
+        "heading": "Deseja nos dizer mais alguma coisa?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Regras violadas do servidor"
       }
     },
     "search": {
@@ -451,13 +451,13 @@
         "statuses": "Toot"
       },
       "notFound": "Não foi possível encontrar <bold>{{searchTerm}}</bold> {{type}} relacionado",
-      "noResult": ""
+      "noResult": "Não foi possível encontrar nada, tente um termo diferente"
     },
     "toot": {
       "name": "Discussões",
       "remoteFetch": {
         "title": "",
-        "message": ""
+        "message": "O conteúdo global nem sempre está disponível na instância local. Estes conteúdos são obtidos de instâncias remotas e marcados. Você pode interagir com esses conteúdos normalmente."
       }
     },
     "users": {
