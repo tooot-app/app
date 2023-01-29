@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "前のページを取得",
-    "refetch": "更新"
+    "refetch": "更新",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

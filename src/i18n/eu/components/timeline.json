@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Berrienak hemendik hasita",
-    "refetch": "Azkenekora arte"
+    "refetch": "Azkenekora arte",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

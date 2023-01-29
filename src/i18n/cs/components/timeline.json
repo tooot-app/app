@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "",
-    "refetch": ""
+    "refetch": "",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Més recent des d'aquí",
-    "refetch": "A l'últim"
+    "refetch": "A l'últim",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

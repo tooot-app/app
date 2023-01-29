@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Nyare härifrån",
-    "refetch": "Till senaste"
+    "refetch": "Till senaste",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {
