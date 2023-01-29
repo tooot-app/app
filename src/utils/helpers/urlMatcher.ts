@@ -1,6 +1,9 @@
 import { getAccountStorage } from '@utils/storage/actions'
 import parse from 'url-parse'
 
+// Would mess with the /@username format
+const BLACK_LIST = ['matters.news', 'medium.com']
+
 export const urlMatcher = (
   url: string
 ):
@@ -14,6 +17,10 @@ export const urlMatcher = (
   if (!parsed.hostname.length || !parsed.pathname.length) return undefined
 
   const domain = parsed.hostname
+  if (BLACK_LIST.includes(domain)) {
+    return
+  }
+
   const _remote = parsed.hostname !== getAccountStorage.string('auth.domain')
 
   let statusId: string | undefined
