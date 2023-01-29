@@ -92,7 +92,7 @@ const ScreenAccountSelection = ({
   const { colors } = useTheme()
   const { t } = useTranslation('screenAccountSelection')
 
-  const accounts = getReadableAccounts(true)
+  const accounts = getReadableAccounts()
 
   return (
     <ScrollView
@@ -129,7 +129,7 @@ const ScreenAccountSelection = ({
             return (
               <AccountButton
                 key={index}
-                account={account}
+                account={{ ...account, active: false }}
                 additionalActions={() =>
                   navigationRef.navigate('Screen-Compose', {
                     type: 'share',

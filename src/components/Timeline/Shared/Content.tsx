@@ -14,7 +14,7 @@ export interface Props {
 }
 
 const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoilerExpanded }) => {
-  const { status, highlighted, inThread } = useContext(StatusContext)
+  const { status, highlighted, suppressSpoiler, inThread } = useContext(StatusContext)
   if (!status || typeof status.content !== 'string' || !status.content.length) return null
 
   const { colors } = useTheme()
@@ -35,6 +35,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             size={highlighted ? 'L' : 'M'}
             adaptiveSize
             numberOfLines={999}
+            color={suppressSpoiler ? colors.disabled : undefined}
           />
           {inThread ? (
             <CustomText

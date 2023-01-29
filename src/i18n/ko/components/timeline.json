@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "이 시점에 이어서 불러오기",
-    "refetch": "최신 내용 불러오기"
+    "refetch": "최신 내용 불러오기",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

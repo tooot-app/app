@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Νεότερες από εδώ",
-    "refetch": "Μέχρι την τελευταία"
+    "refetch": "Μέχρι την τελευταία",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

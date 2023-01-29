@@ -45,6 +45,7 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props,
                 borderRadius: 8,
                 marginRight: StyleConstants.Spacing.S
               }}
+              dim
             />
             <View style={{ flex: 1 }}>
               <CustomText numberOfLines={1}>

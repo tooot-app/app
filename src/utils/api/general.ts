@@ -1,5 +1,7 @@
 import axios from 'axios'
-import { ctx, handleError, PagedResponse, parseHeaderLinks, processBody, userAgent } from './helpers'
+import { GLOBAL } from '../../App'
+import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
+import { CONNECT_DOMAIN } from './helpers/connect'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -35,15 +37,17 @@ const apiGeneral = async <T = unknown>({
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
-    baseURL: `https://${domain}/`,
+    baseURL: `https://${GLOBAL.connect ? CONNECT_DOMAIN() : domain}`,
     url,
     params,
     headers: {
       Accept: 'application/json',
       ...userAgent,
-      ...headers
+      ...headers,
+      ...(body && body instanceof FormData && { 'Content-Type': 'multipart/form-data' }),
+      ...(GLOBAL.connect && { 'x-tooot-domain': domain })
     },
-    data: processBody(body)
+    data: body
   })
     .then(response => ({ body: response.data, links: parseHeaderLinks(response.headers.link) }))
     .catch(handleError())

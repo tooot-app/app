@@ -17,6 +17,7 @@ import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -28,6 +29,7 @@ export interface Props {
   flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
   fetchingActive: React.MutableRefObject<boolean>
+  setFetchedCount: React.Dispatch<React.SetStateAction<number | null>>
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>
   disableRefresh?: boolean
@@ -42,6 +44,7 @@ const TimelineRefresh: React.FC<Props> = ({
   flRef,
   queryKey,
   fetchingActive,
+  setFetchedCount,
   scrollY,
   fetchingType,
   disableRefresh = false,
@@ -152,6 +155,8 @@ const TimelineRefresh: React.FC<Props> = ({
       meta: {}
     })
       .then(res => {
+        setFetchedCount(res.body.length)
+
         if (!res.body.length) return
 
         queryClient.setQueryData<
@@ -218,6 +223,18 @@ const TimelineRefresh: React.FC<Props> = ({
     if (readMarker) {
       setAccountStorage([{ key: readMarker, value: undefined }])
     }
+    queryClient.setQueryData<
+      InfiniteData<
+        PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+      >
+    >(queryKey, old => {
+      if (!old) return old
+
+      return {
+        pages: [old.pages[0]],
+        pageParams: [old.pageParams[0]]
+      }
+    })
     await refetch()
     setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }

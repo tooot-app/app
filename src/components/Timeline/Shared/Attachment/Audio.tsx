@@ -83,11 +83,9 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
           <>
             {audio.preview_url ? (
               <GracefullyImage
-                uri={{
-                  original: audio.preview_url,
-                  remote: audio.preview_remote_url
-                }}
+                uri={{ original: audio.preview_url, remote: audio.preview_remote_url }}
                 style={styles.background}
+                dim
               />
             ) : null}
             <Button

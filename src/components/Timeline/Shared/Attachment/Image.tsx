@@ -39,6 +39,7 @@ const AttachmentImage = ({
           blurhash={image.blurhash}
           onPress={() => navigateToImagesViewer(image.id)}
           style={{ aspectRatio: aspectRatio({ total, index, ...image.meta?.original }) }}
+          dim
         />
       </View>
       <AttachmentAltText sensitiveShown={sensitiveShown} text={image.description} />

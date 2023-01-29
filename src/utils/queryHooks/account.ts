@@ -1,6 +1,7 @@
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
+import { appendRemote } from '@utils/helpers/appendRemote'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { AxiosError } from 'axios'
 import { searchLocalAccount } from './search'
@@ -34,14 +35,14 @@ const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyA
             method: 'get',
             domain: domain,
             url: `api/v1/accounts/${id}`
-          }).then(res => ({ ...res.body, _remote: true }))
+          }).then(res => appendRemote.account(res.body))
         } else if (acct) {
           matchedAccount = await apiGeneral<Mastodon.Account>({
             method: 'get',
             domain: domain,
             url: 'api/v1/accounts/lookup',
             params: { acct }
-          }).then(res => ({ ...res.body, _remote: true }))
+          }).then(res => appendRemote.account(res.body))
         }
       } catch {}
     }

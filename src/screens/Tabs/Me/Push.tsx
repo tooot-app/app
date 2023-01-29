@@ -75,19 +75,21 @@ const TabMePush: React.FC = () => {
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
-            switchDisabled={!pushEnabled || !push.global}
+            // switchDisabled={!pushEnabled || !push.global}
             switchValue={push?.alerts[alert]}
             switchOnValueChange={async () => {
               const alerts = { ...push?.alerts, [alert]: !push?.alerts[alert] }
-              const formData = new FormData()
+              const body: { data: { alerts: { [key: string]: boolean } } } = {
+                data: { alerts: {} }
+              }
               for (const [key, value] of Object.entries(alerts)) {
-                formData.append(`data[alerts][${key}]`, value.toString())
+                body.data.alerts[key] = value
               }
 
               await apiInstance<Mastodon.PushSubscription>({
                 method: 'put',
                 url: 'push/subscription',
-                body: formData
+                body
               })
 
               setAccountStorage([{ key: 'push', value: { ...push, alerts } }])
@@ -103,19 +105,21 @@ const TabMePush: React.FC = () => {
           <MenuRow
             key={type}
             title={t(`me.push.${type}.heading`)}
-            switchDisabled={!pushEnabled || !push.global}
+            // switchDisabled={!pushEnabled || !push.global}
             switchValue={push?.alerts[type]}
             switchOnValueChange={async () => {
               const alerts = { ...push?.alerts, [type]: !push?.alerts[type] }
-              const formData = new FormData()
+              const body: { data: { alerts: { [key: string]: boolean } } } = {
+                data: { alerts: {} }
+              }
               for (const [key, value] of Object.entries(alerts)) {
-                formData.append(`data[alerts][${key}]`, value.toString())
+                body.data.alerts[key] = value
               }
 
               await apiInstance<Mastodon.PushSubscription>({
                 method: 'put',
                 url: 'push/subscription',
-                body: formData
+                body
               })
 
               setAccountStorage([{ key: 'push', value: { ...push, alerts } }])
@@ -190,21 +194,25 @@ const TabMePush: React.FC = () => {
 
                       const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${pushPath}/${randomPath}`
 
-                      const formData = new FormData()
-                      formData.append('subscription[endpoint]', endpoint)
-                      formData.append(
-                        'subscription[keys][p256dh]',
-                        'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo='
-                      )
-                      formData.append('subscription[keys][auth]', authKey)
+                      const body: { subscription: any; alerts: { [key: string]: boolean } } = {
+                        subscription: {
+                          endpoint,
+                          keys: {
+                            p256dh:
+                              'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo=',
+                            auth: authKey
+                          }
+                        },
+                        alerts: {}
+                      }
                       for (const [key, value] of Object.entries(push.alerts)) {
-                        formData.append(`data[alerts][${key}]`, value.toString())
+                        body.alerts[key] = value
                       }
 
                       const res = await apiInstance<Mastodon.PushSubscription>({
                         method: 'post',
                         url: 'push/subscription',
-                        body: formData
+                        body
                       })
 
                       if (!res.body.server_key?.length) {

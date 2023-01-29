@@ -53,22 +53,29 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           content={t('screenTabs:shared.report.report')}
           destructive
           onPress={async () => {
-            const body = new FormData()
+            const body: {
+              status_ids?: string[]
+              account_id?: string
+              comment?: string
+              forward?: boolean
+              category?: string
+              rule_ids?: string[]
+            } = {}
             if (status) {
               if (status._remote) {
                 const fetchedStatus = await searchLocalStatus(status.uri)
                 if (fetchedStatus) {
-                  body.append('status_ids[]', fetchedStatus.id)
+                  body.status_ids = [fetchedStatus.id]
                 }
               } else {
-                body.append('status_ids[]', status.id)
+                body.status_ids = [status.id]
               }
             }
-            body.append('account_id', account.id)
-            comment.length && body.append('comment', comment)
-            body.append('forward', forward.toString())
-            body.append('category', categories.find(category => category.selected)?.type || 'other')
-            rules.filter(rule => rule.selected).forEach(rule => body.append('rule_ids[]', rule.id))
+            body.account_id = account.id
+            comment.length && (body.comment = comment)
+            body.forward = forward
+            body.category = categories.find(category => category.selected)?.type || 'other'
+            body.rule_ids = rules.filter(rule => rule.selected).map(rule => rule.id)
 
             apiInstance({ method: 'post', url: 'reports', body })
               .then(() => {

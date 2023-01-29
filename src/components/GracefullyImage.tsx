@@ -1,4 +1,5 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { connectImage } from '@utils/api/helpers/connect'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import {
@@ -37,6 +38,7 @@ export interface Props {
       height: number
     }>
   >
+  dim?: boolean
 }
 
 const GracefullyImage = ({
@@ -49,14 +51,15 @@ const GracefullyImage = ({
   onPress,
   style,
   imageStyle,
-  setImageDimensions
+  setImageDimensions,
+  dim
 }: Props) => {
   const { reduceMotionEnabled } = useAccessibility()
-  const { colors } = useTheme()
+  const { colors, theme } = useTheme()
   const [imageLoaded, setImageLoaded] = useState(false)
 
   const [currentUri, setCurrentUri] = useState<string | undefined>(uri.original || uri.remote)
-  const source = {
+  const source: { uri?: string } = {
     uri: reduceMotionEnabled && uri.static ? uri.static : currentUri
   }
   useEffect(() => {
@@ -90,12 +93,12 @@ const GracefullyImage = ({
     >
       {uri.preview && !imageLoaded ? (
         <FastImage
-          source={{ uri: uri.preview }}
+          source={connectImage({ uri: uri.preview })}
           style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]}
         />
       ) : null}
       <FastImage
-        source={source}
+        source={connectImage(source)}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={() => {
           setImageLoaded(true)
@@ -110,6 +113,14 @@ const GracefullyImage = ({
         }}
       />
       {blurhashView()}
+      {dim && theme !== 'light' ? (
+        <View
+          style={[
+            styles.placeholder,
+            { backgroundColor: 'black', opacity: theme === 'dark_lighter' ? 0.18 : 0.36 }
+          ]}
+        />
+      ) : null}
     </Pressable>
   )
 }

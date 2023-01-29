@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Más reciente desde aquí",
-    "refetch": "Al último"
+    "refetch": "Al último",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {

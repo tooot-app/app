@@ -86,6 +86,7 @@ const TimelineCard: React.FC = () => {
             blurhash={status.card.blurhash}
             style={{ flexBasis: StyleConstants.Font.LineHeight.M * 5 }}
             imageStyle={{ borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }}
+            dim
           />
         ) : null}
         <View style={{ flex: 1, padding: StyleConstants.Spacing.S }}>

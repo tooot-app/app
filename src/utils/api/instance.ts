@@ -1,14 +1,9 @@
 import { getAccountDetails } from '@utils/storage/actions'
 import { StorageGlobal } from '@utils/storage/global'
 import axios, { AxiosRequestConfig } from 'axios'
-import {
-  ctx,
-  handleError,
-  PagedResponse,
-  parseHeaderLinks,
-  processBody,
-  userAgent
-} from './helpers'
+import { GLOBAL } from '../../App'
+import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
+import { CONNECT_DOMAIN } from './helpers/connect'
 
 export type Params = {
   account?: StorageGlobal['account.active']
@@ -54,16 +49,20 @@ const apiInstance = async <T = unknown>({
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
-    baseURL: `https://${accountDetails['auth.domain']}/api/${version}/`,
+    baseURL: `https://${
+      GLOBAL.connect ? CONNECT_DOMAIN() : accountDetails['auth.domain']
+    }/api/${version}`,
     url,
     params,
     headers: {
       Accept: 'application/json',
       ...userAgent,
       ...headers,
-      Authorization: `Bearer ${accountDetails['auth.token']}`
+      Authorization: `Bearer ${accountDetails['auth.token']}`,
+      ...(body && body instanceof FormData && { 'Content-Type': 'multipart/form-data' }),
+      ...(GLOBAL.connect && { 'x-tooot-domain': accountDetails['auth.domain'] })
     },
-    data: processBody(body),
+    data: body,
     ...extras
   })
     .then(response => ({ body: response.data, links: parseHeaderLinks(response.headers.link) }))

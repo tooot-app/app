@@ -171,17 +171,17 @@
     },
     "preferencesFilters": {
       "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
+      "keywords_one": "{{count}} từ khóa",
+      "keywords_other": "{{count}} từ khóa",
+      "statuses_one": "{{count}} tút",
+      "statuses_other": "{{count}} tút",
       "context": "",
       "contexts": {
         "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "notifications": "thông báo",
+        "public": "liên hợp",
+        "thread": "thảo luận",
+        "account": "người"
       }
     },
     "preferencesFilter": {

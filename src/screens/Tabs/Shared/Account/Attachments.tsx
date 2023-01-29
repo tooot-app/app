@@ -93,6 +93,7 @@ const AccountAttachments: React.FC = () => {
                 dimension={{ width: width, height: width }}
                 style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
                 onPress={() => navigation.push('Tab-Shared-Toot', { toot: item })}
+                dim
               />
             )
           }

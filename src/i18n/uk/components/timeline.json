@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "З цього моменту",
-    "refetch": "До кінця"
+    "refetch": "До кінця",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {
