@@ -223,6 +223,18 @@ const TimelineRefresh: React.FC<Props> = ({
     if (readMarker) {
       setAccountStorage([{ key: readMarker, value: undefined }])
     }
+    queryClient.setQueryData<
+      InfiniteData<
+        PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+      >
+    >(queryKey, old => {
+      if (!old) return old
+
+      return {
+        pages: [old.pages[0]],
+        pageParams: [old.pageParams[0]]
+      }
+    })
     await refetch()
     setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }

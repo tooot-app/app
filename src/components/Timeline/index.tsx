@@ -131,9 +131,9 @@ const Timeline: React.FC<Props> = ({
 
               const firstItemId = viewableItems.filter(item => item.isViewable)[0]?.item.id
               if (!fetchingActive.current && firstItemId && firstItemId > (marker || '0')) {
-                // setAccountStorage([{ key: readMarker, value: firstItemId }])
+                setAccountStorage([{ key: readMarker, value: firstItemId }])
               } else {
-                setAccountStorage([{ key: readMarker, value: '109519141378761752' }])
+                // setAccountStorage([{ key: readMarker, value: '109519141378761752' }])
               }
             }
           }
