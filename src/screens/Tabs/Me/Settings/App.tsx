@@ -11,6 +11,7 @@ import * as Localization from 'expo-localization'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform } from 'react-native'
+import { GLOBAL } from '../../../../App'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
 const SettingsApp: React.FC = () => {
@@ -34,6 +35,7 @@ const SettingsApp: React.FC = () => {
       })
       .catch(() => {
         if (connect) {
+          GLOBAL.connect = false
           setConnect(false)
         } else {
           setShowConnect(false)
@@ -173,7 +175,10 @@ const SettingsApp: React.FC = () => {
         <MenuRow
           title='使用代理'
           switchValue={connect || false}
-          switchOnValueChange={() => setConnect(!connect)}
+          switchOnValueChange={() => {
+            GLOBAL.connect = !connect
+            setConnect(!connect)
+          }}
         />
       ) : null}
     </MenuContainer>

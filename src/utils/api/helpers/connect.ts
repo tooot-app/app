@@ -1,8 +1,9 @@
 import { mapEnvironment } from '@utils/helpers/checkEnvironment'
-import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
+import { setGlobalStorage } from '@utils/storage/actions'
 import axios from 'axios'
 import parse from 'url-parse'
 import { userAgent } from '.'
+import { GLOBAL } from '../../../App'
 
 const list = [
   'n61owz4leck',
@@ -119,8 +120,7 @@ export const connectImage = ({
 }: {
   uri?: string
 }): { uri?: string; headers?: { 'x-tooot-domain': string } } => {
-  const connect = getGlobalStorage.boolean('app.connect')
-  if (connect) {
+  if (GLOBAL.connect) {
     if (uri) {
       const host = parse(uri).host
       return { uri: uri.replace(host, CONNECT_DOMAIN()), headers: { 'x-tooot-domain': host } }
@@ -139,6 +139,7 @@ export const connectVerify = () =>
     url: 'verify',
     headers: { ...userAgent }
   }).catch(err => {
+    GLOBAL.connect = false
     setGlobalStorage('app.connect', false)
     return Promise.reject(err)
   })

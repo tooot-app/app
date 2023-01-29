@@ -1,5 +1,5 @@
-import { getGlobalStorage } from '@utils/storage/actions'
 import axios from 'axios'
+import { GLOBAL } from '../../App'
 import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
 import { CONNECT_DOMAIN } from './helpers/connect'
 
@@ -34,12 +34,10 @@ const apiGeneral = async <T = unknown>({
     params ? params : ''
   )
 
-  const useConnect = getGlobalStorage.boolean('app.connect')
-
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
-    baseURL: `https://${useConnect ? CONNECT_DOMAIN() : domain}`,
+    baseURL: `https://${GLOBAL.connect ? CONNECT_DOMAIN() : domain}`,
     url,
     params,
     headers: {
@@ -47,7 +45,7 @@ const apiGeneral = async <T = unknown>({
       ...userAgent,
       ...headers,
       ...(body && body instanceof FormData && { 'Content-Type': 'multipart/form-data' }),
-      ...(useConnect && { 'x-tooot-domain': domain })
+      ...(GLOBAL.connect && { 'x-tooot-domain': domain })
     },
     data: body
   })

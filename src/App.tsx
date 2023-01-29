@@ -24,6 +24,10 @@ import { enableFreeze } from 'react-native-screens'
 import i18n from './i18n'
 import Screens from './screens'
 
+export const GLOBAL: { connect?: boolean } = {
+  connect: undefined
+}
+
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 })
@@ -54,6 +58,7 @@ const App: React.FC = () => {
       }
 
       const useConnect = getGlobalStorage.boolean('app.connect')
+      GLOBAL.connect = useConnect
       log('log', 'App', `connect: ${useConnect}`)
       if (useConnect) {
         await connectVerify()
