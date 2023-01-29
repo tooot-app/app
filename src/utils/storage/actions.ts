@@ -323,27 +323,30 @@ export const removeAccount = async (account: string, warning: boolean = true) =>
 }
 
 export type ReadableAccountType = {
+  avatar_static: string
   acct: string
   key: string
   active: boolean
 }
-export const getReadableAccounts = (withoutActive: boolean = false): ReadableAccountType[] => {
-  const accountActive = !withoutActive && getGlobalStorage.string('account.active')
-  const accounts = getGlobalStorage.object('accounts')?.sort((a, b) => a.localeCompare(b))
-  !withoutActive &&
-    accounts?.splice(
-      accounts.findIndex(a => a === accountActive),
-      1
-    )
-  !withoutActive && accounts?.unshift(accountActive || '')
+export const getReadableAccounts = (): ReadableAccountType[] => {
+  const accountActive = getGlobalStorage.string('account.active')
+  const accounts = getGlobalStorage.object('accounts')
+
   return (
     accounts?.map(account => {
       const details = getAccountDetails(
-        ['auth.account.acct', 'auth.account.domain', 'auth.domain', 'auth.account.id'],
+        [
+          'auth.account.avatar_static',
+          'auth.account.acct',
+          'auth.account.domain',
+          'auth.domain',
+          'auth.account.id'
+        ],
         account
       )
       if (details) {
         return {
+          avatar_static: details['auth.account.avatar_static'],
           acct: `@${details['auth.account.acct']}@${details['auth.account.domain']}`,
           key: generateAccountKey({
             domain: details['auth.domain'],
@@ -352,7 +355,7 @@ export const getReadableAccounts = (withoutActive: boolean = false): ReadableAcc
           active: account === accountActive
         }
       } else {
-        return { acct: '', key: '', active: false }
+        return { avatar_static: '', acct: '', key: '', active: false }
       }
     }) || []
   ).filter(a => a.acct.length)
