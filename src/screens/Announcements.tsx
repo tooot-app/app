@@ -6,6 +6,7 @@ import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { connectImage } from '@utils/api/helpers/connect'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useAnnouncementMutation, useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
@@ -139,9 +140,9 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
               >
                 {reaction.url ? (
                   <FastImage
-                    source={{
+                    source={connectImage({
                       uri: reduceMotionEnabled ? reaction.static_url : reaction.url
-                    }}
+                    })}
                     style={{
                       width: StyleConstants.Font.LineHeight.M + 3,
                       height: StyleConstants.Font.LineHeight.M

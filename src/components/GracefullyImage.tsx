@@ -1,4 +1,5 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { connectImage } from '@utils/api/helpers/connect'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import {
@@ -56,7 +57,7 @@ const GracefullyImage = ({
   const [imageLoaded, setImageLoaded] = useState(false)
 
   const [currentUri, setCurrentUri] = useState<string | undefined>(uri.original || uri.remote)
-  const source = {
+  const source: { uri?: string } = {
     uri: reduceMotionEnabled && uri.static ? uri.static : currentUri
   }
   useEffect(() => {
@@ -90,12 +91,12 @@ const GracefullyImage = ({
     >
       {uri.preview && !imageLoaded ? (
         <FastImage
-          source={{ uri: uri.preview }}
+          source={connectImage({ uri: uri.preview })}
           style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]}
         />
       ) : null}
       <FastImage
-        source={source}
+        source={connectImage(source)}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={() => {
           setImageLoaded(true)

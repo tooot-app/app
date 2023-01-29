@@ -1,7 +1,8 @@
-import { getAccountDetails } from '@utils/storage/actions'
+import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import { StorageGlobal } from '@utils/storage/global'
 import axios, { AxiosRequestConfig } from 'axios'
 import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
+import { CONNECT_DOMAIN } from './helpers/connect'
 
 export type Params = {
   account?: StorageGlobal['account.active']
@@ -43,11 +44,15 @@ const apiInstance = async <T = unknown>({
     method + ctx.blue(' -> ') + `/${url}` + (params ? ctx.blue(' -> ') : ''),
     params ? params : ''
   )
-  console.log('body', body)
+
+  const useConnect = getGlobalStorage.boolean('app.connect')
+
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
-    baseURL: `https://${accountDetails['auth.domain']}/api/${version}/`,
+    baseURL: `https://${
+      useConnect ? CONNECT_DOMAIN() : accountDetails['auth.domain']
+    }/api/${version}`,
     url,
     params,
     headers: {
@@ -55,7 +60,8 @@ const apiInstance = async <T = unknown>({
       ...userAgent,
       ...headers,
       Authorization: `Bearer ${accountDetails['auth.token']}`,
-      ...(body && body instanceof FormData && { 'Content-Type': 'multipart/form-data' })
+      ...(body && body instanceof FormData && { 'Content-Type': 'multipart/form-data' }),
+      ...(useConnect && { 'x-tooot-domain': accountDetails['auth.domain'] })
     },
     data: body,
     ...extras

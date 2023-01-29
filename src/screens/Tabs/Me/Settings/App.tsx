@@ -1,16 +1,17 @@
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import { LOCALES } from '@i18n/locales'
 import { useNavigation } from '@react-navigation/native'
+import { connectVerify } from '@utils/api/helpers/connect'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform } from 'react-native'
 import { mapFontsizeToName } from '../SettingsFontsize'
-import { LOCALES } from '@i18n/locales'
 
 const SettingsApp: React.FC = () => {
   const navigation = useNavigation<any>()
@@ -23,6 +24,22 @@ const SettingsApp: React.FC = () => {
   const [themeDark, setThemeDark] = useGlobalStorage.string('app.theme.dark')
   const [browser, setBrowser] = useGlobalStorage.string('app.browser')
   const [autoplayGifv, setAutoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
+
+  const [connect, setConnect] = useGlobalStorage.boolean('app.connect')
+  const [showConnect, setShowConnect] = useState(connect)
+  useEffect(() => {
+    connectVerify()
+      .then(() => {
+        setShowConnect(true)
+      })
+      .catch(() => {
+        if (connect) {
+          setConnect(false)
+        } else {
+          setShowConnect(false)
+        }
+      })
+  }, [])
 
   return (
     <MenuContainer>
@@ -152,6 +169,13 @@ const SettingsApp: React.FC = () => {
         switchValue={autoplayGifv}
         switchOnValueChange={() => setAutoplayGifv(!autoplayGifv)}
       />
+      {showConnect ? (
+        <MenuRow
+          title='使用代理'
+          switchValue={connect || false}
+          switchOnValueChange={() => setConnect(!connect)}
+        />
+      ) : null}
     </MenuContainer>
   )
 }

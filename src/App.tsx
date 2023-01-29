@@ -2,6 +2,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import * as Sentry from '@sentry/react-native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
+import { connectVerify } from '@utils/api/helpers/connect'
 import getLanguage from '@utils/helpers/getLanguage'
 import { queryClient } from '@utils/queryHooks'
 import audio from '@utils/startup/audio'
@@ -50,20 +51,28 @@ const App: React.FC = () => {
           await migrateFromAsyncStorage()
           setHasMigrated(true)
         } catch {}
+      }
+
+      const useConnect = getGlobalStorage.boolean('app.connect')
+      log('log', 'App', `connect: ${useConnect}`)
+      if (useConnect) {
+        await connectVerify()
+          .then(() => log('log', 'App', 'connected'))
+          .catch(() => log('warn', 'App', 'connect verify failed'))
+      }
+
+      log('log', 'App', 'loading from MMKV')
+      const account = getGlobalStorage.string('account.active')
+      if (account) {
+        await setAccount(account)
       } else {
-        log('log', 'App', 'loading from MMKV')
-        const account = getGlobalStorage.string('account.active')
-        if (account) {
-          await setAccount(account)
+        log('log', 'App', 'No active account available')
+        const accounts = getGlobalStorage.object('accounts')
+        if (accounts?.length) {
+          log('log', 'App', `Setting active account ${accounts[accounts.length - 1]}`)
+          await setAccount(accounts[accounts.length - 1])
         } else {
-          log('log', 'App', 'No active account available')
-          const accounts = getGlobalStorage.object('accounts')
-          if (accounts?.length) {
-            log('log', 'App', `Setting active account ${accounts[accounts.length - 1]}`)
-            await setAccount(accounts[accounts.length - 1])
-          } else {
-            setGlobalStorage('account.active', undefined)
-          }
+          setGlobalStorage('account.active', undefined)
         }
       }
 

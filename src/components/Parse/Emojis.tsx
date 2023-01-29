@@ -1,5 +1,6 @@
 import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { connectImage } from '@utils/api/helpers/connect'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
@@ -75,7 +76,7 @@ const ParseEmojis: React.FC<Props> = ({
                   <CustomText key={emojiShortcode + i}>
                     {i === 0 ? ' ' : undefined}
                     <FastImage
-                      source={{ uri: uri.trim() }}
+                      source={connectImage({ uri: uri.trim() })}
                       style={{
                         width: adaptedFontsize,
                         height: adaptedFontsize,
