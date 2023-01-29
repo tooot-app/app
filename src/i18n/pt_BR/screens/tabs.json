@@ -252,7 +252,7 @@
         "label": "Rótulo",
         "content": "Conteúdo"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Falha no processamento da imagem. Por favor, tente novamente."
     },
     "push": {
       "notAvailable": "Seu telefone não suporta notificação de envio de tooot",
@@ -394,7 +394,7 @@
     "accountInLists": {
       "name": "",
       "inLists": "",
-      "notInLists": ""
+      "notInLists": "Outras listas"
     },
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"
@@ -414,9 +414,9 @@
       },
       "reasons": {
         "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "spam": "É spam",
+        "other": "É outra coisa",
+        "violation": "Viola as regras do servidor"
       },
       "comment": {
         "heading": ""
@@ -442,7 +442,7 @@
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Hashtags em alta"
         }
       },
       "sections": {
