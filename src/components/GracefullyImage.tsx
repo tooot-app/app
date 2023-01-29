@@ -38,6 +38,7 @@ export interface Props {
       height: number
     }>
   >
+  dim?: boolean
 }
 
 const GracefullyImage = ({
@@ -50,10 +51,11 @@ const GracefullyImage = ({
   onPress,
   style,
   imageStyle,
-  setImageDimensions
+  setImageDimensions,
+  dim
 }: Props) => {
   const { reduceMotionEnabled } = useAccessibility()
-  const { colors } = useTheme()
+  const { colors, theme } = useTheme()
   const [imageLoaded, setImageLoaded] = useState(false)
 
   const [currentUri, setCurrentUri] = useState<string | undefined>(uri.original || uri.remote)
@@ -111,6 +113,14 @@ const GracefullyImage = ({
         }}
       />
       {blurhashView()}
+      {dim && theme !== 'light' ? (
+        <View
+          style={[
+            styles.placeholder,
+            { backgroundColor: 'black', opacity: theme === 'dark_lighter' ? 0.18 : 0.36 }
+          ]}
+        />
+      ) : null}
     </Pressable>
   )
 }

@@ -28,6 +28,7 @@ const AccountHeader: React.FC = () => {
           )
         }
       }}
+      dim
     />
   )
 }

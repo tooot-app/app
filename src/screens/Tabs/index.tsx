@@ -89,11 +89,6 @@ const ScreenTabs = () => {
         name='Tab-Me'
         component={TabMe}
         listeners={({ navigation }) => ({
-          tabPress: () => {
-            if (navigation.isFocused()) {
-              navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
-            }
-          },
           tabLongPress: () => {
             haptics('Light')
             navigation.navigate('Tab-Me', { screen: 'Tab-Me-Root' })

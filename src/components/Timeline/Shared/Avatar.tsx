@@ -31,8 +31,7 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
         })
       })}
       onPress={() =>
-        !disableOnPress &&
-        navigation.push('Tab-Shared-Account', { account: actualAccount })
+        !disableOnPress && navigation.push('Tab-Shared-Account', { account: actualAccount })
       }
       uri={{ original: actualAccount.avatar, static: actualAccount.avatar_static }}
       dimension={
@@ -51,6 +50,7 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
         overflow: 'hidden',
         marginRight: StyleConstants.Spacing.S
       }}
+      dim
     />
   )
 }

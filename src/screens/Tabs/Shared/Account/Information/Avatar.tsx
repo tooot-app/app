@@ -42,6 +42,7 @@ const AccountInformationAvatar: React.FC = () => {
           }
         }
       }}
+      dim
     />
   )
 }

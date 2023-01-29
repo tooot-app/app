@@ -88,6 +88,7 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
                       : StyleConstants.Avatar.M
                 }}
                 style={{ flex: 1, flexBasis: '50%' }}
+                dim
               />
             ))}
           </View>
