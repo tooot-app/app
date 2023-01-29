@@ -6,6 +6,7 @@ import {
 import apiGeneral from '@utils/api/general'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
+import { appendRemote } from '@utils/helpers/appendRemote'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
@@ -54,7 +55,11 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
               url: `api/v1/accounts/${resLookup.body.id}/${page.type}`,
               params
             })
-            return { ...res, remoteData: true }
+            return {
+              ...res,
+              body: res.body.map(account => appendRemote.account(account)),
+              remoteData: true
+            }
           } else {
             throw new Error()
           }
