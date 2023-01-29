@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Nieuwere vanaf hier",
-    "refetch": "Naar nieuwste"
+    "refetch": "Naar nieuwste",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {
