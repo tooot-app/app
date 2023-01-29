@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Trước đó",
-    "refetch": "Trang cuối"
+    "refetch": "Trang cuối",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {
