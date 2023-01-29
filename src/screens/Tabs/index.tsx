@@ -2,11 +2,11 @@ import GracefullyImage from '@components/GracefullyImage'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { RootStackScreenProps, ScreenTabsStackParamList } from '@utils/navigation/navigators'
+import { ScreenTabsStackParamList } from '@utils/navigation/navigators'
 import { getGlobalStorage, useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Platform } from 'react-native'
+import { Platform, View } from 'react-native'
 import TabLocal from './Local'
 import TabMe from './Me'
 import TabNotifications from './Notifications'
@@ -14,7 +14,7 @@ import TabPublic from './Public'
 
 const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 
-const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
+const ScreenTabs = () => {
   const { colors } = useTheme()
 
   const [accountActive] = useGlobalStorage.string('account.active')
@@ -50,19 +50,19 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
               return <Icon name='bell' size={size} color={color} />
             case 'Tab-Me':
               return (
-                <GracefullyImage
-                  uri={{ original: avatarStatic }}
-                  dimension={{
-                    width: size,
-                    height: size
-                  }}
-                  style={{
-                    borderRadius: size,
-                    overflow: 'hidden',
-                    borderWidth: focused ? 2 : 0,
-                    borderColor: focused ? colors.secondary : color
-                  }}
-                />
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <GracefullyImage
+                    uri={{ original: avatarStatic }}
+                    dimension={{ width: size, height: size }}
+                    style={{
+                      borderRadius: size,
+                      overflow: 'hidden',
+                      borderWidth: focused ? 2 : 0,
+                      borderColor: focused ? colors.primaryDefault : color
+                    }}
+                  />
+                  <Icon name='more-vertical' size={size / 1.5} color={colors.secondary} />
+                </View>
               )
             default:
               return <Icon name='alert-octagon' size={size} color={color} />
@@ -74,13 +74,13 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
       <Tab.Screen name='Tab-Public' component={TabPublic} />
       <Tab.Screen
         name='Tab-Compose'
-        listeners={{
+        listeners={({ navigation }) => ({
           tabPress: e => {
             e.preventDefault()
             haptics('Light')
             navigation.navigate('Screen-Compose')
           }
-        }}
+        })}
       >
         {() => null}
       </Tab.Screen>
@@ -88,15 +88,18 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
       <Tab.Screen
         name='Tab-Me'
         component={TabMe}
-        listeners={{
+        listeners={({ navigation }) => ({
+          tabPress: () => {
+            if (navigation.isFocused()) {
+              navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
+            }
+          },
           tabLongPress: () => {
             haptics('Light')
-            //@ts-ignore
             navigation.navigate('Tab-Me', { screen: 'Tab-Me-Root' })
-            //@ts-ignore
             navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
           }
-        }}
+        })}
       />
     </Tab.Navigator>
   )
