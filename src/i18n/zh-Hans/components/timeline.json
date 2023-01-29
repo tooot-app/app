@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "较新于此的嘟嘟",
-    "refetch": "最新的嘟嘟"
+    "refetch": "最新的嘟嘟",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
   },
   "shared": {
     "actioned": {
