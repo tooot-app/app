@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Berrienak hemendik hasita",
     "refetch": "Azkenekora arte",
-    "fetching": "",
+    "fetching": "Tut berriak eskuratzen...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Tut berririk ez",
+      "found": "{{count}} tut eskuratuak"
     }
   },
   "shared": {
