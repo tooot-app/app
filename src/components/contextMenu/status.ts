@@ -197,7 +197,7 @@ const menuStatus = ({
         hidden:
           !ownAccount &&
           queryKey[1].page !== 'Notifications' &&
-          !status.mentions.find(
+          !status.mentions?.find(
             mention => mention.acct === accountAcct && mention.username === accountAcct
           ) &&
           !status.muted

@@ -15,8 +15,8 @@ const TimelineFullConversation = () => {
   return queryKey &&
     queryKey[1].page !== 'Toot' &&
     status.in_reply_to_account_id &&
-    (status.mentions.length === 0 ||
-      status.mentions.filter(mention => mention.id !== status.in_reply_to_account_id).length) ? (
+    (status.mentions?.length === 0 ||
+      status.mentions?.filter(mention => mention.id !== status.in_reply_to_account_id).length) ? (
     <CustomText
       fontStyle='S'
       style={{

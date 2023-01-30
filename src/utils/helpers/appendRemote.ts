@@ -19,5 +19,5 @@ export const appendRemote = {
     _remote: true
   }),
   mentions: (mentions: Mastodon.Mention[]) =>
-    mentions.map(mention => ({ ...mention, _remote: true }))
+    mentions?.map(mention => ({ ...mention, _remote: true }))
 }
