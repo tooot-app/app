@@ -1,1 +1,1 @@
-tooot - multilingual Mastodon app
+tooot - fediverse and Mastodon
