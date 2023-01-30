@@ -17,9 +17,9 @@
   "refresh": {
     "fetchPreviousPage": "Mais novo aqui",
     "refetch": "Mais recente",
-    "fetching": "",
+    "fetching": "Buscando toots mais recentes...",
     "fetched": {
-      "none": "",
+      "none": "Nenhum novo toot",
       "found": ""
     }
   },
