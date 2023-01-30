@@ -6,9 +6,9 @@
       "action_false": "Seguir usuário",
       "action_true": "Deixar de seguir usuário"
     },
-    "inLists": "",
+    "inLists": "Listas contendo usuário ...",
     "showBoosts": {
-      "action_false": "",
+      "action_false": "Mostrar boosts do usuário",
       "action_true": ""
     },
     "mute": {

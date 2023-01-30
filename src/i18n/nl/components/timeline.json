@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Nieuwere vanaf hier",
     "refetch": "Naar nieuwste",
-    "fetching": "",
+    "fetching": "Nieuwere toots ophalen...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Geen nieuwere toot",
+      "found": "{{count}} toots opgehaald"
     }
   },
   "shared": {

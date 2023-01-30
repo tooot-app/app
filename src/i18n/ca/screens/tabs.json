@@ -147,7 +147,7 @@
         "title": "Marca el contingut com a sensible"
       },
       "media": {
-        "title": "Visualització de multimèdia",
+        "title": "Multimèdia",
         "options": {
           "default": "Amaga els sensibles",
           "show_all": "Mostra'ls sempre",
