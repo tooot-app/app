@@ -178,10 +178,10 @@
       "context": "Aplica-se em <0 />",
       "contexts": {
         "home": "seguindo e listas",
-        "notifications": "",
+        "notifications": "notificação",
         "public": "global",
         "thread": "",
-        "account": ""
+        "account": "perfil"
       }
     },
     "preferencesFilter": {
@@ -196,22 +196,22 @@
         "604800": "Após 1 semana",
         "18144000": "Após 1 mês"
       },
-      "context": "",
+      "context": "Aplica-se em",
       "contexts": {
-        "home": "",
-        "notifications": "",
+        "home": "Seguindo e listas",
+        "notifications": "Notificação",
         "public": "Linha do tempo global",
         "thread": "",
         "account": ""
       },
       "action": "",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Recolhido, mas pode ser revelado",
+        "hide": "Esconder completamente"
       },
       "keywords": "",
-      "keyword": "",
-      "statuses": ""
+      "keyword": "Palavra-chave",
+      "statuses": "Corresponde a estes toots"
     },
     "profile": {
       "feedback": {
@@ -354,7 +354,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Reproduzir GIFs automaticamente na linha do tempo"
       },
       "feedback": {
         "heading": "Pedidos de Funcionalidades"
@@ -401,7 +401,7 @@
     },
     "filter": {
       "name": "Adicionar ao filtro",
-      "existed": ""
+      "existed": "Existe nestes filtros"
     },
     "history": {
       "name": "Histórico de Edição"
