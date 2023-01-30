@@ -22,7 +22,7 @@ const HeaderSharedReplies: React.FC = () => {
   excludeMentions &&
     (excludeMentions.current =
       mentionsBeginning?.length && status?.mentions
-        ? status.mentions.filter(mention => mentionsBeginning.includes(`@${mention.username}`))
+        ? status.mentions?.filter(mention => mentionsBeginning.includes(`@${mention.username}`))
         : [])
 
   return excludeMentions?.current.length ? (

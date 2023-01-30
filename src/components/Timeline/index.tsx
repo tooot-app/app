@@ -18,6 +18,7 @@ import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, {
   Easing,
   runOnJS,
+  useAnimatedReaction,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useDerivedValue,
@@ -70,26 +71,44 @@ const Timeline: React.FC<Props> = ({
     })
 
   const flRef = useRef<FlatList>(null)
-  const fetchingActive = useRef<boolean>(false)
+  const isFetchingPrev = useSharedValue<boolean>(false)
   const [fetchedCount, setFetchedCount] = useState<number | null>(null)
   const fetchedNoticeHeight = useSharedValue<number>(100)
+  const notifiedFetchedNotice = useSharedValue<boolean>(false)
+  useAnimatedReaction(
+    () => isFetchingPrev.value,
+    (curr, prev) => {
+      if (curr === true && prev === false) {
+        notifiedFetchedNotice.value = true
+      }
+    }
+  )
+  useAnimatedReaction(
+    () => fetchedCount,
+    (curr, prev) => {
+      if (curr !== null && prev === null) {
+        notifiedFetchedNotice.value = false
+      }
+    },
+    [fetchedCount]
+  )
   const fetchedNoticeTop = useDerivedValue(() => {
-    if ((!isLoading && !isRefetching && isFetching) || fetchedCount !== null) {
+    if (notifiedFetchedNotice.value || fetchedCount !== null) {
       return withSequence(
         withTiming(fetchedNoticeHeight.value + 16 + 4),
         withDelay(
           2000,
-          withTiming(0, { easing: Easing.out(Easing.ease) }, finished => {
-            if (finished) {
-              runOnJS(setFetchedCount)(null)
-            }
-          })
+          withTiming(
+            0,
+            { easing: Easing.out(Easing.ease) },
+            finished => finished && runOnJS(setFetchedCount)(null)
+          )
         )
       )
     } else {
       return 0
     }
-  }, [isLoading, isRefetching, isFetching, fetchedCount])
+  }, [fetchedCount])
   const fetchedNoticeAnimate = useAnimatedStyle(() => ({
     transform: [{ translateY: fetchedNoticeTop.value }]
   }))
@@ -130,7 +149,12 @@ const Timeline: React.FC<Props> = ({
               const marker = readMarker ? getAccountStorage.string(readMarker) : undefined
 
               const firstItemId = viewableItems.filter(item => item.isViewable)[0]?.item.id
-              if (!fetchingActive.current && firstItemId && firstItemId > (marker || '0')) {
+              if (
+                !isFetchingPrev.value &&
+                !isRefetching &&
+                firstItemId &&
+                firstItemId > (marker || '0')
+              ) {
                 setAccountStorage([{ key: readMarker, value: firstItemId }])
               } else {
                 // setAccountStorage([{ key: readMarker, value: '109519141378761752' }])
@@ -170,7 +194,7 @@ const Timeline: React.FC<Props> = ({
       <TimelineRefresh
         flRef={flRef}
         queryKey={queryKey}
-        fetchingActive={fetchingActive}
+        isFetchingPrev={isFetchingPrev}
         setFetchedCount={setFetchedCount}
         scrollY={scrollY}
         fetchingType={fetchingType}
@@ -238,7 +262,7 @@ const Timeline: React.FC<Props> = ({
           }) => (fetchedNoticeHeight.value = height)}
         >
           <CustomText
-            fontStyle='M'
+            fontStyle='S'
             style={{ color: colors.primaryDefault }}
             children={
               fetchedCount !== null

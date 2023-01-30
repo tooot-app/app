@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Més recent des d'aquí",
     "refetch": "A l'últim",
-    "fetching": "",
+    "fetching": "Obtenint publicacions...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "No n'hi ha de noves",
+      "found": "S'ha obtingut {{count}}"
     }
   },
   "shared": {

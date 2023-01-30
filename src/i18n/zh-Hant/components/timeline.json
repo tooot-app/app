@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "較新的嘟文",
     "refetch": "到最新的位置",
-    "fetching": "",
+    "fetching": "取得較新的嘟文 …",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "沒有更新的嘟文",
+      "found": "已取得 {{count}} 條嘟文"
     }
   },
   "shared": {

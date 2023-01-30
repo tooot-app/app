@@ -147,7 +147,7 @@
         "title": "Marcar el contenido multimedia como sensibles por defecto"
       },
       "media": {
-        "title": "Mostrar el contenido multimedia",
+        "title": "Multimedia",
         "options": {
           "default": "Ocultar los sensibles",
           "show_all": "Mostrar siempre",
