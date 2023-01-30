@@ -61,7 +61,7 @@
         "name": "Criar uma lista"
       },
       "listEdit": {
-        "name": ""
+        "name": "Editar Detalhes da Lista"
       },
       "lists": {
         "name": "Listas"
@@ -116,7 +116,7 @@
       "empty": "Nenhum usuário adicionado a esta lista"
     },
     "listEdit": {
-      "heading": "",
+      "heading": "Editar detalhes da lista",
       "title": "Título",
       "repliesPolicy": {
         "heading": "Mostrar respostas para:",
@@ -144,7 +144,7 @@
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Marcar mídia como sensível por padrão"
       },
       "media": {
         "title": "",
@@ -166,18 +166,18 @@
       },
       "web_only": {
         "title": "",
-        "description": ""
+        "description": "As configurações abaixo só podem ser atualizadas usando a interface web"
       }
     },
     "preferencesFilters": {
       "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "keywords_one": "{{count}} palavra-chave",
+      "keywords_other": "{{count}} palavras-chave",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} toots",
+      "context": "Aplica-se em <0 />",
       "contexts": {
-        "home": "",
+        "home": "seguindo e listas",
         "notifications": "",
         "public": "global",
         "thread": "",
@@ -343,7 +343,7 @@
         "heading": "Tema escuro",
         "options": {
           "lighter": "Padrão",
-          "darker": ""
+          "darker": "Preto verdadeiro"
         }
       },
       "browser": {
@@ -392,7 +392,7 @@
       "suspended": "Conta suspensa pelos moderadores do seu servidor"
     },
     "accountInLists": {
-      "name": "",
+      "name": "Listas de @{{username}}",
       "inLists": "",
       "notInLists": "Outras listas"
     },
@@ -400,7 +400,7 @@
       "name": "<0 /><1>\"s mídia</1>"
     },
     "filter": {
-      "name": "",
+      "name": "Adicionar ao filtro",
       "existed": ""
     },
     "history": {
