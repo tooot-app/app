@@ -169,7 +169,8 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 haptics('Success')
               }}
             />
-            {composeState.type === 'edit' && featureCheck('edit_media_details') ? (
+            {composeState.type !== 'edit' ||
+            (composeState.type === 'edit' && featureCheck('edit_media_details')) ? (
               <Button
                 accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
                   attachment: index + 1
