@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Más reciente desde aquí",
     "refetch": "Al último",
-    "fetching": "",
+    "fetching": "Obteniendo publicaciones...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "No hay nuevas",
+      "found": "Se ha obtenido {{count}}"
     }
   },
   "shared": {
