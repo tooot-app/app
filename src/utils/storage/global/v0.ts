@@ -17,6 +17,7 @@ export type GlobalV0 = {
   'version.account': number
   // boolean
   'app.auto_play_gifv'?: boolean
+  'app.connect'?: boolean
 
   //// account
   // string

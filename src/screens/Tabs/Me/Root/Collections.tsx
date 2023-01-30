@@ -96,10 +96,10 @@ const Collections: React.FC = () => {
         iconBack='chevron-right'
         title={t('screenTabs:me.stacks.push.name')}
         content={
-          typeof instancePush.global === 'boolean'
+          typeof instancePush?.global === 'boolean'
             ? t('screenTabs:me.root.push.content', {
                 defaultValue: 'false',
-                context: instancePush.global.toString()
+                context: instancePush?.global.toString()
               })
             : undefined
         }

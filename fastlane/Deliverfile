@@ -1,6 +1,3 @@
-name({
-  'default' => "tooot"
-})
 keywords({
   'default' => "Mastodon,tooot,social,decentralized,长毛象,社交,去中心"
 })

@@ -1,6 +1,7 @@
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
+import { appendRemote } from '@utils/helpers/appendRemote'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { AxiosError } from 'axios'
 import { searchLocalStatus } from './search'
@@ -26,7 +27,7 @@ const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyStatus>)
         method: 'get',
         domain,
         url: `api/v1/statuses/${id}`
-      }).then(res => ({ ...res.body, _remote: true }))
+      }).then(res => appendRemote.status(res.body))
     } catch {}
   }
 

@@ -61,7 +61,7 @@
         "name": "Criar uma lista"
       },
       "listEdit": {
-        "name": ""
+        "name": "Editar Detalhes da Lista"
       },
       "lists": {
         "name": "Listas"
@@ -116,7 +116,7 @@
       "empty": "Nenhum usuário adicionado a esta lista"
     },
     "listEdit": {
-      "heading": "",
+      "heading": "Editar detalhes da lista",
       "title": "Título",
       "repliesPolicy": {
         "heading": "Mostrar respostas para:",
@@ -144,7 +144,7 @@
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Marcar mídia como sensível por padrão"
       },
       "media": {
         "title": "",
@@ -166,22 +166,22 @@
       },
       "web_only": {
         "title": "",
-        "description": ""
+        "description": "As configurações abaixo só podem ser atualizadas usando a interface web"
       }
     },
     "preferencesFilters": {
       "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "keywords_one": "{{count}} palavra-chave",
+      "keywords_other": "{{count}} palavras-chave",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} toots",
+      "context": "Aplica-se em <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
+        "home": "seguindo e listas",
+        "notifications": "notificação",
+        "public": "global",
         "thread": "",
-        "account": ""
+        "account": "perfil"
       }
     },
     "preferencesFilter": {
@@ -196,22 +196,22 @@
         "604800": "Após 1 semana",
         "18144000": "Após 1 mês"
       },
-      "context": "",
+      "context": "Aplica-se em",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
+        "home": "Seguindo e listas",
+        "notifications": "Notificação",
+        "public": "Linha do tempo global",
         "thread": "",
         "account": ""
       },
       "action": "",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Recolhido, mas pode ser revelado",
+        "hide": "Esconder completamente"
       },
       "keywords": "",
-      "keyword": "",
-      "statuses": ""
+      "keyword": "Palavra-chave",
+      "statuses": "Corresponde a estes toots"
     },
     "profile": {
       "feedback": {
@@ -252,7 +252,7 @@
         "label": "Rótulo",
         "content": "Conteúdo"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Falha no processamento da imagem. Por favor, tente novamente."
     },
     "push": {
       "notAvailable": "Seu telefone não suporta notificação de envio de tooot",
@@ -343,7 +343,7 @@
         "heading": "Tema escuro",
         "options": {
           "lighter": "Padrão",
-          "darker": ""
+          "darker": "Preto verdadeiro"
         }
       },
       "browser": {
@@ -354,7 +354,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Reproduzir GIFs automaticamente na linha do tempo"
       },
       "feedback": {
         "heading": "Pedidos de Funcionalidades"
@@ -392,37 +392,37 @@
       "suspended": "Conta suspensa pelos moderadores do seu servidor"
     },
     "accountInLists": {
-      "name": "",
+      "name": "Listas de @{{username}}",
       "inLists": "",
-      "notInLists": ""
+      "notInLists": "Outras listas"
     },
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Adicionar ao filtro",
+      "existed": "Existe nestes filtros"
     },
     "history": {
       "name": "Histórico de Edição"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Denuncia {{acct}}",
+      "report": "Denunciar",
       "forward": {
-        "heading": ""
+        "heading": "Encaminhar anonimamente para o servidor remoto {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "O que há de errado com essa conta?",
+        "spam": "É spam",
+        "other": "É outra coisa",
+        "violation": "Viola as regras do servidor"
       },
       "comment": {
-        "heading": ""
+        "heading": "Deseja nos dizer mais alguma coisa?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Regras violadas do servidor"
       }
     },
     "search": {
@@ -442,7 +442,7 @@
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Hashtags em alta"
         }
       },
       "sections": {
@@ -451,13 +451,13 @@
         "statuses": "Toot"
       },
       "notFound": "Não foi possível encontrar <bold>{{searchTerm}}</bold> {{type}} relacionado",
-      "noResult": ""
+      "noResult": "Não foi possível encontrar nada, tente um termo diferente"
     },
     "toot": {
       "name": "Discussões",
       "remoteFetch": {
         "title": "",
-        "message": ""
+        "message": "O conteúdo global nem sempre está disponível na instância local. Estes conteúdos são obtidos de instâncias remotas e marcados. Você pode interagir com esses conteúdos normalmente."
       }
     },
     "users": {

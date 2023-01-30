@@ -16,11 +16,12 @@ import { ElementType, parseDocument } from 'htmlparser2'
 import i18next from 'i18next'
 import React, { useContext, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, Text, View } from 'react-native'
+import { ColorValue, Platform, Pressable, Text, View } from 'react-native'
 
 export interface Props {
   content: string
   size?: 'S' | 'M' | 'L'
+  color?: ColorValue
   adaptiveSize?: boolean
   showFullLink?: boolean
   numberOfLines?: number
@@ -34,6 +35,7 @@ export interface Props {
 const ParseHTML: React.FC<Props> = ({
   content,
   size = 'M',
+  color,
   adaptiveSize = false,
   showFullLink = false,
   numberOfLines = 10,
@@ -58,6 +60,7 @@ const ParseHTML: React.FC<Props> = ({
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { params } = useRoute()
   const { colors } = useTheme()
+  const colorPrimary = color || colors.primaryDefault
   const { t } = useTranslation('componentParse')
   if (!expandHint) {
     expandHint = t('HTML.defaultHint')
@@ -111,6 +114,7 @@ const ParseHTML: React.FC<Props> = ({
             content={content}
             emojis={status?.emojis || emojis}
             size={size}
+            color={colorPrimary}
             adaptiveSize={adaptiveSize}
           />
         )
@@ -181,7 +185,7 @@ const ParseHTML: React.FC<Props> = ({
                 return (
                   <Text
                     key={index}
-                    style={{ color: matchedMention ? colors.blue : colors.primaryDefault }}
+                    style={{ color: matchedMention ? colors.blue : colorPrimary }}
                     onPress={() =>
                       matchedMention &&
                       !disableDetails &&

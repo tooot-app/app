@@ -136,7 +136,7 @@
     },
     "preferences": {
       "visibility": {
-        "title": "Visibilidad de publicación predeterminada",
+        "title": "Visibilidad por defecto",
         "options": {
           "public": "Público",
           "unlisted": "No listado",
@@ -147,11 +147,11 @@
         "title": "Marcar el contenido multimedia como sensibles por defecto"
       },
       "media": {
-        "title": "Mostrar el contenido multimedia",
+        "title": "Multimedia",
         "options": {
-          "default": "Ocultar los contenidos multimedia marcados como sensibles",
-          "show_all": "Mostrar siempre el contenido multimedia",
-          "hide_all": "Siempre ocultar el contenido multimedia"
+          "default": "Ocultar los sensibles",
+          "show_all": "Mostrar siempre",
+          "hide_all": "Ocultar siempre"
         }
       },
       "spoilers": {
@@ -178,7 +178,7 @@
       "context": "Se aplica en <0 />",
       "contexts": {
         "home": "Seguidos y listas",
-        "notifications": "Notificación",
+        "notifications": "Notificaciones",
         "public": "Federado",
         "thread": "Conversación",
         "account": "Perfil"
@@ -199,17 +199,17 @@
       "context": "Se aplica en",
       "contexts": {
         "home": "Seguidos y listas",
-        "notifications": "Notificación",
+        "notifications": "Notificaciones",
         "public": "Cronología federada",
         "thread": "Vista de conversación",
         "account": "Vista de perfil"
       },
       "action": "Al coincidir",
       "actions": {
-        "warn": "",
+        "warn": "Contraído pero puede ser revelado",
         "hide": "Oculto completamente"
       },
-      "keywords": "Coincide con estas palabras clave",
+      "keywords": "Coincide con",
       "keyword": "Palabra clave",
       "statuses": "Coincide con estas publicaciones"
     },

@@ -1,5 +1,5 @@
 import { StyleConstants } from '@utils/styles/constants'
-import { ColorValue, TouchableNativeFeedback, View } from 'react-native'
+import { ColorValue, Pressable, View } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import haptics from './haptics'
 import Icon, { IconName } from './Icon'
@@ -25,7 +25,7 @@ export const SwipeToActions = <T extends unknown>({
       renderHiddenItem={({ item }) => (
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
           {actions.map((action, index) => (
-            <TouchableNativeFeedback
+            <Pressable
               key={index}
               onPress={() => {
                 haptics(action.haptic || 'Light')
@@ -43,7 +43,7 @@ export const SwipeToActions = <T extends unknown>({
               >
                 <Icon name={action.icon} color='white' size={StyleConstants.Font.Size.L} />
               </View>
-            </TouchableNativeFeedback>
+            </Pressable>
           ))}
         </View>
       )}

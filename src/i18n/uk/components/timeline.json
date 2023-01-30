@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "З цього моменту",
-    "refetch": "До кінця"
+    "refetch": "До кінця",
+    "fetching": "Отримання нових дмухів ...",
+    "fetched": {
+      "none": "Немає нових дмухів",
+      "found": "Отримано {{count}} дмухів"
+    }
   },
   "shared": {
     "actioned": {

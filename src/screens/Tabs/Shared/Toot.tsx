@@ -7,6 +7,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { useQuery } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
+import { appendRemote } from '@utils/helpers/appendRemote'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
@@ -206,26 +207,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           if (localMatch) {
             return localMatch
           } else {
-            return {
-              ...ancestor,
-              _remote: true,
-              account: { ...ancestor.account, _remote: true },
-              mentions: ancestor.mentions.map(mention => ({
-                ...mention,
-                _remote: true
-              })),
-              ...(ancestor.reblog && {
-                reblog: {
-                  ...ancestor.reblog,
-                  _remote: true,
-                  account: { ...ancestor.reblog.account, _remote: true },
-                  mentions: ancestor.reblog.mentions.map(mention => ({
-                    ...mention,
-                    _remote: true
-                  }))
-                }
-              })
-            }
+            return appendRemote.status(ancestor)
           }
         })
       }
@@ -268,23 +250,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                       if (localMatch) {
                         return { ...localMatch, _level: remote._level }
                       } else {
-                        return {
-                          ...remote,
-                          _remote: true,
-                          account: { ...remote.account, _remote: true },
-                          mentions: remote.mentions.map(mention => ({ ...mention, _remote: true })),
-                          ...(remote.reblog && {
-                            reblog: {
-                              ...remote.reblog,
-                              _remote: true,
-                              account: { ...remote.reblog.account, _remote: true },
-                              mentions: remote.reblog.mentions.map(mention => ({
-                                ...mention,
-                                _remote: true
-                              }))
-                            }
-                          })
-                        }
+                        return appendRemote.status(remote)
                       }
                     })
                   }
@@ -380,8 +346,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             <TimelineDefault
               item={item}
               queryKey={item._remote ? queryKey.remote : queryKey.local}
-              highlighted={toot.id === item.id || item.id === 'cached'}
-              isConversation={toot.id !== item.id && item.id !== 'cached'}
+              highlighted={toot.id === item.id}
+              suppressSpoiler={
+                toot.id !== item.id &&
+                !!toot.spoiler_text?.length &&
+                toot.spoiler_text === item.spoiler_text
+              }
+              isConversation={toot.id !== item.id}
               noBackground
             />
             {/* <CustomText

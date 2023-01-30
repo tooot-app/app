@@ -3,6 +3,7 @@ import Icon from '@components/Icon'
 import { SwipeToActions } from '@components/SwipeToActions'
 import CustomText from '@components/Text'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
+import { connectImage } from '@utils/api/helpers/connect'
 import apiInstance from '@utils/api/instance'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import { getAccountStorage, setAccountStorage, useAccountStorage } from '@utils/storage/actions'
@@ -154,9 +155,11 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
                             4,
                           marginLeft: index !== 0 ? StyleConstants.Spacing.S : 0
                         }}
-                        source={{
-                          uri: attachment.local?.thumbnail || attachment.remote?.preview_url
-                        }}
+                        source={
+                          attachment.local?.thumbnail
+                            ? { uri: attachment.local?.thumbnail }
+                            : connectImage({ uri: attachment.remote?.preview_url })
+                        }
                       />
                     ))}
                   </View>

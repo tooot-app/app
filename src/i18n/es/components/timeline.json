@@ -16,7 +16,12 @@
   },
   "refresh": {
     "fetchPreviousPage": "Más reciente desde aquí",
-    "refetch": "Al último"
+    "refetch": "Al último",
+    "fetching": "Obteniendo publicaciones...",
+    "fetched": {
+      "none": "No hay nuevas",
+      "found": "Se ha obtenido {{count}}"
+    }
   },
   "shared": {
     "actioned": {

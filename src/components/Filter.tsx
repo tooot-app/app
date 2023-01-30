@@ -2,8 +2,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Fragment } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { View, ViewStyle } from 'react-native'
-import { TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { Pressable, View, ViewStyle } from 'react-native'
 import Icon from './Icon'
 import CustomText from './Text'
 
@@ -19,7 +18,7 @@ export const Filter: React.FC<Props> = ({ onPress, filter, button, style }) => {
   const { colors } = useTheme()
 
   return (
-    <TouchableNativeFeedback onPress={onPress}>
+    <Pressable onPress={onPress}>
       <View
         style={{
           paddingVertical: StyleConstants.Spacing.S,
@@ -106,6 +105,6 @@ export const Filter: React.FC<Props> = ({ onPress, filter, button, style }) => {
           />
         )}
       </View>
-    </TouchableNativeFeedback>
+    </Pressable>
   )
 }

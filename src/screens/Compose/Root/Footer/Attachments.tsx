@@ -6,6 +6,7 @@ import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
+import { connectImage } from '@utils/api/helpers/connect'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -105,7 +106,11 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
       >
         <FastImage
           style={{ width: '100%', height: '100%' }}
-          source={{ uri: item.local?.thumbnail || item.remote?.preview_url }}
+          source={
+            item.local?.thumbnail
+              ? { uri: item.local?.thumbnail }
+              : connectImage({ uri: item.remote?.preview_url })
+          }
         />
         {item.remote?.meta?.original?.duration ? (
           <CustomText
@@ -164,7 +169,8 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 haptics('Success')
               }}
             />
-            {composeState.type === 'edit' && featureCheck('edit_media_details') ? (
+            {composeState.type !== 'edit' ||
+            (composeState.type === 'edit' && featureCheck('edit_media_details')) ? (
               <Button
                 accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
                   attachment: index + 1

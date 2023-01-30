@@ -33,6 +33,7 @@ export interface Props {
   item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
   queryKey?: QueryKeyTimeline
   highlighted?: boolean
+  suppressSpoiler?: boolean // Same content as the main thread, can be dimmed
   disableDetails?: boolean
   disableOnPress?: boolean
   isConversation?: boolean
@@ -44,6 +45,7 @@ const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
   highlighted = false,
+  suppressSpoiler = false,
   disableDetails = false,
   disableOnPress = false,
   isConversation = false,
@@ -170,6 +172,7 @@ const TimelineDefault: React.FC<Props> = ({
         detectedLanguage,
         excludeMentions,
         highlighted,
+        suppressSpoiler,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,
         disableOnPress,

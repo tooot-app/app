@@ -17,9 +17,9 @@ import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
@@ -27,9 +27,10 @@ import Animated, {
 export interface Props {
   flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
-  fetchingActive: React.MutableRefObject<boolean>
-  scrollY: Animated.SharedValue<number>
-  fetchingType: Animated.SharedValue<0 | 1 | 2>
+  isFetchingPrev: SharedValue<boolean>
+  setFetchedCount: React.Dispatch<React.SetStateAction<number | null>>
+  scrollY: SharedValue<number>
+  fetchingType: SharedValue<0 | 1 | 2>
   disableRefresh?: boolean
   readMarker?: 'read_marker_following'
 }
@@ -41,7 +42,8 @@ export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Siz
 const TimelineRefresh: React.FC<Props> = ({
   flRef,
   queryKey,
-  fetchingActive,
+  isFetchingPrev,
+  setFetchedCount,
   scrollY,
   fetchingType,
   disableRefresh = false,
@@ -55,20 +57,11 @@ const TimelineRefresh: React.FC<Props> = ({
   }
 
   const PREV_PER_BATCH = 1
-  const prevActive = useRef<boolean>(false)
   const prevCache = useRef<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>()
   const prevStatusId = useRef<Mastodon.Status['id']>()
 
   const queryClient = useQueryClient()
-  const { refetch, isRefetching } = useTimelineQuery({ ...queryKey[1] })
-
-  useDerivedValue(() => {
-    if (prevActive.current || isRefetching) {
-      fetchingActive.current = true
-    } else {
-      fetchingActive.current = false
-    }
-  }, [prevActive.current, isRefetching])
+  const { refetch } = useTimelineQuery({ ...queryKey[1] })
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
@@ -96,7 +89,7 @@ const TimelineRefresh: React.FC<Props> = ({
   const arrowStage = useSharedValue(0)
   useAnimatedReaction(
     () => {
-      if (fetchingActive.current) {
+      if (isFetchingPrev.value) {
         return false
       }
       switch (arrowStage.value) {
@@ -128,13 +121,12 @@ const TimelineRefresh: React.FC<Props> = ({
       if (data) {
         runOnJS(haptics)('Light')
       }
-    },
-    [fetchingActive.current]
+    }
   )
 
   const fetchAndScrolled = useSharedValue(false)
   const runFetchPrevious = async () => {
-    if (prevActive.current) return
+    if (isFetchingPrev.value) return
 
     const firstPage =
       queryClient.getQueryData<
@@ -143,7 +135,7 @@ const TimelineRefresh: React.FC<Props> = ({
         >
       >(queryKey)?.pages[0]
 
-    prevActive.current = true
+    isFetchingPrev.value = true
     prevStatusId.current = firstPage?.body[0]?.id
 
     await queryFunctionTimeline({
@@ -151,7 +143,9 @@ const TimelineRefresh: React.FC<Props> = ({
       pageParam: firstPage?.links?.prev,
       meta: {}
     })
-      .then(res => {
+      .then(async res => {
+        setFetchedCount(res.body.length)
+
         if (!res.body.length) return
 
         queryClient.setQueryData<
@@ -172,7 +166,7 @@ const TimelineRefresh: React.FC<Props> = ({
       })
       .then(async nextLength => {
         if (!nextLength) {
-          prevActive.current = false
+          isFetchingPrev.value = false
           return
         }
 
@@ -209,7 +203,7 @@ const TimelineRefresh: React.FC<Props> = ({
             }
           })
         }
-        prevActive.current = false
+        isFetchingPrev.value = false
       })
   }
 
@@ -218,6 +212,18 @@ const TimelineRefresh: React.FC<Props> = ({
     if (readMarker) {
       setAccountStorage([{ key: readMarker, value: undefined }])
     }
+    queryClient.setQueryData<
+      InfiniteData<
+        PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+      >
+    >(queryKey, old => {
+      if (!old) return old
+
+      return {
+        pages: [old.pages[0]],
+        pageParams: [old.pageParams[0]]
+      }
+    })
     await refetch()
     setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }

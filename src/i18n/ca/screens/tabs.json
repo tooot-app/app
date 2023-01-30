@@ -46,7 +46,7 @@
         "name": "Etiquetes seguides"
       },
       "fontSize": {
-        "name": "Mida de la font de la publicació"
+        "name": "Mida de la font"
       },
       "language": {
         "name": "Idioma"
@@ -136,7 +136,7 @@
     },
     "preferences": {
       "visibility": {
-        "title": "Visibilitat de la publicació per defecte",
+        "title": "Visibilitat per defecte",
         "options": {
           "public": "Públic",
           "unlisted": "Sense llistar",
@@ -147,11 +147,11 @@
         "title": "Marca el contingut com a sensible"
       },
       "media": {
-        "title": "Mostra el contingut multimèdia",
+        "title": "Multimèdia",
         "options": {
-          "default": "Amaga el contingut multimèdia com a sensible",
-          "show_all": "Mostra sempre el contingut multimèdia",
-          "hide_all": "Amaga sempre el contingut multimèdia"
+          "default": "Amaga els sensibles",
+          "show_all": "Mostra'ls sempre",
+          "hide_all": "Amaga'ls sempre"
         }
       },
       "spoilers": {
@@ -178,7 +178,7 @@
       "context": "Aplica a <0 />",
       "contexts": {
         "home": "Seguits i llistes",
-        "notifications": "Notificació",
+        "notifications": "Notificacions",
         "public": "federat",
         "thread": "Conversa",
         "account": "Perfil"
@@ -199,17 +199,17 @@
       "context": "Aplica a",
       "contexts": {
         "home": "Seguits i llistes",
-        "notifications": "Notificació",
+        "notifications": "Notificacions",
         "public": "Línia de temps federada",
         "thread": "Vista de conversa",
         "account": "Vista del perfil"
       },
       "action": "Quan coincideix",
       "actions": {
-        "warn": "",
+        "warn": "Contret però pot ser revelat",
         "hide": "Amagat completament"
       },
-      "keywords": "Coincidències per aquestes paraules claus",
+      "keywords": "Coincidències amb",
       "keyword": "Paraula clau",
       "statuses": "Coincideixen aquestes publicacions"
     },
