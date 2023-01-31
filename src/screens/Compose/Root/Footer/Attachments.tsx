@@ -6,7 +6,7 @@ import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
-import { connectImage } from '@utils/api/helpers/connect'
+import { connectMedia } from '@utils/api/helpers/connect'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -109,7 +109,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           source={
             item.local?.thumbnail
               ? { uri: item.local?.thumbnail }
-              : connectImage({ uri: item.remote?.preview_url })
+              : connectMedia({ uri: item.remote?.preview_url })
           }
         />
         {item.remote?.meta?.original?.duration ? (

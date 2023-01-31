@@ -1,6 +1,7 @@
 import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { Slider } from '@sharcoux/slider'
+import { connectMedia } from '@utils/api/helpers/connect'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
@@ -26,7 +27,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
   const playAudio = useCallback(async () => {
     if (!audioPlayer) {
       const { sound } = await Audio.Sound.createAsync(
-        { uri: audio.url },
+        connectMedia({ uri: audio.url }) as { uri: string },
         {},
         // @ts-ignore
         props => setAudioPosition(props.positionMillis)
