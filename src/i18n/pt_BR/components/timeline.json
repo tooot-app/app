@@ -60,7 +60,7 @@
         "accessibilityLabel": "Adicionar este toot aos favoritos",
         "function": "Salvos"
       },
-      "openReport": ""
+      "openReport": "Abrir denúncia"
     },
     "actionsUsers": {
       "reblogged_by": {
