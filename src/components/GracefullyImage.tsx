@@ -88,21 +88,21 @@ const GracefullyImage = ({
       {...(onPress ? { accessibilityRole: 'imagebutton' } : { accessibilityRole: 'image' })}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
-      style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
+      style={[style, dimension]}
       {...(onPress ? (hidden ? { disabled: true } : { onPress }) : { disabled: true })}
     >
       {uri.preview && !imageLoaded ? (
         <FastImage
           source={connectMedia({ uri: uri.preview })}
           enterTransition='fadeIn'
-          transitionDuration={100}
-          style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]}
+          transitionDuration={60}
+          style={[styles.placeholder]}
         />
       ) : null}
       <FastImage
         source={connectMedia(source)}
         enterTransition='fadeIn'
-        transitionDuration={100}
+        transitionDuration={60}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={() => {
           setImageLoaded(true)
