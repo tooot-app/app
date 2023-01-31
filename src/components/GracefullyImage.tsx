@@ -94,11 +94,15 @@ const GracefullyImage = ({
       {uri.preview && !imageLoaded ? (
         <FastImage
           source={connectMedia({ uri: uri.preview })}
+          enterTransition='fadeIn'
+          transitionDuration={100}
           style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]}
         />
       ) : null}
       <FastImage
         source={connectMedia(source)}
+        enterTransition='fadeIn'
+        transitionDuration={100}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={() => {
           setImageLoaded(true)

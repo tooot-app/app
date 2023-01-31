@@ -21,3 +21,343 @@ index 5b21cd59c40a5754f5d19c77e2a0eb0229925911..19d82f826e88125c5e6d87ee7c348fac
      annotationProcessor "com.github.bumptech.glide:compiler:${glideVersion}"
 +    implementation 'com.github.penfeizhou.android.animation:glide-plugin:2.12.0'
  }
+diff --git a/android/src/main/java/com/dylanvann/fastimage/FastImageEnterTransition.java b/android/src/main/java/com/dylanvann/fastimage/FastImageEnterTransition.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..55e3b4e0d463654f62d942ba05c2a5e51ae9d6d7
+--- /dev/null
++++ b/android/src/main/java/com/dylanvann/fastimage/FastImageEnterTransition.java
+@@ -0,0 +1,6 @@
++package com.dylanvann.fastimage;
++
++public enum FastImageEnterTransition {
++    TRANSITION_NONE,
++    FADE_IN
++}
+diff --git a/android/src/main/java/com/dylanvann/fastimage/FastImageTransitions.java b/android/src/main/java/com/dylanvann/fastimage/FastImageTransitions.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..d764cc4b8d110f087120a4f0dc5d986754806dec
+--- /dev/null
++++ b/android/src/main/java/com/dylanvann/fastimage/FastImageTransitions.java
+@@ -0,0 +1,20 @@
++package com.dylanvann.fastimage;
++
++import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
++import com.bumptech.glide.TransitionOptions;
++import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
++import android.view.animation.DecelerateInterpolator;
++
++public class FastImageTransitions {
++    static final DecelerateInterpolator mInterpolator = new DecelerateInterpolator();
++
++    public static TransitionOptions getEnterTransition(FastImageEnterTransition transition, int duration) {
++        switch (transition) {
++            case FADE_IN:
++                return DrawableTransitionOptions.withCrossFade(duration);
++
++            default:
++                throw new JSApplicationIllegalArgumentException("FastImage, invalid enterTransition argument");
++        }
++    }
++}
+\ No newline at end of file
+diff --git a/android/src/main/java/com/dylanvann/fastimage/FastImageViewConverter.java b/android/src/main/java/com/dylanvann/fastimage/FastImageViewConverter.java
+index 86ca00d018d7ded0edff733373d80976c8dbb961..e6220f57b38a3fe3ae9d5a75228f791e0ec978bb 100644
+--- a/android/src/main/java/com/dylanvann/fastimage/FastImageViewConverter.java
++++ b/android/src/main/java/com/dylanvann/fastimage/FastImageViewConverter.java
+@@ -50,6 +50,12 @@ class FastImageViewConverter {
+                 put("center", ScaleType.CENTER_INSIDE);
+             }};
+ 
++    private static final Map<String, FastImageEnterTransition> FAST_IMAGE_ENTER_TRANSITION_MAP =
++            new HashMap<String, FastImageEnterTransition>() {{
++                put("none", FastImageEnterTransition.TRANSITION_NONE);
++                put("fadeIn", FastImageEnterTransition.FADE_IN);
++            }};
++
+     // Resolve the source uri to a file path that android understands.
+     static @Nullable
+     FastImageSource getImageSource(Context context, @Nullable ReadableMap source) {
+@@ -125,6 +131,10 @@ class FastImageViewConverter {
+         return getValueFromSource("cache", "immutable", FAST_IMAGE_CACHE_CONTROL_MAP, source);
+     }
+ 
++    static FastImageEnterTransition getEnterTransition(String propValue) {
++        return getValue("enterTransition", "none", FAST_IMAGE_ENTER_TRANSITION_MAP, propValue);
++    }
++
+     private static Priority getPriority(ReadableMap source) {
+         return getValueFromSource("priority", "normal", FAST_IMAGE_PRIORITY_MAP, source);
+     }
+diff --git a/android/src/main/java/com/dylanvann/fastimage/FastImageViewManager.java b/android/src/main/java/com/dylanvann/fastimage/FastImageViewManager.java
+index c7a795471c8f8b48163c778836406bc5ead75dab..53b481547b44224e7791a8d3f39815c9c9a4be59 100644
+--- a/android/src/main/java/com/dylanvann/fastimage/FastImageViewManager.java
++++ b/android/src/main/java/com/dylanvann/fastimage/FastImageViewManager.java
+@@ -83,6 +83,17 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
+         view.setScaleType(scaleType);
+     }
+ 
++    @ReactProp(name = "enterTransition")
++    public void setEnterTransition(FastImageViewWithUrl view, String enterTransition) {
++        final FastImageEnterTransition transition = FastImageViewConverter.getEnterTransition(enterTransition);
++        view.setEnterTransition(transition);
++    }
++
++    @ReactProp(name = "transitionDuration")
++    public void setTransitionDuration(FastImageViewWithUrl view, int transitionDuration) {
++        view.setTransitionDuration(transitionDuration);
++    }
++
+     @Override
+     public void onDropViewInstance(@NonNull FastImageViewWithUrl view) {
+         // This will cancel existing requests.
+diff --git a/android/src/main/java/com/dylanvann/fastimage/FastImageViewWithUrl.java b/android/src/main/java/com/dylanvann/fastimage/FastImageViewWithUrl.java
+index 34fcf898d17d82fd52375e9028b71ad815b9b15b..fd57ac68de093d2a8ee53aeede45328c8d52aa39 100644
+--- a/android/src/main/java/com/dylanvann/fastimage/FastImageViewWithUrl.java
++++ b/android/src/main/java/com/dylanvann/fastimage/FastImageViewWithUrl.java
+@@ -30,6 +30,8 @@ class FastImageViewWithUrl extends AppCompatImageView {
+     private boolean mNeedsReload = false;
+     private ReadableMap mSource = null;
+     private Drawable mDefaultSource = null;
++    private FastImageEnterTransition mEnterTransition = FastImageEnterTransition.TRANSITION_NONE;
++    private int mTransitionDuration = 350;
+ 
+     public GlideUrl glideUrl;
+ 
+@@ -47,6 +49,14 @@ class FastImageViewWithUrl extends AppCompatImageView {
+         mDefaultSource = source;
+     }
+ 
++    public void setEnterTransition(@Nullable FastImageEnterTransition transition) {
++        mEnterTransition = transition;
++    }
++
++    public void setTransitionDuration(int duration) {
++        mTransitionDuration = duration == 0 ? 350 : duration;
++    }
++
+     private boolean isNullOrEmpty(final String url) {
+         return url == null || url.trim().isEmpty();
+     }
+@@ -147,6 +157,10 @@ class FastImageViewWithUrl extends AppCompatImageView {
+             if (key != null)
+                 builder.listener(new FastImageRequestListener(key));
+ 
++            if (mEnterTransition != FastImageEnterTransition.TRANSITION_NONE) {
++                builder.transition(FastImageTransitions.getEnterTransition(mEnterTransition, mTransitionDuration));
++            }
++
+             builder.into(this);
+         }
+     }
+diff --git a/dist/index.cjs.js b/dist/index.cjs.js
+index 2df6a29769978d8d947dfb50b422e1f56bd97fb6..f3904e20edac5f19cc26f41a4ff02eecd73ac627 100644
+--- a/dist/index.cjs.js
++++ b/dist/index.cjs.js
+@@ -9,6 +9,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
+ var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
+ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+ 
++const enterTransition = {
++  none: 'none',
++  fadeIn: 'fadeIn'
++}
+ const resizeMode = {
+   contain: 'contain',
+   cover: 'cover',
+@@ -115,6 +119,7 @@ const FastImageComponent = /*#__PURE__*/React.forwardRef((props, ref) => /*#__PU
+ }, props)));
+ FastImageComponent.displayName = 'FastImage';
+ const FastImage = FastImageComponent;
++FastImage.enterTransition = enterTransition
+ FastImage.resizeMode = resizeMode;
+ FastImage.cacheControl = cacheControl;
+ FastImage.priority = priority;
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 5abb7c98b767cd0709b53f5ab2dd50c752a9377b..2da22817e3136673d40a177ae8c9fc2209f143d8 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -1,5 +1,10 @@
+ import React from 'react';
+ import { FlexStyle, LayoutChangeEvent, ShadowStyleIOS, StyleProp, TransformsStyle, ImageRequireSource, AccessibilityProps, ViewProps, ColorValue } from 'react-native';
++export declare type EnterTransition = 'none' | 'fadeIn';
++declare const enterTransition: {
++    readonly none: "none";
++    readonly fadeIn: "fadeIn";
++};
+ export declare type ResizeMode = 'contain' | 'cover' | 'stretch' | 'center';
+ declare const resizeMode: {
+     readonly contain: "contain";
+@@ -57,6 +62,16 @@ export interface FastImageProps extends AccessibilityProps, ViewProps {
+     defaultSource?: ImageRequireSource;
+     resizeMode?: ResizeMode;
+     fallback?: boolean;
++    /**
++     * Transition durations.
++     * @default none
++     */
++    enterTransition?: EnterTransition
++    /**
++     * Enter transition duration in ms.
++     * @default 500ms
++     */
++    transitionDuration?: number
+     onLoadStart?(): void;
+     onProgress?(event: OnProgressEvent): void;
+     onLoad?(event: OnLoadEvent): void;
+@@ -91,6 +106,7 @@ export interface FastImageProps extends AccessibilityProps, ViewProps {
+     children?: React.ReactNode;
+ }
+ export interface FastImageStaticProperties {
++    enterTransition: typeof enterTransition;
+     resizeMode: typeof resizeMode;
+     priority: typeof priority;
+     cacheControl: typeof cacheControl;
+diff --git a/dist/index.js b/dist/index.js
+index 58e0308bd44836aad3e4979b5c1151083956c295..5853b3b2fd05c91be8c70819fe6fc45606f26f8d 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -2,6 +2,10 @@ import _extends from '@babel/runtime/helpers/extends';
+ import React, { forwardRef, memo } from 'react';
+ import { NativeModules, StyleSheet, requireNativeComponent, Image, View, Platform } from 'react-native';
+ 
++const enterTransition = {
++  none: 'none',
++  fadeIn: 'fadeIn'
++}
+ const resizeMode = {
+   contain: 'contain',
+   cover: 'cover',
+@@ -57,6 +61,8 @@ function FastImageBase({
+   children,
+   // eslint-disable-next-line no-shadow
+   resizeMode = 'cover',
++  enterTransition = 'none',
++  transitionDuration = 350,
+   forwardedRef,
+   ...props
+ }) {
+@@ -79,7 +85,9 @@ function FastImageBase({
+       onLoad: onLoad,
+       onError: onError,
+       onLoadEnd: onLoadEnd,
+-      resizeMode: resizeMode
++      resizeMode: resizeMode,
++      enterTransition: enterTransition,
++      transitionDuration: transitionDuration
+     })), children);
+   }
+ 
+@@ -98,7 +106,9 @@ function FastImageBase({
+     onFastImageLoad: onLoad,
+     onFastImageError: onError,
+     onFastImageLoadEnd: onLoadEnd,
+-    resizeMode: resizeMode
++    resizeMode: resizeMode,
++    enterTransition: enterTransition,
++    transitionDuration: transitionDuration
+   })), children);
+ }
+ 
+@@ -108,6 +118,7 @@ const FastImageComponent = /*#__PURE__*/forwardRef((props, ref) => /*#__PURE__*/
+ }, props)));
+ FastImageComponent.displayName = 'FastImage';
+ const FastImage = FastImageComponent;
++FastImage.enterTransition = enterTransition
+ FastImage.resizeMode = resizeMode;
+ FastImage.cacheControl = cacheControl;
+ FastImage.priority = priority;
+diff --git a/ios/FastImage/FFFastImageView.h b/ios/FastImage/FFFastImageView.h
+index e52fca79882ad2a678487a46b2fe158427e06f3a..6c9c41b0b1a3c967a3715a24bb692447b76ef365 100644
+--- a/ios/FastImage/FFFastImageView.h
++++ b/ios/FastImage/FFFastImageView.h
+@@ -7,6 +7,7 @@
+ #import <React/RCTResizeMode.h>
+ 
+ #import "FFFastImageSource.h"
++#import "FFFastImageViewManager.h"
+ 
+ @interface FFFastImageView : SDAnimatedImageView
+ 
+@@ -16,6 +17,8 @@
+ @property (nonatomic, copy) RCTDirectEventBlock onFastImageLoad;
+ @property (nonatomic, copy) RCTDirectEventBlock onFastImageLoadEnd;
+ @property (nonatomic, assign) RCTResizeMode resizeMode;
++@property (nonatomic, assign) FFFEnterTransition enterTransition;
++@property (nonatomic, assign) NSTimeInterval transitionDuration;
+ @property (nonatomic, strong) FFFastImageSource *source;
+ @property (nonatomic, strong) UIImage *defaultSource;
+ @property (nonatomic, strong) UIColor *imageColor;
+diff --git a/ios/FastImage/FFFastImageView.m b/ios/FastImage/FFFastImageView.m
+index f7100815e652539b29b1fa70ff1477c5f5db08dc..ecb79eafe566fe52090adada3cdf16eb10a67513 100644
+--- a/ios/FastImage/FFFastImageView.m
++++ b/ios/FastImage/FFFastImageView.m
+@@ -71,6 +71,18 @@ - (void) setImageColor: (UIColor*)imageColor {
+     }
+ }
+ 
++- (void) setTransitionDuration: (NSTimeInterval)transitionDuration {
++   self.sd_imageTransition.duration = transitionDuration;
++}
++
++- (void) setEnterTransition: (FFFEnterTransition)enterTransition {
++    switch (enterTransition) {
++        case FFFFadeIn:
++            self.sd_imageTransition = SDWebImageTransition.fadeTransition;
++            break;
++    }
++}
++
+ - (UIImage*) makeImage: (UIImage*)image withTint: (UIColor*)color {
+     UIImage* newImage = [image imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
+     UIGraphicsBeginImageContextWithOptions(image.size, NO, newImage.scale);
+diff --git a/ios/FastImage/FFFastImageViewManager.h b/ios/FastImage/FFFastImageViewManager.h
+index 8ba6020e2c6e5757ed778d00e3f43a6ff4c1d50a..a269669301ea00ef3c2714123d17e822094635d6 100644
+--- a/ios/FastImage/FFFastImageViewManager.h
++++ b/ios/FastImage/FFFastImageViewManager.h
+@@ -1,5 +1,10 @@
+ #import <React/RCTViewManager.h>
+ 
++typedef NS_ENUM(NSInteger, FFFEnterTransition) {
++    FFFTransitionNone,
++    FFFFadeIn,
++};
++
+ @interface FFFastImageViewManager : RCTViewManager
+ 
+ @end
+diff --git a/ios/FastImage/FFFastImageViewManager.m b/ios/FastImage/FFFastImageViewManager.m
+index 84ca94e26e546d4d139dabca6c3efd0a890eda63..2184bac31f0d547e6119356bb4fc7931be87446d 100644
+--- a/ios/FastImage/FFFastImageViewManager.m
++++ b/ios/FastImage/FFFastImageViewManager.m
+@@ -13,6 +13,8 @@ - (FFFastImageView*)view {
+ }
+ 
+ RCT_EXPORT_VIEW_PROPERTY(source, FFFastImageSource)
++RCT_EXPORT_VIEW_PROPERTY(enterTransition, FFFEnterTransition)
++RCT_EXPORT_VIEW_PROPERTY(transitionDuration, NSTimeInterval)
+ RCT_EXPORT_VIEW_PROPERTY(defaultSource, UIImage)
+ RCT_EXPORT_VIEW_PROPERTY(resizeMode, RCTResizeMode)
+ RCT_EXPORT_VIEW_PROPERTY(onFastImageLoadStart, RCTDirectEventBlock)
+diff --git a/ios/FastImage/RCTConvert+FFFastImage.m b/ios/FastImage/RCTConvert+FFFastImage.m
+index 43f8922157655a7497f56a3909ef6b2a886f07d8..0705f8e05f44f3053e7239fcc9a30d986e7aaab7 100644
+--- a/ios/FastImage/RCTConvert+FFFastImage.m
++++ b/ios/FastImage/RCTConvert+FFFastImage.m
+@@ -1,5 +1,6 @@
+ #import "RCTConvert+FFFastImage.h"
+ #import "FFFastImageSource.h"
++#import "FFFastImageViewManager.h"
+ 
+ @implementation RCTConvert (FFFastImage)
+ 
+@@ -15,6 +16,11 @@ @implementation RCTConvert (FFFastImage)
+                                        @"cacheOnly": @(FFFCacheControlCacheOnly),
+                                        }), FFFCacheControlImmutable, integerValue);
+ 
++RCT_ENUM_CONVERTER(FFFEnterTransition, (@{
++                                          @"none": @(FFFTransitionNone),
++                                          @"fadeIn": @(FFFFadeIn),
++                                          }), FFFTransitionNone, integerValue);
++
+ + (FFFastImageSource *)FFFastImageSource:(id)json {
+     if (!json) {
+         return nil;

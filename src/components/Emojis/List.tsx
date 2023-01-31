@@ -130,6 +130,8 @@ const EmojisList = () => {
               style={{ padding: StyleConstants.Spacing.S }}
             >
               <FastImage
+                enterTransition='fadeIn'
+                transitionDuration={100}
                 accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
                   emoji: emoji.shortcode
                 })}
