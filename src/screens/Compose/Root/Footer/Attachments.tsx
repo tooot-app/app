@@ -106,7 +106,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
       >
         <FastImage
           enterTransition='fadeIn'
-          transitionDuration={100}
+          transitionDuration={60}
           style={{ width: '100%', height: '100%' }}
           source={
             item.local?.thumbnail

@@ -131,7 +131,7 @@ const EmojisList = () => {
             >
               <FastImage
                 enterTransition='fadeIn'
-                transitionDuration={100}
+                transitionDuration={60}
                 accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
                   emoji: emoji.shortcode
                 })}
