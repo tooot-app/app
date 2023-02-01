@@ -50,21 +50,22 @@ const TimelinePoll: React.FC = () => {
     },
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
-      displayMessage({
-        theme,
-        type: 'error',
-        message: t('common:message.error.message', {
-          // @ts-ignore
-          function: t(`componentTimeline:shared.poll.meta.button.${theParams.payload.type}` as any)
-        }),
-        ...(err.status &&
-          typeof err.status === 'number' &&
-          err.data &&
-          err.data.error &&
-          typeof err.data.error === 'string' && {
-            description: err.data.error
-          })
-      })
+      if (theParams.payload.type === 'poll') {
+        displayMessage({
+          theme,
+          type: 'error',
+          message: t('common:message.error.message', {
+            function: t(`componentTimeline:shared.poll.meta.button.${theParams.payload.action}`)
+          }),
+          ...(err.status &&
+            typeof err.status === 'number' &&
+            err.data &&
+            err.data.error &&
+            typeof err.data.error === 'string' && {
+              description: err.data.error
+            })
+        })
+      }
       queryClient.invalidateQueries(queryKey)
     }
   })
