@@ -101,7 +101,7 @@ const GracefullyImage = ({
       ) : null}
       <FastImage
         source={connectMedia(source)}
-        enterTransition='fadeIn'
+        enterTransition={!blurhash && !uri.preview ? 'fadeIn' : 'none'}
         transitionDuration={60}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={() => {
