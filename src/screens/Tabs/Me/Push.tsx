@@ -37,6 +37,7 @@ const TabMePush: React.FC = () => {
 
   const appsQuery = useAppsQuery({
     options: {
+      enabled: false,
       onSuccess: async data => {
         if (data.vapid_key) {
           await checkPush()
@@ -49,6 +50,9 @@ const TabMePush: React.FC = () => {
       }
     }
   })
+  useEffect(() => {
+    appsQuery.refetch()
+  }, [])
 
   const checkPush = async () => {
     const permissions = await Notifications.getPermissionsAsync()
