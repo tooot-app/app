@@ -17,7 +17,7 @@
   "refresh": {
     "fetchPreviousPage": "前のページを取得",
     "refetch": "更新",
-    "fetching": "",
+    "fetching": "新しいトゥートを取得しています...",
     "fetched": {
       "none": "",
       "found": ""
