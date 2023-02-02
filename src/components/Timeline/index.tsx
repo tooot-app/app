@@ -228,11 +228,12 @@ const Timeline: React.FC<Props> = ({
           )
         }
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-        {...(!isLoading && {
-          maintainVisibleContentPosition: {
-            minIndexForVisible: 0
-          }
-        })}
+        {...(!isLoading &&
+          !isFetching && {
+            maintainVisibleContentPosition: {
+              minIndexForVisible: 0
+            }
+          })}
         {...androidRefreshControl}
         {...customProps}
       />
