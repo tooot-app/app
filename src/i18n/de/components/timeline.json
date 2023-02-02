@@ -128,7 +128,7 @@
         "muted": {
           "accessibilityLabel": "Tröt stummgeschaltet"
         },
-        "replies": "",
+        "replies": "Antworten <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Tröt ist eine Direktnachricht"
