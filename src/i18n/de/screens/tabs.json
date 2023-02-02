@@ -171,8 +171,8 @@
     },
     "preferencesFilters": {
       "expired": "Abgelaufen",
-      "keywords_one": "",
-      "keywords_other": "",
+      "keywords_one": "{{count}} Stichwort",
+      "keywords_other": "{{count}} Stichwort",
       "statuses_one": "{{count}} Tröt",
       "statuses_other": "{{count}} Tröts",
       "context": "Läuft in <0 /> ab",
@@ -196,7 +196,7 @@
         "604800": "Nach einer Woche",
         "18144000": "Nach einem Monat"
       },
-      "context": "",
+      "context": "Gilt für",
       "contexts": {
         "home": "Gefolgte und Listen",
         "notifications": "Benachrichtigung",
@@ -209,9 +209,9 @@
         "warn": "Verdeckt, kann aber aufgedeckt werden",
         "hide": "Vollständig verdeckt"
       },
-      "keywords": "",
+      "keywords": "Treffer für diese Schlüsselwörter",
       "keyword": "Stichwörter",
-      "statuses": ""
+      "statuses": "Passende Tröts"
     },
     "profile": {
       "feedback": {
@@ -400,29 +400,29 @@
       "name": "<0 /><1>'s Medien</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Zum Filter hinzufügen",
+      "existed": "In diesen Filtern vorhanden"
     },
     "history": {
       "name": "Bearbeitungsverlauf"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "{{acct}} melden",
+      "report": "Melden",
       "forward": {
-        "heading": ""
+        "heading": "Anonym an die Instanz {{instance}} weiterleiten"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Was stimmt mit diesem Konto nicht?",
+        "spam": "Das ist Spam",
+        "other": "Etwas anderes",
+        "violation": "Verstoß gegen die Instanzregeln"
       },
       "comment": {
-        "heading": ""
+        "heading": "Möchtest du sonst noch etwas hinzufügen?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Verstoß gegen die Instanzregeln"
       }
     },
     "search": {
