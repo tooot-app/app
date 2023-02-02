@@ -11,7 +11,6 @@ import * as Localization from 'expo-localization'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { GLOBAL } from '../../../../App'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
@@ -171,7 +170,7 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('screenTabs:me.settings.autoplayGifv.heading')}
-        switchValue={autoplayGifv}
+        switchValue={autoplayGifv || false}
         switchOnValueChange={() => setAutoplayGifv(!autoplayGifv)}
       />
       {showConnect ? (
@@ -184,17 +183,6 @@ const SettingsApp: React.FC = () => {
           }}
         />
       ) : null}
-      <MenuRow
-        title='Clear cache'
-        iconBack='chevron-right'
-        loading={clearingCache}
-        onPress={() => {
-          setClearingCache(true)
-          FastImage.clearDiskCache()
-            .then(() => setClearingCache(false))
-            .catch(() => setClearingCache(false))
-        }}
-      />
     </MenuContainer>
   )
 }
