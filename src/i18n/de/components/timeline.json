@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Neuere Einträge",
     "refetch": "Zum letzten",
-    "fetching": "",
+    "fetching": "Neue Tröts werden abgerufen…",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Kein neuerer Tröt",
+      "found": "{{count}} Tröts abgerufen"
     }
   },
   "shared": {
