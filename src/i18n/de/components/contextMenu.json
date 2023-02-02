@@ -6,7 +6,7 @@
       "action_false": "Folgen",
       "action_true": "Nutzer entfolgen"
     },
-    "inLists": "",
+    "inLists": "Listen mit diesem Nutzer…",
     "showBoosts": {
       "action_false": "",
       "action_true": ""
@@ -99,8 +99,8 @@
       "action_true": "Tröt nicht mehr anheften"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Tröts filtern…",
+      "action_true": "Filter bearbeiten…"
     }
   }
 }
