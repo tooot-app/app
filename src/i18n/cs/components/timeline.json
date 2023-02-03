@@ -33,6 +33,7 @@
       "poll": "",
       "reblog": {
         "default": "",
+        "myself": "",
         "notification": ""
       },
       "update": "",
