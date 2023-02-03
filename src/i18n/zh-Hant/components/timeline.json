@@ -33,7 +33,7 @@
       "poll": "您曾投過的投票已經結束",
       "reblog": {
         "default": "{{name}} 轉嘟了",
-        "myself": "",
+        "myself": "我轉嘟了",
         "notification": "{{name}} 轉嘟了您的嘟文"
       },
       "update": "轉嘟已編輯",
