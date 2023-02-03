@@ -33,7 +33,7 @@
       "poll": "En omröstning du röstat i har avslutats",
       "reblog": {
         "default": "{{name}} boostade",
-        "myself": "",
+        "myself": "Jag boostade",
         "notification": "{{name}} boostade ditt inlägg"
       },
       "update": "Boosten har redigerats",
