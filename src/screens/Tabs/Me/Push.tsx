@@ -79,22 +79,20 @@ const TabMePush: React.FC = () => {
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
-            // switchDisabled={!pushEnabled || !push.global}
             switchValue={push?.alerts[alert]}
             switchOnValueChange={async () => {
               const alerts = { ...push?.alerts, [alert]: !push?.alerts[alert] }
-              const body: { data: { alerts: { [key: string]: boolean } } } = {
-                data: { alerts: {} }
-              }
-              for (const [key, value] of Object.entries(alerts)) {
-                body.data.alerts[key] = value
-              }
 
-              await apiInstance<Mastodon.PushSubscription>({
-                method: 'put',
-                url: 'push/subscription',
-                body
-              })
+              if (pushEnabled && push.global) {
+                const body: { data: { alerts: Mastodon.PushSubscription['alerts'] } } = {
+                  data: { alerts }
+                }
+                await apiInstance<Mastodon.PushSubscription>({
+                  method: 'put',
+                  url: 'push/subscription',
+                  body
+                })
+              }
 
               setAccountStorage([{ key: 'push', value: { ...push, alerts } }])
             }}
@@ -109,22 +107,22 @@ const TabMePush: React.FC = () => {
           <MenuRow
             key={type}
             title={t(`me.push.${type}.heading`)}
-            // switchDisabled={!pushEnabled || !push.global}
             switchValue={push?.alerts[type]}
             switchOnValueChange={async () => {
               const alerts = { ...push?.alerts, [type]: !push?.alerts[type] }
-              const body: { data: { alerts: { [key: string]: boolean } } } = {
-                data: { alerts: {} }
-              }
-              for (const [key, value] of Object.entries(alerts)) {
-                body.data.alerts[key] = value
-              }
 
-              await apiInstance<Mastodon.PushSubscription>({
-                method: 'put',
-                url: 'push/subscription',
-                body
-              })
+              if (pushEnabled && push.global) {
+                const body: {
+                  data: { alerts: Mastodon.PushSubscription['alerts'] }
+                } = {
+                  data: { alerts }
+                }
+                await apiInstance<Mastodon.PushSubscription>({
+                  method: 'put',
+                  url: 'push/subscription',
+                  body
+                })
+              }
 
               setAccountStorage([{ key: 'push', value: { ...push, alerts } }])
             }}
@@ -198,7 +196,10 @@ const TabMePush: React.FC = () => {
 
                       const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${pushPath}/${randomPath}`
 
-                      const body: { subscription: any; alerts: { [key: string]: boolean } } = {
+                      const body: {
+                        subscription: any
+                        alerts: Mastodon.PushSubscription['alerts']
+                      } = {
                         subscription: {
                           endpoint,
                           keys: {
@@ -207,10 +208,7 @@ const TabMePush: React.FC = () => {
                             auth: authKey
                           }
                         },
-                        alerts: {}
-                      }
-                      for (const [key, value] of Object.entries(push.alerts)) {
-                        body.alerts[key] = value
+                        alerts: push.alerts
                       }
 
                       const res = await apiInstance<Mastodon.PushSubscription>({
@@ -225,6 +223,10 @@ const TabMePush: React.FC = () => {
                           duration: 'long',
                           message: t('me.push.missingServerKey.message'),
                           description: t('me.push.missingServerKey.description')
+                        })
+                        await apiInstance({
+                          method: 'delete',
+                          url: 'push/subscription'
                         })
                         Sentry.setContext('Push server key', {
                           instance: domain,
@@ -242,6 +244,11 @@ const TabMePush: React.FC = () => {
                           serverKey: res.body.server_key,
                           auth: push.decode === false ? null : authKey
                         }
+                      }).catch(async () => {
+                        await apiInstance({
+                          method: 'delete',
+                          url: 'push/subscription'
+                        })
                       })
 
                       setAccountStorage([
