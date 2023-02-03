@@ -43,6 +43,11 @@ const useColorSchemeDelay = (delay = 250) => {
   return colorScheme
 }
 
+const determineMode = (
+  osTheme: 'light' | 'dark' | null | undefined,
+  userTheme: StorageGlobal['app.theme']
+): 'light' | 'dark' =>
+  !userTheme || userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light'
 const determineTheme = (
   osTheme: 'light' | 'dark' | null | undefined,
   userTheme: StorageGlobal['app.theme'],
@@ -75,13 +80,11 @@ const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   const [userTheme] = useGlobalStorage.string('app.theme')
   const [darkTheme] = useGlobalStorage.string('app.theme.dark')
 
-  const [mode, setMode] = useState<'light' | 'dark'>(
-    userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light'
-  )
+  const [mode, setMode] = useState<'light' | 'dark'>(determineMode(osTheme, userTheme))
   const [theme, setTheme] = useState<Theme>(determineTheme(osTheme, userTheme, darkTheme))
 
   useEffect(() => {
-    setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light')
+    setMode(determineMode(osTheme, userTheme))
   }, [osTheme, userTheme])
   useEffect(() => {
     setTheme(determineTheme(osTheme, userTheme, darkTheme))
