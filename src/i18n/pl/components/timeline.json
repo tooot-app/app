@@ -33,6 +33,7 @@
       "poll": "Ankieta w której brałeś(-aś) udział zakończyło się",
       "reblog": {
         "default": "{{name}} podbił(a)",
+        "myself": "",
         "notification": "{{name}} podbił(a) Twojego tootka"
       },
       "update": "Podbity tootek został edytowany",
