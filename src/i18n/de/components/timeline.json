@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Neuere Einträge",
     "refetch": "Zum letzten",
-    "fetching": "",
+    "fetching": "Neue Tröts werden abgerufen…",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Kein neuerer Tröt",
+      "found": "{{count}} Tröts abgerufen"
     }
   },
   "shared": {
@@ -33,6 +33,7 @@
       "poll": "Eine Umfrage, an der du teilgenommen hast, ist beendet",
       "reblog": {
         "default": "{{name}} hat geboostet",
+        "myself": "",
         "notification": "{{name}} hat deinen Tröt geboostet"
       },
       "update": "Boost wurde bearbeitet",
@@ -128,7 +129,7 @@
         "muted": {
           "accessibilityLabel": "Tröt stummgeschaltet"
         },
-        "replies": "",
+        "replies": "Antworten <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Tröt ist eine Direktnachricht"

@@ -1,7 +1,7 @@
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { UseInfiniteQueryOptions } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { flattenPages } from '@utils/queryHooks/utils'
@@ -12,7 +12,8 @@ import {
 } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useRef, useState } from 'react'
+import { throttle } from 'lodash'
+import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, {
@@ -55,6 +56,7 @@ const Timeline: React.FC<Props> = ({
   readMarker = undefined,
   customProps
 }) => {
+  const navigation = useNavigation()
   const { colors, theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
@@ -134,6 +136,21 @@ const Timeline: React.FC<Props> = ({
     [isFetching]
   )
 
+  const latestMarker = useRef<string>()
+  const updateMarkers = useCallback(
+    throttle(
+      () => readMarker && setAccountStorage([{ key: readMarker, value: latestMarker.current }]),
+      1000 * 15
+    ),
+    []
+  )
+  readMarker &&
+    useEffect(() => {
+      const unsubscribe = navigation.addListener('blur', () =>
+        setAccountStorage([{ key: readMarker, value: latestMarker.current }])
+      )
+      return unsubscribe
+    }, [])
   const viewabilityConfigCallbackPairs = useRef<
     Pick<FlatListProps<any>, 'viewabilityConfigCallbackPairs'>['viewabilityConfigCallbackPairs']
   >(
@@ -155,9 +172,11 @@ const Timeline: React.FC<Props> = ({
                 firstItemId &&
                 firstItemId > (marker || '0')
               ) {
-                setAccountStorage([{ key: readMarker, value: firstItemId }])
+                latestMarker.current = firstItemId
+                updateMarkers()
               } else {
-                // setAccountStorage([{ key: readMarker, value: '105250709762254246' }])
+                // latestMarker.current = '105250709762254246'
+                // updateMarkers()
               }
             }
           }
@@ -218,15 +237,11 @@ const Timeline: React.FC<Props> = ({
           <TimelineFooter queryKey={queryKey} disableInfinity={disableInfinity} />
         }
         ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
-        ItemSeparatorComponent={({ leadingItem }) =>
-          queryKey[1].page === 'Toot' && queryKey[1].toot === leadingItem.id ? (
-            <ComponentSeparator extraMarginLeft={0} />
-          ) : (
-            <ComponentSeparator
-              extraMarginLeft={StyleConstants.Avatar.M + StyleConstants.Spacing.S}
-            />
-          )
-        }
+        ItemSeparatorComponent={() => (
+          <ComponentSeparator
+            extraMarginLeft={StyleConstants.Avatar.M + StyleConstants.Spacing.S}
+          />
+        )}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         {...(!isLoading &&
           !isFetching && {

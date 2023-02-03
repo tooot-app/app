@@ -33,6 +33,7 @@
       "poll": "A poll you have voted in has ended",
       "reblog": {
         "default": "{{name}} boosted",
+        "myself": "I boosted",
         "notification": "{{name}} boosted your toot"
       },
       "update": "Reblog has been edited",

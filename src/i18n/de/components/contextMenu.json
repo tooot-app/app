@@ -6,22 +6,22 @@
       "action_false": "Folgen",
       "action_true": "Nutzer entfolgen"
     },
-    "inLists": "",
+    "inLists": "Listen mit diesem Nutzer…",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Zeige Boosts des Kontos",
+      "action_true": "Boosts des Users ausblenden"
     },
     "mute": {
       "action_false": "Profil stummschalten",
       "action_true": "Stummschaltung des Nutzers aufheben"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "Folgen als…",
       "succeed_default": "Folgt nun @{{target}} als @{{source}}",
       "succeed_locked": "Follower-Anfrage an @{{target}} mit {{source}} gesendet, Bestätigung ausstehend",
       "failed": "Folgen als…"
     },
-    "blockReport": "",
+    "blockReport": "Blockieren und melden",
     "block": {
       "action_false": "Nutzer blockieren",
       "action_true": "User entblocken",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Folgen",
+      "action_true": "Entfolgen"
     },
     "filter": {
-      "action": ""
+      "action": "Hashtag filtern…"
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "Tröt nicht mehr anheften"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Tröts filtern…",
+      "action_true": "Filter bearbeiten…"
     }
   }
 }

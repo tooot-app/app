@@ -61,20 +61,9 @@ export const queryFunctionTimeline = async ({
 
   let marker: string | undefined
   if (page.page === 'Following' && !pageParam?.offset && !pageParam?.min_id && !pageParam?.max_id) {
-    const storedMarker = getAccountStorage.string('read_marker_following')
-    if (storedMarker) {
-      await apiInstance<Mastodon.Status[]>({
-        method: 'get',
-        url: 'timelines/home',
-        params: { limit: 1, min_id: storedMarker }
-      }).then(res => {
-        if (res.body.length) {
-          marker = storedMarker
-        }
-      })
-    }
+    marker = getAccountStorage.string('read_marker_following')
   }
-  let params: { [key: string]: string } = marker
+  const params: { [key: string]: string } = marker
     ? { limit: 40, max_id: marker }
     : { limit: 40, ...pageParam }
 
