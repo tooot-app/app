@@ -33,6 +33,7 @@
       "poll": "Een poll waaraan jij hebt meegedaan is beëindigd",
       "reblog": {
         "default": "{{name}} boostte",
+        "myself": "",
         "notification": "{{name}} boostte jouw toot"
       },
       "update": "De reblog is bewerkt",
