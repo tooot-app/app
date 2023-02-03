@@ -297,7 +297,7 @@ const ParseHTML: React.FC<Props> = ({
       <Text
         children={document.children.map(renderNode)}
         onTextLayout={({ nativeEvent }) => {
-          if (numberOfLines === 1 || nativeEvent.lines.length >= numberOfLines + 5) {
+          if (numberOfLines === 1 || nativeEvent.lines.length >= numberOfLines + 8) {
             setTotalLines(nativeEvent.lines.length)
           }
         }}
