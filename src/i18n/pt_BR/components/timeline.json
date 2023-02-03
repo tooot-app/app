@@ -33,6 +33,7 @@
       "poll": "Uma enquete em que você votou terminou",
       "reblog": {
         "default": "{{name}} boostou",
+        "myself": "",
         "notification": "{{name}} deu boost no teu toot"
       },
       "update": "Toot foi editado",
