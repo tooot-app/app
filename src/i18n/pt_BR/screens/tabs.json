@@ -73,7 +73,7 @@
         "name": "Preferências"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Todos os filtros de conteúdo"
       },
       "preferencesFilterAdd": {
         "name": "Criar um Filtro"
@@ -150,8 +150,8 @@
         "title": "",
         "options": {
           "default": "Ocultar mídia marcada como sensível",
-          "show_all": "",
-          "hide_all": ""
+          "show_all": "Sempre mostrar mídias",
+          "hide_all": "Sempre ocultar mídias"
         }
       },
       "spoilers": {
@@ -300,10 +300,10 @@
         "heading": "Toot foi editado"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin: cadastros"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin: denúncias"
       },
       "howitworks": "Saiba como funciona o roteamento"
     },

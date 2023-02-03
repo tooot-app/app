@@ -33,6 +33,7 @@
       "poll": "Un sondaggio in cui hai votato è terminato",
       "reblog": {
         "default": "{{name}} ha ricondiviso",
+        "myself": "",
         "notification": "{{name}} ha ricondiviso il tuo toot"
       },
       "update": "Il link è stato modificato",

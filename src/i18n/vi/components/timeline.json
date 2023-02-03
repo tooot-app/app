@@ -33,6 +33,7 @@
       "poll": "Cuộc bình chọn đã kết thúc",
       "reblog": {
         "default": "{{name}} đăng lại",
+        "myself": "",
         "notification": "{{name}} đăng lại tút của bạn"
       },
       "update": "Đăng lại đã được sửa",

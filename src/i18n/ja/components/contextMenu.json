@@ -6,7 +6,7 @@
       "action_false": "ユーザーをフォロー",
       "action_true": "ユーザーをフォロー解除"
     },
-    "inLists": "",
+    "inLists": "ユーザーを含むリスト一覧",
     "showBoosts": {
       "action_false": "ブーストを表示する",
       "action_true": "ブーストを非表示にする"
@@ -16,12 +16,12 @@
       "action_true": "ユーザーのミュートを解除"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "... としてフォロー",
       "succeed_default": "{{source}} として @{{target}} をフォローしました",
       "succeed_locked": "{{source}} として @{{target}} へのフォロー申請を送りました。現在承認待ちです",
       "failed": "別ユーザーとしてフォロー"
     },
-    "blockReport": "",
+    "blockReport": "ブロックと通報",
     "block": {
       "action_false": "ユーザーをブロック",
       "action_true": "ユーザーのブロックを解除",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "フォロー",
+      "action_true": "フォロー解除"
     },
     "filter": {
-      "action": ""
+      "action": "ハッシュタグをフィルター"
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "トゥートの固定を解除"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "トゥートのフィルター",
+      "action_true": "フィルターの管理"
     }
   }
 }

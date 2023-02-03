@@ -70,13 +70,13 @@
         "name": "プッシュ通知"
       },
       "preferences": {
-        "name": ""
+        "name": "設定"
       },
       "preferencesFilters": {
         "name": ""
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "フィルターを作成"
       },
       "preferencesFilterEdit": {
         "name": ""
@@ -138,9 +138,9 @@
       "visibility": {
         "title": "",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "公開",
+          "unlisted": "未収載",
+          "private": "フォロワー限定"
         }
       },
       "sensitive": {
@@ -170,7 +170,7 @@
       }
     },
     "preferencesFilters": {
-      "expired": "",
+      "expired": "期限切れ",
       "keywords_one": "",
       "keywords_other": "",
       "statuses_one": "",
@@ -178,29 +178,29 @@
       "context": "",
       "contexts": {
         "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "notifications": "通知",
+        "public": "連合",
+        "thread": "会話",
+        "account": "プロフィール"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "名前",
+      "expiration": "有効期限",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "無期限",
+        "1800": "30分後",
+        "3600": "1時間後",
+        "43200": "12時間後",
+        "86400": "1日後",
+        "604800": "1週間後",
+        "18144000": "1ヶ月後"
       },
       "context": "",
       "contexts": {
         "home": "",
-        "notifications": "",
-        "public": "",
+        "notifications": "通知",
+        "public": "連合タイムライン",
         "thread": "",
         "account": ""
       },
@@ -210,7 +210,7 @@
         "hide": ""
       },
       "keywords": "",
-      "keyword": "",
+      "keyword": "キーワード",
       "statuses": ""
     },
     "profile": {
@@ -400,7 +400,7 @@
       "name": "<0 /><1>のメディア</1>"
     },
     "filter": {
-      "name": "",
+      "name": "フィルターに追加",
       "existed": ""
     },
     "history": {

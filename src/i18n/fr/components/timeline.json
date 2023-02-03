@@ -33,6 +33,7 @@
       "poll": "Un sondage auquel vous avez participé est maintenant terminé",
       "reblog": {
         "default": "{{name}} a partagé",
+        "myself": "",
         "notification": "{{name}} a partagé votre message"
       },
       "update": "Le reblog a été modifié",

@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Domain der Instanz"
     },
-    "whitelisted": "",
+    "whitelisted": "Von dieser Instanz können Tröts möglicherweise nicht ohne Login abgerufen werden.",
     "button": "Login",
     "information": {
       "name": "Name",
