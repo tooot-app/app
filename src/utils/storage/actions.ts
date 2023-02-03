@@ -33,9 +33,13 @@ export const getGlobalStorage = {
   object: <T extends keyof StorageGlobal>(key: T) => {
     const value = storage.global.getString(key)
     if (value?.length) {
-      return JSON.parse(value) as NonNullable<StorageGlobal[T]> extends object
-        ? StorageGlobal[T]
-        : never
+      try {
+        return JSON.parse(value) as NonNullable<StorageGlobal[T]> extends object
+          ? StorageGlobal[T]
+          : never
+      } catch {
+        return undefined
+      }
     } else {
       return undefined
     }
@@ -108,9 +112,13 @@ export const getAccountStorage = {
   object: <T extends keyof StorageAccount>(key: T) => {
     const value = storage.account?.getString(key)
     if (value?.length) {
-      return JSON.parse(value) as NonNullable<StorageAccount[T]> extends object
-        ? StorageAccount[T]
-        : never
+      try {
+        return JSON.parse(value) as NonNullable<StorageAccount[T]> extends object
+          ? StorageAccount[T]
+          : never
+      } catch {
+        return undefined
+      }
     } else {
       return undefined
     }

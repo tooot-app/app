@@ -33,6 +33,7 @@
       "poll": "내가 참여한 투표가 끝났어요",
       "reblog": {
         "default": "{{name}} 님이 부스트했어요",
+        "myself": "",
         "notification": "{{name}} 님이 내 툿을 부스트했어요"
       },
       "update": "부스트한 툿이 수정됨",

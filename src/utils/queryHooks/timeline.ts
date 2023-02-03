@@ -61,20 +61,9 @@ export const queryFunctionTimeline = async ({
 
   let marker: string | undefined
   if (page.page === 'Following' && !pageParam?.offset && !pageParam?.min_id && !pageParam?.max_id) {
-    const storedMarker = getAccountStorage.string('read_marker_following')
-    if (storedMarker) {
-      await apiInstance<Mastodon.Status[]>({
-        method: 'get',
-        url: 'timelines/home',
-        params: { limit: 1, min_id: storedMarker }
-      }).then(res => {
-        if (res.body.length) {
-          marker = storedMarker
-        }
-      })
-    }
+    marker = getAccountStorage.string('read_marker_following')
   }
-  let params: { [key: string]: string } = marker
+  const params: { [key: string]: string } = marker
     ? { limit: 40, max_id: marker }
     : { limit: 40, ...pageParam }
 
@@ -353,14 +342,23 @@ export type MutationVarsTimeline =
 const mutationFunction = async (params: MutationVarsTimeline) => {
   switch (params.type) {
     case 'updateStatusProperty':
+      let tootId = params.status.id
+      let pollId = params.status.poll?.id
+      if (params.status._remote) {
+        const fetched = await searchLocalStatus(params.status.uri)
+        if (fetched) {
+          tootId = fetched.id
+          pollId = fetched.poll?.id
+        } else {
+          return Promise.reject('Fetching for remote toot failed')
+        }
+      }
+
       switch (params.payload.type) {
         case 'poll':
           return apiInstance<Mastodon.Poll>({
             method: params.payload.action === 'vote' ? 'post' : 'get',
-            url:
-              params.payload.action === 'vote'
-                ? `polls/${params.status.poll?.id}/votes`
-                : `polls/${params.status.poll?.id}`,
+            url: params.payload.action === 'vote' ? `polls/${pollId}/votes` : `polls/${pollId}`,
             ...(params.payload.action === 'vote' && {
               body: {
                 choices: params.payload.options
@@ -370,15 +368,6 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             })
           })
         default:
-          let tootId = params.status.id
-          if (params.status._remote) {
-            const fetched = await searchLocalStatus(params.status.uri)
-            if (fetched) {
-              tootId = fetched.id
-            } else {
-              return Promise.reject('Fetching for remote toot failed')
-            }
-          }
           return apiInstance<Mastodon.Status>({
             method: 'post',
             url: `statuses/${tootId}/${params.payload.to ? '' : 'un'}${

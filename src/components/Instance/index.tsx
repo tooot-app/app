@@ -186,7 +186,7 @@ const ComponentInstance: React.FC<Props> = ({
         if (!account) {
           setGlobalStorage('accounts', (accounts || []).concat([accountKey]))
         }
-        setAccount(accountKey)
+        await setAccount(accountKey)
 
         goBack && navigation.goBack()
       }

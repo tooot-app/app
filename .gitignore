@@ -32,6 +32,7 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 ios/.xcode.env.local
+ios/containers
 
 # Android/IntelliJ
 #

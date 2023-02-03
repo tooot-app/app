@@ -43,6 +43,8 @@ const SettingsApp: React.FC = () => {
       })
   }, [])
 
+  const [clearingCache, setClearingCache] = useState(false)
+
   return (
     <MenuContainer>
       <MenuRow
@@ -168,7 +170,7 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('screenTabs:me.settings.autoplayGifv.heading')}
-        switchValue={autoplayGifv}
+        switchValue={autoplayGifv || false}
         switchOnValueChange={() => setAutoplayGifv(!autoplayGifv)}
       />
       {showConnect ? (

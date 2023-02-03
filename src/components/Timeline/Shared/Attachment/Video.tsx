@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { connectMedia } from '@utils/api/helpers/connect'
 import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
@@ -41,7 +42,7 @@ const AttachmentVideo: React.FC<Props> = ({
   const playOnPress = async () => {
     setVideoLoading(true)
     if (!videoLoaded) {
-      await videoPlayer.current?.loadAsync({ uri: video.url })
+      await videoPlayer.current?.loadAsync(connectMedia({ uri: video.url }) as { uri: string })
     }
     setVideoLoading(false)
 
@@ -71,10 +72,10 @@ const AttachmentVideo: React.FC<Props> = ({
               shouldPlay: reduceMotionEnabled || !shouldAutoplayGifv ? false : true,
               isMuted: true,
               isLooping: true,
-              source: { uri: video.url }
+              source: connectMedia({ uri: video.url }) as { uri: string }
             }
           : {
-              posterSource: { uri: video.preview_url },
+              posterSource: connectMedia({ uri: video.preview_url }),
               posterStyle: { resizeMode: ResizeMode.COVER }
             })}
         useNativeControls={false}

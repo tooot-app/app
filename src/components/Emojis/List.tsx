@@ -2,7 +2,7 @@ import { emojis } from '@components/Emojis'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { connectImage } from '@utils/api/helpers/connect'
+import { connectMedia } from '@utils/api/helpers/connect'
 import { StorageAccount } from '@utils/storage/account'
 import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
@@ -130,11 +130,13 @@ const EmojisList = () => {
               style={{ padding: StyleConstants.Spacing.S }}
             >
               <FastImage
+                enterTransition='fadeIn'
+                transitionDuration={60}
                 accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
                   emoji: emoji.shortcode
                 })}
                 accessibilityHint={t('screenCompose:content.root.footer.emojis.accessibilityHint')}
-                source={connectImage({ uri })}
+                source={connectMedia({ uri })}
                 style={{ width: 32, height: 32 }}
               />
             </Pressable>

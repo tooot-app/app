@@ -3,6 +3,7 @@ import { ParseEmojis } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
+import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
@@ -37,8 +38,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
     />
   )
 
-  const onPress = () =>
-    navigation.push('Tab-Shared-Account', { account })
+  const onPress = () => navigation.push('Tab-Shared-Account', { account })
 
   const children = () => {
     switch (action) {
@@ -109,6 +109,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
           </>
         )
       case 'reblog':
+        const myself = rest.rootStatus?.account.id === getAccountStorage.string('auth.account.id')
         return (
           <>
             <Icon
@@ -121,6 +122,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               {content(
                 isNotification
                   ? t('shared.actioned.reblog.notification', { name })
+                  : myself
+                  ? t('shared.actioned.reblog.myself')
                   : t('shared.actioned.reblog.default', { name })
               )}
             </Pressable>

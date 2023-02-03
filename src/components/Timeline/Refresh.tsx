@@ -61,7 +61,7 @@ const TimelineRefresh: React.FC<Props> = ({
   const prevStatusId = useRef<Mastodon.Status['id']>()
 
   const queryClient = useQueryClient()
-  const { refetch } = useTimelineQuery({ ...queryKey[1] })
+  const { refetch, isFetched } = useTimelineQuery({ ...queryKey[1] })
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
@@ -118,10 +118,11 @@ const TimelineRefresh: React.FC<Props> = ({
       }
     },
     data => {
-      if (data) {
+      if (data && isFetched) {
         runOnJS(haptics)('Light')
       }
-    }
+    },
+    [isFetched]
   )
 
   const fetchAndScrolled = useSharedValue(false)
@@ -245,6 +246,8 @@ const TimelineRefresh: React.FC<Props> = ({
     },
     []
   )
+
+  if (!isFetched) return null
 
   return (
     <Animated.View

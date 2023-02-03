@@ -1,5 +1,5 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { connectImage } from '@utils/api/helpers/connect'
+import { connectMedia } from '@utils/api/helpers/connect'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import {
@@ -88,17 +88,21 @@ const GracefullyImage = ({
       {...(onPress ? { accessibilityRole: 'imagebutton' } : { accessibilityRole: 'image' })}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
-      style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
+      style={[style, dimension]}
       {...(onPress ? (hidden ? { disabled: true } : { onPress }) : { disabled: true })}
     >
       {uri.preview && !imageLoaded ? (
         <FastImage
-          source={connectImage({ uri: uri.preview })}
-          style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]}
+          source={connectMedia({ uri: uri.preview })}
+          enterTransition='fadeIn'
+          transitionDuration={60}
+          style={[styles.placeholder]}
         />
       ) : null}
       <FastImage
-        source={connectImage(source)}
+        source={connectMedia(source)}
+        enterTransition={!blurhash && !uri.preview ? 'fadeIn' : 'none'}
+        transitionDuration={60}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={() => {
           setImageLoaded(true)

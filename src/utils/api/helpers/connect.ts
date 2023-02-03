@@ -74,14 +74,14 @@ const list = [
   'vq2rz02ayf'
 ]
 
-export const CONNECT_DOMAIN = () =>
+export const CONNECT_DOMAIN = (index?: number) =>
   mapEnvironment({
-    release: `${list[Math.floor(Math.random() * 66)]}.tooot.app`,
+    release: `${list[index || Math.floor(Math.random() * list.length)]}.tooot.app`,
     candidate: 'connect-candidate.tooot.app',
     development: 'connect-development.tooot.app'
   })
 
-export const connectImage = ({
+export const connectMedia = ({
   uri
 }: {
   uri?: string
@@ -89,7 +89,19 @@ export const connectImage = ({
   if (GLOBAL.connect) {
     if (uri) {
       const host = parse(uri).host
-      return { uri: uri.replace(host, CONNECT_DOMAIN()), headers: { 'x-tooot-domain': host } }
+      return {
+        uri: uri.replace(
+          host,
+          CONNECT_DOMAIN(
+            uri
+              .split('')
+              .map(i => i.charCodeAt(0))
+              .reduce((a, b) => a + b, 0) %
+              (list.length + 1)
+          )
+        ),
+        headers: { 'x-tooot-domain': host }
+      }
     } else {
       return { uri }
     }
