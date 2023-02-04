@@ -204,14 +204,14 @@
         "thread": "会話表示",
         "account": "プロフィール表示"
       },
-      "action": "",
+      "action": "一致した時",
       "actions": {
         "warn": "",
-        "hide": ""
+        "hide": "完全に非表示にする"
       },
-      "keywords": "",
+      "keywords": "これらのキーワードと一致",
       "keyword": "キーワード",
-      "statuses": ""
+      "statuses": "これらのトゥートと一致"
     },
     "profile": {
       "feedback": {
@@ -401,7 +401,7 @@
     },
     "filter": {
       "name": "フィルターに追加",
-      "existed": ""
+      "existed": "フィルター内に存在"
     },
     "history": {
       "name": "編集履歴"
