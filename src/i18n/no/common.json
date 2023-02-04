@@ -1,21 +1,21 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": "",
-    "discard": "",
-    "continue": "",
-    "create": "",
-    "delete": "",
-    "done": "",
-    "confirm": ""
+    "OK": "OK",
+    "apply": "Bruk",
+    "cancel": "Avbryt",
+    "discard": "Forkast",
+    "continue": "Fortsett",
+    "create": "Opprett",
+    "delete": "Slett",
+    "done": "Fullført",
+    "confirm": "Bekreft"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Tilpasset emoji {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} var vellykket"
     },
     "warning": {
       "message": ""
