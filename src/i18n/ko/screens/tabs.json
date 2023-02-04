@@ -70,16 +70,16 @@
         "name": "푸시 알림"
       },
       "preferences": {
-        "name": ""
+        "name": "설정"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "콘텐츠 필터"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "필터 만들기"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "필터 편집"
       },
       "profile": {
         "name": "프로필 편집"
@@ -136,81 +136,81 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "공개 범위 기본값",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "공개",
+          "unlisted": "공개 타임라인에 비표시",
+          "private": "팔로워만"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "민감한 미디어 표시를 기본값으로 사용"
       },
       "media": {
-        "title": "",
+        "title": "미디어 표시",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "민감한 미디어 숨기기",
+          "show_all": "모든 미디어 표시",
+          "hide_all": "모든 미디어 숨기기"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "스포일러 경고가 있는 툿 자동으로 펼치기"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "툿에 포함된 GIF 자동 재생"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "콘텐츠 필터",
+        "content": "{{count}}개 활성화"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "추가 설정",
+        "description": "일부 설정은 웹 UI에서만 변경할 수 있어요"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "만료됨",
+      "keywords_one": "{{count}}개의 단어",
+      "keywords_other": "{{count}}개의 단어",
+      "statuses_one": "{{count}}개의 툿",
+      "statuses_other": "{{count}}개의 툿",
+      "context": "<0 />에 적용됨",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "팔로우와 리스트",
+        "notifications": "알림",
+        "public": "연합",
+        "thread": "대화",
+        "account": "프로필"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "이름",
+      "expiration": "만료일",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "만료하지 않음",
+        "1800": "30분 후",
+        "3600": "1시간 후",
+        "43200": "12시간 후",
+        "86400": "1일 후",
+        "604800": "1주일 후",
+        "18144000": "1개월 후"
       },
-      "context": "",
+      "context": "적용할 대상",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "팔로우와 리스트",
+        "notifications": "알림",
+        "public": "연합 타임라인",
+        "thread": "대화 내용",
+        "account": "프로필 내용"
       },
-      "action": "",
+      "action": "필터 동작",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "내용만 가리고 펼쳐볼 수 있게 하기",
+        "hide": "완전히 숨기기"
       },
-      "keywords": "",
-      "keyword": "",
+      "keywords": "필터할 단어",
+      "keyword": "단어",
       "statuses": ""
     },
     "profile": {
