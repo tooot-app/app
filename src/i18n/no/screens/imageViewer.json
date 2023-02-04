@@ -1,16 +1,16 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Flere handlinger med dette bildet",
+      "accessibilityHint": "Du kan lagre eller dele dette bildet"
     },
     "options": {
-      "save": "",
-      "share": ""
+      "save": "Lagre bilde",
+      "share": "Del bilde"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Bilde lagret",
+      "failed": "Lagring av bilde feilet"
     }
   }
 }
