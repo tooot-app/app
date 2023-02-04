@@ -1,13 +1,13 @@
 {
   "screenshot": {
-    "title": "",
-    "message": ""
+    "title": "Personvernbeskyttelse",
+    "message": "Vennligst ikke avslør brukerens identitet, som f. eks. brukernavn, profilbilde, osv. Tusen takk!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Din økt er utløpt, vennligst logg inn igjen"
   },
   "pushError": {
-    "message": "",
+    "message": "Feil ved push-tjeneste",
     "description": "Vennligst aktiver push-varsling i innstillingene"
   },
   "shareError": {
