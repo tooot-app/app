@@ -19,8 +19,8 @@
     "refetch": "更新",
     "fetching": "新しいトゥートを取得しています...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "新しいトゥートはありません",
+      "found": "{{count}}トゥートを取得"
     }
   },
   "shared": {
@@ -33,7 +33,7 @@
       "poll": "アンケートが終了しました",
       "reblog": {
         "default": "{{name}}さんがブースト",
-        "myself": "",
+        "myself": "ブーストしました",
         "notification": "{{name}}さんがあなたのトゥートをブーストしました"
       },
       "update": "ブーストしたトゥートが編集されました",
