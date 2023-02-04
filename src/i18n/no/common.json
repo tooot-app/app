@@ -21,12 +21,12 @@
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} feilet, vennligst prøv igjen"
     }
   },
-  "separator": "",
+  "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Endringene er ikke lagret",
+    "message": "Dine endringer er ikke lagret. Angrer du på endringene?"
   }
 }
