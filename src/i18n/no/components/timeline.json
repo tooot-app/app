@@ -46,7 +46,7 @@
       },
       "reblogged": {
         "accessibilityLabel": "Boost denne tut",
-        "function": "",
+        "function": "Boost tut",
         "options": {
           "title": "Velg synlighet for boost",
           "public": "Offentlig boost",
