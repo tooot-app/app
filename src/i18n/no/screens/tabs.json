@@ -1,128 +1,128 @@
 {
   "tabs": {
     "local": {
-      "name": "",
+      "name": "Følger",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Vis booster",
+        "showReplies": "Vis svar"
       }
     },
     "public": {
       "segments": {
-        "federated": "",
-        "local": "",
-        "trending": ""
+        "federated": "Føderert",
+        "local": "Lokal",
+        "trending": "Populært"
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Varsler"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Søk",
+      "accessibilityHint": "Søk etter emneknagger, brukere eller tuter"
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
-      "title": ""
+      "accessibilityLabel": "Filter",
+      "accessibilityHint": "Filtrer viste varslingstyper",
+      "title": "Vis varsler"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Bokmerker"
       },
       "conversations": {
-        "name": ""
+        "name": "Direktemeldinger"
       },
       "favourites": {
-        "name": ""
+        "name": "Favoritter"
       },
       "followedTags": {
-        "name": ""
+        "name": "Fulgte emneknagger"
       },
       "fontSize": {
-        "name": ""
+        "name": "Skriftstørrelse for tut"
       },
       "language": {
-        "name": ""
+        "name": "Språk"
       },
       "list": {
-        "name": ""
+        "name": "Liste: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Brukere i listen: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Opprett liste"
       },
       "listEdit": {
-        "name": ""
+        "name": "Rediger detaljer"
       },
       "lists": {
-        "name": ""
+        "name": "Lister"
       },
       "push": {
-        "name": ""
+        "name": "Pushvarsling"
       },
       "preferences": {
-        "name": ""
+        "name": "Brukervalg"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Alle innholdsfiltre"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Opprett Filter"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Rediger Filter"
       },
       "profile": {
-        "name": ""
+        "name": "Rediger Profil"
       },
       "profileName": {
-        "name": ""
+        "name": "Rediger visningsnavn"
       },
       "profileNote": {
-        "name": ""
+        "name": "Rediger beskrivelse"
       },
       "profileFields": {
-        "name": ""
+        "name": "Rediger metadata"
       },
       "settings": {
-        "name": ""
+        "name": "Appinnstillinger"
       },
       "switch": {
-        "name": ""
+        "name": "Bytt konto"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Dette er en demotut😊. Du kan velge flere alternativer nedenfor.<br /><br />Denne innstillingen påvirker bare hovedinnholdet i tuter, men ikke andre skriftstørrelser.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Standard",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Administrer brukere",
+      "error": "Slett bruker fra listen",
+      "empty": "Ingen bruker lagt til i denne listen"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Rediger detaljer",
+      "title": "Emne",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Vis svar:",
         "options": {
-          "none": "",
-          "list": "",
+          "none": "Ingen",
+          "list": "Medlemmer fra listen",
           "followed": ""
         }
       }
@@ -211,121 +211,121 @@
       },
       "keywords": "",
       "keyword": "",
-      "statuses": ""
+      "statuses": "Treff disse tutene"
     },
     "profile": {
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} oppdatert",
+        "failed": "{{type}} oppdatering feilet, prøv igjen"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Visningsnavn"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Profilbilde",
+          "description": "Vil bli nedskalert til 400 x 400 px"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Fane",
+          "description": "Vil bli nedskalert til 1500x500px"
         },
         "note": {
-          "title": ""
+          "title": "Beskrivelse"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadata",
+          "total_one": "{{count}} felt",
+          "total_other": "{{count}} felt"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Lås konto",
+          "description": "Krever at du godkjenner følgere manuelt"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Bot konto",
+          "description": "Denne kontoen utfører i hovedsak automatiserte handlinger og blir kanskje ikke holdt øye med"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Gruppe {{index}}",
+        "label": "Etikett",
+        "content": "Innhold"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Bildebehandling mislyktes. Vennligst prøv igjen."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Din telefon støtter ikke tooot's push-varsling",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Aktiver push-varsler",
+        "settings": "Aktiver i innstillinger"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Feil på tjener for push-tjeneste",
+        "description": "Vennligst kontakt din serveradministrator for å konfigurere push-støtte"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Aktiver for {{acct}}",
+        "description": "Meldinger blir sendt gjennom toot's server"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Meldingsdetaljer",
+        "description": "Meldinger sendt gjennom toots server er kryptert, men du kan velge å dekode meldingen på serveren. Vår server er åpen kildekode og har ingen logging."
       },
       "default": {
-        "heading": ""
+        "heading": "Standard"
       },
       "follow": {
-        "heading": ""
+        "heading": "Ny følger"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Følgerforespørsel"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Favorisert"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Boostet"
       },
       "mention": {
-        "heading": ""
+        "heading": "Nevnte deg"
       },
       "poll": {
-        "heading": ""
+        "heading": "Oppdateringer om avstemning"
       },
       "status": {
-        "heading": ""
+        "heading": "Tut fra påmeldte brukere"
       },
       "update": {
-        "heading": ""
+        "heading": "%s er redigert"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Administrer: registrer deg"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Administrer: rapporter"
       },
-      "howitworks": ""
+      "howitworks": "Lær hvordan ruting virker"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} ulest",
+          "read": "Alt lest",
+          "empty": "Ingen"
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Aktivert",
+        "content_false": "Deaktivert"
       },
       "logout": {
-        "button": "",
+        "button": "Logg ut",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Logge ut?",
+          "message": "Etter å ha logget ut, må du logge på igjen",
           "buttons": {
-            "logout": ""
+            "logout": "Logg ut"
           }
         }
       }
