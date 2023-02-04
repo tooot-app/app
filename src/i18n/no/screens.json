@@ -8,10 +8,10 @@
   },
   "pushError": {
     "message": "",
-    "description": ""
+    "description": "Vennligst aktiver push-varsling i innstillingene"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Bildetype {{type}} støttes ikke",
+    "videoNotSupported": "Videotype {{type}} støttes ikke"
   }
 }
