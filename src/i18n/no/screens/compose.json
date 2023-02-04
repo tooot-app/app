@@ -67,105 +67,105 @@
           "option": {
             "placeholder": {
               "accessibilityLabel": "Avstemningsvalg {{index}}",
-              "single": "",
-              "multiple": ""
+              "single": "Ett valg",
+              "multiple": "Flere valg"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Reduser valg til {{amount}}",
+              "accessibilityHint": "Minimum antall valg nådd, har {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Reduser valg til {{amount}}",
+              "accessibilityHint": "Maksimum antall valg nådd, har {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Valg type",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Ett valg",
+              "multiple": "Flere valg"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Gyldighet",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 minutter",
+              "1800": "30 minutter",
+              "3600": "1 time",
+              "21600": "6 timer",
+              "86400": "1 dag",
+              "259200": "3 dager",
+              "604800": "7 dager"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Last opp vedlegg",
+          "accessibilityHint": "Avstemmingsfunksjonen blir deaktivert når der er noen vedlegg",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Opplasting feilet",
+              "button": "Prøv igjen"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Legg til avstemning",
+          "accessibilityHint": "Vedlegg vil bli deaktivert når avstemningen er aktiv"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Tut-synlighet er {{visibility}}",
+          "title": "Tut-synlighet",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Offentlig",
+            "unlisted": "Uoppført",
+            "private": "Kun følgere",
+            "direct": "Direktemelding"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Legg til emoji",
+          "accessibilityHint": "Åpne emoji-valgpanel, sveip horisontalt for å endre side"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Utkast ({{count}})",
+      "drafts_other": "Utkast ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Rediger vedlegg",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Lagre redigering av vedlegg",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Redigering mislyktes",
+            "button": "Prøv igjen"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Beskriv media for synshemmede",
+          "placeholder": "Du kan legge til en beskrivelse, noen ganger kalt alt-tekst, på dine medier slik at de er tilgjengelige for enda flere mennesker, også for dem som er blinde eller svaksynte.\n\nGode beskrivelser er konkret, men presenterer hva som er i dine medier nøyaktig nok til å forstå konteksten."
         }
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Utkast"
       },
-      "warning": "",
+      "warning": "Utkast lagres bare lokalt, og kan ved uhell gå tapt. Bruk ikke utkast til langtidslagring.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Lagret utkast, trykk for å redigere dette utkastet",
+        "textEmpty": "Innhold er tomt"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Sjekker vedlegg på serveren..."
     }
   }
 }
