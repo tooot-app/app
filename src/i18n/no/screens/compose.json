@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Avbryte redigering?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Lagre utkast",
+          "delete": "Slett utkast"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Tut",
+        "conversation": "Tut DM",
+        "reply": "Tut svar",
+        "deleteEdit": "Tut",
+        "edit": "Tut",
+        "share": "Tut"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Tut mislyktes",
+          "button": "Prøv igjen"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "confirm": ""
+          "title": "Svar på tut ble ikke funnet",
+          "description": "Svarte tut kan ha blitt slettet. Vil du fjerne det fra din referanse?",
+          "confirm": "Fjern referanse"
         }
       }
     }
@@ -34,39 +34,39 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Tuter som @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Spoiler advarsel"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Hva tenker du på",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": ""
+              "title": "Maksimalt antall vedlegg nådd"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Merk vedlegg som følsomt",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Fjern opplastet vedlegg, nummer {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Rediger opplastet vedlegg, nummer {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Last opp flere vedlegg"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Trykk for å legge til emoji"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
+              "accessibilityLabel": "Avstemningsvalg {{index}}",
               "single": "",
               "multiple": ""
             }
