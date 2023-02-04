@@ -123,94 +123,94 @@
         "options": {
           "none": "Ingen",
           "list": "Medlemmer fra listen",
-          "followed": ""
+          "followed": "Enhver fulgt bruker"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Slett liste",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Slett listen \"{{list}}\"?",
+        "message": "Denne handlingen kan ikke gjenopprettes."
       }
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Standard synlighet for post",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Offentlig",
+          "unlisted": "Uoppført",
+          "private": "Kun følgere"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Marker alltid media som sensitivt"
       },
       "media": {
-        "title": "",
+        "title": "Visning av media",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Skjul media som er merket som sensitivt",
+          "show_all": "Vis alltid media",
+          "hide_all": "Skjul alltid media"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Utvid alltid tuter som er merket med innholdsadvarsler"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Autostart GIF i tuter"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Innholdsfiltre",
+        "content": "{{count}} aktive"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Oppdater innstillinger",
+        "description": "Innstillingene nedenfor kan kun oppdateres ved hjelp av web-grensesnittet"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "Utløpt",
+      "keywords_one": "{{count}} nøkkelord",
+      "keywords_other": "{{count}} nøkkelord",
+      "statuses_one": "{{count}} tut",
+      "statuses_other": "{{count}} tut",
+      "context": "Gjelder i <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "følgende og lister",
+        "notifications": "varsler",
+        "public": "føderert",
+        "thread": "samtale",
+        "account": "profil"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Navn",
+      "expiration": "Utløper",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Aldri",
+        "1800": "Etter 30 minutter",
+        "3600": "Etter 1 time",
+        "43200": "Etter 12 timer",
+        "86400": "Etter 1 dag",
+        "604800": "Etter 1 uke",
+        "18144000": "Etter 1 måned"
       },
-      "context": "",
+      "context": "Gjelder i",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Følgende og lister",
+        "notifications": "Varsel",
+        "public": "Føderert tidlinje",
+        "thread": "Samtalevisning",
+        "account": "Profil visning"
       },
-      "action": "",
+      "action": "Når samsvarende",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Kollapset, men kan vises",
+        "hide": "Skjult fullstendig"
       },
-      "keywords": "",
-      "keyword": "",
+      "keywords": "Treff for disse nøkkelordene",
+      "keyword": "Nøkkelord",
       "statuses": "Treff disse tutene"
     },
     "profile": {
@@ -332,144 +332,144 @@
     },
     "settings": {
       "theme": {
-        "heading": "",
+        "heading": "Utseende",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "Som system",
+          "light": "Lyst tema",
+          "dark": "Mørkt tema"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Mørkt tema",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Standard",
+          "darker": "Helt svart"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Åpning av lenke",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "I appen",
+          "external": "Bruk nettleser"
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Autostart GIF i tuter"
       },
       "feedback": {
-        "heading": ""
+        "heading": "Funksjonsforespørsler"
       },
       "support": {
-        "heading": ""
+        "heading": "Støtt tooot"
       },
       "contact": {
-        "heading": ""
+        "heading": "Kontakt tooot"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Versjon v{{version}}",
+      "instanceVersion": "Mastodon versjon v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Velg fra innlogget",
+      "new": "Logg inn på instans"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Handlinger for bruker {{user}}",
+        "accessibilityHint": "Du kan dempe, blokkere, rapportere eller dele denne brukeren"
       },
-      "followed_by": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " følger deg",
+      "moved": "Bruker flyttet",
+      "created_at": "Ble med: {{date}}",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} tut"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Tuter",
+        "all": "Tuter og svar"
       },
-      "suspended": ""
+      "suspended": "Konto suspendert av moderatorene på serveren din"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Lister av @{{username}}",
+      "inLists": "I liste",
+      "notInLists": "Andre lister"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>'s media</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Legg til filter",
+      "existed": "Finnes i disse filtrene"
     },
     "history": {
-      "name": ""
+      "name": "Rediger historikk"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Rapporter {{acct}}",
+      "report": "Rapporter",
       "forward": {
-        "heading": ""
+        "heading": "Anonymt videresendt til ekstern server {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Hva skjer med denne kontoen?",
+        "spam": "Det er søppelpost",
+        "other": "Det er noe annet",
+        "violation": "Det bryter serverregler"
       },
       "comment": {
-        "heading": ""
+        "heading": "Noe annet du vil legge til?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Det bryter serverregler"
       }
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Søker",
+        "placeholder": "etter..."
       },
       "empty": {
-        "general": "",
+        "general": "Angi nøkkelord for å søke etter <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> eller <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Avansert søk",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Populære emner"
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Bruker",
+        "hashtags": "Emneknagg",
+        "statuses": "Tut"
       },
-      "notFound": "",
-      "noResult": ""
+      "notFound": "Finner ikke <bold>{{searchTerm}}</bold> relatert til {{type}}",
+      "noResult": "Kan ikke finne noe, vennligst prøv et annet begrep"
     },
     "toot": {
-      "name": "",
+      "name": "Diskusjoner",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Inneholder eksternt innhold",
+        "message": "Føderert innhold er ikke alltid tilgjengelig på lokal forekomst. Dette innholdet hentes fra ekstern forekomst og merkes. Du kan samhandle med disse innholdet som vanlig."
       }
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "Følger {{count}}",
+        "followers": "{{count}} følgere"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} boostet",
+        "favourited_by": "{{count}} som favoritt"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Resultater fra en ekstern instans er ufullstendig"
     }
   }
 }
