@@ -1,106 +1,106 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Handlinger for tut, for eksempel dens bruker, tut selv",
   "account": {
-    "title": "",
+    "title": "Brukerhandlinger",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Følg bruker",
+      "action_true": "Slutt å følge"
     },
-    "inLists": "",
+    "inLists": "Lister som inneholder bruker ...",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Vis brukerens booster",
+      "action_true": "Skjul brukernes booster"
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Demp bruker",
+      "action_true": "Opphev demping av bruker"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Følg som ...",
+      "succeed_default": "Følger nå @{{target}} med @{{source}}",
+      "succeed_locked": "Sendt følge forespørsel til @{{target}} med {{source}}, venter på godkjenning",
+      "failed": "Følg som"
     },
-    "blockReport": "",
+    "blockReport": "Blokker og rapporter",
     "block": {
-      "action_false": "",
-      "action_true": "",
+      "action_false": "Blokker bruker",
+      "action_true": "Fjern blokkering av brukker",
       "alert": {
-        "title": ""
+        "title": "Bekreft blokkering av @{{username}}?"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Rapporter og blokker bruker",
       "alert": {
-        "title": ""
+        "title": "Bekreft blokkering av @{{username}}?"
       }
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Direktemelding",
+    "public": "Offentlig melding"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Kopier tut",
+    "succeed": "Kopiert"
   },
   "instance": {
-    "title": "",
+    "title": "Instansaktivitet",
     "block": {
-      "action": "",
+      "action": "Blokker instans {{instance}}",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Bekreft blokkering av @{{instance}}?",
+        "message": "For det meste kan du dempe eller blokkere visse brukere.\n\nEtter at du har blokkert, vil alt innholdet fra denne forekomsten bli fjernet!"
       }
     }
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Følg",
+      "action_true": "Slutt å følge"
     },
     "filter": {
-      "action": ""
+      "action": "Filtrer emnet ..."
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Del tut"
     },
     "account": {
-      "action": ""
+      "action": "Del bruker"
     }
   },
   "status": {
-    "title": "",
+    "title": "Tut handlinger",
     "edit": {
-      "action": ""
+      "action": "Rediger tut"
     },
     "delete": {
-      "action": "",
+      "action": "Slett tut",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Bekreft sletting?",
+        "message": "Alle booster og favoritter blir slettet, inkludert alle svar."
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Slett tut og repost",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Bekreft sletting og repost?",
+        "message": "Alle booster og favoritter blir slettet, inkludert alle svar."
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Demp tut og svar",
+      "action_true": "Avdemp tut og svar"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Fest tut",
+      "action_true": "Avfest tut"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Filtrer tut...",
+      "action_true": "Behandle filtere..."
     }
   }
 }
