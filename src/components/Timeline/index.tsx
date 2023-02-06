@@ -160,7 +160,7 @@ const Timeline: React.FC<Props> = ({
             viewabilityConfig: {
               minimumViewTime: 300,
               itemVisiblePercentThreshold: 80,
-              waitForInteraction: true
+              waitForInteraction: false
             },
             onViewableItemsChanged: ({ viewableItems }) => {
               const marker = readMarker ? getAccountStorage.string(readMarker) : undefined
