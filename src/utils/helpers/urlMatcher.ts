@@ -9,7 +9,7 @@ export const urlMatcher = (
 ):
   | {
       domain: string
-      account?: Partial<Pick<Mastodon.Account, 'id' | 'acct' | '_remote'>>
+      account?: Partial<Pick<Mastodon.Account, 'acct' | '_remote'>>
       status?: Partial<Pick<Mastodon.Status, 'id' | '_remote'>>
     }
   | undefined => {
@@ -24,12 +24,17 @@ export const urlMatcher = (
   const _remote = parsed.hostname !== getAccountStorage.string('auth.domain')
 
   let statusId: string | undefined
-  let accountId: string | undefined
   let accountAcct: string | undefined
 
   const segments = parsed.pathname.split('/')
   const last = segments[segments.length - 1]
   const length = segments.length // there is a starting slash
+
+  const testAndAssignStatusId = (id: string) => {
+    if (!!parseInt(id)) {
+      statusId = id
+    }
+  }
 
   switch (last?.startsWith('@')) {
     case true:
@@ -45,14 +50,14 @@ export const urlMatcher = (
         if (nextToLast === 'statuses') {
           if (length === 4 && segments[length - 3] === 'web') {
             // https://social.xmflsct.com/web/statuses/105590085754428765 <- old
-            statusId = last
+            testAndAssignStatusId(last)
           } else if (
             length === 5 &&
             segments[length - 2] === 'statuses' &&
             segments[length - 4] === 'users'
           ) {
             // https://social.xmflsct.com/users/tooot/statuses/105590085754428765 <- default Mastodon
-            statusId = last
+            testAndAssignStatusId(last)
             // accountAcct = `@${segments[length - 3]}@${domain}`
           }
         } else if (
@@ -61,7 +66,7 @@ export const urlMatcher = (
         ) {
           // https://social.xmflsct.com/web/@tooot/105590085754428765 <- pretty Mastodon v3.5 and below
           // https://social.xmflsct.com/@tooot/105590085754428765 <- pretty Mastodon v4.0 and above
-          statusId = last
+          testAndAssignStatusId(last)
           // accountAcct = `${nextToLast}@${domain}`
         }
       }
@@ -70,7 +75,7 @@ export const urlMatcher = (
 
   return {
     domain,
-    ...((accountId || accountAcct) && { account: { id: accountId, acct: accountAcct, _remote } }),
+    ...(accountAcct && { account: { acct: accountAcct, _remote } }),
     ...(statusId && { status: { id: statusId, _remote } })
   }
 }

@@ -248,7 +248,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                     body: data.map(remote => {
                       const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
                       if (localMatch) {
-                        return { ...localMatch, _level: remote._level }
+                        return {
+                          ...localMatch,
+                          _level: remote._level,
+                          key: `${localMatch.id}_remote`
+                        }
                       } else {
                         return appendRemote.status(remote)
                       }
@@ -275,6 +279,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       ref={flRef}
       windowSize={5}
       data={query.data?.pages?.[0].body}
+      extraData={query.dataUpdatedAt}
       renderItem={({ item, index }) => {
         const prev = query.data?.pages[0].body[index - 1]?._level || 0
         const curr = item._level || 0

@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
@@ -7,7 +8,6 @@ import * as Sentry from '@sentry/react-native'
 import apiInstance from '@utils/api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@utils/api/tooot'
 import browserPackage from '@utils/helpers/browserPackage'
-import { isDevelopment } from '@utils/helpers/checkEnvironment'
 import { PUSH_ADMIN, PUSH_DEFAULT, setChannels } from '@utils/push/constants'
 import { updateExpoToken } from '@utils/push/updateExpoToken'
 import { useAppsQuery } from '@utils/queryHooks/apps'
@@ -35,24 +35,7 @@ const TabMePush: React.FC = () => {
   const [accountDomain] = useAccountStorage.string('auth.account.domain')
   const [accountId] = useAccountStorage.string('auth.account.id')
 
-  const appsQuery = useAppsQuery({
-    options: {
-      enabled: false,
-      onSuccess: async data => {
-        if (data.vapid_key) {
-          await checkPush()
-          if (isDevelopment) {
-            setPushAvailable(true)
-          } else {
-            setPushAvailable(!!expoToken?.length)
-          }
-        }
-      }
-    }
-  })
-  useEffect(() => {
-    appsQuery.refetch()
-  }, [])
+  const appsQuery = useAppsQuery()
 
   const checkPush = async () => {
     const permissions = await Notifications.getPermissionsAsync()
@@ -61,17 +44,18 @@ const TabMePush: React.FC = () => {
     layoutAnimation()
     await updateExpoToken()
   }
-
-  const [pushAvailable, setPushAvailable] = useState<boolean>()
-  const [pushEnabled, setPushEnabled] = useState<boolean>()
-  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
-
+  useEffect(() => {
+    checkPush()
+  }, [])
   useEffect(() => {
     const subscription = AppState.addEventListener('change', checkPush)
     return () => {
       subscription.remove()
     }
   }, [])
+
+  const [pushEnabled, setPushEnabled] = useState<boolean>()
+  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
 
   const alerts = () =>
     push?.alerts
@@ -133,11 +117,11 @@ const TabMePush: React.FC = () => {
   const pushPath = `${expoToken}/${domain}/${accountId}`
   const accountFull = `@${accountAcct}@${accountDomain}`
 
-  return (
+  return appsQuery.isFetched ? (
     <ScrollView>
       {!!appsQuery.data?.vapid_key ? (
         <>
-          {!!pushAvailable ? (
+          {!!expoToken?.length ? (
             <>
               {pushEnabled === false ? (
                 <MenuContainer>
@@ -249,6 +233,7 @@ const TabMePush: React.FC = () => {
                           method: 'delete',
                           url: 'push/subscription'
                         })
+                        return Promise.reject()
                       })
 
                       setAccountStorage([
@@ -352,6 +337,8 @@ const TabMePush: React.FC = () => {
         </View>
       )}
     </ScrollView>
+  ) : (
+    <Loading style={{ flex: 1 }} />
   )
 }
 
