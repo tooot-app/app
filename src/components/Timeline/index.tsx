@@ -60,6 +60,9 @@ const Timeline: React.FC<Props> = ({
   const { colors, theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
+  const firstLoad = useSharedValue<boolean>(!readMarker || disableRefresh)
+  const shouldAutoFetch = useSharedValue<boolean>(!!readMarker && !disableRefresh)
+
   const { data, refetch, isFetching, isLoading, isRefetching, fetchNextPage, isFetchingNextPage } =
     useTimelineQuery({
       ...queryKey[1],
@@ -68,7 +71,13 @@ const Timeline: React.FC<Props> = ({
         notifyOnChangeProps: Platform.select({
           ios: ['dataUpdatedAt', 'isFetching'],
           android: ['dataUpdatedAt', 'isFetching', 'isLoading']
-        })
+        }),
+        onSuccess: () => {
+          if (!firstLoad.value) {
+            firstLoad.value = true
+            fetchingType.value = 1
+          }
+        }
       }
     })
 
@@ -90,6 +99,9 @@ const Timeline: React.FC<Props> = ({
     (curr, prev) => {
       if (curr !== null && prev === null) {
         notifiedFetchedNotice.value = false
+        if (curr === 0) {
+          shouldAutoFetch.value = false
+        }
       }
     },
     [fetchedCount]
@@ -122,6 +134,15 @@ const Timeline: React.FC<Props> = ({
     {
       onScroll: ({ contentOffset: { y } }) => {
         scrollY.value = y
+        if (
+          y < 300 &&
+          !isFetchingPrev.value &&
+          fetchingType.value === 0 &&
+          shouldAutoFetch.value &&
+          Platform.OS === 'ios'
+        ) {
+          fetchingType.value = 1
+        }
       },
       onEndDrag: ({ contentOffset: { y } }) => {
         if (!disableRefresh && !isFetching) {
@@ -129,6 +150,7 @@ const Timeline: React.FC<Props> = ({
             fetchingType.value = 2
           } else if (y <= SEPARATION_Y_1) {
             fetchingType.value = 1
+            shouldAutoFetch.value = true
           }
         }
       }
