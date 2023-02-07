@@ -21,7 +21,7 @@ import { Pressable, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {
-  const { queryKey, status, ownAccount, spoilerHidden, disableDetails, highlighted } =
+  const { queryKey, status, isMyAccount, spoilerHidden, disableDetails, highlighted } =
     useContext(StatusContext)
   if (!queryKey || !status || !status.poll) return null
   const poll = status.poll
@@ -72,7 +72,7 @@ const TimelinePoll: React.FC = () => {
 
   const pollButton = () => {
     if (!poll.expired) {
-      if (!ownAccount && !poll.voted) {
+      if (!isMyAccount && !poll.voted) {
         return (
           <View style={{ marginRight: StyleConstants.Spacing.S }}>
             <Button
