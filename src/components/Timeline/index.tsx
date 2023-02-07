@@ -138,10 +138,16 @@ const Timeline: React.FC<Props> = ({
 
   const latestMarker = useRef<string>()
   const updateMarkers = useCallback(
-    throttle(
-      () => readMarker && setAccountStorage([{ key: readMarker, value: latestMarker.current }]),
-      1000 * 15
-    ),
+    throttle(() => {
+      if (readMarker) {
+        const currentMarker = getAccountStorage.string(readMarker) || '0'
+        if ((latestMarker.current || '0') > currentMarker) {
+          setAccountStorage([{ key: readMarker, value: latestMarker.current }])
+        } else {
+          // setAccountStorage([{ key: readMarker, value: '105250709762254246' }])
+        }
+      }
+    }, 1000 * 15),
     []
   )
   readMarker &&
@@ -159,24 +165,14 @@ const Timeline: React.FC<Props> = ({
           {
             viewabilityConfig: {
               minimumViewTime: 300,
-              itemVisiblePercentThreshold: 80,
+              itemVisiblePercentThreshold: 10,
               waitForInteraction: false
             },
             onViewableItemsChanged: ({ viewableItems }) => {
-              const marker = readMarker ? getAccountStorage.string(readMarker) : undefined
-
               const firstItemId = viewableItems.filter(item => item.isViewable)[0]?.item.id
-              if (
-                !isFetchingPrev.value &&
-                !isRefetching &&
-                firstItemId &&
-                firstItemId > (marker || '0')
-              ) {
+              if (!isFetchingPrev.value && !isRefetching && firstItemId) {
                 latestMarker.current = firstItemId
                 updateMarkers()
-              } else {
-                // latestMarker.current = '105250709762254246'
-                // updateMarkers()
               }
             }
           }
