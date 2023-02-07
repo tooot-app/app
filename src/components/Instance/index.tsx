@@ -78,7 +78,8 @@ const ComponentInstance: React.FC<Props> = ({
         clientId,
         clientSecret,
         scopes: variables.scopes,
-        redirectUri
+        redirectUri,
+        usePKCE: !['pawoo.net'].includes(domain)
       })
       await request.makeAuthUrlAsync(discovery)
 
