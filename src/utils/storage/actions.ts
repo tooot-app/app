@@ -244,6 +244,12 @@ export const setAccount = async (account: string) => {
     return
   }
 
+  log('log', 'setAccount', `binding storage of ${account}`)
+  storage.account = temp
+  setGlobalStorage('account.active', account)
+  await queryClient.resetQueries()
+  queryClient.clear()
+
   await apiGeneral<Mastodon.Account>({
     method: 'get',
     domain,
@@ -254,15 +260,10 @@ export const setAccount = async (account: string) => {
   })
     .then(res => res.body)
     .then(async a => {
-      temp.set('auth.account.acct', a.acct)
-      temp.set('auth.account.avatar_static', a.avatar_static)
+      storage.account?.set('auth.account.acct', a.acct)
+      storage.account?.set('auth.account.avatar_static', a.avatar_static)
 
-      log('log', 'setAccount', `binding storage of ${account}`)
-      await queryClient.resetQueries()
-      queryClient.clear()
-
-      storage.account = temp
-      setGlobalStorage('account.active', account)
+      log('log', 'setAccount', 'update details')
     })
     .catch(async error => {
       if (error?.status && error.status == 401) {
@@ -302,7 +303,7 @@ export const removeAccount = async (account: string, warning: boolean = true) =>
     apiGeneral({
       method: 'post',
       domain: revokeDetails.domain,
-      url: '/oauth/revoke',
+      url: 'oauth/revoke',
       body: revokeDetails
     })
   }

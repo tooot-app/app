@@ -5706,6 +5706,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-image@npm:^1.0.0-beta.6":
+  version: 1.0.0-beta.6
+  resolution: "expo-image@npm:1.0.0-beta.6"
+  peerDependencies:
+    expo: "*"
+  checksum: d874d6779db813166a682be6f4c4ee3e101be90121376963946db85bcbef71f50bc027b18d5e07b4ca6a03337597a60df2cc2cfed66661149ec7cf53d6b6bae9
+  languageName: node
+  linkType: hard
+
 "expo-keep-awake@npm:~11.0.1":
   version: 11.0.1
   resolution: "expo-keep-awake@npm:11.0.1"
@@ -6721,9 +6730,9 @@ __metadata:
   linkType: hard
 
 "http-cache-semantics@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "http-cache-semantics@npm:4.1.0"
-  checksum: 974de94a81c5474be07f269f9fd8383e92ebb5a448208223bfb39e172a9dbc26feff250192ecc23b9593b3f92098e010406b0f24bd4d588d631f80214648ed42
+  version: 4.1.1
+  resolution: "http-cache-semantics@npm:4.1.1"
+  checksum: 83ac0bc60b17a3a36f9953e7be55e5c8f41acc61b22583060e8dedc9dd5e3607c823a88d0926f9150e571f90946835c7fe150732801010845c72cd8bbff1a236
   languageName: node
   linkType: hard
 
@@ -9639,26 +9648,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-fast-image@npm:8.6.3":
-  version: 8.6.3
-  resolution: "react-native-fast-image@npm:8.6.3"
-  peerDependencies:
-    react: ^17 || ^18
-    react-native: ">=0.60.0"
-  checksum: 29289cb6b2eae0983c8922b22e2d9de3be07322bb7991c5def19f95eadefaedb0e308ff0b38cc1d0444e8bd4fe94a7621a99a2d3d9298100bcb60b3144677234
-  languageName: node
-  linkType: hard
-
-"react-native-fast-image@patch:react-native-fast-image@npm%3A8.6.3#./.yarn/patches/react-native-fast-image-npm-8.6.3-03ee2d23c0.patch::locator=tooot%40workspace%3A.":
-  version: 8.6.3
-  resolution: "react-native-fast-image@patch:react-native-fast-image@npm%3A8.6.3#./.yarn/patches/react-native-fast-image-npm-8.6.3-03ee2d23c0.patch::version=8.6.3&hash=1a9a6d&locator=tooot%40workspace%3A."
-  peerDependencies:
-    react: ^17 || ^18
-    react-native: ">=0.60.0"
-  checksum: 4b2c6b2d6fc461f26936ff5033acccf7aef15f9d176ea835d09c87bee83accbb6c2b98a2435ad019a305c0751aa43040c153a6d5735664ace31e64aad0b2bc61
-  languageName: node
-  linkType: hard
-
 "react-native-flash-message@npm:^0.4.0":
   version: 0.4.0
   resolution: "react-native-flash-message@npm:0.4.0"
@@ -11432,6 +11421,7 @@ __metadata:
     expo-crypto: ^12.1.0
     expo-file-system: ^15.1.1
     expo-haptics: ^12.1.0
+    expo-image: ^1.0.0-beta.6
     expo-linking: ^3.3.0
     expo-localization: ^14.0.0
     expo-notifications: ^0.17.0
@@ -11454,7 +11444,6 @@ __metadata:
     react-native: ^0.70.7
     react-native-blurhash: ^1.1.10
     react-native-clean-project: ^4.0.1
-    react-native-fast-image: ^8.6.3
     react-native-flash-message: ^0.4.0
     react-native-gesture-handler: ~2.9.0
     react-native-image-picker: ^5.0.1

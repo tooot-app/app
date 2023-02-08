@@ -60,6 +60,9 @@ const Timeline: React.FC<Props> = ({
   const { colors, theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
+  const firstLoad = useSharedValue<boolean>(!readMarker || disableRefresh)
+  const shouldAutoFetch = useSharedValue<boolean>(!!readMarker && !disableRefresh)
+
   const { data, refetch, isFetching, isLoading, isRefetching, fetchNextPage, isFetchingNextPage } =
     useTimelineQuery({
       ...queryKey[1],
@@ -68,7 +71,13 @@ const Timeline: React.FC<Props> = ({
         notifyOnChangeProps: Platform.select({
           ios: ['dataUpdatedAt', 'isFetching'],
           android: ['dataUpdatedAt', 'isFetching', 'isLoading']
-        })
+        }),
+        onSuccess: () => {
+          if (!firstLoad.value) {
+            firstLoad.value = true
+            fetchingType.value = 1
+          }
+        }
       }
     })
 
@@ -90,6 +99,9 @@ const Timeline: React.FC<Props> = ({
     (curr, prev) => {
       if (curr !== null && prev === null) {
         notifiedFetchedNotice.value = false
+        if (curr === 0) {
+          shouldAutoFetch.value = false
+        }
       }
     },
     [fetchedCount]
@@ -122,6 +134,15 @@ const Timeline: React.FC<Props> = ({
     {
       onScroll: ({ contentOffset: { y } }) => {
         scrollY.value = y
+        if (
+          y < 300 &&
+          !isFetchingPrev.value &&
+          fetchingType.value === 0 &&
+          shouldAutoFetch.value &&
+          Platform.OS === 'ios'
+        ) {
+          fetchingType.value = 1
+        }
       },
       onEndDrag: ({ contentOffset: { y } }) => {
         if (!disableRefresh && !isFetching) {
@@ -129,6 +150,7 @@ const Timeline: React.FC<Props> = ({
             fetchingType.value = 2
           } else if (y <= SEPARATION_Y_1) {
             fetchingType.value = 1
+            shouldAutoFetch.value = true
           }
         }
       }
@@ -138,10 +160,16 @@ const Timeline: React.FC<Props> = ({
 
   const latestMarker = useRef<string>()
   const updateMarkers = useCallback(
-    throttle(
-      () => readMarker && setAccountStorage([{ key: readMarker, value: latestMarker.current }]),
-      1000 * 15
-    ),
+    throttle(() => {
+      if (readMarker) {
+        const currentMarker = getAccountStorage.string(readMarker) || '0'
+        if ((latestMarker.current || '0') > currentMarker) {
+          setAccountStorage([{ key: readMarker, value: latestMarker.current }])
+        } else {
+          // setAccountStorage([{ key: readMarker, value: '105250709762254246' }])
+        }
+      }
+    }, 1000 * 15),
     []
   )
   readMarker &&
@@ -159,24 +187,14 @@ const Timeline: React.FC<Props> = ({
           {
             viewabilityConfig: {
               minimumViewTime: 300,
-              itemVisiblePercentThreshold: 80,
+              itemVisiblePercentThreshold: 10,
               waitForInteraction: false
             },
             onViewableItemsChanged: ({ viewableItems }) => {
-              const marker = readMarker ? getAccountStorage.string(readMarker) : undefined
-
               const firstItemId = viewableItems.filter(item => item.isViewable)[0]?.item.id
-              if (
-                !isFetchingPrev.value &&
-                !isRefetching &&
-                firstItemId &&
-                firstItemId > (marker || '0')
-              ) {
+              if (!isFetchingPrev.value && !isRefetching && firstItemId) {
                 latestMarker.current = firstItemId
                 updateMarkers()
-              } else {
-                // latestMarker.current = '105250709762254246'
-                // updateMarkers()
               }
             }
           }

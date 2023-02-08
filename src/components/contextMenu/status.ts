@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
+import { checkIsMyAccount } from '@utils/helpers/isMyAccount'
 import { RootStackParamList, useNavState } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
@@ -57,9 +58,8 @@ const menuStatus = ({
 
   const menus: ContextMenu = []
 
-  const [accountId] = useAccountStorage.string('auth.account.id')
   const [accountAcct] = useAccountStorage.string('auth.account.acct')
-  const ownAccount = accountId === status.account?.id
+  const isMyAccount = checkIsMyAccount(status.account.id)
 
   const canEditPost = featureCheck('edit_post')
 
@@ -98,7 +98,7 @@ const menuStatus = ({
         },
         disabled: false,
         destructive: false,
-        hidden: !ownAccount || !canEditPost
+        hidden: !isMyAccount || !canEditPost
       },
       title: t('componentContextMenu:status.edit.action'),
       icon: 'square.and.pencil'
@@ -142,7 +142,7 @@ const menuStatus = ({
           ),
         disabled: false,
         destructive: true,
-        hidden: !ownAccount
+        hidden: !isMyAccount
       },
       title: t('componentContextMenu:status.deleteEdit.action'),
       icon: 'pencil.and.outline'
@@ -171,7 +171,7 @@ const menuStatus = ({
           ),
         disabled: false,
         destructive: true,
-        hidden: !ownAccount
+        hidden: !isMyAccount
       },
       title: t('componentContextMenu:status.delete.action'),
       icon: 'trash'
@@ -195,7 +195,7 @@ const menuStatus = ({
         disabled: false,
         destructive: false,
         hidden:
-          !ownAccount &&
+          !isMyAccount &&
           queryKey[1].page !== 'Notifications' &&
           !status.mentions?.find(
             mention => mention.acct === accountAcct && mention.username === accountAcct
@@ -224,7 +224,7 @@ const menuStatus = ({
           }),
         disabled: status.visibility !== 'public' && status.visibility !== 'unlisted',
         destructive: false,
-        hidden: !ownAccount
+        hidden: !isMyAccount
       },
       title: t('componentContextMenu:status.pin.action', {
         defaultValue: 'false',
@@ -236,8 +236,9 @@ const menuStatus = ({
       type: 'item',
       key: 'status-filter',
       props: {
-        // @ts-ignore
-        onSelect: () => navigation.navigate('Tab-Shared-Filter', { source: 'status', status, queryKey }),
+        onSelect: () =>
+          // @ts-ignore
+          navigation.navigate('Tab-Shared-Filter', { source: 'status', status, queryKey }),
         disabled: false,
         destructive: false,
         hidden: !('filtered' in status)

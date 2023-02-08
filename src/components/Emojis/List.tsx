@@ -8,6 +8,7 @@ import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { Image } from 'expo-image'
 import { chunk } from 'lodash'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +20,6 @@ import {
   TextInput,
   View
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import EmojisContext from './Context'
 
 const EmojisList = () => {
@@ -129,9 +129,7 @@ const EmojisList = () => {
               }}
               style={{ padding: StyleConstants.Spacing.S }}
             >
-              <FastImage
-                enterTransition='fadeIn'
-                transitionDuration={60}
+              <Image
                 accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
                   emoji: emoji.shortcode
                 })}

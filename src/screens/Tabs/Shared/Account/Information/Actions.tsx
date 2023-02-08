@@ -2,7 +2,7 @@ import Button from '@components/Button'
 import menuAt from '@components/contextMenu/at'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
-import { useAccountStorage } from '@utils/storage/actions'
+import { checkIsMyAccount } from '@utils/helpers/isMyAccount'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -56,12 +56,11 @@ const AccountInformationActions: React.FC = () => {
     )
   }
 
-  const [accountId] = useAccountStorage.string('auth.account.id')
-  const ownAccount = account?.id === accountId
+  const isMyAccount = checkIsMyAccount(account?.id)
 
   const mAt = menuAt({ account })
 
-  if (!ownAccount && account) {
+  if (!isMyAccount && account) {
     return (
       <View style={styles.base}>
         {relationship && !relationship.blocked_by ? (

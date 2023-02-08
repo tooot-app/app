@@ -1,4 +1,5 @@
 import Button from '@components/Button'
+import GracefullyImage from '@components/GracefullyImage'
 import haptics from '@components/haptics'
 import { Loading } from '@components/Loading'
 import { ParseHTML } from '@components/Parse'
@@ -6,7 +7,6 @@ import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { connectMedia } from '@utils/api/helpers/connect'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useAnnouncementMutation, useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
@@ -22,7 +22,6 @@ import {
   StyleSheet,
   View
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -139,12 +138,13 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
                 }
               >
                 {reaction.url ? (
-                  <FastImage
-                    source={connectMedia({
-                      uri: reduceMotionEnabled ? reaction.static_url : reaction.url
-                    })}
-                    style={{
-                      width: StyleConstants.Font.LineHeight.M + 3,
+                  <GracefullyImage
+                    sources={{
+                      default: { uri: reaction.url },
+                      static: { uri: reaction.static_url }
+                    }}
+                    dimension={{
+                      width: StyleConstants.Font.LineHeight.M,
                       height: StyleConstants.Font.LineHeight.M
                     }}
                   />

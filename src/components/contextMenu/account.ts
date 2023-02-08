@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
+import { checkIsMyAccount } from '@utils/helpers/isMyAccount'
 import { TabSharedStackParamList, useNavState } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import {
@@ -15,7 +16,7 @@ import {
   MutationVarsTimelineUpdateAccountProperty,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { getAccountStorage, getReadableAccounts, useAccountStorage } from '@utils/storage/actions'
+import { getAccountStorage, getReadableAccounts } from '@utils/storage/actions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform } from 'react-native'
@@ -40,18 +41,17 @@ const menuAccount = ({
 
   const [enabled, setEnabled] = useState(openChange)
   useEffect(() => {
-    if (!ownAccount && enabled === false && openChange === true) {
+    if (!isMyAccount && enabled === false && openChange === true) {
       setEnabled(true)
     }
   }, [openChange, enabled])
   const { data: fetchedAccount } = useAccountQuery({ account, _local: true, options: { enabled } })
   const actualAccount = status?._remote ? fetchedAccount : account
+  const isMyAccount = checkIsMyAccount(actualAccount?.id)
   const { data, isFetched } = useRelationshipQuery({
     id: actualAccount?.id,
     options: { enabled: !!actualAccount?.id && enabled }
   })
-
-  const ownAccount = useAccountStorage.string('auth.account.id')['0'] === actualAccount?.id
 
   const queryClient = useQueryClient()
   const timelineMutation = useTimelineMutation({
@@ -134,7 +134,7 @@ const menuAccount = ({
 
   if (!account) return []
 
-  if (!ownAccount && Platform.OS !== 'android' && type !== 'account') {
+  if (!isMyAccount && Platform.OS !== 'android' && type !== 'account') {
     menus[0].push({
       type: 'item',
       key: 'account-following',
@@ -165,7 +165,7 @@ const menuAccount = ({
     })
   }
 
-  if (!ownAccount) {
+  if (!isMyAccount) {
     menus[0].push({
       type: 'item',
       key: 'account-list',

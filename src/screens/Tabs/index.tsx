@@ -52,7 +52,7 @@ const ScreenTabs = () => {
               return (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <GracefullyImage
-                    uri={{ original: avatarStatic }}
+                    sources={{ default: { uri: avatarStatic } }}
                     dimension={{ width: size, height: size }}
                     style={{
                       borderRadius: size,

@@ -40,7 +40,7 @@ const AccountButton: React.FC<Props> = ({ account, additionalActions }) => {
       }}
     >
       <GracefullyImage
-        uri={{ original: account.avatar_static }}
+        sources={{ default: { uri: account.avatar_static } }}
         dimension={{
           width: StyleConstants.Font.Size.L,
           height: StyleConstants.Font.Size.L

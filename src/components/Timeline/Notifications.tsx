@@ -12,10 +12,10 @@ import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { featureCheck } from '@utils/helpers/featureCheck'
+import { checkIsMyAccount } from '@utils/helpers/isMyAccount'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Fragment, useState } from 'react'
@@ -32,7 +32,6 @@ export interface Props {
 }
 
 const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
-  const [accountId] = useAccountStorage.string('auth.account.id')
   const { data: preferences } = usePreferencesQuery()
 
   const status = notification.status?.reblog ? notification.status.reblog : notification.status
@@ -42,7 +41,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       : notification.status
       ? notification.status.account
       : notification.account
-  const ownAccount = notification.account?.id === accountId
+  const isMyAccount = checkIsMyAccount(notification.account?.id)
   const [spoilerExpanded, setSpoilerExpanded] = useState(
     preferences?.['reading:expand:spoilers'] || false
   )
@@ -109,7 +108,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   const mStatus = menuStatus({ status: notification.status, queryKey })
   const mInstance = menuInstance({ status: notification.status, queryKey })
 
-  if (!ownAccount) {
+  if (!isMyAccount) {
     let filterResults: FilteredProps['filterResults'] = []
     const [filterRevealed, setFilterRevealed] = useState(false)
     const hasFilterServerSide = featureCheck('filter_server_side')
@@ -140,7 +139,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       value={{
         queryKey,
         status,
-        ownAccount,
+        isMyAccount,
         spoilerHidden
       }}
     >

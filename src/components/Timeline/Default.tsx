@@ -12,11 +12,11 @@ import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { featureCheck } from '@utils/helpers/featureCheck'
+import { checkIsMyAccount } from '@utils/helpers/isMyAccount'
 import removeHTML from '@utils/helpers/removeHTML'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Fragment, useRef, useState } from 'react'
@@ -63,10 +63,9 @@ const TimelineDefault: React.FC<Props> = ({
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const [accountId] = useAccountStorage.string('auth.account.id')
   const { data: preferences } = usePreferencesQuery()
 
-  const ownAccount = status.account?.id === accountId
+  const isMyAccount = checkIsMyAccount(status.account.id)
   const [spoilerExpanded, setSpoilerExpanded] = useState(
     preferences?.['reading:expand:spoilers'] || false
   )
@@ -136,7 +135,7 @@ const TimelineDefault: React.FC<Props> = ({
   const mStatus = menuStatus({ status, queryKey })
   const mInstance = menuInstance({ status, queryKey })
 
-  if (!ownAccount) {
+  if (!isMyAccount) {
     let filterResults: FilteredProps['filterResults'] = []
     const [filterRevealed, setFilterRevealed] = useState(false)
     const hasFilterServerSide = featureCheck('filter_server_side')
@@ -166,7 +165,7 @@ const TimelineDefault: React.FC<Props> = ({
       value={{
         queryKey,
         status,
-        ownAccount,
+        isMyAccount,
         spoilerHidden,
         rawContent,
         detectedLanguage,

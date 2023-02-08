@@ -35,8 +35,11 @@ const AttachmentImage = ({
         <GracefullyImage
           accessibilityLabel={image.description}
           hidden={sensitiveShown}
-          uri={{ original: image.preview_url, remote: image.remote_url }}
-          blurhash={image.blurhash}
+          sources={{
+            default: { uri: image.preview_url },
+            remote: { uri: image.remote_url },
+            blurhash: image.blurhash
+          }}
           onPress={() => navigateToImagesViewer(image.id)}
           style={{ aspectRatio: aspectRatio({ total, index, ...image.meta?.original }) }}
           dim
