@@ -52,6 +52,7 @@ const ScreenTabs = () => {
               return (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <GracefullyImage
+                    key={accountActive}
                     sources={{ default: { uri: avatarStatic } }}
                     dimension={{ width: size, height: size }}
                     style={{

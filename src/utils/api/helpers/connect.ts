@@ -1,9 +1,9 @@
 import { mapEnvironment } from '@utils/helpers/checkEnvironment'
+import { GLOBAL } from '@utils/storage'
 import { setGlobalStorage } from '@utils/storage/actions'
 import axios from 'axios'
 import parse from 'url-parse'
 import { userAgent } from '.'
-import { GLOBAL } from '../../../App'
 
 const list = [
   'n61owz4leck',

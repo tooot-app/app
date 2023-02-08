@@ -134,15 +134,6 @@ const Timeline: React.FC<Props> = ({
     {
       onScroll: ({ contentOffset: { y } }) => {
         scrollY.value = y
-        if (
-          y < 300 &&
-          !isFetchingPrev.value &&
-          fetchingType.value === 0 &&
-          shouldAutoFetch.value &&
-          Platform.OS === 'ios'
-        ) {
-          fetchingType.value = 1
-        }
       },
       onEndDrag: ({ contentOffset: { y } }) => {
         if (!disableRefresh && !isFetching) {
@@ -156,6 +147,21 @@ const Timeline: React.FC<Props> = ({
       }
     },
     [isFetching]
+  )
+  useAnimatedReaction(
+    () => scrollY.value < 600,
+    (curr, prev) => {
+      if (
+        curr === true &&
+        prev === false &&
+        !isFetchingPrev.value &&
+        fetchingType.value === 0 &&
+        shouldAutoFetch.value &&
+        Platform.OS === 'ios'
+      ) {
+        fetchingType.value = 1
+      }
+    }
   )
 
   const latestMarker = useRef<string>()
