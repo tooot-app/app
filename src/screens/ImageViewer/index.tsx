@@ -194,9 +194,9 @@ const ScreenImagesViewer = ({
                   >
                     <GracefullyImage
                       sources={{
-                        preview: { uri: item.preview_url, width: item.width, height: item.height },
-                        default: { uri: item.url, width: item.width, height: item.height },
-                        remote: { uri: item.remote_url, width: item.width, height: item.height }
+                        preview: { uri: item.preview_url },
+                        default: { uri: item.url },
+                        remote: { uri: item.remote_url }
                       }}
                       dimension={{
                         width:

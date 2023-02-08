@@ -63,9 +63,10 @@ const GracefullyImage = ({
       {...(onPress ? (hidden ? { disabled: true } : { onPress }) : { disabled: true })}
     >
       <Image
+        placeholderContentFit='cover'
         placeholder={sources.blurhash || connectMedia(sources.preview)}
         source={hidden ? undefined : connectMedia(source)}
-        transition={{ duration: 100 }}
+        transition={{ duration: 80 }}
         style={{ flex: 1, ...imageStyle }}
         onLoad={event => {
           if (setImageDimensions && event.source) {
