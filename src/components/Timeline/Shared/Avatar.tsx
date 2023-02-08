@@ -33,7 +33,10 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
       onPress={() =>
         !disableOnPress && navigation.push('Tab-Shared-Account', { account: actualAccount })
       }
-      uri={{ original: actualAccount.avatar, static: actualAccount.avatar_static }}
+      sources={{
+        default: { uri: actualAccount.avatar },
+        static: { uri: actualAccount.avatar_static }
+      }}
       dimension={
         disableDetails || isConversation
           ? {

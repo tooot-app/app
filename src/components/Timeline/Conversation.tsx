@@ -79,7 +79,10 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
             {conversation.accounts.slice(0, 4).map(account => (
               <GracefullyImage
                 key={account.id}
-                uri={{ original: account.avatar, static: account.avatar_static }}
+                sources={{
+                  default: { uri: account.avatar },
+                  static: { uri: account.avatar_static }
+                }}
                 dimension={{
                   width: StyleConstants.Avatar.M,
                   height:

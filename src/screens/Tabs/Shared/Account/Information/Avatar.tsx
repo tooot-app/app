@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import navigationRef from '@utils/navigation/navigationRef'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useContext } from 'react'
 import AccountContext from '../Context'
@@ -13,20 +12,13 @@ const AccountInformationAvatar: React.FC = () => {
 
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const [accountAvatarStatic] = useAccountStorage.string('auth.account.avatar_static')
-
   return (
     <GracefullyImage
-      key={account?.avatar}
-      style={{
-        borderRadius: 8,
-        overflow: 'hidden',
-        width: StyleConstants.Avatar.L,
-        height: StyleConstants.Avatar.L
-      }}
-      uri={{
-        original: account?.avatar || (pageMe ? accountAvatarStatic : undefined),
-        static: account?.avatar_static || (pageMe ? accountAvatarStatic : undefined)
+      style={{ borderRadius: 8, overflow: 'hidden' }}
+      dimension={{ width: StyleConstants.Avatar.L, height: StyleConstants.Avatar.L }}
+      sources={{
+        default: { uri: account?.avatar },
+        static: { uri: account?.avatar_static }
       }}
       onPress={() => {
         if (account) {

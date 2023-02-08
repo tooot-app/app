@@ -9,7 +9,6 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
@@ -207,7 +206,6 @@ const TimelineAttachment = () => {
               content={t('shared.attachment.sensitive.button')}
               overlay
               onPress={() => {
-                layoutAnimation()
                 setSensitiveShown(false)
                 haptics('Light')
               }}

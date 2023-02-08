@@ -11,10 +11,10 @@ import { featureCheck } from '@utils/helpers/featureCheck'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { Image } from 'expo-image'
 import React, { RefObject, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import chooseAndUploadAttachment from './addAttachment'
@@ -104,9 +104,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           width: calculateWidth(item)
         }}
       >
-        <FastImage
-          enterTransition='fadeIn'
-          transitionDuration={60}
+        <Image
           style={{ width: '100%', height: '100%' }}
           source={
             item.local?.thumbnail

@@ -5,9 +5,9 @@ import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { Image } from 'expo-image'
 import React from 'react'
 import { ColorValue, Platform, TextStyle } from 'react-native'
-import FastImage from 'react-native-fast-image'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
@@ -77,8 +77,8 @@ const ParseEmojis: React.FC<Props> = ({
                 return (
                   <CustomText key={emojiShortcode + i}>
                     {i === 0 ? ' ' : undefined}
-                    <FastImage
-                      source={connectMedia({ uri: uri.trim() })}
+                    <Image
+                      source={connectMedia({ uri })}
                       style={{
                         width: adaptedFontsize,
                         height: adaptedFontsize,
