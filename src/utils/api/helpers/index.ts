@@ -1,10 +1,10 @@
 import * as Sentry from '@sentry/react-native'
+import { GLOBAL } from '@utils/storage'
 import { setGlobalStorage } from '@utils/storage/actions'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
 import { Platform } from 'react-native'
 import parse from 'url-parse'
-import { GLOBAL } from '../../../App'
 
 const userAgent = {
   'User-Agent': `tooot/${Constants.expoConfig?.version} ${Platform.OS}/${Platform.Version}`

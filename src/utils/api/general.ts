@@ -1,5 +1,5 @@
+import { GLOBAL } from '@utils/storage'
 import axios from 'axios'
-import { GLOBAL } from '../../App'
 import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
 import { CONNECT_DOMAIN } from './helpers/connect'
 

@@ -16,8 +16,8 @@ import { setAccountStorage, useAccountStorage, useGlobalStorage } from '@utils/s
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as Crypto from 'expo-crypto'
 import * as Notifications from 'expo-notifications'
-import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -173,7 +173,7 @@ const TabMePush: React.FC = () => {
                       // Fix a bug for some users of v4.8.0
                       let authKey = push.key
                       if (push.key?.length <= 10) {
-                        authKey = fromByteArray(Random.getRandomBytes(16))
+                        authKey = fromByteArray(Crypto.getRandomBytes(16))
                       }
                       // Turning on
                       const randomPath = (Math.random() + 1).toString(36).substring(2)

@@ -19,8 +19,8 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
+import * as Crypto from 'expo-crypto'
 import { Image } from 'expo-image'
-import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
@@ -162,7 +162,7 @@ const ComponentInstance: React.FC<Props> = ({
               'admin.sign_up': false,
               'admin.report': false
             },
-            key: fromByteArray(Random.getRandomBytes(16))
+            key: fromByteArray(Crypto.getRandomBytes(16))
           },
           page_local: {
             showBoosts: true,
@@ -233,7 +233,7 @@ const ComponentInstance: React.FC<Props> = ({
         <View style={{ flexDirection: 'row' }}>
           <Image
             source={require('assets/images/welcome.png')}
-            style={{ resizeMode: 'contain', flex: 1, aspectRatio: 16 / 9 }}
+            style={{ flex: 1, aspectRatio: 16 / 9 }}
           />
         </View>
       ) : null}

@@ -11,6 +11,7 @@ import log from '@utils/startup/log'
 import netInfo from '@utils/startup/netInfo'
 import push from '@utils/startup/push'
 import sentry from '@utils/startup/sentry'
+import { GLOBAL } from '@utils/storage'
 import { getGlobalStorage, setAccount, setGlobalStorage } from '@utils/storage/actions'
 import { migrateFromAsyncStorage, versionStorageGlobal } from '@utils/storage/migrations/toMMKV'
 import ThemeManager from '@utils/styles/ThemeManager'
@@ -23,10 +24,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
 import i18n from './i18n'
 import Screens from './screens'
-
-export const GLOBAL: { connect?: boolean } = {
-  connect: undefined
-}
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
