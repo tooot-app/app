@@ -3,14 +3,14 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (5.0.1):
     - ExpoModulesCore
-  - EXAV (13.1.0):
+  - EXAV (13.2.0):
     - ExpoModulesCore
     - ReactCommon/turbomodule/core
-  - EXConstants (14.1.0):
+  - EXConstants (14.2.0):
     - ExpoModulesCore
   - EXErrorRecovery (4.0.1):
     - ExpoModulesCore
-  - EXFileSystem (15.1.1):
+  - EXFileSystem (15.2.0):
     - ExpoModulesCore
   - EXFont (11.0.1):
     - ExpoModulesCore
@@ -18,9 +18,9 @@ PODS:
     - ExpoModulesCore
   - Expo (47.0.13):
     - ExpoModulesCore
-  - ExpoCrypto (12.1.0):
+  - ExpoCrypto (12.2.0):
     - ExpoModulesCore
-  - ExpoHaptics (12.1.0):
+  - ExpoHaptics (12.2.0):
     - ExpoModulesCore
   - ExpoImage (1.0.0-beta.6):
     - ExpoModulesCore
@@ -30,25 +30,25 @@ PODS:
     - SDWebImageWebPCoder (~> 0.9.1)
   - ExpoKeepAwake (11.0.1):
     - ExpoModulesCore
-  - ExpoLocalization (14.0.0):
+  - ExpoLocalization (14.1.0):
     - ExpoModulesCore
   - ExpoModulesCore (1.1.1):
     - React-Core
     - ReactCommon/turbomodule/core
-  - ExpoRandom (13.0.0):
+  - ExpoRandom (13.1.0):
     - ExpoModulesCore
-  - ExpoStoreReview (6.1.0):
+  - ExpoStoreReview (6.2.0):
     - ExpoModulesCore
-  - ExpoVideoThumbnails (7.1.0):
+  - ExpoVideoThumbnails (7.2.0):
     - ExpoModulesCore
   - ExpoWebBrowser (12.0.0):
     - ExpoModulesCore
-  - EXScreenCapture (5.0.0):
+  - EXScreenCapture (5.1.0):
     - ExpoModulesCore
-  - EXScreenOrientation (5.0.1):
+  - EXScreenOrientation (5.1.0):
     - ExpoModulesCore
     - React-Core
-  - EXSecureStore (12.0.0):
+  - EXSecureStore (12.1.0):
     - ExpoModulesCore
   - EXSplashScreen (0.17.5):
     - ExpoModulesCore
@@ -726,26 +726,26 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 034b1c40a8e9fe1bff76a1e511ee90dff64ad834
-  EXAV: 4b92292fb107520a25956bea940a94a3bb4911ca
-  EXConstants: 44f7d347d0432a66f469d0ce1dc4e3a0ca1b8b2d
+  EXAV: 1242c4c206fc522058a2749019064e979a4c0b76
+  EXConstants: 397186c7e312c33eb1ab85fa1f434dc123778136
   EXErrorRecovery: ae43433feb0608a64dc5b1c8363b3e7769a9ea24
-  EXFileSystem: 60602b6eefa6873f97172c684b7537c9760b50d6
+  EXFileSystem: d9fea7fe7a4390a0ef226cac33958de9178388b9
   EXFont: 319606bfe48c33b5b5063fb0994afdc496befe80
   EXNotifications: babce2a87b7922051354fcfe7a74dd279b7e272a
   Expo: b9fa98bf260992312ee3c424400819fb9beadafe
-  ExpoCrypto: 6eb2a5ede7d95b7359a5f0391ee0c5d2ecd144b3
-  ExpoHaptics: 129d3f8d44c2205adcdf8db760602818463d5437
+  ExpoCrypto: 98c71864077c4d0fe798a6a5aee1a8c1294cef85
+  ExpoHaptics: 97c532f311c3e638c14a6134f23564d007b76de4
   ExpoImage: 748f2b8d3974f1d51c7706fd61057b93241738aa
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
-  ExpoLocalization: e202d1e2a4950df17ac8d0889d65a1ffd7532d7e
+  ExpoLocalization: 28ce7cfa174a752f7ace84189710f1385373655b
   ExpoModulesCore: 485dff3a59b036a33b6050c0a5aea3cf1037fdd1
-  ExpoRandom: 58b7e0a5fe1adf1cb6dc1cbe503a6fe9524f36ce
-  ExpoStoreReview: 713336ff504db3a6983475bf7c67519cc5efc86f
-  ExpoVideoThumbnails: 424db02cedfbbe2d498bcb2712ea4ba8a9dcb453
+  ExpoRandom: d8fc05d0d071485b06a97ab2a78cb7f8082052cd
+  ExpoStoreReview: e96ba0690ea21dc5d341cfafd0b26bac7bc974f5
+  ExpoVideoThumbnails: 865fa65f2b4f006ff02ef9e3e9c10370d9442d0a
   ExpoWebBrowser: 073e50f16669d498fb49063b9b7fe780b24f7fda
-  EXScreenCapture: d9f1ec31042dfef109290d06c2b4789b7444d16d
-  EXScreenOrientation: 07e5aeff07bce09a2b214981e612d87fd7719997
-  EXSecureStore: daec0117c922a67c658cb229152a9e252e5c1750
+  EXScreenCapture: bcf94c8199cd1876166e384b2398ff519a8ef7ee
+  EXScreenOrientation: d43067a93e75234a7ce5154e2759fff2238dbfd5
+  EXSecureStore: ec150f49b22269022c6184f1711abb05fe98d72d
   EXSplashScreen: 3e989924f61a8dd07ee4ea584c6ba14be9b51949
   FBLazyVector: a6454570f573a0f6f1d397e5a95c13e8e45d1700
   FBReactNativeSpec: 09e8dfba44487e5dc4882a9f5318cde67549549c
