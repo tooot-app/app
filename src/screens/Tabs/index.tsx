@@ -50,9 +50,8 @@ const ScreenTabs = () => {
               return <Icon name='bell' size={size} color={color} />
             case 'Tab-Me':
               return (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View key={avatarStatic} style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <GracefullyImage
-                    key={accountActive}
                     sources={{ default: { uri: avatarStatic } }}
                     dimension={{ width: size, height: size }}
                     style={{
