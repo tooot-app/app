@@ -1,0 +1,168 @@
+{
+  "empty": {
+    "error": {
+      "message": "Lasting mislyktes",
+      "button": "Prøv igjen"
+    },
+    "success": {
+      "message": "Tidslinjen er tom"
+    }
+  },
+  "end": {
+    "message": "Slutt, hva med en kopp med <0 />"
+  },
+  "lookback": {
+    "message": "Sist lest"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Nyere herfra",
+    "refetch": "Til nyeste",
+    "fetching": "Henter nyere tuter ...",
+    "fetched": {
+      "none": "Ingen nyere tut",
+      "found": "Hentet {{count}} tuter"
+    }
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Festet",
+      "favourite": "{{name}} favoriserte din tut",
+      "status": "{name} la nettopp ut",
+      "follow": "{{name}} følger deg",
+      "follow_request": "{{name}} ba om å følge deg",
+      "poll": "En avstemming du har stemt på er avsluttet",
+      "reblog": {
+        "default": "{{name}} boostet",
+        "myself": "Jeg boostet",
+        "notification": "{{name}} boostet ditt tut"
+      },
+      "update": "Reblogg har blitt redigert",
+      "admin.sign_up": "{{name}} ble med i instansen",
+      "admin.report": "{{name}} rapportert:"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Svar på tut"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Boost denne tut",
+        "function": "Boost tut",
+        "options": {
+          "title": "Velg synlighet for boost",
+          "public": "Offentlig boost",
+          "unlisted": "Fjern boost"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Legge tut til dine favoritter",
+        "function": "Favoritt tut"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Legg tut til bokmerker",
+        "function": "Bokmerk tut"
+      },
+      "openReport": "Åpne rapport"
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} brukere har boostet tuten",
+        "accessibilityHint": "Trykk for å bli kjent med brukerne",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} brukere har boostet tuten",
+        "accessibilityHint": "Trykk for å bli kjent med brukerne",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Tut har blitt redigert {{count}} ganger",
+        "accessibilityHint": "Trykk for å vise hele redigeringsloggen",
+        "text_one": "{{count}} rediger",
+        "text_other": "{{count}} redigeringer"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Vis sensitivt media"
+      },
+      "unsupported": {
+        "text": "Feil med lasting",
+        "button": "Prøv ekstern lenke"
+      },
+      "altText": "Alternativ tekst"
+    },
+    "avatar": {
+      "accessibilityLabel": "Profilbilde av {{name}}",
+      "accessibilityHint": "Trykk for å gå til {{name}} sin side"
+    },
+    "content": {
+      "expandHint": "Skjult innhold"
+    },
+    "filtered": {
+      "reveal": "Vis likevel",
+      "match_v1": "Filtrert: {{phrase}}.",
+      "match_v2_one": "Filtrert av {{filters}}.",
+      "match_v2_other": "Filtrert med {{count}} filtre, {{filters}}."
+    },
+    "fullConversation": "Vis samtaler",
+    "translate": {
+      "default": "Oversett",
+      "succeed": "Oversatt med {{provider}} fra {{source}}",
+      "failed": "Oversettelse feilet",
+      "source_not_supported": "dette språket er ikke støttet",
+      "target_not_supported": "Dette språket er ikke støttet"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Brukerens visningsnavn"
+          },
+          "account": {
+            "accessibilityHint": "Brukerkonto"
+          }
+        },
+        "application": "med {{application}}",
+        "edited": {
+          "accessibilityLabel": "Tut redigert"
+        },
+        "muted": {
+          "accessibilityLabel": "Tut er dempet"
+        },
+        "replies": "Svar <0 />",
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Tut er en direkte melding"
+          },
+          "private": {
+            "accessibilityLabel": "Tut er kun synlig for følgere"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "Med",
+        "delete": {
+          "function": "Slett direkte melding"
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Stem",
+          "refresh": "Oppdater"
+        },
+        "count": {
+          "voters_one": "{{count}} bruker har stemt",
+          "voters_other": "{{count}} bruker har stemt",
+          "votes_one": "%{count} stemme",
+          "votes_other": "%{count} stemmer"
+        },
+        "expiration": {
+          "expired": "Avstemning utløpt",
+          "until": "Utløper <0 />"
+        }
+      }
+    }
+  }
+}

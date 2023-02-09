@@ -1,9 +1,9 @@
 import { mapEnvironment } from '@utils/helpers/checkEnvironment'
+import { GLOBAL } from '@utils/storage'
 import { setGlobalStorage } from '@utils/storage/actions'
 import axios from 'axios'
 import parse from 'url-parse'
 import { userAgent } from '.'
-import { GLOBAL } from '../../../App'
 
 const list = [
   'n61owz4leck',
@@ -81,19 +81,18 @@ export const CONNECT_DOMAIN = (index?: number) =>
     development: 'connect-development.tooot.app'
   })
 
-export const connectMedia = ({
-  uri
-}: {
+export const connectMedia = (args?: {
   uri?: string
 }): { uri?: string; headers?: { 'x-tooot-domain': string } } => {
   if (GLOBAL.connect) {
-    if (uri) {
-      const host = parse(uri).host
+    if (args?.uri) {
+      const host = parse(args.uri).host
       return {
-        uri: uri.replace(
+        ...args,
+        uri: args.uri.replace(
           host,
           CONNECT_DOMAIN(
-            uri
+            args.uri
               .split('')
               .map(i => i.charCodeAt(0))
               .reduce((a, b) => a + b, 0) %
@@ -103,10 +102,10 @@ export const connectMedia = ({
         headers: { 'x-tooot-domain': host }
       }
     } else {
-      return { uri }
+      return { ...args }
     }
   } else {
-    return { uri }
+    return { ...args }
   }
 }
 

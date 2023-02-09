@@ -193,10 +193,10 @@ const ScreenImagesViewer = ({
                     }}
                   >
                     <GracefullyImage
-                      uri={{
-                        preview: item.preview_url,
-                        remote: item.remote_url,
-                        original: item.url
+                      sources={{
+                        preview: { uri: item.preview_url },
+                        default: { uri: item.url },
+                        remote: { uri: item.remote_url }
                       }}
                       dimension={{
                         width:
@@ -208,6 +208,7 @@ const ScreenImagesViewer = ({
                             ? WINDOW_HEIGHT
                             : (WINDOW_WIDTH / imageWidth) * imageHeight
                       }}
+                      enableLiveTextInteraction
                     />
                   </View>
                 }

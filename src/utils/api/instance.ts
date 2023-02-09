@@ -1,7 +1,7 @@
+import { GLOBAL } from '@utils/storage'
 import { getAccountDetails } from '@utils/storage/actions'
 import { StorageGlobal } from '@utils/storage/global'
 import axios, { AxiosRequestConfig } from 'axios'
-import { GLOBAL } from '../../App'
 import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
 import { CONNECT_DOMAIN } from './helpers/connect'
 

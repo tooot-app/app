@@ -73,13 +73,13 @@
         "name": "設定"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "すべてのコンテンツフィルター"
       },
       "preferencesFilterAdd": {
         "name": "フィルターを作成"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "フィルターを編集"
       },
       "profile": {
         "name": "プロフィールを編集"
@@ -136,7 +136,7 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "デフォルトの投稿の表示",
         "options": {
           "public": "公開",
           "unlisted": "未収載",
@@ -144,40 +144,40 @@
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "メディアを常に閲覧注意としてマークする"
       },
       "media": {
-        "title": "",
+        "title": "メディアの表示",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "閲覧注意としてマークされたメディアを隠す",
+          "show_all": "メディアを常に表示する",
+          "hide_all": "メディアを常に隠す"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "閲覧注意としてマークされたトゥートを常に展開する"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "トゥートでGIFを自動再生"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "コンテンツフィルター",
+        "content": "{{count}} がアクティブです"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "アップデート設定",
+        "description": "以下の設定は、web UI を使用してのみ更新できます"
       }
     },
     "preferencesFilters": {
       "expired": "期限切れ",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "keywords_one": "{{count}}件のキーワード",
+      "keywords_other": "{{count}}件のキーワード",
+      "statuses_one": "{{count}}トゥート",
+      "statuses_other": "{{count}}トゥート",
+      "context": "<0 />で適用",
       "contexts": {
-        "home": "",
+        "home": "フォロー中とリスト",
         "notifications": "通知",
         "public": "連合",
         "thread": "会話",
@@ -196,22 +196,22 @@
         "604800": "1週間後",
         "18144000": "1ヶ月後"
       },
-      "context": "",
+      "context": "適用：",
       "contexts": {
-        "home": "",
+        "home": "フォロー中とリスト",
         "notifications": "通知",
         "public": "連合タイムライン",
-        "thread": "",
-        "account": ""
+        "thread": "会話表示",
+        "account": "プロフィール表示"
       },
-      "action": "",
+      "action": "一致した時",
       "actions": {
         "warn": "",
-        "hide": ""
+        "hide": "完全に非表示にする"
       },
-      "keywords": "",
+      "keywords": "これらのキーワードと一致",
       "keyword": "キーワード",
-      "statuses": ""
+      "statuses": "これらのトゥートと一致"
     },
     "profile": {
       "feedback": {
@@ -401,7 +401,7 @@
     },
     "filter": {
       "name": "フィルターに追加",
-      "existed": ""
+      "existed": "フィルター内に存在"
     },
     "history": {
       "name": "編集履歴"

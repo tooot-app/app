@@ -46,17 +46,9 @@ const openLink = async (url: string, navigation?: any) => {
 
   // If an account can be found
   if (match?.account) {
-    if (!match.account._remote && match.account.id) {
-      handleNavigation('Tab-Shared-Account', { account: match.account.id })
-      return
-    }
-
     let response: Mastodon.Account | undefined = undefined
 
-    const queryKey: QueryKeyAccount = [
-      'Account',
-      { id: match.account.id, url: url, _remote: match.account._remote }
-    ]
+    const queryKey: QueryKeyAccount = ['Account', { url: url, _remote: match.account._remote }]
     const cache = queryClient.getQueryData<Mastodon.Status>(queryKey)
 
     if (cache) {

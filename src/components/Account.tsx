@@ -38,7 +38,7 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props,
         <>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             <GracefullyImage
-              uri={{ original: account.avatar, static: account.avatar_static }}
+              sources={{ default: { uri: account.avatar }, static: { uri: account.avatar_static } }}
               style={{
                 width: StyleConstants.Avatar.S,
                 height: StyleConstants.Avatar.S,

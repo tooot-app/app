@@ -33,7 +33,7 @@
       "poll": "S'ha acabat una enquesta en què havies participat",
       "reblog": {
         "default": "{{name}} ha impulsat",
-        "myself": "",
+        "myself": "He impulsat",
         "notification": "{{name}} ha impulsat la teva publicació"
       },
       "update": "L'impuls ha sigut editat",

@@ -82,8 +82,7 @@ const TimelineCard: React.FC = () => {
       <>
         {status.card?.image ? (
           <GracefullyImage
-            uri={{ original: status.card.image }}
-            blurhash={status.card.blurhash}
+            sources={{ default: { uri: status.card.image }, blurhash: status.card.blurhash }}
             style={{ flexBasis: StyleConstants.Font.LineHeight.M * 5 }}
             imageStyle={{ borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }}
             dim

@@ -1,0 +1,171 @@
+{
+  "heading": {
+    "left": {
+      "alert": {
+        "title": "Avbryte redigering?",
+        "buttons": {
+          "save": "Lagre utkast",
+          "delete": "Slett utkast"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Tut",
+        "conversation": "Tut DM",
+        "reply": "Tut svar",
+        "deleteEdit": "Tut",
+        "edit": "Tut",
+        "share": "Tut"
+      },
+      "alert": {
+        "default": {
+          "title": "Tut mislyktes",
+          "button": "Prøv igjen"
+        },
+        "removeReply": {
+          "title": "Svar på tut ble ikke funnet",
+          "description": "Svarte tut kan ha blitt slettet. Vil du fjerne det fra din referanse?",
+          "confirm": "Fjern referanse"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Tuter som @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Spoiler advarsel"
+        },
+        "textInput": {
+          "placeholder": "Hva tenker du på",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Maksimalt antall vedlegg nådd"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Merk vedlegg som følsomt",
+          "remove": {
+            "accessibilityLabel": "Fjern opplastet vedlegg, nummer {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Rediger opplastet vedlegg, nummer {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Last opp flere vedlegg"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Trykk for å legge til emoji"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Avstemningsvalg {{index}}",
+              "single": "Ett valg",
+              "multiple": "Flere valg"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Reduser valg til {{amount}}",
+              "accessibilityHint": "Minimum antall valg nådd, har {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Reduser valg til {{amount}}",
+              "accessibilityHint": "Maksimum antall valg nådd, har {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "Valg type",
+            "options": {
+              "single": "Ett valg",
+              "multiple": "Flere valg"
+            }
+          },
+          "expiration": {
+            "heading": "Gyldighet",
+            "options": {
+              "300": "5 minutter",
+              "1800": "30 minutter",
+              "3600": "1 time",
+              "21600": "6 timer",
+              "86400": "1 dag",
+              "259200": "3 dager",
+              "604800": "7 dager"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Last opp vedlegg",
+          "accessibilityHint": "Avstemmingsfunksjonen blir deaktivert når der er noen vedlegg",
+          "failed": {
+            "alert": {
+              "title": "Opplasting feilet",
+              "button": "Prøv igjen"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Legg til avstemning",
+          "accessibilityHint": "Vedlegg vil bli deaktivert når avstemningen er aktiv"
+        },
+        "visibility": {
+          "accessibilityLabel": "Tut-synlighet er {{visibility}}",
+          "title": "Tut-synlighet",
+          "options": {
+            "public": "Offentlig",
+            "unlisted": "Uoppført",
+            "private": "Kun følgere",
+            "direct": "Direktemelding"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Spoiler"
+        },
+        "emoji": {
+          "accessibilityLabel": "Legg til emoji",
+          "accessibilityHint": "Åpne emoji-valgpanel, sveip horisontalt for å endre side"
+        }
+      },
+      "drafts_one": "Utkast ({{count}})",
+      "drafts_other": "Utkast ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "Rediger vedlegg",
+        "right": {
+          "accessibilityLabel": "Lagre redigering av vedlegg",
+          "failed": {
+            "title": "Redigering mislyktes",
+            "button": "Prøv igjen"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "Beskriv media for synshemmede",
+          "placeholder": "Du kan legge til en beskrivelse, noen ganger kalt alt-tekst, på dine medier slik at de er tilgjengelige for enda flere mennesker, også for dem som er blinde eller svaksynte.\n\nGode beskrivelser er konkret, men presenterer hva som er i dine medier nøyaktig nok til å forstå konteksten."
+        }
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "Utkast"
+      },
+      "warning": "Utkast lagres bare lokalt, og kan ved uhell gå tapt. Bruk ikke utkast til langtidslagring.",
+      "content": {
+        "accessibilityHint": "Lagret utkast, trykk for å redigere dette utkastet",
+        "textEmpty": "Innhold er tomt"
+      },
+      "checkAttachment": "Sjekker vedlegg på serveren..."
+    }
+  }
+}

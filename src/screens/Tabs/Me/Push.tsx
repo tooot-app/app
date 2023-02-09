@@ -16,8 +16,8 @@ import { setAccountStorage, useAccountStorage, useGlobalStorage } from '@utils/s
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as Crypto from 'expo-crypto'
 import * as Notifications from 'expo-notifications'
-import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -164,16 +164,15 @@ const TabMePush: React.FC = () => {
                         url: `push/unsubscribe/${pushPath}`
                       })
 
+                      setAccountStorage([{ key: 'push', value: { ...push, global: false } }])
                       if (Platform.OS === 'android') {
                         Notifications.deleteNotificationChannelGroupAsync(accountFull)
                       }
-
-                      setAccountStorage([{ key: 'push', value: { ...push, global: false } }])
                     } else {
                       // Fix a bug for some users of v4.8.0
                       let authKey = push.key
                       if (push.key?.length <= 10) {
-                        authKey = fromByteArray(Random.getRandomBytes(16))
+                        authKey = fromByteArray(Crypto.getRandomBytes(16))
                       }
                       // Turning on
                       const randomPath = (Math.random() + 1).toString(36).substring(2)
@@ -182,7 +181,7 @@ const TabMePush: React.FC = () => {
 
                       const body: {
                         subscription: any
-                        alerts: Mastodon.PushSubscription['alerts']
+                        data: { alerts: Mastodon.PushSubscription['alerts'] }
                       } = {
                         subscription: {
                           endpoint,
@@ -192,7 +191,7 @@ const TabMePush: React.FC = () => {
                             auth: authKey
                           }
                         },
-                        alerts: push.alerts
+                        data: { alerts: push.alerts }
                       }
 
                       const res = await apiInstance<Mastodon.PushSubscription>({
@@ -239,7 +238,6 @@ const TabMePush: React.FC = () => {
                       setAccountStorage([
                         { key: 'push', value: { ...push, global: true, key: authKey } }
                       ])
-
                       if (Platform.OS === 'android') {
                         setChannels(true)
                       }

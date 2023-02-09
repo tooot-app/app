@@ -1,4 +1,5 @@
 import Button from '@components/Button'
+import GracefullyImage from '@components/GracefullyImage'
 import openLink from '@components/openLink'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
@@ -6,7 +7,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -33,8 +33,8 @@ const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, 
       }}
     >
       {attachment.blurhash ? (
-        <Blurhash
-          blurhash={attachment.blurhash}
+        <GracefullyImage
+          sources={{ blurhash: attachment.blurhash }}
           style={{
             position: 'absolute',
             width: '100%',

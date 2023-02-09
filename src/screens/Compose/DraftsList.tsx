@@ -9,10 +9,10 @@ import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import { getAccountStorage, setAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { Image } from 'expo-image'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, Pressable, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import ComposeContext from './utils/createContext'
 import { formatText } from './utils/processText'
 import { ComposeStateDraft, ExtendedAttachment } from './utils/types'
@@ -140,7 +140,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
                     }}
                   >
                     {item.attachments.uploads.map((attachment, index) => (
-                      <FastImage
+                      <Image
                         key={index}
                         style={{
                           width:

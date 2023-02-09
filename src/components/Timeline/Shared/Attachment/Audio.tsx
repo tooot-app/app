@@ -7,7 +7,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AppState, AppStateStatus, StyleSheet, View } from 'react-native'
-import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -72,19 +71,23 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
       <View style={styles.overlay}>
         {sensitiveShown ? (
           audio.blurhash ? (
-            <Blurhash
-              blurhash={audio.blurhash}
+            <GracefullyImage
+              sources={{ blurhash: audio.blurhash }}
               style={{
                 width: '100%',
                 height: '100%'
               }}
+              dim
             />
           ) : null
         ) : (
           <>
             {audio.preview_url ? (
               <GracefullyImage
-                uri={{ original: audio.preview_url, remote: audio.preview_remote_url }}
+                sources={{
+                  default: { uri: audio.preview_url },
+                  remote: { uri: audio.preview_remote_url }
+                }}
                 style={styles.background}
                 dim
               />

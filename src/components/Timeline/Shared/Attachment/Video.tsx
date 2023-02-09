@@ -1,4 +1,5 @@
 import Button from '@components/Button'
+import GracefullyImage from '@components/GracefullyImage'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { connectMedia } from '@utils/api/helpers/connect'
 import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
@@ -8,7 +9,6 @@ import { Platform } from 'expo-modules-core'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import React, { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -120,7 +120,10 @@ const AttachmentVideo: React.FC<Props> = ({
       >
         {sensitiveShown ? (
           video.blurhash ? (
-            <Blurhash blurhash={video.blurhash} style={{ width: '100%', height: '100%' }} />
+            <GracefullyImage
+              sources={{ blurhash: video.blurhash }}
+              style={{ width: '100%', height: '100%' }}
+            />
           ) : null
         ) : !gifv || (gifv && (reduceMotionEnabled || !shouldAutoplayGifv)) ? (
           <Button

@@ -82,15 +82,25 @@ const AccountAttachments: React.FC = () => {
           } else {
             return (
               <GracefullyImage
-                uri={{
-                  original:
-                    item.media_attachments[0]?.preview_url || item.media_attachments[0]?.url,
-                  remote: item.media_attachments[0]?.remote_url
+                sources={{
+                  preview: {
+                    uri: item.media_attachments[0]?.preview_url,
+                    width: item.media_attachments[0]?.meta?.small?.width,
+                    height: item.media_attachments[0]?.meta?.small?.height
+                  },
+                  default: {
+                    uri: item.media_attachments[0]?.url,
+                    width: item.media_attachments[0]?.meta?.original?.width,
+                    height: item.media_attachments[0]?.meta?.original?.height
+                  },
+                  remote: {
+                    uri: item.media_attachments[0]?.remote_url,
+                    width: item.media_attachments[0]?.meta?.original?.width,
+                    height: item.media_attachments[0]?.meta?.original?.height
+                  },
+                  blurhash: item.media_attachments[0]?.blurhash
                 }}
-                blurhash={
-                  item.media_attachments[0] && (item.media_attachments[0].blurhash || undefined)
-                }
-                dimension={{ width: width, height: width }}
+                dimension={{ width, height: width }}
                 style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
                 onPress={() => navigation.push('Tab-Shared-Toot', { toot: item })}
                 dim

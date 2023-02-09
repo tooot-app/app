@@ -8,7 +8,7 @@ type StatusContextType = {
 
   status?: Mastodon.Status
 
-  ownAccount?: boolean
+  isMyAccount?: boolean
   spoilerHidden?: boolean
   rawContent?: React.MutableRefObject<string[]> // When highlighted, for translate, edit history
   detectedLanguage?: React.MutableRefObject<string>

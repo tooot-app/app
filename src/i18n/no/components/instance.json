@@ -1,0 +1,27 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Instansens domene"
+    },
+    "whitelisted": "Dette kan være en hvitelistet forekomst som tooot ikke kan hente data fra før du logger inn.",
+    "button": "Logg inn",
+    "information": {
+      "name": "Navn",
+      "accounts": "Brukere",
+      "statuses": "Tuter",
+      "domains": "Universum"
+    },
+    "disclaimer": {
+      "base": "Innlogging bruker systemnettleser mens du logger inn på, din kontoinformasjon vil ikke være synlig for toot-appen."
+    },
+    "terms": {
+      "base": "Ved å logge inn godtar du <0>retningslinjer for personvern</0> og <1>vilkårene for bruk</1>."
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Logget på denne instansen",
+      "message": "Du kan logge inn på en annen konto, og beholde eksisterende pålogging"
+    }
+  }
+}

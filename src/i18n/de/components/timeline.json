@@ -33,7 +33,7 @@
       "poll": "Eine Umfrage, an der du teilgenommen hast, ist beendet",
       "reblog": {
         "default": "{{name}} hat geboostet",
-        "myself": "",
+        "myself": "Von mir geboosted",
         "notification": "{{name}} hat deinen Tröt geboostet"
       },
       "update": "Boost wurde bearbeitet",

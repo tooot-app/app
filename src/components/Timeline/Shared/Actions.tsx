@@ -22,7 +22,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelineActions: React.FC = () => {
-  const { queryKey, status, ownAccount, highlighted, disableDetails } = useContext(StatusContext)
+  const { queryKey, status, isMyAccount, highlighted, disableDetails } = useContext(StatusContext)
   if (!queryKey || !status || disableDetails) return null
 
   const navigationState = useNavState()
@@ -182,7 +182,7 @@ const TimelineActions: React.FC = () => {
   const childrenReblog = () => {
     const color = (state: boolean) => (state ? colors.green : colors.secondary)
     const disabled =
-      status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
+      status.visibility === 'direct' || (status.visibility === 'private' && !isMyAccount)
     return (
       <>
         <Icon
@@ -196,7 +196,7 @@ const TimelineActions: React.FC = () => {
             fontStyle='S'
             style={{
               color:
-                status.visibility === 'private' && !ownAccount
+                status.visibility === 'private' && !isMyAccount
                   ? colors.disabled
                   : color(status.reblogged),
               marginLeft: StyleConstants.Spacing.XS
@@ -258,7 +258,7 @@ const TimelineActions: React.FC = () => {
         onPress={onPressReblog}
         children={childrenReblog()}
         disabled={
-          status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
+          status.visibility === 'direct' || (status.visibility === 'private' && !isMyAccount)
         }
       />
 

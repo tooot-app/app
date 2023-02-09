@@ -25,7 +25,7 @@ const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyA
     const match = urlMatcher(key.url)
 
     const domain = match?.domain
-    const id = key.id || match?.account?.id
+    const id = key.id
     const acct = key.acct || key.username || match?.account?.acct
 
     if (!key._local && domain) {
