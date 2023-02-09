@@ -164,11 +164,10 @@ const TabMePush: React.FC = () => {
                         url: `push/unsubscribe/${pushPath}`
                       })
 
+                      setAccountStorage([{ key: 'push', value: { ...push, global: false } }])
                       if (Platform.OS === 'android') {
                         Notifications.deleteNotificationChannelGroupAsync(accountFull)
                       }
-
-                      setAccountStorage([{ key: 'push', value: { ...push, global: false } }])
                     } else {
                       // Fix a bug for some users of v4.8.0
                       let authKey = push.key
@@ -182,7 +181,7 @@ const TabMePush: React.FC = () => {
 
                       const body: {
                         subscription: any
-                        alerts: Mastodon.PushSubscription['alerts']
+                        data: { alerts: Mastodon.PushSubscription['alerts'] }
                       } = {
                         subscription: {
                           endpoint,
@@ -192,7 +191,7 @@ const TabMePush: React.FC = () => {
                             auth: authKey
                           }
                         },
-                        alerts: push.alerts
+                        data: { alerts: push.alerts }
                       }
 
                       const res = await apiInstance<Mastodon.PushSubscription>({
@@ -239,7 +238,6 @@ const TabMePush: React.FC = () => {
                       setAccountStorage([
                         { key: 'push', value: { ...push, global: true, key: authKey } }
                       ])
-
                       if (Platform.OS === 'android') {
                         setChannels(true)
                       }
