@@ -1,0 +1,8 @@
+{
+  "HTML": {
+    "accessibilityHint": "Trykk for å utvide eller skjule innhold",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} flere linjer)",
+    "defaultHint": "Lang tut"
+  }
+}

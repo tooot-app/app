@@ -1,0 +1,10 @@
+{
+  "heading": "Kunngjøringer",
+  "content": {
+    "published": "Publisert <0 />",
+    "button": {
+      "read": "Les",
+      "unread": "Merk som lest"
+    }
+  }
+}

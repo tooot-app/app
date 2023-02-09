@@ -1,0 +1,10 @@
+{
+  "title": "Velg mediekilde",
+  "message": "Media EXIF-data er ikke lastet opp",
+  "options": {
+    "image": "Last opp bilder",
+    "image_max": "Last opp bilder (maks {{max}})",
+    "video": "Last opp video",
+    "video_max": "Last opp video (maks {{max}})"
+  }
+}

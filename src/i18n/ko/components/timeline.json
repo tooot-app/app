@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "이 시점에 이어서 불러오기",
     "refetch": "최신 내용 불러오기",
-    "fetching": "",
+    "fetching": "새로운 툿 불러오는 중 ...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "새로운 툿이 없어요",
+      "found": "새로운 툿 {{count}}개를 불러왔어요"
     }
   },
   "shared": {
@@ -33,7 +33,7 @@
       "poll": "내가 참여한 투표가 끝났어요",
       "reblog": {
         "default": "{{name}} 님이 부스트했어요",
-        "myself": "",
+        "myself": "내가 부스트함",
         "notification": "{{name}} 님이 내 툿을 부스트했어요"
       },
       "update": "부스트한 툿이 수정됨",
