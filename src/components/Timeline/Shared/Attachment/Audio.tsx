@@ -60,15 +60,23 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
   return (
     <View
       accessibilityLabel={audio.description}
-      style={[
-        styles.base,
-        {
-          backgroundColor: colors.disabled,
-          aspectRatio: aspectRatio({ total, index, ...audio.meta?.original })
-        }
-      ]}
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: colors.disabled,
+        aspectRatio: aspectRatio({ total, index, ...audio.meta?.original })
+      }}
     >
-      <View style={styles.overlay}>
+      <View
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         {sensitiveShown ? (
           audio.blurhash ? (
             <GracefullyImage
@@ -88,7 +96,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
                   default: { uri: audio.preview_url },
                   remote: { uri: audio.preview_remote_url }
                 }}
-                style={styles.background}
+                style={{ position: 'absolute', width: '100%', height: '100%' }}
                 dim
               />
             ) : null}
@@ -138,23 +146,5 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexBasis: '50%',
-    padding: StyleConstants.Spacing.XS / 2,
-    flexDirection: 'row'
-  },
-  background: { position: 'absolute', width: '100%', height: '100%' },
-  overlay: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
 
 export default AttachmentAudio

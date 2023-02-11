@@ -25,21 +25,15 @@ const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, 
     <View
       style={{
         flex: 1,
-        flexBasis: '50%',
-        padding: StyleConstants.Spacing.XS / 2,
+        aspectRatio: aspectRatio({ total, index, ...attachment.meta?.original }),
         justifyContent: 'center',
-        alignItems: 'center',
-        aspectRatio: aspectRatio({ total, index, ...attachment.meta?.original })
+        alignItems: 'center'
       }}
     >
       {attachment.blurhash ? (
         <GracefullyImage
           sources={{ blurhash: attachment.blurhash }}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%'
-          }}
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
         />
       ) : null}
       {!sensitiveShown ? (
