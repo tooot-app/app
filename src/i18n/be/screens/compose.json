@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Скасаваць рэдагаванне?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Захаваць чарнавік",
+          "delete": "Выдаліць чарнавік"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
+        "default": "Допіс",
         "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "reply": "Адказаць",
+        "deleteEdit": "Допіс",
+        "edit": "Допіс",
+        "share": "Допіс"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Не ўдалося апублікаваць допіс",
+          "button": "Паўтарыць спробу"
         },
         "removeReply": {
           "title": "",
           "description": "",
-          "confirm": ""
+          "confirm": "Выдаліць спасылку"
         }
       }
     }
@@ -39,7 +39,7 @@
           "placeholder": ""
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Што адбываецца?",
           "keyboardImage": {
             "exceedMaximum": {
               "title": ""
@@ -91,37 +91,37 @@
           "expiration": {
             "heading": "",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 хвілін",
+              "1800": "30 хвілін",
+              "3600": "1 гадзіна",
+              "21600": "6 гадзін",
+              "86400": "1 дзень",
+              "259200": "3 дні",
+              "604800": "7 дзён"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Запампаваць далучэнне",
           "accessibilityHint": "",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Памылка запампоўкі",
+              "button": "Паўтарыць спробу"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Дадаць апытанне",
           "accessibilityHint": ""
         },
         "visibility": {
           "accessibilityLabel": "",
           "title": "",
           "options": {
-            "public": "",
+            "public": "Публічны",
             "unlisted": "",
             "private": "",
             "direct": ""
