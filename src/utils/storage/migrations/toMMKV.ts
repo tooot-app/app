@@ -11,7 +11,6 @@ export const versionStorageGlobal = storage.global.getNumber('version.global')
 
 export async function migrateFromAsyncStorage(): Promise<void> {
   log('log', 'Migration', 'Migrating...')
-  const start = global.performance.now()
 
   const unwrapPushData = (setting: { value: boolean } | boolean | undefined): boolean =>
     typeof setting === 'object' ? setting.value : typeof setting === 'boolean' ? setting : true
@@ -176,6 +175,5 @@ export async function migrateFromAsyncStorage(): Promise<void> {
 
   storage.global.set('version.global', 0)
 
-  const end = global.performance.now()
-  log('log', 'Migration', `Migrated in ${end - start}ms`)
+  log('log', 'Migration', 'Migrated')
 }

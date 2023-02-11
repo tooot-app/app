@@ -1,3 +1,3 @@
 import { AccountV0 } from "./v0";
 
-export { AccountV0 as StorageAccount }
+export type { AccountV0 as StorageAccount }

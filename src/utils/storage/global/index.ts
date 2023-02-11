@@ -1,3 +1,3 @@
-import { GlobalV0 } from "./v0";
+import { GlobalV0 } from './v0'
 
-export { GlobalV0 as StorageGlobal }
+export type { GlobalV0 as StorageGlobal }

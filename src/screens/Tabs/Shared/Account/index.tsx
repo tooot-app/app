@@ -3,7 +3,7 @@ import menuShare from '@components/contextMenu/share'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
-import SegmentedControl from '@react-native-community/segmented-control'
+import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
@@ -182,11 +182,12 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
           <AccountAttachments />
         </View>
         {!data?.suspended ? (
+          // @ts-ignore
           <SegmentedControl
             appearance={mode}
             values={[t('shared.account.toots.default'), t('shared.account.toots.all')]}
             selectedIndex={segment}
-            onChange={({ nativeEvent }) => {
+            onChange={({ nativeEvent }: any) => {
               setSegment(nativeEvent.selectedSegmentIndex)
               switch (nativeEvent.selectedSegmentIndex) {
                 case 0:

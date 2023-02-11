@@ -1,4 +1,3 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
 import TabSharedAccountInLists from '@screens/Tabs/Shared/AccountInLists'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
@@ -11,7 +10,7 @@ import TabSharedUsers from '@screens/Tabs/Shared/Users'
 import React from 'react'
 import TabSharedFilter from './Filter'
 
-const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNavigator> }) => {
+const TabShared = ({ Stack }: { Stack: any }) => {
   return (
     <Stack.Group>
       <Stack.Screen

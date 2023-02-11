@@ -9,16 +9,18 @@
       "react-native"
     ],
     "lib": [
-      "es2019"
+      "esnext"
     ],
     "allowJs": false,
     "jsx": "react-native",
     "noEmit": true,
     "isolatedModules": true,
     "strict": true,
+    "strictFunctionTypes": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "traceResolution": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
