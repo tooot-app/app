@@ -1,13 +1,13 @@
 {
   "screenshot": {
-    "title": "",
+    "title": "Абарона прыватнасці",
     "message": ""
   },
   "localCorrupt": {
     "message": ""
   },
   "pushError": {
-    "message": "",
+    "message": "Памылка сэрвісу Push",
     "description": ""
   },
   "shareError": {
