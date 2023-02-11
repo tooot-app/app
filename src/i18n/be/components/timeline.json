@@ -1,8 +1,8 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Памылка загрузкі",
+      "button": "Паўтарыць"
     },
     "success": {
       "message": ""
