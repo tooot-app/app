@@ -1,0 +1,168 @@
+{
+  "empty": {
+    "error": {
+      "message": "",
+      "button": ""
+    },
+    "success": {
+      "message": ""
+    }
+  },
+  "end": {
+    "message": ""
+  },
+  "lookback": {
+    "message": ""
+  },
+  "refresh": {
+    "fetchPreviousPage": "",
+    "refetch": "",
+    "fetching": "",
+    "fetched": {
+      "none": "",
+      "found": ""
+    }
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "",
+      "favourite": "",
+      "status": "",
+      "follow": "",
+      "follow_request": "",
+      "poll": "",
+      "reblog": {
+        "default": "",
+        "myself": "",
+        "notification": ""
+      },
+      "update": "",
+      "admin.sign_up": "",
+      "admin.report": ""
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": ""
+      },
+      "reblogged": {
+        "accessibilityLabel": "",
+        "function": "",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "bookmarked": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "openReport": ""
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "favourited_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "history": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": ""
+      },
+      "unsupported": {
+        "text": "",
+        "button": ""
+      },
+      "altText": ""
+    },
+    "avatar": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    },
+    "content": {
+      "expandHint": ""
+    },
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
+    "fullConversation": "",
+    "translate": {
+      "default": "",
+      "succeed": "",
+      "failed": "",
+      "source_not_supported": "",
+      "target_not_supported": ""
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": ""
+          },
+          "account": {
+            "accessibilityHint": ""
+          }
+        },
+        "application": "",
+        "edited": {
+          "accessibilityLabel": ""
+        },
+        "muted": {
+          "accessibilityLabel": ""
+        },
+        "replies": "",
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": ""
+          },
+          "private": {
+            "accessibilityLabel": ""
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "",
+        "delete": {
+          "function": ""
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "",
+          "refresh": ""
+        },
+        "count": {
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
+        },
+        "expiration": {
+          "expired": "",
+          "until": ""
+        }
+      }
+    }
+  }
+}
