@@ -1,0 +1,17 @@
+{
+  "screenshot": {
+    "title": "",
+    "message": ""
+  },
+  "localCorrupt": {
+    "message": ""
+  },
+  "pushError": {
+    "message": "",
+    "description": ""
+  },
+  "shareError": {
+    "imageNotSupported": "",
+    "videoNotSupported": ""
+  }
+}
