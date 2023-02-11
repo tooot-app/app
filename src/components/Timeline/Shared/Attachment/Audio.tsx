@@ -6,7 +6,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { AppState, AppStateStatus, StyleSheet, View } from 'react-native'
+import { AppState, AppStateStatus, View } from 'react-native'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -63,7 +63,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
       style={{
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: colors.disabled,
+        backgroundColor: colors.shimmerDefault,
         aspectRatio: aspectRatio({ total, index, ...audio.meta?.original })
       }}
     >
@@ -117,7 +117,6 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
             alignSelf: 'flex-end',
             width: '100%',
             height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
-            backgroundColor: colors.backgroundOverlayInvert,
             paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
             borderRadius: 100,
             opacity: sensitiveShown ? 0.35 : undefined
@@ -129,14 +128,14 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
             value={audioPosition}
             minimumTrackTintColor={colors.secondary}
             maximumTrackTintColor={colors.disabled}
-            // onSlidingStart={() => {
-            //   audioPlayer?.pauseAsync()
-            //   setAudioPlaying(false)
-            // }}
-            // onSlidingComplete={value => {
-            //   setAudioPosition(value)
-            // }}
-            enabled={false} // Bug in above sliding actions
+            onSlidingStart={() => {
+              audioPlayer?.pauseAsync()
+              setAudioPlaying(false)
+            }}
+            onSlidingComplete={value => {
+              setAudioPosition(value)
+            }}
+            enabled={true}
             thumbSize={StyleConstants.Spacing.M}
             thumbTintColor={colors.primaryOverlay}
           />
