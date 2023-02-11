@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Аб'явы",
   "content": {
-    "published": "",
+    "published": "Апублікавана <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Прачытана",
+      "unread": "Адзначыць як прачытанае"
     }
   }
 }
