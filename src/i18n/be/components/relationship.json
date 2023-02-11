@@ -3,12 +3,12 @@
     "function": ""
   },
   "block": {
-    "function": ""
+    "function": "Заблакіраваць карыстальніка"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
+    "error": "Памылка загрузкі",
+    "blocked_by": "Заблакіраваны карыстальнікам",
+    "blocking": "Разблакіраваць",
     "following": "",
     "requested": "",
     "default": ""
