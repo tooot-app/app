@@ -4,12 +4,12 @@
       "placeholder": ""
     },
     "whitelisted": "",
-    "button": "",
+    "button": "Увайсці",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
-      "domains": ""
+      "name": "Назва",
+      "accounts": "Карыстальнікі",
+      "statuses": "Допісы",
+      "domains": "Юніверсы"
     },
     "disclaimer": {
       "base": ""
