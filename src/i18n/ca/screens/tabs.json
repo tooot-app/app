@@ -101,7 +101,7 @@
       }
     },
     "fontSize": {
-      "demo": "<p>Això és una publicació de prova😊. Pots escollir entre moltes opcions<br /><br />Aquesta configuració només afecta el contingut principal de les publicacions, però altres mides de la font.</p>",
+      "demo": "<p>Això és una publicació de prova 😊. Pots escollir entre moltes opcions.<br /><br />Aquesta configuració només afecta el contingut principal de les publicacions, però altres mides de la font.</p>",
       "sizes": {
         "S": "S",
         "M": "M - Per defecte",
