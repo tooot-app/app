@@ -7,7 +7,7 @@
     "button": "Inicia la sessió",
     "information": {
       "name": "Nom",
-      "description": ""
+      "description": "Descripció"
     },
     "disclaimer": {
       "base": "L'inici de sessió fa servir el navegador del sistema. Per tant, el tooot no accedirà a la informació del compte."
