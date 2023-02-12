@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Глобальна",
         "local": "Місцева",
-        "trending": "Популярне"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
