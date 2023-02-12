@@ -386,6 +386,7 @@
         "accessibilityHint": "Du kan tysta, blockera, rapportera eller dela denna användare"
       },
       "followed_by": " följer dig",
+      "privateNote": "",
       "moved": "Användaren har flyttat",
       "created_at": "Gick med: {{date}}",
       "summary": {
