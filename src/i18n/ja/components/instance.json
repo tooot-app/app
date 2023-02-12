@@ -7,9 +7,7 @@
     "button": "ログイン",
     "information": {
       "name": "名前",
-      "accounts": "ユーザー",
-      "statuses": "トゥート",
-      "domains": "接続連合数"
+      "description": ""
     },
     "disclaimer": {
       "base": "あなたのログイン情報の安全のため、ログインはシステムのブラウズを経由して行われます。 tooot アプリにパスワード等は送られません。"
