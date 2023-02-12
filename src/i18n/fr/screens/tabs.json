@@ -386,6 +386,7 @@
         "accessibilityHint": "Vous pouvez masquer, bloquer, signaler ou partager cet utilisateur"
       },
       "followed_by": " vous suit",
+      "privateNote": "",
       "moved": "Utilisateur déplacé",
       "created_at": "Inscrit le: {{date}}",
       "summary": {
