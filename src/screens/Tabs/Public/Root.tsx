@@ -134,7 +134,7 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                     paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
                     marginTop: StyleConstants.Spacing.S,
                     borderWidth: 1,
-                    borderRadius: StyleConstants.Spacing.S,
+                    borderRadius: StyleConstants.BorderRadius,
                     marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
                     borderColor: colors.border
                   }}

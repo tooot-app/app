@@ -89,7 +89,7 @@ const MenuRow: React.FC<Props> = ({
                     width: 8,
                     height: 8,
                     backgroundColor: colors.red,
-                    borderRadius: 8,
+                    borderRadius: StyleConstants.BorderRadius,
                     marginRight: StyleConstants.Spacing.S
                   }}
                 />

@@ -67,7 +67,7 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
         <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
           <View
             style={{
-              borderRadius: 4,
+              borderRadius: StyleConstants.BorderRadius,
               overflow: 'hidden',
               marginRight: StyleConstants.Spacing.S,
               width: StyleConstants.Avatar.M,

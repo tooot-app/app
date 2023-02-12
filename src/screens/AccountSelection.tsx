@@ -52,7 +52,7 @@ const Share = ({
           padding: StyleConstants.Spacing.M,
           borderWidth: 1,
           borderColor: colors.shimmerHighlight,
-          borderRadius: 8
+          borderRadius: StyleConstants.BorderRadius
         }}
         children={text}
       />
@@ -65,7 +65,7 @@ const Share = ({
           padding: StyleConstants.Spacing.M,
           borderWidth: 1,
           borderColor: colors.shimmerHighlight,
-          borderRadius: 8
+          borderRadius: StyleConstants.BorderRadius
         }}
       >
         <FlatList

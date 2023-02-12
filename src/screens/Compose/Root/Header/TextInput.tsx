@@ -71,7 +71,7 @@ const ComposeTextInput: React.FC = () => {
       scrollEnabled={false}
       disableCopyPaste={false}
       onPaste={(error: string | null | undefined, files: PastedFile[]) => {
-        if (composeState.attachments.uploads.length + files.length > MAX_MEDIA_ATTACHMENTS) {
+        if (composeState.attachments.uploads.length + files.length > MAX_MEDIA_ATTACHMENTS()) {
           Alert.alert(
             t('screenCompose:content.root.header.textInput.keyboardImage.exceedMaximum.title'),
             undefined,

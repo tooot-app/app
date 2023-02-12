@@ -137,7 +137,7 @@ const TimelineCard: React.FC = () => {
         flexDirection: 'row',
         marginTop: StyleConstants.Spacing.M,
         borderWidth: 1,
-        borderRadius: StyleConstants.Spacing.S,
+        borderRadius: StyleConstants.BorderRadius,
         overflow: 'hidden',
         borderColor: colors.border
       }}

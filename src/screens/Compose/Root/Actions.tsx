@@ -30,7 +30,7 @@ const ComposeActions: React.FC = () => {
   const attachmentOnPress = () => {
     if (composeState.poll.active) return
 
-    if (composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS) {
+    if (composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS()) {
       return chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
     }
   }

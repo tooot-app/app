@@ -31,9 +31,11 @@ export const SwipeToActions = <T extends unknown>({
                 haptics(action.haptic || 'Light')
                 action.onPress({ item })
               }}
+              style={{ backgroundColor: 'rgba(0, 255, 0, 0.2)' }}
             >
               <View
                 style={{
+                  flex: 1,
                   paddingHorizontal: StyleConstants.Spacing.L,
                   flexBasis: perActionWidth,
                   backgroundColor: action.color,

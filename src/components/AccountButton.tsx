@@ -45,7 +45,7 @@ const AccountButton: React.FC<Props> = ({ account, additionalActions }) => {
           width: StyleConstants.Font.Size.L,
           height: StyleConstants.Font.Size.L
         }}
-        style={{ borderRadius: StyleConstants.Font.Size.L / 2, overflow: 'hidden' }}
+        style={{ borderRadius: 99, overflow: 'hidden' }}
       />
       <CustomText
         fontStyle='M'

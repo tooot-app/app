@@ -56,7 +56,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
           padding: StyleConstants.Spacing.S,
           borderColor: colors.border,
           borderWidth: 1,
-          borderRadius: StyleConstants.Spacing.S,
+          borderRadius: StyleConstants.BorderRadius,
           marginBottom: StyleConstants.Spacing.S
         }}
       >
