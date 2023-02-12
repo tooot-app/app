@@ -48,119 +48,119 @@
         "accessibilityLabel": "Tut hau bultzatu",
         "function": "Tuta bultzatu",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Aukeratu bultzadaren ikuspena",
+          "public": "Bultzada publikoa",
+          "unlisted": "Zerrendatik kendu bultzada"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Gehitu tut hau gogokoenetara",
+        "function": "Gehitu tuta gogokoenetara"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Gehitu tut hau laster-marketara",
+        "function": "Gehitu tuta laster-marketara"
       },
-      "openReport": ""
+      "openReport": "Ireki txostena"
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} erabiltzailek bultzatu dute tut hau",
+        "accessibilityHint": "Sakatu erabiltzaileak ezagutzeko",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} erabiltzailek gogokoenetara gehitu dute tut hau",
+        "accessibilityHint": "Sakatu erabiltzaileak ezagutzeko",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Tut hau {{count}} aldiz editatua izan da",
+        "accessibilityHint": "Sakatu editatzeen historia osoa ikusteko",
+        "text_one": "Editatze {{count}}",
+        "text_other": "{{count}} editatze"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Erakutsi eduki hunkigarria"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Errorea kargatzean",
+        "button": "Saiatu urrutiko estekarekin"
       },
-      "altText": ""
+      "altText": "Testu alternatiboa"
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "{{name}}-(r)en abatarra",
+      "accessibilityHint": "Sakatu {{name}}-(r)en orrira joateko"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Ezkutuko edukia"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Erakutsi hala ere",
+      "match_v1": "Iragazia: {{phrase}}.",
+      "match_v2_one": "{{filters}}-(e)k iragazia.",
+      "match_v2_other": "{{count}} iragazkiek iragaziak, {{filters}}."
     },
-    "fullConversation": "",
+    "fullConversation": "Irakurri elkarrizketak",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Itzuli",
+      "succeed": "{{provider}}-(e)k itzulia {{source}}-(e)tik",
+      "failed": "Itzulpenak huts egin du",
+      "source_not_supported": "Tutaren hizkuntza ez da bateragarria",
+      "target_not_supported": "Helburuko hizkuntza ez da bateragarria"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Erabiltzailearen bistaratutako izena"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Erabiltzailearen kontua"
           }
         },
-        "application": "",
+        "application": "{{application}}-(e)tik",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Tuta editatuta"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Tuta mutututa"
         },
-        "replies": "",
+        "replies": "<0 />-(r)ekiko erantzuna",
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Tuta mezu zuzen bat da"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Tuta jarraitzaileentzako soilik da ikusgarri"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "Honekin/Hauekin",
         "delete": {
-          "function": ""
+          "function": "Ezabatu mezu zuzena"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Bozkatu",
+          "refresh": "Eguneratu"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "Erabiltzaile {{count}}ek bozkatu du",
+          "voters_other": "{{count}} erabiltzailek bozkatu dute",
+          "votes_one": "Boto {{count}}",
+          "votes_other": "{{count}} boto"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Bozketa amaitua",
+          "until": "<0 /> amaitzeko"
         }
       }
     }
