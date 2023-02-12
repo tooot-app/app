@@ -9,7 +9,7 @@
     "delete": "Slett",
     "done": "Fullført",
     "confirm": "Bekreft",
-    "add": ""
+    "add": "Legg til"
   },
   "customEmoji": {
     "accessibilityLabel": "Tilpasset emoji {{emoji}}"
