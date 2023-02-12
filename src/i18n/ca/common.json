@@ -9,7 +9,7 @@
     "delete": "Esborra",
     "done": "Fet",
     "confirm": "Confirma",
-    "add": ""
+    "add": "Afegeix"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalitzat {{emoji}}"
