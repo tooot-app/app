@@ -7,9 +7,7 @@
     "button": "Iniciar sesión",
     "information": {
       "name": "Nombre",
-      "accounts": "Usuarios",
-      "statuses": "Toots",
-      "domains": "Universos"
+      "description": ""
     },
     "disclaimer": {
       "base": "El inicio de sesión usa el navegador del sistema, y la información de la cuenta no será visible para tooot."
