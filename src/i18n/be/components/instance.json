@@ -7,9 +7,7 @@
     "button": "Увайсці",
     "information": {
       "name": "Назва",
-      "accounts": "Карыстальнікі",
-      "statuses": "Допісы",
-      "domains": "Юніверсы"
+      "description": ""
     },
     "disclaimer": {
       "base": ""
