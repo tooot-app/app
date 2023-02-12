@@ -11,13 +11,13 @@
       "segments": {
         "federated": "Federat",
         "local": "Local",
-        "explore": ""
+        "explore": "Explora"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "Explorant",
+        "trending": "Tendència",
+        "followRemote": "Segueix la instància remota",
+        "noTitle": "Sense títol"
       }
     },
     "notifications": {
@@ -386,7 +386,7 @@
         "accessibilityHint": "Pots silenciar, bloquejar, denunciar o compartir aquest usuari"
       },
       "followed_by": " et segueix",
-      "privateNote": "",
+      "privateNote": "Estableix una nota privada",
       "moved": "S'ha traslladat",
       "created_at": "Es va unir el dia {{date}}",
       "summary": {
