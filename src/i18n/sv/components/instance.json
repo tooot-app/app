@@ -7,9 +7,7 @@
     "button": "Logga in",
     "information": {
       "name": "Namn",
-      "accounts": "Användare",
-      "statuses": "Inlägg",
-      "domains": "Universum"
+      "description": ""
     },
     "disclaimer": {
       "base": "Inloggningsprocessen använder systemets webbläsare så ingen av din kontoinformation är synlig för appen."
