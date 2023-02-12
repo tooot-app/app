@@ -7,7 +7,7 @@
     "button": "Connexion",
     "information": {
       "name": "Nom",
-      "description": ""
+      "description": "Description"
     },
     "disclaimer": {
       "base": "Le processus de connexion utilise le navigateur du système. Les informations de votre compte ne seront pas visibles par l'application tooot."
