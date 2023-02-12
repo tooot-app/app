@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Globaal",
         "local": "Lokaal",
-        "trending": "Trending"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
