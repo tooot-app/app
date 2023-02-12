@@ -386,6 +386,7 @@
         "accessibilityHint": "Puedes silenciar, bloquear, denunciar o compartir este usuario"
       },
       "followed_by": " te sigue",
+      "privateNote": "",
       "moved": "Se ha trasladado",
       "created_at": "Se unió el {{date}}",
       "summary": {
