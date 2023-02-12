@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Federazione",
         "local": "Locale",
-        "trending": ""
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
