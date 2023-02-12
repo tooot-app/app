@@ -13,6 +13,7 @@ import { getGlobalStorage, setGlobalStorage, useGlobalStorage } from '@utils/sto
 import { StorageGlobal } from '@utils/storage/global'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
+import { isLargeDevice } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -260,7 +261,7 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                         ? (instanceQuery.data as Mastodon.Instance_V1)?.short_description ||
                           instanceQuery.data?.description
                         : undefined,
-                      lines: 2
+                      lines: isLargeDevice ? 1 : 2
                     })}
                   </Placeholder>
                 </View>

@@ -6,6 +6,7 @@ import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
+import { isLargeDevice } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Dimensions, Pressable, View } from 'react-native'
@@ -20,9 +21,11 @@ const AccountAttachments: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { colors } = useTheme()
 
-  const DISPLAY_AMOUNT = 6
+  const DISPLAY_AMOUNT = isLargeDevice ? 8 : 6
 
-  const width = (Dimensions.get('window').width - StyleConstants.Spacing.Global.PagePadding * 2) / 4
+  const width =
+    (Dimensions.get('window').width - StyleConstants.Spacing.Global.PagePadding * 2) /
+    (DISPLAY_AMOUNT - 1)
 
   const { data } = useTimelineQuery({
     page: 'Account',

@@ -9,6 +9,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
+import { isLargeDevice } from '@utils/styles/scaling'
 import { chunk } from 'lodash'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -179,7 +180,8 @@ const TimelineAttachment = () => {
       style={{
         marginTop: StyleConstants.Spacing.M,
         flex: 1,
-        gap: StyleConstants.Spacing.XS
+        gap: StyleConstants.Spacing.XS,
+        ...(isLargeDevice && { maxWidth: 375 })
       }}
     >
       {chunk(status.media_attachments, 2).map((chunk, chunkIndex) => (
