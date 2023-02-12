@@ -22,7 +22,7 @@ export interface Props {
   switchDisabled?: boolean
   switchOnValueChange?: () => void
 
-  iconBack?: 'chevron-right' | 'external-link' | 'check'
+  iconBack?: 'chevron-right' | 'chevron-down' | 'external-link' | 'check'
   iconBackColor?: ColorDefinitions
 
   loading?: boolean
@@ -66,14 +66,7 @@ const MenuRow: React.FC<Props> = ({
         }}
       >
         <View style={{ flex: 1 }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: StyleConstants.Spacing.S
-            }}
-          >
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <View
               style={{
                 flexShrink: 3,
@@ -96,7 +89,7 @@ const MenuRow: React.FC<Props> = ({
                     width: 8,
                     height: 8,
                     backgroundColor: colors.red,
-                    borderRadius: 8,
+                    borderRadius: StyleConstants.BorderRadius,
                     marginRight: StyleConstants.Spacing.S
                   }}
                 />

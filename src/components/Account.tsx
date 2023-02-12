@@ -42,7 +42,7 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props,
               style={{
                 width: StyleConstants.Avatar.S,
                 height: StyleConstants.Avatar.S,
-                borderRadius: 8,
+                borderRadius: StyleConstants.BorderRadius,
                 marginRight: StyleConstants.Spacing.S
               }}
               dim

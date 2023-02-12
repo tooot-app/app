@@ -29,7 +29,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const { colors } = useTheme()
   const { t } = useTranslation(['componentTimeline', 'screenTabs'])
 
-  const [hasRemoteContent, setHasRemoteContent] = useState<boolean>(false)
+  const [hasRemoteContent, setHasRemoteContent] = useState<boolean>(toot._remote || false)
   const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
     local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
     remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
@@ -70,7 +70,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
       headerBackVisible: false
     })
-    navigation.setParams({ toot, queryKey: queryKey.local })
+    navigation.setParams({ queryKey: queryKey.local })
   }, [hasRemoteContent])
 
   const PREV_PER_BATCH = 1
@@ -236,12 +236,15 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return
         }
 
-        if ((query.data?.pages[0].body.length || 0) < data.length) {
+        if ((query.data?.pages[0].body.length || 0) <= data.length) {
+          if (!hasRemoteContent && (query.data?.pages[0].body.length || 0) <= data.length) {
+            setHasRemoteContent(true)
+          }
+
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
             queryKey.local,
             old => {
-              setHasRemoteContent(true)
               return {
                 pages: [
                   {
@@ -350,7 +353,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             ) : null}
             <TimelineDefault
               item={item}
-              queryKey={item._remote ? queryKey.remote : queryKey.local}
+              queryKey={queryKey.local}
               highlighted={toot.id === item.id}
               suppressSpoiler={
                 toot.id !== item.id &&

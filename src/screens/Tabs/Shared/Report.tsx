@@ -110,7 +110,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           margin: StyleConstants.Spacing.Global.PagePadding,
           borderWidth: 1,
           borderColor: colors.red,
-          borderRadius: 8
+          borderRadius: StyleConstants.BorderRadius
         }}
       >
         <ComponentAccount account={account} props={{}} />

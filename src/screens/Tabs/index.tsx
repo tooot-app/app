@@ -55,7 +55,7 @@ const ScreenTabs = () => {
                     sources={{ default: { uri: avatarStatic } }}
                     dimension={{ width: size, height: size }}
                     style={{
-                      borderRadius: size,
+                      borderRadius: 99,
                       overflow: 'hidden',
                       borderWidth: focused ? 2 : 0,
                       borderColor: focused ? colors.primaryDefault : color

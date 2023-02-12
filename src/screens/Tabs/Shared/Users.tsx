@@ -79,7 +79,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
               padding: StyleConstants.Spacing.S,
               borderColor: colors.border,
               borderWidth: 1,
-              borderRadius: StyleConstants.Spacing.S
+              borderRadius: StyleConstants.BorderRadius
             }}
           >
             <Icon

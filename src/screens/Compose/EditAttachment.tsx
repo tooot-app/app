@@ -1,3 +1,4 @@
+import { discardConfirmation } from '@components/discardConfirmation'
 import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { ModalScrollView } from '@components/ModalScrollView'
@@ -6,9 +7,11 @@ import apiInstance from '@utils/api/instance'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { Image } from 'expo-image'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, TextInput } from 'react-native'
+import { Alert, TextInput, View } from 'react-native'
+import { DEFAULT_WIDTH } from './Root/Footer/Attachments'
 import ComposeContext from './utils/createContext'
 
 const ComposeEditAttachment: React.FC<
@@ -20,7 +23,7 @@ const ComposeEditAttachment: React.FC<
   }
 }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenCompose')
+  const { t } = useTranslation(['common', 'screenCompose'])
 
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -31,55 +34,89 @@ const ComposeEditAttachment: React.FC<
     return null
   }
 
+  const [altText, setAltText] = useState<string | undefined>(theAttachment.description)
+
   useEffect(() => {
     navigation.setOptions({
-      title: t('content.editAttachment.header.title'),
-      headerLeft: () => <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />,
+      title: t('screenCompose:content.editAttachment.header.title'),
+      headerLeft: () => (
+        <HeaderLeft
+          content='chevron-down'
+          onPress={() => {
+            discardConfirmation({
+              condition: theAttachment.description != altText,
+              action: () => navigation.goBack()
+            })
+          }}
+        />
+      ),
       headerRight: () => (
         <HeaderRight
-          accessibilityLabel={t('content.editAttachment.header.right.accessibilityLabel')}
-          content='save'
+          accessibilityLabel={t(
+            'screenCompose:content.editAttachment.header.right.accessibilityLabel'
+          )}
+          type='text'
+          content={t('common:buttons.apply')}
           loading={isSubmitting}
           onPress={() => {
             if (composeState.type === 'edit') {
-              composeDispatch({ type: 'attachment/edit', payload: { ...theAttachment } })
+              composeDispatch({
+                type: 'attachment/edit',
+                payload: { ...theAttachment, description: altText }
+              })
               navigation.goBack()
               return
             }
-
-            setIsSubmitting(true)
-            const body = { description: theAttachment.description }
 
             theAttachment?.id &&
               apiInstance<Mastodon.Attachment>({
                 method: 'put',
                 url: `media/${theAttachment.id}`,
-                body
+                body: { description: altText }
               })
-                .then(() => {
+                .then(res => {
+                  setIsSubmitting(false)
                   haptics('Success')
+                  composeDispatch({
+                    type: 'attachment/edit',
+                    payload: res.body
+                  })
                   navigation.goBack()
                 })
                 .catch(() => {
                   setIsSubmitting(false)
                   haptics('Error')
-                  Alert.alert(t('content.editAttachment.header.right.failed.title'), undefined, [
-                    {
-                      text: t('content.editAttachment.header.right.failed.button'),
-                      style: 'cancel'
-                    }
-                  ])
+                  Alert.alert(
+                    t('screenCompose:content.editAttachment.header.right.failed.title'),
+                    undefined,
+                    [
+                      {
+                        text: t('screenCompose:content.editAttachment.header.right.failed.button'),
+                        style: 'cancel'
+                      }
+                    ]
+                  )
                 })
           }}
         />
       )
     })
-  }, [theAttachment])
+  }, [theAttachment, altText])
 
   return (
     <ModalScrollView>
+      <View style={{ alignItems: 'center', marginBottom: StyleConstants.Spacing.M }}>
+        <Image
+          style={{
+            width: DEFAULT_WIDTH,
+            height: DEFAULT_WIDTH,
+            borderRadius: StyleConstants.BorderRadius
+          }}
+          source={theAttachment.preview_url}
+        />
+      </View>
       <CustomText fontStyle='M' style={{ color: colors.primaryDefault }} fontWeight='Bold'>
-        {t('content.editAttachment.content.altText.heading')}
+        {t('screenCompose:content.editAttachment.content.altText.heading')}
       </CustomText>
       <TextInput
         style={{
@@ -94,18 +131,10 @@ const ComposeEditAttachment: React.FC<
         }}
         maxLength={1500}
         multiline
-        onChangeText={e =>
-          composeDispatch({
-            type: 'attachment/edit',
-            payload: {
-              ...theAttachment,
-              description: e
-            }
-          })
-        }
-        placeholder={t('content.editAttachment.content.altText.placeholder')}
+        value={altText}
+        onChangeText={e => setAltText(e)}
+        placeholder={t('screenCompose:content.editAttachment.content.altText.placeholder')}
         placeholderTextColor={colors.secondary}
-        value={theAttachment.description}
       />
       <CustomText
         fontStyle='S'

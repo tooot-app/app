@@ -54,12 +54,16 @@ const useInstanceQuery = (
     options?: UseQueryOptions<Mastodon.Instance<any>, AxiosError>
   }
 ) => {
-  const queryKey: QueryKeyInstance = params?.domain ? ['Instance', params] : ['Instance']
+  const queryKey: QueryKeyInstance = params?.domain
+    ? ['Instance', { domain: params.domain }]
+    : ['Instance']
   return useQuery(queryKey, queryFunction, {
     ...params?.options,
     staleTime: Infinity,
     cacheTime: Infinity,
-    onSuccess: data => setAccountStorage([{ key: 'version', value: data.version }])
+    ...(!params?.domain && {
+      onSuccess: data => setAccountStorage([{ key: 'version', value: data.version }])
+    })
   })
 }
 

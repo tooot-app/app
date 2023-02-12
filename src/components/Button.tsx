@@ -116,7 +116,7 @@ const Button: React.FC<Props> = ({
       }}
       style={[
         {
-          borderRadius: 100,
+          borderRadius: 99,
           justifyContent: 'center',
           alignItems: 'center',
           borderWidth: overlay ? 0 : selected ? 1.5 : 1,

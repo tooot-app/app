@@ -105,21 +105,21 @@ const menuAccount = ({
   })
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id: actualAccount?.id }]
   const relationshipMutation = useRelationshipMutation({
-    onSuccess: (res, { payload: { action } }) => {
+    onSuccess: (res, vars) => {
       haptics('Success')
       queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
-      if (action === 'block') {
+      if (vars.type === 'outgoing' && vars.payload.action === 'block') {
         queryClient.invalidateQueries({
           queryKey: ['Timeline', { page: 'Following' }],
           exact: false
         })
       }
     },
-    onError: (err: any, { payload: { action } }) => {
+    onError: (err: any, vars) => {
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t(`componentContextMenu:${action}.function` as any)
+          function: t(`componentContextMenu:${(vars.payload as any).action}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&

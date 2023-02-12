@@ -9,8 +9,9 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
+import { isLargeDevice } from '@utils/styles/scaling'
 import { chunk } from 'lodash'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import StatusContext from '../Context'
@@ -71,14 +72,9 @@ const TimelineAttachment = () => {
           }
         default:
           if (
-            attachment.preview_url?.endsWith('.jpg') ||
-            attachment.preview_url?.endsWith('.jpeg') ||
-            attachment.preview_url?.endsWith('.png') ||
-            attachment.preview_url?.endsWith('.gif') ||
-            attachment.remote_url?.endsWith('.jpg') ||
-            attachment.remote_url?.endsWith('.jpeg') ||
-            attachment.remote_url?.endsWith('.png') ||
-            attachment.remote_url?.endsWith('.gif')
+            // https://docs.expo.dev/versions/unversioned/sdk/image/#supported-image-formats
+            attachment.preview_url?.match(/.(?:a?png|jpe?g|webp|avif|heic|gif|svg|ico|icns)$/i) ||
+            attachment.remote_url?.match(/.(?:a?png|jpe?g|webp|avif|heic|gif|svg|ico|icns)$/i)
           ) {
             return {
               id: attachment.id,
@@ -179,11 +175,13 @@ const TimelineAttachment = () => {
       style={{
         marginTop: StyleConstants.Spacing.M,
         flex: 1,
-        gap: StyleConstants.Spacing.XS
+        gap: StyleConstants.Spacing.XS,
+        ...(isLargeDevice && { maxWidth: 375 })
       }}
     >
       {chunk(status.media_attachments, 2).map((chunk, chunkIndex) => (
         <View
+          key={chunkIndex}
           style={{
             flex: 1,
             flexDirection: 'row',
@@ -193,7 +191,9 @@ const TimelineAttachment = () => {
             gap: StyleConstants.Spacing.XS
           }}
         >
-          {chunk.map((a, aIndex) => mapAttachmentType(a, chunkIndex * 2 + aIndex))}
+          {chunk.map((a, aIndex) => (
+            <Fragment key={aIndex}>{mapAttachmentType(a, chunkIndex * 2 + aIndex)}</Fragment>
+          ))}
         </View>
       ))}
 

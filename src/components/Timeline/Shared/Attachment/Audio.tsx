@@ -118,7 +118,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
             width: '100%',
             height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
             paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-            borderRadius: 100,
+            borderRadius: 99,
             opacity: sensitiveShown ? 0.35 : undefined
           }}
         >

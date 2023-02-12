@@ -83,9 +83,9 @@ const themeColors: {
     dark_darker: 'rgba(18, 18, 18, 0.5)'
   },
   backgroundOverlayInvert: {
-    light: 'rgba(25, 25, 25, 0.5)',
-    dark_lighter: 'rgba(0, 0, 0, 0.5)',
-    dark_darker: 'rgba(0, 0, 0, 0.5)'
+    light: 'rgba(25, 25, 25, 0.75)',
+    dark_lighter: 'rgba(0, 0, 0, 0.75)',
+    dark_darker: 'rgba(0, 0, 0, 0.75)'
   },
 
   border: {

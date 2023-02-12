@@ -6,8 +6,10 @@ import {
   UseInfiniteQueryOptions,
   useMutation
 } from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
+import { appendRemote } from '@utils/helpers/appendRemote'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { useNavState } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
@@ -24,7 +26,7 @@ export type QueryKeyTimeline = [
   'Timeline',
   (
     | {
-        page: Exclude<App.Pages, 'Following' | 'Hashtag' | 'List' | 'Toot' | 'Account'>
+        page: Exclude<App.Pages, 'Following' | 'Hashtag' | 'List' | 'Toot' | 'Account' | 'Explore'>
       }
     | {
         page: 'Following'
@@ -50,6 +52,7 @@ export type QueryKeyTimeline = [
         toot: Mastodon.Status['id']
         remote: boolean
       }
+    | { page: 'Explore'; domain?: string }
   )
 ]
 
@@ -117,12 +120,24 @@ export const queryFunctionTimeline = async ({
         params
       })
 
-    case 'Trending':
-      return apiInstance<Mastodon.Status[]>({
-        method: 'get',
-        url: 'trends/statuses',
-        params
-      })
+    case 'Explore':
+      if (page.domain) {
+        return apiGeneral<Mastodon.Status[]>({
+          method: 'get',
+          domain: page.domain,
+          url: 'api/v1/timelines/public',
+          params: {
+            ...params,
+            local: 'true'
+          }
+        }).then(res => ({ ...res, body: res.body.map(status => appendRemote.status(status)) }))
+      } else {
+        return apiInstance<Mastodon.Status[]>({
+          method: 'get',
+          url: 'trends/statuses',
+          params
+        })
+      }
 
     case 'Notifications':
       const notificationsFilter = getAccountStorage.object('notifications')

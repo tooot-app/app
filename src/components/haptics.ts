@@ -4,9 +4,6 @@ import { Platform } from 'react-native'
 const haptics = (
   type: 'Success' | 'Warning' | 'Error' | 'Light' | 'Medium' | 'Heavy'
 ) => {
-  if (Platform.OS === 'ios' && parseInt(Platform.Version, 10) <= 12) {
-    return
-  }
   if (Platform.OS === 'android') {
     if (type === 'Error') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle['Light']).catch(() => {})

@@ -73,7 +73,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
           padding: StyleConstants.Spacing.Global.PagePadding,
           marginTop: StyleConstants.Spacing.Global.PagePadding,
           borderWidth: 1,
-          borderRadius: 6,
+          borderRadius: StyleConstants.BorderRadius,
           borderColor: colors.primaryDefault,
           backgroundColor: colors.backgroundDefault
         }}
@@ -123,7 +123,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
                   marginTop: StyleConstants.Spacing.Global.PagePadding / 2,
                   marginBottom: StyleConstants.Spacing.Global.PagePadding / 2,
                   marginRight: StyleConstants.Spacing.M,
-                  borderRadius: 6,
+                  borderRadius: StyleConstants.BorderRadius,
                   flexDirection: 'row',
                   borderColor: reaction.me ? colors.disabled : colors.primaryDefault,
                   backgroundColor: reaction.me ? colors.disabled : colors.backgroundDefault
@@ -231,7 +231,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
                   style={{
                     width: StyleConstants.Spacing.S,
                     height: StyleConstants.Spacing.S,
-                    borderRadius: StyleConstants.Spacing.S,
+                    borderRadius: StyleConstants.BorderRadius,
                     borderWidth: 1,
                     borderColor: colors.primaryDefault,
                     backgroundColor: i === index ? colors.primaryDefault : undefined,
@@ -271,7 +271,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
                 style={{
                   width: StyleConstants.Spacing.S,
                   height: StyleConstants.Spacing.S,
-                  borderRadius: StyleConstants.Spacing.S,
+                  borderRadius: StyleConstants.BorderRadius,
                   borderWidth: 1,
                   borderColor: colors.primaryDefault,
                   backgroundColor: i === index ? colors.primaryDefault : undefined,

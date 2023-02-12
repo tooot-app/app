@@ -14,7 +14,7 @@ const AccountInformationAvatar: React.FC = () => {
 
   return (
     <GracefullyImage
-      style={{ borderRadius: 8, overflow: 'hidden' }}
+      style={{ borderRadius: StyleConstants.BorderRadius, overflow: 'hidden' }}
       dimension={{ width: StyleConstants.Avatar.L, height: StyleConstants.Avatar.L }}
       sources={{
         default: { uri: account?.avatar },
