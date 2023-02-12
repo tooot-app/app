@@ -7,7 +7,7 @@
     "button": "Logga in",
     "information": {
       "name": "Namn",
-      "description": ""
+      "description": "Beskrivning"
     },
     "disclaimer": {
       "base": "Inloggningsprocessen använder systemets webbläsare så ingen av din kontoinformation är synlig för appen."
