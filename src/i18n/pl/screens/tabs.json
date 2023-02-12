@@ -386,6 +386,7 @@
         "accessibilityHint": "Możesz wyciszać, zablokować, zgłosić lub udostępnić tego użytkownika"
       },
       "followed_by": " obserwuje Cię",
+      "privateNote": "",
       "moved": "Użytkownik przeniesiony",
       "created_at": "Dołączono: {{date}}",
       "summary": {
