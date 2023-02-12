@@ -7,9 +7,7 @@
     "button": "Zaloguj",
     "information": {
       "name": "Imię i nazwisko",
-      "accounts": "Użytkownicy",
-      "statuses": "Tootki",
-      "domains": "Uniwersa"
+      "description": ""
     },
     "disclaimer": {
       "base": "Logowanie odbywa się przy użyciu przeglądarki systemowej, która nie będzie widoczna dla aplikacji."
