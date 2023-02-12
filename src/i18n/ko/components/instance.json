@@ -7,9 +7,7 @@
     "button": "로그인",
     "information": {
       "name": "이름",
-      "accounts": "사용자",
-      "statuses": "툿",
-      "domains": "연합"
+      "description": ""
     },
     "disclaimer": {
       "base": "로그인 과정에서는 시스템 브라우저를 사용하므로, tooot 앱은 당신의 계정 정보를 볼 수 없어요."
