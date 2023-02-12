@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Abisuak",
   "content": {
-    "published": "",
+    "published": "<0 /> argitaratua",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Irakurri",
+      "unread": "Irakurritako gisa ezarri"
     }
   }
 }
