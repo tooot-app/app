@@ -5,7 +5,7 @@ export type GlobalV0 = {
   // string
   'app.expo_token'?: string
   'app.prev_tab'?: keyof ScreenTabsStackParamList
-  'app.prev_public_segment'?: Extract<App.Pages, 'Local' | 'LocalPublic' | 'Trending'>
+  'app.prev_public_segment'?: Extract<App.Pages, 'Local' | 'LocalPublic' | 'Explore'>
   'app.language'?: string
   'app.theme'?: 'light' | 'dark' | 'auto'
   'app.theme.dark'?: 'lighter' | 'darker'
@@ -24,4 +24,10 @@ export type GlobalV0 = {
   'account.active'?: string
   // object
   accounts?: string[]
+
+  //// remote
+  // string
+  'remote.active'?: string
+  // object
+  remotes?: { title: string; domain: string }[]
 }

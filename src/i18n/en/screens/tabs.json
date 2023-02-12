@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Federated",
         "local": "Local",
-        "trending": "Trending"
+        "explore": "Explore"
+      },
+      "exploring": {
+        "heading": "Exploring",
+        "trending": "Trending",
+        "followRemote": "Follow remote instance",
+        "noTitle": "No Title"
       }
     },
     "notifications": {

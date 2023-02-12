@@ -39,7 +39,7 @@ const ComposePoll: React.FC = () => {
       style={{
         flex: 1,
         borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: 6,
+        borderRadius: StyleConstants.Spacing.S,
         margin: StyleConstants.Spacing.Global.PagePadding,
         borderColor: colors.border
       }}
