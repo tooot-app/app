@@ -8,7 +8,8 @@
     "create": "Tạo",
     "delete": "Xóa",
     "done": "Xong",
-    "confirm": "Xác nhận"
+    "confirm": "Xác nhận",
+    "add": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
