@@ -11,13 +11,13 @@
       "segments": {
         "federated": "",
         "local": "",
-        "explore": ""
+        "explore": "Arakatu"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "Arakatzen",
+        "trending": "Joerak",
+        "followRemote": "Jarraitu urrutiko instantzia",
+        "noTitle": "Izenbururik ez"
       }
     },
     "notifications": {
@@ -386,6 +386,7 @@
         "accessibilityHint": ""
       },
       "followed_by": "",
+      "privateNote": "",
       "moved": "",
       "created_at": "",
       "summary": {
