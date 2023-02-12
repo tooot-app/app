@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": "Følg bruker"
+  },
+  "block": {
+    "function": "Blokker bruker"
+  },
+  "button": {
+    "error": "Feil med lasting",
+    "blocked_by": "Blokkert av bruker",
+    "blocking": "Fjern blokkering",
+    "following": "Slutt å følge",
+    "requested": "Avbryt forespørsel",
+    "default": "Følg"
+  }
+}

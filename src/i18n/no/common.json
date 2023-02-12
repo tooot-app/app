@@ -1,0 +1,32 @@
+{
+  "buttons": {
+    "OK": "OK",
+    "apply": "Bruk",
+    "cancel": "Avbryt",
+    "discard": "Forkast",
+    "continue": "Fortsett",
+    "create": "Opprett",
+    "delete": "Slett",
+    "done": "Fullført",
+    "confirm": "Bekreft"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Tilpasset emoji {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} var vellykket"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} feilet, vennligst prøv igjen"
+    }
+  },
+  "separator": ", ",
+  "discard": {
+    "title": "Endringene er ikke lagret",
+    "message": "Dine endringer er ikke lagret. Angrer du på endringene?"
+  }
+}

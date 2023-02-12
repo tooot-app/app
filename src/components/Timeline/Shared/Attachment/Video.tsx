@@ -2,8 +2,9 @@ import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { connectMedia } from '@utils/api/helpers/connect'
-import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import { Platform } from 'expo-modules-core'
 import * as ScreenOrientation from 'expo-screen-orientation'
@@ -27,13 +28,9 @@ const AttachmentVideo: React.FC<Props> = ({
   video,
   gifv = false
 }) => {
+  const { colors } = useTheme()
   const { reduceMotionEnabled } = useAccessibility()
-  const [autoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
-  const [preferences] = useAccountStorage.object('preferences')
-  const shouldAutoplayGifv =
-    preferences?.['reading:autoplay:gifs'] !== undefined
-      ? preferences['reading:autoplay:gifs']
-      : autoplayGifv
+  const [shouldAutoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
 
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
@@ -56,9 +53,10 @@ const AttachmentVideo: React.FC<Props> = ({
     <View
       style={{
         flex: 1,
-        flexBasis: '50%',
-        padding: StyleConstants.Spacing.XS / 2,
-        aspectRatio: aspectRatio({ total, index, ...video.meta?.original })
+        backgroundColor: colors.shimmerDefault,
+        aspectRatio: aspectRatio({ total, index, ...video.meta?.original }),
+        alignContent: 'center',
+        justifyContent: 'center'
       }}
     >
       <Video

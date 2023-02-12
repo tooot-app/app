@@ -33,7 +33,7 @@
       "poll": "Erantzun zenuen inkesta bat amaitu da",
       "reblog": {
         "default": "{{name}}-(e)k bultzatu du",
-        "myself": "",
+        "myself": "Bultzatu dut",
         "notification": "{{name}}-(e)k zure tuta bultzatu du"
       },
       "update": "Bultzada editatua izan da",

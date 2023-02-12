@@ -1,6 +1,6 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { forwardRef, RefObject } from 'react'
+import React, { ForwardedRef, forwardRef } from 'react'
 import { Platform, TextInput, TextInputProps, View } from 'react-native'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { EmojisState } from './Emojis/Context'
@@ -35,7 +35,7 @@ const ComponentInput = forwardRef(
       isFocused,
       ...props
     }: Props,
-    ref: RefObject<TextInput>
+    ref: ForwardedRef<TextInput>
   ) => {
     const { colors, mode } = useTheme()
 

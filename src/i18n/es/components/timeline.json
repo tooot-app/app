@@ -33,7 +33,7 @@
       "poll": "Una encuesta en la que has votado ha terminado",
       "reblog": {
         "default": "{{name}} ha impulsado",
-        "myself": "",
+        "myself": "He impulsado",
         "notification": "{{name}} ha impulsado tu toot"
       },
       "update": "El impulso ha sido editado",

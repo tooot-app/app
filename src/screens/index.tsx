@@ -221,9 +221,7 @@ const Screens: React.FC = () => {
     <IntlProvider locale={i18n.language}>
       <StatusBar
         backgroundColor={colors.backgroundDefault}
-        {...(Platform.OS === 'android' && {
-          barStyle: theme === 'light' ? 'dark-content' : 'light-content'
-        })}
+        barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
       />
       <NavigationContainer
         ref={navigationRef}

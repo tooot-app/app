@@ -18,16 +18,15 @@ import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { LogBox, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
 import i18n from './i18n'
 import Screens from './screens'
 
-Platform.select({
-  android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-})
+log('log', 'App', 'delay splash')
+SplashScreen.preventAutoHideAsync()
 
 dev()
 sentry()
@@ -35,9 +34,6 @@ netInfo()
 audio()
 push()
 enableFreeze(true)
-
-log('log', 'App', 'delay splash')
-SplashScreen.preventAutoHideAsync()
 
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')

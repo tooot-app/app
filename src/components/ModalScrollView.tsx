@@ -1,11 +1,11 @@
 import { useHeaderHeight } from '@react-navigation/elements'
 import { StyleConstants } from '@utils/styles/constants'
-import { forwardRef, PropsWithChildren, RefObject } from 'react'
+import { ForwardedRef, forwardRef, PropsWithChildren } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const ModalScrollView = forwardRef(
-  ({ children }: PropsWithChildren, ref: RefObject<ScrollView>) => {
+  ({ children }: PropsWithChildren, ref: ForwardedRef<ScrollView>) => {
     const headerHeight = useHeaderHeight()
 
     return (

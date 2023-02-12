@@ -1,6 +1,6 @@
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
-import SegmentedControl from '@react-native-community/segmented-control'
+import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
@@ -49,11 +49,12 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
+        // @ts-ignore
         <SegmentedControl
           appearance={mode}
           values={routes.map(({ title }) => title)}
           selectedIndex={segment}
-          onChange={({ nativeEvent }) => {
+          onChange={({ nativeEvent }: any) => {
             setSegment(nativeEvent.selectedSegmentIndex)
             setGlobalStorage('app.prev_public_segment', segments[nativeEvent.selectedSegmentIndex])
           }}

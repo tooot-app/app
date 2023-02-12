@@ -129,7 +129,7 @@ const chooseAndUploadAttachment = async ({
   for (const media of result) {
     const requiredMedia = media as Required<Asset>
     uploadAttachment({ composeDispatch, media: requiredMedia })
-    await new Promise(res => setTimeout(res, 500))
+    await new Promise<void>(res => setTimeout(res, 500))
   }
 }
 

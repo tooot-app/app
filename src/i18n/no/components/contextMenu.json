@@ -1,0 +1,106 @@
+{
+  "accessibilityHint": "Handlinger for tut, for eksempel dens bruker, tut selv",
+  "account": {
+    "title": "Brukerhandlinger",
+    "following": {
+      "action_false": "Følg bruker",
+      "action_true": "Slutt å følge"
+    },
+    "inLists": "Lister som inneholder bruker ...",
+    "showBoosts": {
+      "action_false": "Vis brukerens booster",
+      "action_true": "Skjul brukernes booster"
+    },
+    "mute": {
+      "action_false": "Demp bruker",
+      "action_true": "Opphev demping av bruker"
+    },
+    "followAs": {
+      "trigger": "Følg som ...",
+      "succeed_default": "Følger nå @{{target}} med @{{source}}",
+      "succeed_locked": "Sendt følge forespørsel til @{{target}} med {{source}}, venter på godkjenning",
+      "failed": "Følg som"
+    },
+    "blockReport": "Blokker og rapporter",
+    "block": {
+      "action_false": "Blokker bruker",
+      "action_true": "Fjern blokkering av brukker",
+      "alert": {
+        "title": "Bekreft blokkering av @{{username}}?"
+      }
+    },
+    "reports": {
+      "action": "Rapporter og blokker bruker",
+      "alert": {
+        "title": "Bekreft blokkering av @{{username}}?"
+      }
+    }
+  },
+  "at": {
+    "direct": "Direktemelding",
+    "public": "Offentlig melding"
+  },
+  "copy": {
+    "action": "Kopier tut",
+    "succeed": "Kopiert"
+  },
+  "instance": {
+    "title": "Instansaktivitet",
+    "block": {
+      "action": "Blokker instans {{instance}}",
+      "alert": {
+        "title": "Bekreft blokkering av @{{instance}}?",
+        "message": "For det meste kan du dempe eller blokkere visse brukere.\n\nEtter at du har blokkert, vil alt innholdet fra denne forekomsten bli fjernet!"
+      }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "Følg",
+      "action_true": "Slutt å følge"
+    },
+    "filter": {
+      "action": "Filtrer emnet ..."
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Del tut"
+    },
+    "account": {
+      "action": "Del bruker"
+    }
+  },
+  "status": {
+    "title": "Tut handlinger",
+    "edit": {
+      "action": "Rediger tut"
+    },
+    "delete": {
+      "action": "Slett tut",
+      "alert": {
+        "title": "Bekreft sletting?",
+        "message": "Alle booster og favoritter blir slettet, inkludert alle svar."
+      }
+    },
+    "deleteEdit": {
+      "action": "Slett tut og repost",
+      "alert": {
+        "title": "Bekreft sletting og repost?",
+        "message": "Alle booster og favoritter blir slettet, inkludert alle svar."
+      }
+    },
+    "mute": {
+      "action_false": "Demp tut og svar",
+      "action_true": "Avdemp tut og svar"
+    },
+    "pin": {
+      "action_false": "Fest tut",
+      "action_true": "Avfest tut"
+    },
+    "filter": {
+      "action_false": "Filtrer tut...",
+      "action_true": "Behandle filtere..."
+    }
+  }
+}
