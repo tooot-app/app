@@ -1,6 +1,6 @@
 {
   "HTML": {
-    "accessibilityHint": "",
+    "accessibilityHint": "Sakatu edukia zabaldu edo ixteko",
     "expanded": "{{hint}}{{moreLines}}",
     "moreLines": " ({{count}} lerro gehiago)",
     "defaultHint": "Tut luzea"

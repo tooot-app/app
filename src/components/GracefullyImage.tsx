@@ -21,13 +21,7 @@ export interface Props {
   onPress?: () => void
   style?: StyleProp<ViewStyle>
   imageStyle?: ImageStyle
-  // For image viewer when there is no image size available
-  setImageDimensions?: React.Dispatch<
-    React.SetStateAction<{
-      width: number
-      height: number
-    }>
-  >
+
   dim?: boolean
   enableLiveTextInteraction?: boolean
 }
@@ -41,7 +35,6 @@ const GracefullyImage = ({
   onPress,
   style,
   imageStyle,
-  setImageDimensions,
   dim,
   enableLiveTextInteraction = false
 }: Props) => {
@@ -68,11 +61,6 @@ const GracefullyImage = ({
         source={hidden ? undefined : connectMedia(source)}
         transition={{ duration: 80 }}
         style={{ flex: 1, ...imageStyle }}
-        onLoad={event => {
-          if (setImageDimensions && event.source) {
-            setImageDimensions(event.source)
-          }
-        }}
         onError={() => {
           if (
             sources.default?.uri &&

@@ -8,7 +8,8 @@
     "create": "Skapa",
     "delete": "Radera",
     "done": "Klar",
-    "confirm": "Bekräfta"
+    "confirm": "Bekräfta",
+    "add": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"

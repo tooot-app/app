@@ -8,7 +8,8 @@
     "create": "Создать",
     "delete": "Удалить",
     "done": "Готово",
-    "confirm": "Подтвердить"
+    "confirm": "Подтвердить",
+    "add": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Пользовательские эмодзи {{emoji}}"

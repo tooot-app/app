@@ -8,7 +8,8 @@
     "create": "Opprett",
     "delete": "Slett",
     "done": "Fullført",
-    "confirm": "Bekreft"
+    "confirm": "Bekreft",
+    "add": "Legg til"
   },
   "customEmoji": {
     "accessibilityLabel": "Tilpasset emoji {{emoji}}"

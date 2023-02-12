@@ -352,7 +352,7 @@ PODS:
     - React
   - react-native-menu (0.7.3):
     - React
-  - react-native-mmkv (2.6.1):
+  - react-native-mmkv (2.7.0):
     - MMKV (>= 1.2.13)
     - React-Core
   - react-native-netinfo (9.3.7):
@@ -825,7 +825,7 @@ SPEC CHECKSUMS:
   react-native-ios-context-menu: e529171ba760a1af7f2ef0729f5a7f4d226171c5
   react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0
   react-native-menu: 9d7d6f819cc7fa14a15cf86888c53f3240d86f1b
-  react-native-mmkv: 28af0c2a3dc9495c2cea80f9d41444e096c2a1ef
+  react-native-mmkv: a2a40a0458bdbc9d43c4e7752ecfc5e3a87b66dd
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
   react-native-paste-input: fb7156dc75960c9895ddd9b9d68eeb874c9f323a

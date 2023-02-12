@@ -11,7 +11,13 @@
       "segments": {
         "federated": "連合",
         "local": "ローカル",
-        "trending": "トレンド"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
@@ -380,6 +386,7 @@
         "accessibilityHint": "このユーザーをミュート、ブロック、報告または共有できます"
       },
       "followed_by": "はあなたをフォローしています",
+      "privateNote": "",
       "moved": "ユーザーは引っ越ししました",
       "created_at": "登録日: {{date}}",
       "summary": {

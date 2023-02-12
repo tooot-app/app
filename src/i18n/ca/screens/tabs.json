@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Federat",
         "local": "Local",
-        "trending": "Tendència"
+        "explore": "Explora"
+      },
+      "exploring": {
+        "heading": "Explorant",
+        "trending": "Tendència",
+        "followRemote": "Segueix la instància remota",
+        "noTitle": "Sense títol"
       }
     },
     "notifications": {
@@ -101,7 +107,7 @@
       }
     },
     "fontSize": {
-      "demo": "<p>Això és una publicació de prova😊. Pots escollir entre moltes opcions<br /><br />Aquesta configuració només afecta el contingut principal de les publicacions, però altres mides de la font.</p>",
+      "demo": "<p>Això és una publicació de prova 😊. Pots escollir entre moltes opcions.<br /><br />Aquesta configuració només afecta el contingut principal de les publicacions, però altres mides de la font.</p>",
       "sizes": {
         "S": "S",
         "M": "M - Per defecte",
@@ -380,6 +386,7 @@
         "accessibilityHint": "Pots silenciar, bloquejar, denunciar o compartir aquest usuari"
       },
       "followed_by": " et segueix",
+      "privateNote": "Estableix una nota privada",
       "moved": "S'ha traslladat",
       "created_at": "Es va unir el dia {{date}}",
       "summary": {

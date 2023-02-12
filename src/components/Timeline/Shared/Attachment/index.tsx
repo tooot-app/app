@@ -171,31 +171,31 @@ const TimelineAttachment = () => {
   }
 
   return (
-    <View
-      style={{
-        marginTop: StyleConstants.Spacing.M,
-        flex: 1,
-        gap: StyleConstants.Spacing.XS,
-        ...(isLargeDevice && { maxWidth: 375 })
-      }}
-    >
-      {chunk(status.media_attachments, 2).map((chunk, chunkIndex) => (
-        <View
-          key={chunkIndex}
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignContent: 'stretch',
-            gap: StyleConstants.Spacing.XS
-          }}
-        >
-          {chunk.map((a, aIndex) => (
-            <Fragment key={aIndex}>{mapAttachmentType(a, chunkIndex * 2 + aIndex)}</Fragment>
-          ))}
-        </View>
-      ))}
+    <View style={{ marginTop: StyleConstants.Spacing.M, ...(isLargeDevice && { maxWidth: 375 }) }}>
+      <View
+        style={{
+          flex: 1,
+          gap: StyleConstants.Spacing.XS
+        }}
+      >
+        {chunk(status.media_attachments, 2).map((chunk, chunkIndex) => (
+          <View
+            key={chunkIndex}
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignContent: 'stretch',
+              gap: StyleConstants.Spacing.XS
+            }}
+          >
+            {chunk.map((a, aIndex) => (
+              <Fragment key={aIndex}>{mapAttachmentType(a, chunkIndex * 2 + aIndex)}</Fragment>
+            ))}
+          </View>
+        ))}
+      </View>
 
       {defaultSensitive() &&
         (sensitiveShown ? (
@@ -231,7 +231,7 @@ const TimelineAttachment = () => {
             }}
             style={{
               position: 'absolute',
-              top: StyleConstants.Spacing.S * 2,
+              top: StyleConstants.Spacing.S,
               left: StyleConstants.Spacing.S
             }}
           />

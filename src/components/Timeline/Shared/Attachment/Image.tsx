@@ -1,4 +1,5 @@
 import GracefullyImage from '@components/GracefullyImage'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { View } from 'react-native'
@@ -23,7 +24,16 @@ const AttachmentImage = ({
   const { colors } = useTheme()
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.shimmerDefault, alignContent: 'center', justifyContent: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.shimmerDefault,
+        alignContent: 'center',
+        justifyContent: 'center',
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
+      }}
+    >
       <GracefullyImage
         accessibilityLabel={image.description}
         hidden={sensitiveShown}

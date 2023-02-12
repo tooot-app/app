@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Ομοσπονδιακή",
         "local": "Τοπική",
-        "trending": "Δημοφιλή"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
@@ -380,6 +386,7 @@
         "accessibilityHint": "Μπορείτε να σιγάσετε, να αποκλείσετε, να αναφέρετε ή να κοινοποιήσετε αυτό το χρήστη"
       },
       "followed_by": " σας ακολουθεί",
+      "privateNote": "",
       "moved": "Ο χρήστης μεταφέρθηκε",
       "created_at": "Δημιουργία λογαριασμού: {{date}}",
       "summary": {

@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Editatzeari utzi?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Gorde zirriborroa",
+          "delete": "Ezabatu zirriborroa"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Tut egin",
+        "conversation": "Mezu zuzena bidali",
+        "reply": "Erantzun",
+        "deleteEdit": "Berriro tut egin",
+        "edit": "Editatu",
+        "share": "Partekatu"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Akatsa tut egitean",
+          "button": "Berriro saiatu"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "confirm": ""
+          "title": "Erantzutako tuta ezin izan da aurkitu",
+          "description": "Erantzutako tuta ezabatua izan da agian. Zure aipamenetik kendu nahi al duzu?",
+          "confirm": "Kendu aipamena"
         }
       }
     }
@@ -34,7 +34,7 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "@{{acct}}@{{domain}} bezala tut egiten",
         "spoilerInput": {
           "placeholder": ""
         },

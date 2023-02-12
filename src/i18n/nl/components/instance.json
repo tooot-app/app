@@ -7,9 +7,7 @@
     "button": "Inloggen",
     "information": {
       "name": "Naam",
-      "accounts": "Gebruikers",
-      "statuses": "Toots",
-      "domains": "Universum"
+      "description": "Omschrijving"
     },
     "disclaimer": {
       "base": "Het inlogproces gebruikt de systeembrowser, accountgegevens zijn niet zichtbaar voor de app."

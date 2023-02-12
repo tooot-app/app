@@ -1,0 +1,25 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": ""
+    },
+    "whitelisted": "",
+    "button": "Увайсці",
+    "information": {
+      "name": "Назва",
+      "description": "Апісанне"
+    },
+    "disclaimer": {
+      "base": ""
+    },
+    "terms": {
+      "base": ""
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "",
+      "message": ""
+    }
+  }
+}

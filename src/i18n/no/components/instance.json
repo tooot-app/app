@@ -7,9 +7,7 @@
     "button": "Logg inn",
     "information": {
       "name": "Navn",
-      "accounts": "Brukere",
-      "statuses": "Tuter",
-      "domains": "Universum"
+      "description": "Beskrivelse"
     },
     "disclaimer": {
       "base": "Innlogging bruker systemnettleser mens du logger inn på, din kontoinformasjon vil ikke være synlig for toot-appen."

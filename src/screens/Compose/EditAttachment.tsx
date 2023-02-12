@@ -110,7 +110,7 @@ const ComposeEditAttachment: React.FC<
           style={{
             width: DEFAULT_WIDTH,
             height: DEFAULT_WIDTH,
-            borderRadius: StyleConstants.BorderRadius
+            borderRadius: StyleConstants.BorderRadius / 2
           }}
           source={theAttachment.preview_url}
         />

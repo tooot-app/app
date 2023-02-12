@@ -1,0 +1,106 @@
+{
+  "accessibilityHint": "",
+  "account": {
+    "title": "",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
+    "block": {
+      "action_false": "",
+      "action_true": "",
+      "alert": {
+        "title": ""
+      }
+    },
+    "reports": {
+      "action": "",
+      "alert": {
+        "title": ""
+      }
+    }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
+    }
+  },
+  "share": {
+    "status": {
+      "action": ""
+    },
+    "account": {
+      "action": ""
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": ""
+    },
+    "delete": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "pin": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
+    }
+  }
+}

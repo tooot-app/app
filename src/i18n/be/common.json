@@ -1,0 +1,33 @@
+{
+  "buttons": {
+    "OK": "",
+    "apply": "",
+    "cancel": "",
+    "discard": "",
+    "continue": "",
+    "create": "",
+    "delete": "",
+    "done": "",
+    "confirm": "",
+    "add": "Дадаць"
+  },
+  "customEmoji": {
+    "accessibilityLabel": ""
+  },
+  "message": {
+    "success": {
+      "message": ""
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": ""
+    }
+  },
+  "separator": "",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
+}

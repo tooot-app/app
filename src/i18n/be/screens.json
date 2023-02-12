@@ -1,0 +1,17 @@
+{
+  "screenshot": {
+    "title": "Абарона прыватнасці",
+    "message": ""
+  },
+  "localCorrupt": {
+    "message": ""
+  },
+  "pushError": {
+    "message": "Памылка сэрвісу Push",
+    "description": ""
+  },
+  "shareError": {
+    "imageNotSupported": "",
+    "videoNotSupported": ""
+  }
+}

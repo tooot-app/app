@@ -1,15 +1,13 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Domínio da instância"
     },
     "whitelisted": "",
     "button": "Entrar",
     "information": {
       "name": "Nome",
-      "accounts": "Usuários",
-      "statuses": "Toots",
-      "domains": "Universo"
+      "description": "Descrição"
     },
     "disclaimer": {
       "base": "O processo de login usa o navegador do sistema e as informações da sua conta não estarão visíveis para o aplicativo Tooot."

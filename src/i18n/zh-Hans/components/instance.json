@@ -7,9 +7,7 @@
     "button": "登录",
     "information": {
       "name": "社区名称",
-      "accounts": "用户总数",
-      "statuses": "嘟文总数",
-      "domains": "连结总数"
+      "description": "简介"
     },
     "disclaimer": {
       "base": "登录过程将使用系统浏览器，你的账号登录信息tooot应用无法读取。"
