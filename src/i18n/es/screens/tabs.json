@@ -11,13 +11,13 @@
       "segments": {
         "federated": "Federado",
         "local": "Local",
-        "explore": ""
+        "explore": "Explorar"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "Explorando",
+        "trending": "Tendencia",
+        "followRemote": "Seguir instancia remota",
+        "noTitle": "Sin título"
       }
     },
     "notifications": {
@@ -386,7 +386,7 @@
         "accessibilityHint": "Puedes silenciar, bloquear, denunciar o compartir este usuario"
       },
       "followed_by": " te sigue",
-      "privateNote": "",
+      "privateNote": "Establecer nota privada",
       "moved": "Se ha trasladado",
       "created_at": "Se unió el {{date}}",
       "summary": {
