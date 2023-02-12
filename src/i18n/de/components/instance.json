@@ -7,7 +7,7 @@
     "button": "Login",
     "information": {
       "name": "Name",
-      "description": ""
+      "description": "Beschreibung"
     },
     "disclaimer": {
       "base": "Der Login erfolgt über den Browser, sodass deine Kontoinformationen für die App nicht sichtbar sind."
