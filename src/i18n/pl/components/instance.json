@@ -7,7 +7,7 @@
     "button": "Zaloguj",
     "information": {
       "name": "Imię i nazwisko",
-      "description": ""
+      "description": "Opis"
     },
     "disclaimer": {
       "base": "Logowanie odbywa się przy użyciu przeglądarki systemowej, która nie będzie widoczna dla aplikacji."
