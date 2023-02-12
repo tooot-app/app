@@ -11,7 +11,13 @@
       "segments": {
         "federated": "聯邦",
         "local": "本站",
-        "trending": "熱門"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
