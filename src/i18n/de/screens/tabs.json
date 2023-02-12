@@ -386,6 +386,7 @@
         "accessibilityHint": "Du kannst diesen Benutzer stummschalten, blockieren, melden oder teilen"
       },
       "followed_by": " folgt dir",
+      "privateNote": "",
       "moved": "Benutzer umgezogen",
       "created_at": "Registriert am: {{date}}",
       "summary": {
