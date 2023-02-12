@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Global",
         "local": "Local",
-        "trending": "Em alta"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
