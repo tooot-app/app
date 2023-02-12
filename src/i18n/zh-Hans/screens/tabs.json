@@ -386,6 +386,7 @@
         "accessibilityHint": "您可以静音、屏蔽、举报或分享此用户"
       },
       "followed_by": " 正在关注你",
+      "privateNote": "",
       "moved": "账户已迁移",
       "created_at": "注册于：{{date}}",
       "summary": {
