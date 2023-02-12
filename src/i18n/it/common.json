@@ -8,7 +8,8 @@
     "create": "",
     "delete": "",
     "done": "",
-    "confirm": "Ho capito"
+    "confirm": "Ho capito",
+    "add": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizzata {{emoji}}"
