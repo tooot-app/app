@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Global",
         "local": "Local",
-        "trending": "Em alta"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
@@ -380,6 +386,7 @@
         "accessibilityHint": "Você pode silenciar, bloquear, relatar ou compartilhar este usuário"
       },
       "followed_by": " está seguindo você",
+      "privateNote": "",
       "moved": "Usuário movido",
       "created_at": "Registrado em: {{date}}",
       "summary": {

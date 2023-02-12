@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Глобальна",
         "local": "Місцева",
-        "trending": "Популярне"
+        "explore": "Огляд"
+      },
+      "exploring": {
+        "heading": "Огляд",
+        "trending": "Популярне",
+        "followRemote": "Стежити за віддаленим сервером",
+        "noTitle": "Без назви"
       }
     },
     "notifications": {
@@ -380,6 +386,7 @@
         "accessibilityHint": "Ви можете приглушити, заблокувати, чи поскаржитись на цього користувача"
       },
       "followed_by": " слідує за вами",
+      "privateNote": "Налаштувати приватні примітки",
       "moved": "Користувач перемістився",
       "created_at": "Приєднується: {{date}}",
       "summary": {

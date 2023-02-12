@@ -11,7 +11,13 @@
       "segments": {
         "federated": "연합",
         "local": "로컬",
-        "trending": "유행"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
@@ -220,7 +226,7 @@
       },
       "root": {
         "name": {
-          "title": "사옹자 이름"
+          "title": "사용자 이름"
         },
         "avatar": {
           "title": "아바타",
@@ -380,6 +386,7 @@
         "accessibilityHint": "이 사용자를 뮤트, 차단, 신고 또는 공유할 수 있어요"
       },
       "followed_by": " 님은 당신을 팔로우 중입니다.",
+      "privateNote": "",
       "moved": "유저가 이동함",
       "created_at": "등록된 날: {{date}}",
       "summary": {

@@ -1,0 +1,171 @@
+{
+  "heading": {
+    "left": {
+      "alert": {
+        "title": "Скасаваць рэдагаванне?",
+        "buttons": {
+          "save": "Захаваць чарнавік",
+          "delete": "Выдаліць чарнавік"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Допіс",
+        "conversation": "",
+        "reply": "Адказаць",
+        "deleteEdit": "Допіс",
+        "edit": "Допіс",
+        "share": "Допіс"
+      },
+      "alert": {
+        "default": {
+          "title": "Не ўдалося апублікаваць допіс",
+          "button": "Паўтарыць спробу"
+        },
+        "removeReply": {
+          "title": "",
+          "description": "",
+          "confirm": "Выдаліць спасылку"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "",
+        "spoilerInput": {
+          "placeholder": ""
+        },
+        "textInput": {
+          "placeholder": "Што адбываецца?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": ""
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "",
+          "remove": {
+            "accessibilityLabel": ""
+          },
+          "edit": {
+            "accessibilityLabel": ""
+          },
+          "upload": {
+            "accessibilityLabel": ""
+          }
+        },
+        "emojis": {
+          "accessibilityHint": ""
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "",
+              "single": "",
+              "multiple": ""
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "",
+              "accessibilityHint": ""
+            },
+            "increase": {
+              "accessibilityLabel": "",
+              "accessibilityHint": ""
+            }
+          },
+          "multiple": {
+            "heading": "",
+            "options": {
+              "single": "",
+              "multiple": ""
+            }
+          },
+          "expiration": {
+            "heading": "",
+            "options": {
+              "300": "5 хвілін",
+              "1800": "30 хвілін",
+              "3600": "1 гадзіна",
+              "21600": "6 гадзін",
+              "86400": "1 дзень",
+              "259200": "3 дні",
+              "604800": "7 дзён"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Запампаваць далучэнне",
+          "accessibilityHint": "",
+          "failed": {
+            "alert": {
+              "title": "Памылка запампоўкі",
+              "button": "Паўтарыць спробу"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Дадаць апытанне",
+          "accessibilityHint": ""
+        },
+        "visibility": {
+          "accessibilityLabel": "",
+          "title": "",
+          "options": {
+            "public": "Публічны",
+            "unlisted": "",
+            "private": "",
+            "direct": ""
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": ""
+        },
+        "emoji": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        }
+      },
+      "drafts_one": "",
+      "drafts_other": ""
+    },
+    "editAttachment": {
+      "header": {
+        "title": "",
+        "right": {
+          "accessibilityLabel": "",
+          "failed": {
+            "title": "",
+            "button": ""
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "",
+          "placeholder": ""
+        }
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": ""
+      },
+      "warning": "",
+      "content": {
+        "accessibilityHint": "",
+        "textEmpty": ""
+      },
+      "checkAttachment": ""
+    }
+  }
+}

@@ -8,7 +8,8 @@
     "create": "생성",
     "delete": "삭제",
     "done": "완료",
-    "confirm": "확인"
+    "confirm": "확인",
+    "add": ""
   },
   "customEmoji": {
     "accessibilityLabel": "커스텀 에모지 {{emoji}}"

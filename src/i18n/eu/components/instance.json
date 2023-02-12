@@ -7,9 +7,7 @@
     "button": "Saioa hasi",
     "information": {
       "name": "Izena",
-      "accounts": "Erabiltzaileak",
-      "statuses": "Tutak",
-      "domains": "Domeinuak"
+      "description": "Deskribapena"
     },
     "disclaimer": {
       "base": "Saioa hasteko prozesuak sistemako nabigatzailea erabiltzen du, beraz, zure kontuko informazioa ez da tooot aplikazioarentzat ikusgarri izango."
