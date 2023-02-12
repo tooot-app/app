@@ -11,13 +11,13 @@
       "segments": {
         "federated": "Føderert",
         "local": "Lokal",
-        "explore": ""
+        "explore": "Utforsk"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "Utforsk",
+        "trending": "Trender",
+        "followRemote": "Følg annen instans",
+        "noTitle": "Uten tittel"
       }
     },
     "notifications": {
@@ -386,6 +386,7 @@
         "accessibilityHint": "Du kan dempe, blokkere, rapportere eller dele denne brukeren"
       },
       "followed_by": " følger deg",
+      "privateNote": "",
       "moved": "Bruker flyttet",
       "created_at": "Ble med: {{date}}",
       "summary": {
