@@ -65,6 +65,11 @@ type MutationVarsRelationship =
         notify?: boolean
       }
     }
+  | {
+      id: Mastodon.Account['id']
+      type: 'note'
+      payload: Mastodon.Relationship['note']
+    }
 
 const mutationFunction = async (params: MutationVarsRelationship) => {
   switch (params.type) {
@@ -83,11 +88,17 @@ const mutationFunction = async (params: MutationVarsRelationship) => {
         url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${params.payload.action}`,
         body
       }).then(res => res.body)
+    case 'note':
+      return apiInstance<Mastodon.Relationship>({
+        method: 'post',
+        url: `accounts/${params.id}/note`,
+        body: { comment: params.payload }
+      }).then(res => res.body)
   }
 }
 
 const useRelationshipMutation = (
-  options: UseMutationOptions<Mastodon.Relationship, AxiosError, MutationVarsRelationship>
+  options?: UseMutationOptions<Mastodon.Relationship, AxiosError, MutationVarsRelationship>
 ) => {
   return useMutation(mutationFunction, options)
 }

@@ -386,6 +386,7 @@
         "accessibilityHint": "You can mute, block, report or share this user"
       },
       "followed_by": " is following you",
+      "privateNote": "Set private note",
       "moved": "User moved",
       "created_at": "Joined: {{date}}",
       "summary": {

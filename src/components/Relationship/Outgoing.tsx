@@ -29,20 +29,20 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
   const queryClient = useQueryClient()
   const mutation = useRelationshipMutation({
-    onSuccess: (res, { payload: { action } }) => {
+    onSuccess: (res, vars) => {
       haptics('Success')
       queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
-      if (action === 'block') {
+      if (vars.type === 'outgoing' && vars.payload.action === 'block') {
         const queryKey = ['Timeline', { page: 'Following' }]
         queryClient.invalidateQueries({ queryKey, exact: false })
       }
     },
-    onError: (err: any, { payload: { action } }) => {
+    onError: (err: any, vars) => {
       displayMessage({
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`componentRelationship:${action}.function` as any)
+          function: t(`componentRelationship:${(vars.payload as any).action}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
