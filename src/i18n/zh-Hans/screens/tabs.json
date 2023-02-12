@@ -11,13 +11,13 @@
       "segments": {
         "federated": "跨站",
         "local": "本站",
-        "explore": ""
+        "explore": "探索"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "探索",
+        "trending": "热门嘟文",
+        "followRemote": "关注远程实例",
+        "noTitle": "无标题"
       }
     },
     "notifications": {
