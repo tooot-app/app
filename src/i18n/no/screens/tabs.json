@@ -386,7 +386,7 @@
         "accessibilityHint": "Du kan dempe, blokkere, rapportere eller dele denne brukeren"
       },
       "followed_by": " følger deg",
-      "privateNote": "",
+      "privateNote": "Angi privat notat",
       "moved": "Bruker flyttet",
       "created_at": "Ble med: {{date}}",
       "summary": {
