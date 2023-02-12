@@ -4,6 +4,7 @@ import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
 import SegmentedControl from '@react-native-segmented-control/segmented-control'
+import { useScrollToTop } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import apiGeneral from '@utils/api/general'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
@@ -114,11 +115,14 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
     </View>
   )
 
+  useScrollToTop(flRef)
+
   return (
     <Timeline
       flRef={flRef}
       queryKey={queryKey}
       disableRefresh={!remoteActive}
+      refreshAutoRefetch={false}
       customProps={{
         ListHeaderComponent: (
           <View
@@ -400,10 +404,17 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
     { key: 'LocalPublic', title: t('tabs.public.segments.federated') },
     { key: 'Explore', title: t('tabs.public.segments.explore') }
   ])
+  const [remoteActive] = useGlobalStorage.string('remote.active')
   useEffect(() => {
     const page = segments[segment]
-    page && navigation.setParams({ queryKey: ['Timeline', { page }] })
-  }, [segment])
+    page &&
+      navigation.setParams({
+        queryKey: [
+          'Timeline',
+          { page, ...(page === 'Explore' && remoteActive && { domain: remoteActive }) }
+        ]
+      })
+  }, [segment, remoteActive])
 
   useEffect(() => {
     navigation.setOptions({
