@@ -386,6 +386,7 @@
         "accessibilityHint": "Je kunt deze gebruiker dempen, blokkeren, rapporteren of delen"
       },
       "followed_by": " volgt jou",
+      "privateNote": "",
       "moved": "Gebruiker is verplaatst",
       "created_at": "Lid sinds {{date}}",
       "summary": {
