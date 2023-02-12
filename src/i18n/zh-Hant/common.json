@@ -9,7 +9,7 @@
     "delete": "刪除",
     "done": "完成",
     "confirm": "確認",
-    "add": ""
+    "add": "新增"
   },
   "customEmoji": {
     "accessibilityLabel": "自定的表情符號 {{emoji}}"
