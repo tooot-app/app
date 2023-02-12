@@ -7,7 +7,7 @@
     "button": "Đăng nhập",
     "information": {
       "name": "Tên máy chủ",
-      "description": ""
+      "description": "Mô tả"
     },
     "disclaimer": {
       "base": "tooot sẽ không thấy được thông tin tài khoản của bạn."
