@@ -386,6 +386,7 @@
         "accessibilityHint": "Bạn có thể ẩn, chặn, báo cáo hoặc chia sẻ người này"
       },
       "followed_by": " đang theo dõi bạn",
+      "privateNote": "",
       "moved": "Đã chuyển đi",
       "created_at": "Đã tham gia {{date}}",
       "summary": {
