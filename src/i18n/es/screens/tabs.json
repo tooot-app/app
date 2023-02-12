@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Federado",
         "local": "Local",
-        "trending": "Tendencia"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
