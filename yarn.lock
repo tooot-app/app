@@ -3483,18 +3483,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.24.4":
-  version: 4.24.4
-  resolution: "@tanstack/query-core@npm:4.24.4"
-  checksum: b357e950a41e5769878a3bfe9dd56a66828ccebb2f9396e568e8835bed71eb37926770a461e3aa5bafb7e1121c5141cee86aedf3ced88a2eacf754d545b107cd
+"@tanstack/query-core@npm:4.24.6":
+  version: 4.24.6
+  resolution: "@tanstack/query-core@npm:4.24.6"
+  checksum: 495dff04f27d72174051f97676fce0fbe322bca966edb7f174f0005a3363ac0300c31eb06255dafa7ee519a430840542379f5ec9f6846903b6bb878e46c33656
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.24.4":
-  version: 4.24.4
-  resolution: "@tanstack/react-query@npm:4.24.4"
+"@tanstack/react-query@npm:^4.24.6":
+  version: 4.24.6
+  resolution: "@tanstack/react-query@npm:4.24.6"
   dependencies:
-    "@tanstack/query-core": 4.24.4
+    "@tanstack/query-core": 4.24.6
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -3505,7 +3505,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 8cf008d690fc5d336f6471ea2bc0751189f03874dcc7930cf8944fb57fa34e3b5347823775dbd36629d53a7aacb9ce87482b1adb3ad80d277a3a6c73b797f6a2
+  checksum: 250bc2cba8dd7da61680a8e360fac87ee057d079ee3be950c76dbc063f941119817634857c1cb0d9b12042dd5d4fbe847c02af5dfb89ae8daa0f9339f87ad605
   languageName: node
   linkType: hard
 
@@ -9913,13 +9913,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-mmkv@npm:~2.6.1":
-  version: 2.6.1
-  resolution: "react-native-mmkv@npm:2.6.1"
+"react-native-mmkv@npm:~2.7.0":
+  version: 2.7.0
+  resolution: "react-native-mmkv@npm:2.7.0"
   peerDependencies:
     react: "*"
     react-native: ">=0.71.0"
-  checksum: c73959d10e102a08bbde6a8dd041840a680faa8ef411125431afe63fdce38bf5f58cbd3985f8ef63832b8f5c0279ca39d7cd4a2ca1bde172a23eb74e644af5e0
+  checksum: 74f85b097fb96ecc6906f7b0fd83bf66462d874a3afc243b439a912579cf02dd83266e41da93a214a2986e4a28be42ea3c790f0936c0dbd08a4515395e2ad0de
   languageName: node
   linkType: hard
 
@@ -11594,7 +11594,7 @@ __metadata:
     "@react-navigation/stack": ^6.3.12
     "@sentry/react-native": 4.14.0
     "@sharcoux/slider": ^6.1.1
-    "@tanstack/react-query": ^4.24.4
+    "@tanstack/react-query": ^4.24.6
     "@types/diff": ^5.0.2
     "@types/linkify-it": ^3.0.2
     "@types/lodash": ^4.14.191
@@ -11643,7 +11643,7 @@ __metadata:
     react-native-image-picker: ^5.0.1
     react-native-ios-context-menu: ^1.15.3
     react-native-language-detection: ^0.2.2
-    react-native-mmkv: ~2.6.1
+    react-native-mmkv: ~2.7.0
     react-native-pager-view: ^6.1.2
     react-native-quick-base64: ^2.0.5
     react-native-reanimated: ^2.14.4

@@ -56,7 +56,9 @@ const AttachmentVideo: React.FC<Props> = ({
         backgroundColor: colors.shimmerDefault,
         aspectRatio: aspectRatio({ total, index, ...video.meta?.original }),
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
       }}
     >
       <Video

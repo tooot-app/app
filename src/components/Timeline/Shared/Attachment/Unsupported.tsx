@@ -27,7 +27,9 @@ const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, 
         flex: 1,
         aspectRatio: aspectRatio({ total, index, ...attachment.meta?.original }),
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
       }}
     >
       {attachment.blurhash ? (

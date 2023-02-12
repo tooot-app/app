@@ -54,7 +54,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           style={{
             width: DEFAULT_WIDTH,
             height: DEFAULT_WIDTH,
-            borderRadius: StyleConstants.BorderRadius
+            borderRadius: StyleConstants.BorderRadius / 2
           }}
           source={
             item.local?.thumbnail

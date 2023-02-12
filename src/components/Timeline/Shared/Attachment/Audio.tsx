@@ -64,7 +64,9 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
         flex: 1,
         flexDirection: 'row',
         backgroundColor: colors.shimmerDefault,
-        aspectRatio: aspectRatio({ total, index, ...audio.meta?.original })
+        aspectRatio: aspectRatio({ total, index, ...audio.meta?.original }),
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
       }}
     >
       <View
