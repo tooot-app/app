@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Liên hợp",
         "local": "Máy chủ",
-        "trending": "Xu hướng"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
