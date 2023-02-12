@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Föderiert",
         "local": "Lokal",
-        "trending": "Im Trend"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
