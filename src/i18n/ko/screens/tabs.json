@@ -11,7 +11,13 @@
       "segments": {
         "federated": "연합",
         "local": "로컬",
-        "trending": "유행"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
