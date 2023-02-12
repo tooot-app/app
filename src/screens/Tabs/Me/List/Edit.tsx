@@ -1,25 +1,23 @@
+import { discardConfirmation } from '@components/discardConfirmation'
 import { EmojisState } from '@components/Emojis/Context'
 import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import ComponentInput from '@components/Input'
 import { displayMessage, Message } from '@components/Message'
 import Selections from '@components/Selections'
-import CustomText from '@components/Text'
 import { CommonActions } from '@react-navigation/native'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyLists, useListsMutation } from '@utils/queryHooks/lists'
 import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView, TextInput } from 'react-native'
+import { ScrollView, TextInput } from 'react-native'
 
 const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
   navigation,
   route: { params }
 }) => {
-  const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
 
   const messageRef = useRef(null)
@@ -92,21 +90,10 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
         <HeaderLeft
           content='x'
           onPress={() => {
-            if (params.type === 'edit' ? params.payload.title !== title : title.length) {
-              Alert.alert(t('common:discard.title'), t('common:discard.message'), [
-                {
-                  text: t('common:buttons.discard'),
-                  style: 'destructive',
-                  onPress: () => navigation.pop(1)
-                },
-                {
-                  text: t('common:buttons.cancel'),
-                  style: 'default'
-                }
-              ])
-            } else {
-              navigation.pop(1)
-            }
+            discardConfirmation({
+              condition: params.type === 'edit' ? params.payload.title !== title : !!title.length,
+              action: () => navigation.pop(1)
+            })
           }}
         />
       ),

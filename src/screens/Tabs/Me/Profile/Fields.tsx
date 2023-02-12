@@ -1,3 +1,4 @@
+import { discardConfirmation } from '@components/discardConfirmation'
 import { ComponentEmojis } from '@components/Emojis'
 import { EmojisState } from '@components/Emojis/Context'
 import { HeaderLeft, HeaderRight } from '@components/Header'
@@ -9,7 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView, TextInput } from 'react-native'
+import { ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 const Field: React.FC<{
@@ -92,21 +93,10 @@ const TabMeProfileFields: React.FC<
         <HeaderLeft
           content='chevron-left'
           onPress={() => {
-            if (dirty) {
-              Alert.alert(t('common:discard.title'), t('common:discard.message'), [
-                {
-                  text: t('common:buttons.discard'),
-                  style: 'destructive',
-                  onPress: () => navigation.navigate('Tab-Me-Profile-Root')
-                },
-                {
-                  text: t('common:buttons.cancel'),
-                  style: 'default'
-                }
-              ])
-            } else {
-              navigation.navigate('Tab-Me-Profile-Root')
-            }
+            discardConfirmation({
+              condition: dirty,
+              action: () => navigation.navigate('Tab-Me-Profile-Root')
+            })
           }}
         />
       ),

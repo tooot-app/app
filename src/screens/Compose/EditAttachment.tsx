@@ -55,7 +55,8 @@ const ComposeEditAttachment: React.FC<
           accessibilityLabel={t(
             'screenCompose:content.editAttachment.header.right.accessibilityLabel'
           )}
-          content='save'
+          type='text'
+          content={t('common:buttons.apply')}
           loading={isSubmitting}
           onPress={() => {
             if (composeState.type === 'edit') {
