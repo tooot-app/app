@@ -7,9 +7,7 @@
     "button": "登入",
     "information": {
       "name": "名稱",
-      "accounts": "使用者",
-      "statuses": "嘟文",
-      "domains": "串聯宇宙"
+      "description": ""
     },
     "disclaimer": {
       "base": "將使用系統內建的瀏覽器來登入，tooot 無法讀取您的帳號資訊。"
