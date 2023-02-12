@@ -7,9 +7,7 @@
     "button": "Accedi",
     "information": {
       "name": "Nome",
-      "accounts": "Utenti",
-      "statuses": "Toot",
-      "domains": "Universi"
+      "description": ""
     },
     "disclaimer": {
       "base": "Per accedere, verrà aperta una pagina del browser di sistema. I dati di accesso del tuo account sono protetti."
