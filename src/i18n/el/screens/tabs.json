@@ -11,7 +11,13 @@
       "segments": {
         "federated": "Ομοσπονδιακή",
         "local": "Τοπική",
-        "trending": "Δημοφιλή"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": ""
       }
     },
     "notifications": {
