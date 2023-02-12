@@ -7,7 +7,7 @@
     "button": "Logg inn",
     "information": {
       "name": "Navn",
-      "description": ""
+      "description": "Beskrivelse"
     },
     "disclaimer": {
       "base": "Innlogging bruker systemnettleser mens du logger inn på, din kontoinformasjon vil ikke være synlig for toot-appen."
