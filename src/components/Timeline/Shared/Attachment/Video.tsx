@@ -39,7 +39,11 @@ const AttachmentVideo: React.FC<Props> = ({
   const playOnPress = async () => {
     setVideoLoading(true)
     if (!videoLoaded) {
-      await videoPlayer.current?.loadAsync(connectMedia({ uri: video.url }) as { uri: string })
+      await videoPlayer.current?.loadAsync(
+        connectMedia({
+          uri: video.url.includes('/media_proxy/') ? video.remote_url : video.url
+        }) as any
+      )
     }
     setVideoLoading(false)
 

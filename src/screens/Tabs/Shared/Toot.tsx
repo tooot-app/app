@@ -237,7 +237,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         }
 
         if ((query.data?.pages[0].body.length || 0) <= data.length) {
-          if (!hasRemoteContent && (query.data?.pages[0].body.length || 0) <= data.length) {
+          if (
+            !hasRemoteContent &&
+            (query.data?.pages[0].body.length || 0) <= data.length &&
+            data.length > 1
+          ) {
             setHasRemoteContent(true)
           }
 
