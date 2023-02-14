@@ -17,9 +17,6 @@ import expo.modules.ReactNativeHostWrapper;
 
 import java.util.List;
 
-import com.facebook.react.bridge.JSIModulePackage; // <- react-native-reanimated-v2
-import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- react-native-reanimated-v2
-
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
     this,
@@ -50,11 +47,6 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected Boolean isHermesEnabled() {
       return BuildConfig.IS_HERMES_ENABLED;
-    }
-
-    @Override // <- react-native-reanimated-v2
-    protected JSIModulePackage getJSIModulePackage() {
-      return new ReanimatedJSIModulePackage();
     }
   });
 
