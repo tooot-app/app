@@ -172,12 +172,7 @@ const TimelineAttachment = () => {
 
   return (
     <View style={{ marginTop: StyleConstants.Spacing.M, ...(isLargeDevice && { maxWidth: 375 }) }}>
-      <View
-        style={{
-          flex: 1,
-          gap: StyleConstants.Spacing.XS
-        }}
-      >
+      <View style={{ marginBottom: StyleConstants.Spacing.XS }}>
         {chunk(status.media_attachments, 2).map((chunk, chunkIndex) => (
           <View
             key={chunkIndex}
