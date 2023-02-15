@@ -8,15 +8,13 @@ PODS:
     - ReactCommon/turbomodule/core
   - EXConstants (14.2.1):
     - ExpoModulesCore
-  - EXErrorRecovery (4.1.1):
-    - ExpoModulesCore
   - EXFileSystem (15.2.2):
     - ExpoModulesCore
   - EXFont (11.1.1):
     - ExpoModulesCore
   - EXNotifications (0.17.0):
     - ExpoModulesCore
-  - Expo (48.0.0-beta.2):
+  - Expo (48.0.1):
     - ExpoModulesCore
   - ExpoCrypto (12.2.1):
     - ExpoModulesCore
@@ -32,7 +30,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (14.1.1):
     - ExpoModulesCore
-  - ExpoModulesCore (1.2.1):
+  - ExpoModulesCore (1.2.2):
     - React-Core
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
@@ -359,7 +357,7 @@ PODS:
     - React-Core
   - react-native-pager-view (6.1.4):
     - React-Core
-  - react-native-paste-input (0.6.1):
+  - react-native-paste-input (0.6.2):
     - React-Core
     - Swime (= 3.0.6)
   - react-native-quick-base64 (2.0.5):
@@ -520,7 +518,6 @@ DEPENDENCIES:
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXAV (from `../node_modules/expo-av/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXNotifications (from `../node_modules/expo-notifications/ios`)
@@ -623,8 +620,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-av/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -774,17 +769,16 @@ SPEC CHECKSUMS:
   EXApplication: d8f53a7eee90a870a75656280e8d4b85726ea903
   EXAV: f1f69397ecdcf44cfacd4ff5d338cd1b96891e87
   EXConstants: f348da07e21b23d2b085e270d7b74f282df1a7d9
-  EXErrorRecovery: ebb57ae947ff94667f1cbc12f403bb5a043d734d
   EXFileSystem: 844e86ca9b5375486ecc4ef06d3838d5597d895d
   EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
   EXNotifications: babce2a87b7922051354fcfe7a74dd279b7e272a
-  Expo: 1b7b4ec09bd939db6d98985231a0789aa3f6670a
+  Expo: 79deb55f33fab1b232232868a74713772943238d
   ExpoCrypto: 477dfe89c81527b376f2c344ca1d2a01244b243c
   ExpoHaptics: 5156bc5160d8e04c170dd6e645a71154951a2ad9
   ExpoImage: a8b564f046f96133db39d7749eec9d6110d11243
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
-  ExpoModulesCore: 2f4bd2ae0cd03d30c3c286f5d843e22f72ccdb55
+  ExpoModulesCore: 79392ab654019ea3aadeae308919c3d9dd97879c
   ExpoRandom: 7ee07d62e7003b74d0536e0495e3a653fe1b2a74
   ExpoStoreReview: d057dcca4b9c95f3c9db11bd2e168dab9cba59f3
   ExpoVideoThumbnails: 0021303b614a89fcc5df8b59d9d37ddf14a7d4cf
@@ -828,7 +822,7 @@ SPEC CHECKSUMS:
   react-native-mmkv: a2a40a0458bdbc9d43c4e7752ecfc5e3a87b66dd
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-pager-view: b58cb9e9f42f64e50cab3040815772c1d119a2e2
-  react-native-paste-input: fb7156dc75960c9895ddd9b9d68eeb874c9f323a
+  react-native-paste-input: 3392800944a47c00dddbff23c31c281482209679
   react-native-quick-base64: e657e9197e61b60a9dec49807843052b830da254
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-segmented-control: 06607462630512ff8eef652ec560e6235a30cc3e
