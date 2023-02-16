@@ -1,5 +1,4 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
-import * as Sentry from '@sentry/react-native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import { connectVerify } from '@utils/api/helpers/connect'
@@ -117,4 +116,4 @@ const App: React.FC = () => {
   )
 }
 
-export default Sentry.wrap(App)
+export default App
