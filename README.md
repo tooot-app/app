@@ -18,6 +18,7 @@ Please **do not** create a pull request to update translation. tooot's translati
 - [@Hikaru](https://github.com/Hikali-47041) and [@la_la](https://mstdn.jp/@la_la_la) for Japanese translation
 - [@hellojaccc](https://github.com/hellojaccc) for Korean translation
 - [@jan-vandenberg](https://crowdin.com/profile/jan-vandenberg) for Dutch translation
+- [@gaute](https://gauteweb.net/) for Norwegian translation
 - [@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
 - [@janlindblom](https://github.com/janlindblom) for Swedish
 - [@ihoryan](https://crowdin.com/profile/ihoryan) for Ukrainian
