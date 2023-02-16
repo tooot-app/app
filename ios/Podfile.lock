@@ -490,7 +490,7 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.14.0):
+  - RNSentry (4.15.0):
     - React-Core
     - Sentry/HybridSDK (= 7.31.5)
   - RNShareMenu (6.0.0):
@@ -844,7 +844,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNReanimated: fbc356493970e3acddc15586b1bccb5eab3ff1ec
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: 7e90aec2633d2fdad8aeb839c9915e4376fd27d1
+  RNSentry: 50f8b7147d1d0973a56635e524b192ec80e53195
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   SDWebImage: 8ab87d4b3e5cc4927bd47f78db6ceb0b94442577

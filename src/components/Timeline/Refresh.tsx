@@ -156,10 +156,22 @@ const TimelineRefresh: React.FC<Props> = ({
         >(queryKey, old => {
           if (!old) return old
 
+          let count = 0
+          const keepPagesCount = Math.max(
+            1,
+            old.pages.findIndex(page => {
+              count = count + page.body.length
+              return count >= 20
+            })
+          )
+
           prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
           return {
-            ...old,
-            pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages]
+            pages: [
+              { ...res, body: res.body.slice(-PREV_PER_BATCH) },
+              ...old.pages.slice(0, keepPagesCount)
+            ],
+            pageParams: [{}, ...old.pageParams.slice(0, keepPagesCount)]
           }
         })
 

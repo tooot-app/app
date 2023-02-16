@@ -67,8 +67,8 @@ export const queryFunctionTimeline = async ({
     marker = getAccountStorage.string('read_marker_following')
   }
   const params: { [key: string]: string } = marker
-    ? { limit: 40, max_id: marker }
-    : { limit: 40, ...pageParam }
+    ? { limit: 20, max_id: marker }
+    : { limit: 20, ...pageParam }
 
   switch (page.page) {
     case 'Following':
