@@ -8,6 +8,7 @@ const LOCALES = {
   ja: '日本語',
   ko: '한국어',
   nl: 'Nederlands',
+  no: 'Norsk',
   'pt-br': 'Português (Brasil)',
   sv: 'Svenska',
   uk: 'українська',
