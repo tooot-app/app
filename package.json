@@ -88,7 +88,6 @@
     "react-native-svg": "^13.8.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.4.0",
-    "react-redux": "^8.0.5",
     "rn-placeholder": "^3.0.3",
     "url-parse": "^1.5.10",
     "zeego": "^1.0.2"

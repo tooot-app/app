@@ -348,8 +348,6 @@ PODS:
     - React-Core
   - react-native-language-detection (0.2.2):
     - React
-  - react-native-menu (0.7.3):
-    - React
   - react-native-mmkv (2.7.0):
     - MMKV (>= 1.2.13)
     - React-Core
@@ -561,7 +559,6 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-ios-context-menu (from `../node_modules/react-native-ios-context-menu`)
   - react-native-language-detection (from `../node_modules/react-native-language-detection`)
-  - "react-native-menu (from `../node_modules/@react-native-menu/menu`)"
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -702,8 +699,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-ios-context-menu"
   react-native-language-detection:
     :path: "../node_modules/react-native-language-detection"
-  react-native-menu:
-    :path: "../node_modules/@react-native-menu/menu"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
   react-native-netinfo:
@@ -818,7 +813,6 @@ SPEC CHECKSUMS:
   react-native-image-picker: a5dddebb4d2955ac4712a4ed66b00a85f62a63ac
   react-native-ios-context-menu: e529171ba760a1af7f2ef0729f5a7f4d226171c5
   react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0
-  react-native-menu: 9d7d6f819cc7fa14a15cf86888c53f3240d86f1b
   react-native-mmkv: a2a40a0458bdbc9d43c4e7752ecfc5e3a87b66dd
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-pager-view: b58cb9e9f42f64e50cab3040815772c1d119a2e2
