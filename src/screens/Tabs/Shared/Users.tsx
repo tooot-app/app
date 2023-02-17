@@ -36,7 +36,6 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
 
   return (
     <FlatList
-      windowSize={7}
       data={flattenPages(data)}
       style={{
         minHeight: '100%',

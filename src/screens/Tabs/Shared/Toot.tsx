@@ -284,7 +284,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   return (
     <FlatList
       ref={flRef}
-      windowSize={5}
       data={query.data?.pages?.[0].body}
       extraData={query.dataUpdatedAt}
       renderItem={({ item, index }) => {
