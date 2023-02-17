@@ -96,7 +96,7 @@ import '@formatjs/intl-relativetimeformat/locale-data/zh-Hant'
 
 i18n.use(initReactI18next).init({
   lng: 'en',
-  fallbackLng: 'en',
+  fallbackLng: { nb: ['no'], nn: ['no'], default: ['en'] },
 
   ns: ['common'],
   defaultNS: 'common',

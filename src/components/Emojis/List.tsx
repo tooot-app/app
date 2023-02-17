@@ -249,7 +249,6 @@ const EmojisList = () => {
           </CustomText>
         )}
         renderItem={listItem}
-        windowSize={4}
         contentContainerStyle={{
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
           minHeight: 32 * 2 + StyleConstants.Spacing.M * 3
