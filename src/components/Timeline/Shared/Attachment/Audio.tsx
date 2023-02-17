@@ -5,8 +5,9 @@ import { connectMedia } from '@utils/api/helpers/connect'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AppState, AppStateStatus, View } from 'react-native'
+import StatusContext from '../Context'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -18,6 +19,7 @@ export interface Props {
 }
 
 const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio }) => {
+  const { inThread } = useContext(StatusContext)
   const { colors } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
@@ -88,6 +90,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
                 height: '100%'
               }}
               dim
+              withoutTransition={inThread}
             />
           ) : null
         ) : (
@@ -100,6 +103,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
                 }}
                 style={{ position: 'absolute', width: '100%', height: '100%' }}
                 dim
+                withoutTransition={inThread}
               />
             ) : null}
             <Button
