@@ -23,6 +23,7 @@ export interface Props {
   imageStyle?: ImageStyle
 
   dim?: boolean
+  withoutTransition?: boolean
   enableLiveTextInteraction?: boolean
 }
 
@@ -36,6 +37,7 @@ const GracefullyImage = ({
   style,
   imageStyle,
   dim,
+  withoutTransition = false,
   enableLiveTextInteraction = false
 }: Props) => {
   const { reduceMotionEnabled } = useAccessibility()
@@ -59,7 +61,7 @@ const GracefullyImage = ({
         placeholderContentFit='cover'
         placeholder={sources.blurhash || connectMedia(sources.preview)}
         source={hidden ? undefined : connectMedia(source)}
-        transition={{ duration: 80 }}
+        {...((!withoutTransition || !reduceMotionEnabled) && { transition: { duration: 120 } })}
         style={{ flex: 1, ...imageStyle }}
         onError={() => {
           if (

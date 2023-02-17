@@ -8,8 +8,9 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import { Platform } from 'expo-modules-core'
 import * as ScreenOrientation from 'expo-screen-orientation'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
+import StatusContext from '../Context'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -28,6 +29,7 @@ const AttachmentVideo: React.FC<Props> = ({
   video,
   gifv = false
 }) => {
+  const { inThread } = useContext(StatusContext)
   const { colors } = useTheme()
   const { reduceMotionEnabled } = useAccessibility()
   const [shouldAutoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
@@ -127,6 +129,8 @@ const AttachmentVideo: React.FC<Props> = ({
             <GracefullyImage
               sources={{ blurhash: video.blurhash }}
               style={{ width: '100%', height: '100%' }}
+              dim
+              withoutTransition={inThread}
             />
           ) : null
         ) : !gifv || (gifv && (reduceMotionEnabled || !shouldAutoplayGifv)) ? (
