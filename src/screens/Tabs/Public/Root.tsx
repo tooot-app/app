@@ -124,6 +124,8 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
       disableRefresh={!remoteActive}
       refreshAutoRefetch={false}
       customProps={{
+        stickyHeaderIndices: [0],
+        stickyHeaderHiddenOnScroll: true,
         ListHeaderComponent: (
           <View
             style={{ backgroundColor: colors.backgroundDefault }}
@@ -279,7 +281,8 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: StyleConstants.Spacing.XS,
-                        paddingTop: StyleConstants.Spacing.M
+                        paddingTop: StyleConstants.Spacing.S,
+                        paddingBottom: StyleConstants.Spacing.M
                       }}
                     >
                       <CustomText
