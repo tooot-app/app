@@ -488,9 +488,9 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.15.0):
+  - RNSentry (5.0.0):
     - React-Core
-    - Sentry/HybridSDK (= 7.31.5)
+    - Sentry/HybridSDK (= 8.0.0)
   - RNShareMenu (6.0.0):
     - React
   - RNSVG (13.8.0):
@@ -506,7 +506,9 @@ PODS:
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
-  - Sentry/HybridSDK (7.31.5)
+  - Sentry/HybridSDK (8.0.0):
+    - SentryPrivate (= 8.0.0)
+  - SentryPrivate (8.0.0)
   - Swime (3.0.6)
   - Yoga (1.14.0)
 
@@ -604,6 +606,7 @@ SPEC REPOS:
     - SDWebImageSVGCoder
     - SDWebImageWebPCoder
     - Sentry
+    - SentryPrivate
     - Swime
 
 EXTERNAL SOURCES:
@@ -838,14 +841,15 @@ SPEC CHECKSUMS:
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNReanimated: fbc356493970e3acddc15586b1bccb5eab3ff1ec
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: 50f8b7147d1d0973a56635e524b192ec80e53195
+  RNSentry: eff1f32fe84682feb09a36c5e5f513d6ef964b70
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   SDWebImage: 8ab87d4b3e5cc4927bd47f78db6ceb0b94442577
   SDWebImageAVIFCoder: d759e21cf4efb640cc97250566aa556ad8bb877c
   SDWebImageSVGCoder: 6fc109f9c2a82ab44510fff410b88b1a6c271ee8
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
-  Sentry: 4c9babff9034785067c896fd580b1f7de44da020
+  Sentry: 2158a4621096dcd0a3a4f7c80b84b04dde261035
+  SentryPrivate: 1e3acf96ee818a8d0d95b8e922d39ab6be338ea0
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   Yoga: 5ed1699acbba8863755998a4245daa200ff3817b
 
