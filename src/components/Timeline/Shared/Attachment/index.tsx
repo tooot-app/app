@@ -17,13 +17,8 @@ import { Pressable, View } from 'react-native'
 import StatusContext from '../Context'
 
 const TimelineAttachment = () => {
-  const { status, disableDetails } = useContext(StatusContext)
-  if (
-    !status ||
-    disableDetails ||
-    !Array.isArray(status.media_attachments) ||
-    !status.media_attachments.length
-  )
+  const { status, spoilerHidden, disableDetails } = useContext(StatusContext)
+  if (!status || !Array.isArray(status.media_attachments) || !status.media_attachments.length)
     return null
 
   const { t } = useTranslation('componentTimeline')
@@ -169,6 +164,8 @@ const TimelineAttachment = () => {
         }
     }
   }
+
+  if (spoilerHidden || disableDetails) return null
 
   return (
     <View style={{ marginTop: StyleConstants.Spacing.M, ...(isLargeDevice && { maxWidth: 375 }) }}>

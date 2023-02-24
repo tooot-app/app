@@ -14,13 +14,13 @@ PODS:
     - ExpoModulesCore
   - EXNotifications (0.17.0):
     - ExpoModulesCore
-  - Expo (48.0.1):
+  - Expo (48.0.4):
     - ExpoModulesCore
   - ExpoCrypto (12.2.1):
     - ExpoModulesCore
   - ExpoHaptics (12.2.1):
     - ExpoModulesCore
-  - ExpoImage (1.0.0-rc.1):
+  - ExpoImage (1.0.0):
     - ExpoModulesCore
     - SDWebImage (~> 5.15.0)
     - SDWebImageAVIFCoder (~> 0.9.4)
@@ -30,7 +30,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (14.1.1):
     - ExpoModulesCore
-  - ExpoModulesCore (1.2.2):
+  - ExpoModulesCore (1.2.3):
     - React-Core
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
@@ -340,9 +340,9 @@ PODS:
     - glog
   - react-native-blur (4.3.0):
     - React-Core
-  - react-native-cameraroll (5.2.3):
+  - react-native-cameraroll (5.2.4):
     - React-Core
-  - react-native-image-picker (5.0.2):
+  - react-native-image-picker (5.1.0):
     - React-Core
   - react-native-ios-context-menu (1.15.3):
     - React-Core
@@ -488,9 +488,9 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.15.0):
+  - RNSentry (5.0.0):
     - React-Core
-    - Sentry/HybridSDK (= 7.31.5)
+    - Sentry/HybridSDK (= 8.0.0)
   - RNShareMenu (6.0.0):
     - React
   - RNSVG (13.8.0):
@@ -506,7 +506,9 @@ PODS:
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
-  - Sentry/HybridSDK (7.31.5)
+  - Sentry/HybridSDK (8.0.0):
+    - SentryPrivate (= 8.0.0)
+  - SentryPrivate (8.0.0)
   - Swime (3.0.6)
   - Yoga (1.14.0)
 
@@ -604,6 +606,7 @@ SPEC REPOS:
     - SDWebImageSVGCoder
     - SDWebImageWebPCoder
     - Sentry
+    - SentryPrivate
     - Swime
 
 EXTERNAL SOURCES:
@@ -767,13 +770,13 @@ SPEC CHECKSUMS:
   EXFileSystem: 844e86ca9b5375486ecc4ef06d3838d5597d895d
   EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
   EXNotifications: babce2a87b7922051354fcfe7a74dd279b7e272a
-  Expo: 79deb55f33fab1b232232868a74713772943238d
+  Expo: aae5eb5ed076ff163eb909a003b2be1b85f832dd
   ExpoCrypto: 477dfe89c81527b376f2c344ca1d2a01244b243c
   ExpoHaptics: 5156bc5160d8e04c170dd6e645a71154951a2ad9
-  ExpoImage: a8b564f046f96133db39d7749eec9d6110d11243
+  ExpoImage: b6a65c4aa891cdf00bfba0da46df14b27ae09cc7
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
-  ExpoModulesCore: 79392ab654019ea3aadeae308919c3d9dd97879c
+  ExpoModulesCore: f11d8a16e8d3f26c183da2541d75edc6aa9cf8eb
   ExpoRandom: 7ee07d62e7003b74d0536e0495e3a653fe1b2a74
   ExpoStoreReview: d057dcca4b9c95f3c9db11bd2e168dab9cba59f3
   ExpoVideoThumbnails: 0021303b614a89fcc5df8b59d9d37ddf14a7d4cf
@@ -809,8 +812,8 @@ SPEC CHECKSUMS:
   React-jsinspector: 9f7c9137605e72ca0343db4cea88006cb94856dd
   React-logger: 957e5dc96d9dbffc6e0f15e0ee4d2b42829ff207
   react-native-blur: 50c9feabacbc5f49b61337ebc32192c6be7ec3c3
-  react-native-cameraroll: 5b25d0be40185d02e522bf2abf8a1ba4e8faa107
-  react-native-image-picker: a5dddebb4d2955ac4712a4ed66b00a85f62a63ac
+  react-native-cameraroll: cb752fda6d5268f1646b4390bd5be1f27706b9a0
+  react-native-image-picker: c33d4e79f0a14a2b66e5065e14946ae63749660b
   react-native-ios-context-menu: e529171ba760a1af7f2ef0729f5a7f4d226171c5
   react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0
   react-native-mmkv: a2a40a0458bdbc9d43c4e7752ecfc5e3a87b66dd
@@ -838,14 +841,15 @@ SPEC CHECKSUMS:
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNReanimated: fbc356493970e3acddc15586b1bccb5eab3ff1ec
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: 50f8b7147d1d0973a56635e524b192ec80e53195
+  RNSentry: eff1f32fe84682feb09a36c5e5f513d6ef964b70
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   SDWebImage: 8ab87d4b3e5cc4927bd47f78db6ceb0b94442577
   SDWebImageAVIFCoder: d759e21cf4efb640cc97250566aa556ad8bb877c
   SDWebImageSVGCoder: 6fc109f9c2a82ab44510fff410b88b1a6c271ee8
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
-  Sentry: 4c9babff9034785067c896fd580b1f7de44da020
+  Sentry: 2158a4621096dcd0a3a4f7c80b84b04dde261035
+  SentryPrivate: 1e3acf96ee818a8d0d95b8e922d39ab6be338ea0
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   Yoga: 5ed1699acbba8863755998a4245daa200ff3817b
 

@@ -167,12 +167,12 @@ const Timeline: React.FC<Props> = ({
     }
   )
 
-  const latestMarker = useRef<string>()
+  const latestMarker = useRef<string>('')
   const updateMarkers = useCallback(
     throttle(() => {
       if (readMarker) {
         const currentMarker = getAccountStorage.string(readMarker) || '0'
-        if ((latestMarker.current || '0') > currentMarker) {
+        if (latestMarker.current > currentMarker) {
           setAccountStorage([{ key: readMarker, value: latestMarker.current }])
         } else {
           // setAccountStorage([{ key: readMarker, value: '105250709762254246' }])
@@ -183,9 +183,12 @@ const Timeline: React.FC<Props> = ({
   )
   readMarker &&
     useEffect(() => {
-      const unsubscribe = navigation.addListener('blur', () =>
-        setAccountStorage([{ key: readMarker, value: latestMarker.current }])
-      )
+      const unsubscribe = navigation.addListener('blur', () => {
+        const currentMarker = getAccountStorage.string(readMarker) || '0'
+        if (latestMarker.current > currentMarker) {
+          setAccountStorage([{ key: readMarker, value: latestMarker.current }])
+        }
+      })
       return unsubscribe
     }, [])
   const viewabilityConfigCallbackPairs = useRef<
