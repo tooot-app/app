@@ -189,7 +189,7 @@ const TimelineRefresh: React.FC<Props> = ({
             flRef.current?.scrollToOffset({ offset: scrollY.value - 15, animated: true })
           }
 
-          await new Promise<void>(promise => setTimeout(promise, 16))
+          await new Promise<void>(promise => setTimeout(promise, 8))
           queryClient.setQueryData<
             InfiniteData<
               PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
