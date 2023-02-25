@@ -17,7 +17,11 @@
         "heading": "探索",
         "trending": "热门嘟文",
         "followRemote": "关注远程实例",
-        "noTitle": "无标题"
+        "noTitle": "无标题",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
