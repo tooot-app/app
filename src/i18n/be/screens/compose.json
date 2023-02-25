@@ -12,7 +12,7 @@
     "right": {
       "button": {
         "default": "Допіс",
-        "conversation": "",
+        "conversation": "Асабістае паведамленне",
         "reply": "Адказаць",
         "deleteEdit": "Допіс",
         "edit": "Допіс",
@@ -24,8 +24,8 @@
           "button": "Паўтарыць спробу"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
+          "title": "Допіс для адказу не знойдзены",
+          "description": "Допіс для адказу магчыма быў выдалены. Вы жадаеце выдаліць яго са свайго допісу?",
           "confirm": "Выдаліць спасылку"
         }
       }
@@ -34,62 +34,62 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Апублікаваць як @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Тэкст папярэджання"
         },
         "textInput": {
           "placeholder": "Што адбываецца?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": ""
+              "title": "Дасягнута максімальная колькасць далучэнняў"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Пазначыць далучэнні як далікатныя",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Выдаліць запампаванае далучэнне, нумар {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Рэдагаваць запампаванае далучэнне, нумар {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Запампаваць больш далучэнняў"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Націсніце, каб дадаць эмодзі ў допіс"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Варыянт апытання {{index}}",
+              "single": "Адзіны выбар",
+              "multiple": "Множны выбар"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Паменшыць колькасць варыянтаў адказу да {{amount}}",
+              "accessibilityHint": "Дасягнута мінімальная колькасць варыянтаў адказу, зараз {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Павялічыць колькасць варыянтаў адказу да {{amount}}",
+              "accessibilityHint": "Дасягнута максімальная колькасць варыянтаў адказу, зараз {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Тып выбару",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Адзіны выбар",
+              "multiple": "Множны выбар"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Тэрмін дзеяння",
             "options": {
               "300": "5 хвілін",
               "1800": "30 хвілін",
@@ -105,7 +105,7 @@
       "actions": {
         "attachment": {
           "accessibilityLabel": "Запампаваць далучэнне",
-          "accessibilityHint": "",
+          "accessibilityHint": "Немагчыма дадаць апытанне, пры наяўнасці далучэнняў",
           "failed": {
             "alert": {
               "title": "Памылка запампоўкі",
@@ -115,57 +115,57 @@
         },
         "poll": {
           "accessibilityLabel": "Дадаць апытанне",
-          "accessibilityHint": ""
+          "accessibilityHint": "Немагчыма далучыць файлы, калі ёсць актыўнае апытанне"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Бачнасць допісу: {{visibility}}",
+          "title": "Бачнасць допісу",
           "options": {
             "public": "Публічны",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "unlisted": "Прыватны",
+            "private": "Толькі для падпісчыкаў",
+            "direct": "Асабістае паведамленне"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Папярэджанне"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Дадаць эмодзі",
+          "accessibilityHint": "Адкрыйце панэль выбару эмодзі, правядзіце гарызантальна, каб змяніць старонку"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Чарнавік ({{count}})",
+      "drafts_other": "Чарнавікі ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Рэдагаваць далучэнне",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Захаваць змены",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Збой рэдагавання",
+            "button": "Паўтарыць спробу"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Апішыце медыя для людзей са слабым зрокам",
+          "placeholder": "Вы можаце дадаць апісанне, якое часам называюць alt-тэкстам, да вашых медыя файлаў, каб яны былі даступныя яшчэ большай колькасці людзей, у тым ліку сляпым і людзям са слабым зрокам.\n\nДобрыя апісанні - сціслыя, але апісваюць тое, што знаходзіцца у вашых медыя, дастаткова дакладна, каб зразумець іх кантэкст."
         }
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Чарнавік"
       },
-      "warning": "",
+      "warning": "Чарнавікі захоўваюцца толькі лакальна і могуць быць страчаны. Раім не выкарыстоўваць чарнавікі як доўгатэрміновае сховішча.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Чарнавік захаваны, націсніце для рэдагавання",
+        "textEmpty": "Змест пусты"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Праверка далучэнняў на серверы..."
     }
   }
 }
