@@ -17,7 +17,11 @@
         "heading": "Exploring",
         "trending": "Trending",
         "followRemote": "Follow remote instance",
-        "noTitle": "No Title"
+        "noTitle": "No Title",
+        "errors": {
+          "existed": "You are already following this remote instance.",
+          "notAvailable": "This instance's timeline is not public accessible. Please try another instance."
+        }
       }
     },
     "notifications": {

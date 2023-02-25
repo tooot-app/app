@@ -1,6 +1,8 @@
 import Button from '@components/Button'
+import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Icon from '@components/Icon'
+import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
 import SegmentedControl from '@react-native-segmented-control/segmented-control'
@@ -28,6 +30,7 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
   const { t } = useTranslation(['common', 'componentInstance', 'screenTabs'])
   const { colors, mode } = useTheme()
 
+  const [loading, setLoading] = useState(false)
   const [addingRemote, setAddingRemote] = useState(false)
   const [domain, setDomain] = useState<string>('')
   const [domainValid, setDomainValid] = useState<boolean>()
@@ -38,7 +41,14 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
       retry: false,
       keepPreviousData: false,
       cacheTime: 1000 * 30,
-      onSuccess: () =>
+      onError: () => setLoading(false),
+      onSuccess: () => {
+        if (!!remotes?.find(r => r.domain === domain)) {
+          displayMessage({
+            type: 'warning',
+            message: t('screenTabs:tabs.public.exploring.errors.existed')
+          })
+        }
         apiGeneral<Mastodon.Status[]>({
           method: 'get',
           domain: domain,
@@ -46,17 +56,31 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
           params: { local: 'true', limit: 1 }
         })
           .then(({ body }) => {
+            setLoading(false)
             if (Array.isArray(body)) {
               setDomainValid(true)
             } else {
+              displayMessage({
+                type: 'danger',
+                message: t('screenTabs:tabs.public.exploring.errors.notAvailable')
+              })
               setDomainValid(false)
             }
           })
-          .catch(() => setDomainValid(false))
+          .catch(() => {
+            displayMessage({
+              type: 'danger',
+              message: t('screenTabs:tabs.public.exploring.errors.notAvailable')
+            })
+            setLoading(false)
+            setDomainValid(false)
+          })
+      }
     }
   })
   const debounceFetch = useCallback(
     debounce(() => {
+      setLoading(true)
       instanceQuery.refetch()
     }, 1000),
     []
@@ -124,6 +148,8 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
       disableRefresh={!remoteActive}
       refreshAutoRefetch={false}
       customProps={{
+        keyboardDismissMode: 'on-drag',
+        keyboardShouldPersistTaps: 'always',
         stickyHeaderIndices: [0],
         stickyHeaderHiddenOnScroll: true,
         ListHeaderComponent: (
@@ -229,15 +255,16 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                     <Button
                       type='text'
                       content={t('common:buttons.add')}
-                      loading={instanceQuery.isFetching}
+                      loading={loading}
                       disabled={
                         !!domain.length
-                          ? domainValid === false ||
+                          ? !domainValid ||
                             accountActive === domain ||
                             !!remotes?.find(r => r.domain === domain)
                           : true
                       }
                       onPress={() => {
+                        haptics('Success')
                         setRemotes([
                           ...(remotes || []),
                           {
@@ -338,6 +365,7 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                               setRemoteActive(item.domain)
                             } else if (next === 'off') {
                               const nextRemotes = remotes?.filter(r => r.domain !== item.domain)
+                              haptics('Light')
                               setRemotes(nextRemotes)
                               setRemoteActive(nextRemotes.at(-1)?.domain)
                             }
