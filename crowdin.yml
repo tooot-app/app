@@ -1,10 +1,5 @@
-# 'preserve_hierarchy': true
-
 files:
-  [
-    {
-      'source': '/src/i18n/en/**/*.json',
-      'translation': '/src/i18n/%osx_locale%/**/%original_file_name%',
-      'ignore': ['*.ts'],
-    },
-  ]
+  - source: /src/i18n/en/**/*.json
+    translation: /src/i18n/%osx_locale%/**/%original_file_name%
+    ignore:
+      - '*.ts'
