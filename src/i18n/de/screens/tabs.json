@@ -11,13 +11,17 @@
       "segments": {
         "federated": "Föderiert",
         "local": "Lokal",
-        "explore": ""
+        "explore": "Entdecken"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "Entdecken",
+        "trending": "Angesagt",
+        "followRemote": "Remote-Instanz folgen",
+        "noTitle": "Kein Titel",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -386,7 +390,7 @@
         "accessibilityHint": "Du kannst diesen Benutzer stummschalten, blockieren, melden oder teilen"
       },
       "followed_by": " folgt dir",
-      "privateNote": "",
+      "privateNote": "Notiz privat erstellen",
       "moved": "Benutzer umgezogen",
       "created_at": "Registriert am: {{date}}",
       "summary": {
