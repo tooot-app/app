@@ -121,26 +121,26 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Kudeatu erabiltzaileak",
+      "error": "Ezabatu erabiltzailea zerrendatik",
+      "empty": "Erabiltzailerik ez zerrenda honetan"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Editatu zerrendaren xehetasunak",
+      "title": "Izenburua",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Erakutsi hauei erantzunak:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Inori",
+          "list": "Zerrendako kideei",
+          "followed": "Jarraitutako edozeini"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Ezabatu zerrenda",
       "confirm": {
-        "title": "",
+        "title": "{{list}} zerrenda ezabatu?",
         "message": ""
       }
     },
