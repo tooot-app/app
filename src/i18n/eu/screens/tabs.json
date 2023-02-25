@@ -141,50 +141,50 @@
       "heading": "Ezabatu zerrenda",
       "confirm": {
         "title": "{{list}} zerrenda ezabatu?",
-        "message": ""
+        "message": "Ekintza honen ondoren ezin da atzera egin."
       }
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Bidalketaren ikusgarritasun lehenetsia",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Publiko",
+          "unlisted": "Zerrendatu gabea",
+          "private": "Jarraitzaileak soilik"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Ezarri edukia hunkigarri gisa lehenespenez"
       },
       "media": {
-        "title": "",
+        "title": "Edukien bistaratzea",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Ezkutatu hunkigarri gisa ezarritako edukiak",
+          "show_all": "Erakutsi beti edukia",
+          "hide_all": "Ezkutatu beti edukia"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Automatikoki zabaldu edukiaren abisua duten tutak"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Automatikoki erreproduzitu tutetako GIFak"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Edukien iragazkiak",
+        "content": "{{count}} aktibo"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Eguneratu ezarpenak",
+        "description": "Hurrengo ezarpenak soilik web-interfaze bitartez egunera daitezke"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
+      "expired": "Iraungita",
+      "keywords_one": "Gako-hitz {{count}}",
+      "keywords_other": "{{count}} gako-hitz",
+      "statuses_one": "Tut {{count}}",
+      "statuses_other": "{{count}} tut",
       "context": "",
       "contexts": {
         "home": "",
