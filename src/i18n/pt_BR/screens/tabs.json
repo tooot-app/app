@@ -19,8 +19,8 @@
         "followRemote": "",
         "noTitle": "",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Você já está seguindo esta instância.",
+          "notAvailable": "A linha do tempo desta instância não é acessível ao público. Por favor, tente outra instância."
         }
       }
     },
