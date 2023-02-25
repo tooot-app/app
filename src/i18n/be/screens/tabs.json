@@ -1,23 +1,27 @@
 {
   "tabs": {
     "local": {
-      "name": "",
+      "name": "Падпіскі",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Паказваць пашырэнні",
+        "showReplies": "Паказваць адказы"
       }
     },
     "public": {
       "segments": {
-        "federated": "",
-        "local": "",
-        "explore": ""
+        "federated": "Глабальнае",
+        "local": "Мясцовае",
+        "explore": "Агляд"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
+        "heading": "Агляд",
+        "trending": "Папулярныя",
         "followRemote": "",
-        "noTitle": ""
+        "noTitle": "",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -109,23 +113,23 @@
     "fontSize": {
       "demo": "",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Стандартны",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Кіраваць карыстальнікамі",
+      "error": "Выдаліць карыстальніка са спісу",
+      "empty": "У гэтым спісе няма карыстальнікаў"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Рэдагаваць дэталі спісу",
+      "title": "Назва",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Адказы будуць бачныя для:",
         "options": {
           "none": "",
           "list": "",
@@ -192,20 +196,20 @@
     },
     "preferencesFilter": {
       "name": "",
-      "expiration": "",
+      "expiration": "Заканчэнне тэрміну дзеяння",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Ніколі",
+        "1800": "Праз 30 хвілін",
+        "3600": "Праз 1 гадзіну",
+        "43200": "Праз 12 гадзін",
+        "86400": "Праз 1 дзень",
+        "604800": "Праз 1 тыдзень",
+        "18144000": "Праз 1 месяц"
       },
       "context": "",
       "contexts": {
         "home": "",
-        "notifications": "",
+        "notifications": "Апавяшчэнне",
         "public": "",
         "thread": "",
         "account": ""
@@ -229,15 +233,15 @@
           "title": ""
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Аватар",
+          "description": "Будзе паменшана да 400x400 пікселяў"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Відарыс банера",
+          "description": "Будзе паменшаны да 1500x500 пікселяў"
         },
         "note": {
-          "title": ""
+          "title": "Апісанне"
         },
         "fields": {
           "title": "",
@@ -322,23 +326,23 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Уключана",
+        "content_false": "Адключана"
       },
       "logout": {
-        "button": "",
+        "button": "Выйсці",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Вы ўпэўнены, што хочаце выйсці?",
+          "message": "Пасля выхаду з сістэмы неабходна зноў увайсці ў яе",
           "buttons": {
-            "logout": ""
+            "logout": "Выйсці"
           }
         }
       }
     },
     "settings": {
       "theme": {
-        "heading": "",
+        "heading": "Знешні выгляд",
         "options": {
           "auto": "",
           "light": "",
@@ -411,7 +415,7 @@
       "existed": ""
     },
     "history": {
-      "name": ""
+      "name": "Гісторыя рэдагавання"
     },
     "report": {
       "name": "",
@@ -421,21 +425,21 @@
       },
       "reasons": {
         "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "spam": "Гэта спам",
+        "other": "Гэта нешта іншае",
+        "violation": "Гэта парушае правілы сервера"
       },
       "comment": {
         "heading": ""
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Парушэнне правіл сервера"
       }
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Пошук",
+        "placeholder": "..."
       },
       "empty": {
         "general": "",
