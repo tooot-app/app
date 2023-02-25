@@ -206,7 +206,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           if (localMatch) {
             return localMatch
           } else {
-            return appendRemote.status(ancestor)
+            return appendRemote.status(ancestor, domain)
           }
         })
       }
@@ -256,7 +256,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                       if (localMatch) {
                         return { ...localMatch, _level: remote._level }
                       } else {
-                        return appendRemote.status(remote)
+                        return appendRemote.status(remote, match!.domain)
                       }
                     })
                   }

@@ -57,7 +57,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
             })
             return {
               ...res,
-              body: res.body.map(account => appendRemote.account(account)),
+              body: res.body.map(account => appendRemote.account(account, domain)),
               remoteData: true
             }
           } else {

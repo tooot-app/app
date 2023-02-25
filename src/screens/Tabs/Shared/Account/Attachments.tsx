@@ -13,7 +13,12 @@ import { Dimensions, Pressable, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import AccountContext from './Context'
 
-const AccountAttachments: React.FC = () => {
+export type Props = {
+  remote_id?: Mastodon.Status['id']
+  remote_domain?: string
+}
+
+const AccountAttachments: React.FC<Props> = ({ remote_id, remote_domain }) => {
   const { account } = useContext(AccountContext)
 
   if (account?.suspended) return null
@@ -32,7 +37,8 @@ const AccountAttachments: React.FC = () => {
     id: account?.id,
     exclude_reblogs: false,
     only_media: true,
-    options: { enabled: !!account?.id }
+    ...(remote_id && remote_domain && { remote_id, remote_domain }),
+    options: { enabled: !!account?.id || (!!remote_id && !!remote_domain) }
   })
 
   const flattenData = flattenPages(data)
@@ -55,7 +61,7 @@ const AccountAttachments: React.FC = () => {
         horizontal
         data={flattenData}
         renderItem={({ item, index }) => {
-          if (index === DISPLAY_AMOUNT - 1) {
+          if (index === DISPLAY_AMOUNT - 1 && (!remote_id || !remote_domain)) {
             return (
               <Pressable
                 onPress={() => {

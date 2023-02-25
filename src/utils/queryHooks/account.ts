@@ -33,16 +33,16 @@ const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyA
         if (id) {
           matchedAccount = await apiGeneral<Mastodon.Account>({
             method: 'get',
-            domain: domain,
+            domain,
             url: `api/v1/accounts/${id}`
-          }).then(res => appendRemote.account(res.body))
+          }).then(res => appendRemote.account(res.body, domain))
         } else if (acct) {
           matchedAccount = await apiGeneral<Mastodon.Account>({
             method: 'get',
-            domain: domain,
+            domain,
             url: 'api/v1/accounts/lookup',
             params: { acct }
-          }).then(res => appendRemote.account(res.body))
+          }).then(res => appendRemote.account(res.body, domain))
         }
       } catch {}
     }

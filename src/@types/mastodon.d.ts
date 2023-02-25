@@ -33,7 +33,7 @@ declare namespace Mastodon {
     role?: Role
 
     // Internal
-    _remote?: boolean
+    _remote?: string // domain
   }
 
   type Announcement = {
@@ -400,7 +400,7 @@ declare namespace Mastodon {
     url: string
 
     // Internal
-    _remote?: boolean
+    _remote?: string // domain
   }
 
   type Notification =
