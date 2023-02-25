@@ -1,17 +1,17 @@
 {
   "screenshot": {
     "title": "Абарона прыватнасці",
-    "message": ""
+    "message": "Калі ласка, не раскрывайце асобу іншых карыстальнікаў, такіх як імя карыстальніка, аватар і г.д. Дзякуй!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Тэрмін дзеяння ўваходу скончыўся. Увайдзіце яшчэ раз"
   },
   "pushError": {
     "message": "Памылка сэрвісу Push",
-    "description": ""
+    "description": "Паўторна ўключыце push-апавяшчэнне ў наладах"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Тып відарыса {{type}} не падтрымліваецца",
+    "videoNotSupported": "Тып відэа {{type}} не падтрымліваецца"
   }
 }

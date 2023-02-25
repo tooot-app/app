@@ -11,13 +11,17 @@
       "segments": {
         "federated": "Globaal",
         "local": "Lokaal",
-        "explore": ""
+        "explore": "Ontdekken"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": ""
+        "heading": "Ontdekken",
+        "trending": "Trending",
+        "followRemote": "Volg externe server",
+        "noTitle": "Geen Titel",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -386,7 +390,7 @@
         "accessibilityHint": "Je kunt deze gebruiker dempen, blokkeren, rapporteren of delen"
       },
       "followed_by": " volgt jou",
-      "privateNote": "",
+      "privateNote": "Privébericht toevoegen",
       "moved": "Gebruiker is verplaatst",
       "created_at": "Lid sinds {{date}}",
       "summary": {

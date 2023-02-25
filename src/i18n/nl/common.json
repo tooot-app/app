@@ -9,7 +9,7 @@
     "delete": "Verwijder",
     "done": "Gereed",
     "confirm": "Bevestig",
-    "add": ""
+    "add": "Toevoegen"
   },
   "customEmoji": {
     "accessibilityLabel": "Aangepaste emoji {{emoji}}"

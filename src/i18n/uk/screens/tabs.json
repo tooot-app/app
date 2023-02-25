@@ -17,7 +17,11 @@
         "heading": "Огляд",
         "trending": "Популярне",
         "followRemote": "Стежити за віддаленим сервером",
-        "noTitle": "Без назви"
+        "noTitle": "Без назви",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {

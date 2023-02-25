@@ -17,7 +17,11 @@
         "heading": "探索",
         "trending": "熱門",
         "followRemote": "跟隨遠端站點",
-        "noTitle": "無標題"
+        "noTitle": "無標題",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -386,7 +390,7 @@
         "accessibilityHint": "您可以靜音、封鎖、檢舉或分享此使用者"
       },
       "followed_by": " 正在跟隨你",
-      "privateNote": "",
+      "privateNote": "設定非公開備註",
       "moved": "使用者已轉移",
       "created_at": "加入於：{{date}}",
       "summary": {

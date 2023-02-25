@@ -1,106 +1,106 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Дзеянні для гэтага допісу, такія як яго карыстальнік або сам допіс",
   "account": {
-    "title": "",
+    "title": "Дзеянні карыстальніка",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Падпісацца на карыстальніка",
+      "action_true": "Адпісацца ад карыстальніка"
     },
-    "inLists": "",
+    "inLists": "Спісы ў якіх ёсць карыстальнік ...",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Паказаць пашырэнні карыстальніка",
+      "action_true": "Схаваць пашырэнні карыстальніка"
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Ігнараваць карыстальніка",
+      "action_true": "Не ігнараваць карыстальніка"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Падпісацца як ...",
+      "succeed_default": "Цяпер вы падпісаны на @{{target}} як @{{source}}",
+      "succeed_locked": "Запыт на падпіску на @{{target}} як {{source}}, чакае зацвярджэння",
+      "failed": "Падпісацца як"
     },
-    "blockReport": "",
+    "blockReport": "Заблакіраваць і паскардзіцца",
     "block": {
-      "action_false": "",
-      "action_true": "",
+      "action_false": "Заблакіраваць карыстальніка",
+      "action_true": "Разблакіраваць карыстальніка",
       "alert": {
-        "title": ""
+        "title": "Вы ўпэўнены, што хочаце заблакіраваць {{username}}?"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Паскардзіцца і заблакіраваць карыстальніка",
       "alert": {
-        "title": ""
+        "title": "Вы ўпэўнены, што хочаце паскардзіцца і заблакіраваць {{username}}?"
       }
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Асабістае паведамленне",
+    "public": "Публічнае паведамленне"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Скапіраваць допіс",
+    "succeed": "Скапіравана"
   },
   "instance": {
-    "title": "",
+    "title": "Дзеянне інстанса",
     "block": {
-      "action": "",
+      "action": "Заблакіраваць інстанс {{instance}}",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Вы ўпэўнены, што хочаце заблакіраваць {{instance}}?",
+        "message": "Як правіла, вы ігнаруеце (або блакіруеце) пэўных карыстальнікаў.\n\nКалі вы блакіруеце інстанс, увесь яго кантэнт (уключаючы, напрыклад, вашых падпісчыкаў, якія яму належаць) будзе выдалены!"
       }
     }
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Падпісацца",
+      "action_true": "Адпісацца"
     },
     "filter": {
-      "action": ""
+      "action": "Фільтраваць хэштэг ..."
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Абагуліць допіс"
     },
     "account": {
-      "action": ""
+      "action": "Абагуліць карыстальніка"
     }
   },
   "status": {
-    "title": "",
+    "title": "Дзеянні допісу",
     "edit": {
-      "action": ""
+      "action": "Рэдагаваць допіс"
     },
     "delete": {
-      "action": "",
+      "action": "Выдаліць допіс",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Вы ўпэўненыя, што хочаце выдаліць?",
+        "message": "Усе пашырэнні і абраныя будуць выдалены, у тым ліку ўсе адказы."
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Выдаліць допіс і апублікаваць нанава",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Вы пацвярджаеце выдаленне і паўторную публікацыю?",
+        "message": "Усе пашырэнні і абраныя будуць выдалены, у тым ліку ўсе адказы."
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Ігнараваць допіс і адказы",
+      "action_true": "Не ігнараваць допіс і адказы"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Замацаваць допіс",
+      "action_true": "Адмацаваць допіс"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Фільтраваць допіс ...",
+      "action_true": "Кіраваць фільтрамі ..."
     }
   }
 }

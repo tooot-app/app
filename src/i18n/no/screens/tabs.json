@@ -17,7 +17,11 @@
         "heading": "Utforsk",
         "trending": "Trender",
         "followRemote": "Følg annen instans",
-        "noTitle": "Uten tittel"
+        "noTitle": "Uten tittel",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -386,7 +390,7 @@
         "accessibilityHint": "Du kan dempe, blokkere, rapportere eller dele denne brukeren"
       },
       "followed_by": " følger deg",
-      "privateNote": "Angi privat notat",
+      "privateNote": "Legg til et privat notat",
       "moved": "Bruker flyttet",
       "created_at": "Ble med: {{date}}",
       "summary": {
