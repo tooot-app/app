@@ -142,23 +142,23 @@
       "header": {
         "title": "Editatu eranskina",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Aldaketak gorde",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Editatzeak huts egin du",
+            "button": "Saiatu berriro"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Deskribatu edukia ikusmen arazoak dituztenentzat",
+          "placeholder": "Deskribapen bat gehi diezaiokezu zure edukiari, batzuetan, testu alternatibo bezala ezaguna. Horrela, jende gehiagora iritsiko da, bereziki, itsuak direnei edo ikusmen arazoak dituztenei.\n\nZehatza bada hobe, hala ere, aurkeztu zure edukian azaltzen dena zehazki, honen testuingurua uler ahal izateko."
         }
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Zirriborroa"
       },
       "warning": "",
       "content": {
