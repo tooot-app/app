@@ -1,33 +1,33 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": "",
-    "discard": "",
-    "continue": "",
-    "create": "",
-    "delete": "",
-    "done": "",
-    "confirm": "",
+    "OK": "Добра",
+    "apply": "Ужыць",
+    "cancel": "Скасаваць",
+    "discard": "Скасаваць",
+    "continue": "Працягнуць",
+    "create": "Стварыць",
+    "delete": "Выдаліць",
+    "done": "Гатова",
+    "confirm": "Пацвердзіць",
     "add": "Дадаць"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Карыстальніцкія эмодзі {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} паспяхова"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} не ўдалося, паспрабуйце яшчэ раз"
     }
   },
-  "separator": "",
+  "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Змяненні не захаваны",
+    "message": "Вашыя змены не былі захаваны. Вы хочаце скасаваць змены?"
   }
 }
