@@ -14,7 +14,6 @@ import AccountContext from '../Context'
 
 const AccountInformationPrivateNote: React.FC = () => {
   const { relationship, pageMe } = useContext(AccountContext)
-  if (!relationship || pageMe) return null
 
   const { colors, mode } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
@@ -22,14 +21,14 @@ const AccountInformationPrivateNote: React.FC = () => {
   const [editing, setEditing] = useState(false)
   const [notes, setNotes] = useState(relationship?.note)
 
-  const queryKey: QueryKeyRelationship = ['Relationship', { id: relationship.id }]
+  const queryKey: QueryKeyRelationship = ['Relationship', { id: relationship?.id }]
   const mutation = useRelationshipMutation({
     onMutate: async vars => {
       await queryClient.cancelQueries({ queryKey })
       queryClient.setQueryData<Mastodon.Relationship[]>(queryKey, old => {
         return old
           ? vars.type === 'note'
-            ? old.map(o => (o.id === relationship.id ? { ...o, note: notes } : o))
+            ? old.map(o => (o.id === relationship?.id && notes ? { ...o, note: notes } : o))
             : old
           : undefined
       })
@@ -39,10 +38,14 @@ const AccountInformationPrivateNote: React.FC = () => {
     }
   })
   const submit = () => {
-    mutation.mutate({ id: relationship.id, type: 'note', payload: notes || '' })
-    setEditing(!editing)
-    layoutAnimation()
+    if (relationship) {
+      mutation.mutate({ id: relationship.id, type: 'note', payload: notes || '' })
+      setEditing(!editing)
+      layoutAnimation()
+    }
   }
+
+  if (!relationship || pageMe) return null
 
   return relationship?.following ? (
     editing ? (
