@@ -17,7 +17,11 @@
         "heading": "Arakatzen",
         "trending": "Joerak",
         "followRemote": "Jarraitu urrutiko instantzia",
-        "noTitle": "Izenbururik ez"
+        "noTitle": "Izenbururik ez",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {

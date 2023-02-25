@@ -17,7 +17,11 @@
         "heading": "",
         "trending": "",
         "followRemote": "",
-        "noTitle": ""
+        "noTitle": "",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {

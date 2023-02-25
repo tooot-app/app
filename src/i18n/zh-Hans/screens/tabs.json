@@ -17,7 +17,11 @@
         "heading": "探索",
         "trending": "热门嘟文",
         "followRemote": "关注远程实例",
-        "noTitle": "无标题"
+        "noTitle": "无标题",
+        "errors": {
+          "existed": "您已经关注此远程实例。",
+          "notAvailable": "此实例的公共时间线不可访问。请尝试其他实例。"
+        }
       }
     },
     "notifications": {

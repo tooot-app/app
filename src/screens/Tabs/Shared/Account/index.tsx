@@ -258,6 +258,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
           disableRefresh
           queryOptions={{ enabled: account._remote ? !!data?.id : true }}
           customProps={{
+            keyboardShouldPersistTaps: 'always',
             renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
             onScroll: ({ nativeEvent }) => (scrollY.value = nativeEvent.contentOffset.y),
             ListHeaderComponent,

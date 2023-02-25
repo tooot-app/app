@@ -59,8 +59,8 @@ const GracefullyImage = ({
     >
       <Image
         placeholderContentFit='cover'
-        placeholder={sources.blurhash || connectMedia(sources.preview)}
-        source={hidden ? undefined : connectMedia(source)}
+        placeholder={hidden ? sources.blurhash : sources.blurhash || connectMedia(sources.preview)}
+        source={hidden ? sources.blurhash : connectMedia(source)}
         {...(!withoutTransition && !reduceMotionEnabled && { transition: { duration: 120 } })}
         style={{ flex: 1, ...imageStyle }}
         onError={() => {

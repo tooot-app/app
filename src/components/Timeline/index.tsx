@@ -233,7 +233,14 @@ const Timeline: React.FC<Props> = ({
     }
   })
 
-  useScrollToTop(flRef)
+  useScrollToTop(
+    useRef({
+      scrollToTop: () => {
+        shouldAutoFetch.value = false
+        flRef.current?.scrollToOffset({ animated: true, offset: 0 })
+      }
+    })
+  )
   useGlobalStorageListener('account.active', () =>
     flRef.current?.scrollToOffset({ offset: 0, animated: false })
   )
