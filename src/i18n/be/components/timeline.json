@@ -5,112 +5,112 @@
       "button": "Паўтарыць"
     },
     "success": {
-      "message": ""
+      "message": "Стужка пуста"
     }
   },
   "end": {
-    "message": ""
+    "message": "Вось і канец, хочаце кубачак <0 />?"
   },
   "lookback": {
-    "message": ""
+    "message": "Апошні раз прачытана ў"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": "",
-    "fetching": "",
+    "fetchPreviousPage": "Навейшае",
+    "refetch": "Да новых",
+    "fetching": "Атрыманне новых допісаў ...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Няма новых допісаў",
+      "found": "Атрымана {{count}} допісаў"
     }
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Замацавана",
+      "favourite": "{{name}} упадабаў ваш допіс",
+      "status": "{{name}} толькі што апублікаваў допіс",
+      "follow": "{{name}} падпісаўся на вас",
+      "follow_request": "{{name}} хоча падпісацца на вас",
+      "poll": "Апытанне, дзе вы прынялі ўдзел, скончылася",
       "reblog": {
-        "default": "",
-        "myself": "",
-        "notification": ""
+        "default": "{{name}} пашырыў(-ла)",
+        "myself": "Я пашырыў",
+        "notification": "{{name}} пашырыў ваш допіс"
       },
-      "update": "",
-      "admin.sign_up": "",
+      "update": "Пашырэнне было адрэдагавана",
+      "admin.sign_up": "{{name}} далучыўся да інстанса",
       "admin.report": ""
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Адказаць на допіс"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Пашырыць допіс",
+        "function": "Пашырыць допіс",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Выберыце бачнасць пашырэння",
+          "public": "Публічнае пашырэнне",
+          "unlisted": "Прыватнае пашырэнне"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Дадаць гэта допіс у абранае",
+        "function": "Дадаць у абранае"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Дадаць гэты допіс у закладкі",
+        "function": "Дадаць допіс у закладкі"
       },
-      "openReport": ""
+      "openReport": "Адкрыць скаргу"
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} карыстальнікаў пашырылі гэты допіс",
+        "accessibilityHint": "Націсніце, каб даведацца пра карыстальнікаў",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} карыстальнікаў дадалі гэты допіс у абранае",
+        "accessibilityHint": "Націсніце, каб даведацца пра карыстальнікаў",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Гэты допіс быў адрэдагаваны {{count}} разоў",
+        "accessibilityHint": "Націсніце, каб прагледзець поўную гісторыю рэдагавання",
+        "text_one": "{{count}} рэдагаванне",
+        "text_other": "{{count}} рэдагаванняў"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Паказаць далікатнае медыя"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Памылка загрузкі",
+        "button": "Паспрабуйце аддаленую спасылку"
       },
-      "altText": ""
+      "altText": "Альтэрнатыўны тэкст"
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Аватар {{name}}",
+      "accessibilityHint": "Націсніце, каб перайсці на старонку {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Схаваны змест"
     },
     "filtered": {
-      "reveal": "",
+      "reveal": "Усё роўна паказаць",
       "match_v1": "",
       "match_v2_one": "",
       "match_v2_other": ""
     },
-    "fullConversation": "",
+    "fullConversation": "Чытаць размовы",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Перакласці",
+      "succeed": "Перакладзена {{provider}} з {{source}}",
+      "failed": "Не ўдалося перакласці",
+      "source_not_supported": "Мова допісу не падтрымліваецца",
+      "target_not_supported": "Гэтая мова не падтрымліваецца"
     },
     "header": {
       "shared": {
@@ -119,12 +119,12 @@
             "accessibilityHint": ""
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Профіль карыстальніка"
           }
         },
-        "application": "",
+        "application": "праз {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Допіс адрэдагаваны"
         },
         "muted": {
           "accessibilityLabel": ""
@@ -140,7 +140,7 @@
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "З",
         "delete": {
           "function": ""
         }
@@ -149,18 +149,18 @@
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Галасаванне",
+          "refresh": "Абнавіць"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} карыстальнік прагаласаваў",
+          "voters_other": "{{count}} карыстальнікаў прагаласавала",
+          "votes_one": "{{count}} голас",
+          "votes_other": "{{count}} галасоў"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Галасаванне скончылася",
+          "until": "Заканчваецца <0 />"
         }
       }
     }
