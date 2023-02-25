@@ -19,8 +19,8 @@
         "followRemote": "Jarraitu urrutiko instantzia",
         "noTitle": "Izenbururik ez",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Jada jarraitzen duzu urrutiko instantzia hau.",
+          "notAvailable": "Instantzia honetako denbora-lerroa ez da publikoki eskuragarria. Mesedez, saia zaitez beste batekin."
         }
       }
     },
