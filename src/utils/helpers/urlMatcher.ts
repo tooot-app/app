@@ -75,7 +75,7 @@ export const urlMatcher = (
 
   return {
     domain,
-    ...(accountAcct && { account: { acct: accountAcct, _remote } }),
+    ...(accountAcct && { account: { acct: accountAcct, _remote: domain } }),
     ...(statusId && { status: { id: statusId, _remote } })
   }
 }

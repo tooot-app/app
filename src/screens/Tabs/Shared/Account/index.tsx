@@ -9,6 +9,7 @@ import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
@@ -31,33 +32,19 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   const { t } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
 
-  const { data, dataUpdatedAt } = useAccountQuery({
+  const { data, dataUpdatedAt, isFetched } = useAccountQuery({
     account,
     _local: true,
     options: {
       placeholderData: (account._remote
         ? { ...account, id: undefined }
         : account) as Mastodon.Account,
-      onSuccess: a => {
-        if (account._remote) {
-          setQueryKey([
-            queryKey[0],
-            {
-              ...queryKey[1],
-              page: 'Account',
-              id: a.id,
-              exclude_reblogs: true,
-              only_media: false
-            }
-          ])
-        }
-      },
       onError: () => navigation.goBack()
     }
   })
   const { data: dataRelationship } = useRelationshipQuery({
-    id: account._remote ? data?.id : account.id,
-    options: { enabled: account._remote ? !!data?.id : true }
+    id: data?.id,
+    options: { enabled: account._remote ? isFetched : true }
   })
 
   const queryClient = useQueryClient()
@@ -65,9 +52,10 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     'Timeline',
     {
       page: 'Account',
-      id: account._remote ? data?.id : account.id,
+      id: data?.id,
       exclude_reblogs: true,
-      only_media: false
+      only_media: false,
+      ...(account._remote && { remote_id: account.id, remote_domain: account._remote })
     }
   ])
 
@@ -76,9 +64,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   useEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
-      headerStyle: {
-        backgroundColor: `rgba(255, 255, 255, 0)`
-      },
+      headerStyle: { backgroundColor: `rgba(255, 255, 255, 0)` },
       title: '',
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} background />,
       headerRight: () => {
@@ -179,7 +165,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         <View style={{ borderBottomWidth: 1, borderBottomColor: colors.border }}>
           <AccountHeader />
           <AccountInformation />
-          <AccountAttachments />
+          <AccountAttachments
+            {...(account._remote && { remote_id: account.id, remote_domain: account._remote })}
+          />
         </View>
         {!data?.suspended ? (
           // @ts-ignore
@@ -246,8 +234,18 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     )
   }, [segment, dataUpdatedAt, mode])
 
+  const [domain] = useAccountStorage.string('auth.account.domain')
+
   return (
-    <AccountContext.Provider value={{ account: data, relationship: dataRelationship }}>
+    <AccountContext.Provider
+      value={{
+        account: data,
+        relationship: dataRelationship,
+        localInstance: account?.acct?.includes('@')
+          ? account?.acct?.includes(`@${domain}`)
+          : !account?._remote
+      }}
+    >
       <AccountNav scrollY={scrollY} />
 
       {data?.suspended ? (
@@ -256,7 +254,6 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         <Timeline
           queryKey={queryKey}
           disableRefresh
-          queryOptions={{ enabled: account._remote ? !!data?.id : true }}
           customProps={{
             keyboardShouldPersistTaps: 'always',
             renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,

@@ -256,7 +256,7 @@ const TimelineRefresh: React.FC<Props> = ({
           return
       }
     },
-    []
+    [queryKey[1]]
   )
 
   if (!isFetched) return null

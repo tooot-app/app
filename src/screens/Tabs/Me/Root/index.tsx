@@ -28,7 +28,7 @@ const TabMeRoot: React.FC = () => {
   })
 
   return (
-    <AccountContext.Provider value={{ account: data, pageMe: true }}>
+    <AccountContext.Provider value={{ account: data, pageMe: true, localInstance: true }}>
       {accountActive && data ? <AccountNav scrollY={scrollY} /> : null}
       <Animated.ScrollView
         ref={scrollRef}

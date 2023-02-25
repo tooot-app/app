@@ -35,6 +35,7 @@ const AccountInformationAvatar: React.FC = () => {
         }
       }}
       dim
+      withoutTransition
     />
   )
 }

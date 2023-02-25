@@ -10,15 +10,13 @@ import { PlaceholderLine } from 'rn-placeholder'
 import AccountContext from '../Context'
 
 const AccountInformationAccount: React.FC = () => {
-  const { account, relationship, pageMe } = useContext(AccountContext)
+  const { account, relationship, pageMe, localInstance } = useContext(AccountContext)
 
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
 
   const [acct] = useAccountStorage.string('auth.account.acct')
   const [domain] = useAccountStorage.string('auth.account.domain')
-
-  const localInstance = account?.acct?.includes('@') ? account?.acct?.includes(`@${domain}`) : true
 
   if (account || pageMe) {
     return (
