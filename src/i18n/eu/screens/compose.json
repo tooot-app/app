@@ -160,12 +160,12 @@
       "header": {
         "title": "Zirriborroa"
       },
-      "warning": "",
+      "warning": "Zirriborroak lokalki soilik gordetzen dira, eta gal daitezke. Ez da gomendagarria zirriborroak luzaro gordetzea.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Zirriborroa gordeta, sakatu zirriborro hau editatzeko",
+        "textEmpty": "Eduki hutsa"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Zerbitzariko eranskinak egiaztatzen..."
     }
   }
 }
