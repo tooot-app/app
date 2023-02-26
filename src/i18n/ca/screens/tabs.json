@@ -19,8 +19,8 @@
         "followRemote": "Segueix la instància remota",
         "noTitle": "Sense títol",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Ja segueixes aquesta instància remota.",
+          "notAvailable": "Aquesta cronologia no és accessible públicament. Prova-ho amb una altra instància."
         }
       }
     },
