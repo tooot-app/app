@@ -17,7 +17,7 @@
         "heading": "Агляд",
         "trending": "Папулярныя",
         "followRemote": "Падпісацца на аддалены інстанс",
-        "noTitle": "",
+        "noTitle": "Няма загалоўка",
         "errors": {
           "existed": "Вы ўжо падпісаныя на гэты аддалены інстанс.",
           "notAvailable": "Стужка гэтага інстанса недаступная для ўсіх. Паспрабуйце іншы інстанс."
@@ -25,29 +25,29 @@
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Апавяшчэнні"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
+      "accessibilityLabel": "Пошук",
       "accessibilityHint": ""
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
+      "accessibilityLabel": "Фільтр",
       "accessibilityHint": "",
-      "title": ""
+      "title": "Паказваць апавяшчэнні"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Закладкі"
       },
       "conversations": {
-        "name": ""
+        "name": "Асабістыя паведамленні"
       },
       "favourites": {
         "name": ""
@@ -56,13 +56,13 @@
         "name": ""
       },
       "fontSize": {
-        "name": ""
+        "name": "Памер шрыфту"
       },
       "language": {
-        "name": ""
+        "name": "Мова"
       },
       "list": {
-        "name": ""
+        "name": "Спіс: {{list}}"
       },
       "listAccounts": {
         "name": ""
