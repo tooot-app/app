@@ -89,19 +89,19 @@
         "name": ""
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Рэдагаваць фільтр"
       },
       "profile": {
-        "name": ""
+        "name": "Рэдагаваць Профіль"
       },
       "profileName": {
-        "name": ""
+        "name": "Рэдагаваць бачнае імя"
       },
       "profileNote": {
-        "name": ""
+        "name": "Рэдагаваць апісанне"
       },
       "profileFields": {
-        "name": ""
+        "name": "Рэдагаваць метаданыя"
       },
       "settings": {
         "name": ""
@@ -138,7 +138,7 @@
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Выдаліць спіс",
       "confirm": {
         "title": "",
         "message": ""
@@ -244,7 +244,7 @@
           "title": "Апісанне"
         },
         "fields": {
-          "title": "",
+          "title": "Метаданыя",
           "total_one": "",
           "total_other": ""
         },
