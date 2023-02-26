@@ -140,7 +140,7 @@
     "listDelete": {
       "heading": "Выдаліць спіс",
       "confirm": {
-        "title": "",
+        "title": "Выдаліць спіс \"{{list}}\"?",
         "message": ""
       }
     },
@@ -345,22 +345,22 @@
         "heading": "Знешні выгляд",
         "options": {
           "auto": "",
-          "light": "",
-          "dark": ""
+          "light": "Светлы рэжым",
+          "dark": "Цёмны рэжым"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Цёмная тэма",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Прадвызначаная",
+          "darker": "Сапраўдны чорны"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Адкрыццё спасылак",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "Унутры праграмы",
+          "external": "Выкарыстоўваць сістэмны браўзер"
         }
       },
       "autoplayGifv": {
@@ -394,18 +394,18 @@
       "moved": "",
       "created_at": "",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} допісаў"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Допісы",
+        "all": "Допісы і адказы"
       },
       "suspended": ""
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Спісы @{{username}}",
+      "inLists": "У спісах",
+      "notInLists": "Іншыя спісы"
     },
     "attachments": {
       "name": ""
