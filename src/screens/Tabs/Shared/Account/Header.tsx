@@ -9,11 +9,12 @@ const AccountHeader: React.FC = () => {
   const { account } = useContext(AccountContext)
 
   const topInset = useSafeAreaInsets().top
+  const height = Dimensions.get('window').width / 3 + topInset
 
   return (
     <GracefullyImage
       sources={{ default: { uri: account?.header }, static: { uri: account?.header_static } }}
-      style={{ height: Dimensions.get('window').width / 3 + topInset }}
+      style={{ height }}
       onPress={() => {
         if (account) {
           Image.getSize(account.header, (width, height) =>

@@ -53,6 +53,10 @@ export type AccountV0 = {
       unread: number
     }
   }
+  page_account_timeline: {
+    excludeBoosts: boolean
+    excludeReplies: boolean
+  }
   drafts: ComposeStateDraft[]
   emojis_frequent: {
     emoji: Pick<Mastodon.Emoji, 'url' | 'shortcode' | 'static_url'>

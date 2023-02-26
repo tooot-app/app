@@ -25,25 +25,6 @@ const AccountInformationStats: React.FC = () => {
     <View style={[styles.stats, { flexDirection: 'row' }]}>
       {account ? (
         <CustomText
-          style={[styles.stat, { color: colors.primaryDefault }]}
-          children={t('shared.account.summary.statuses_count', {
-            count: account.statuses_count || 0
-          })}
-          onPress={() => {
-            pageMe && account && navigation.push('Tab-Shared-Account', { account })
-          }}
-        />
-      ) : (
-        <PlaceholderLine
-          width={StyleConstants.Font.Size.S * 1.25}
-          height={StyleConstants.Font.LineHeight.S}
-          color={colors.shimmerDefault}
-          noMargin
-          style={{ borderRadius: 0 }}
-        />
-      )}
-      {account ? (
-        <CustomText
           style={[styles.stat, { color: colors.primaryDefault, textAlign: 'right' }]}
           children={t('shared.users.accounts.following', {
             count: account.following_count
@@ -95,13 +76,8 @@ const AccountInformationStats: React.FC = () => {
 }
 
 const styles = StyleSheet.create({
-  stats: {
-    flex: 1,
-    justifyContent: 'space-between'
-  },
-  stat: {
-    ...StyleConstants.FontStyle.S
-  }
+  stats: { flex: 1, gap: StyleConstants.Spacing.L },
+  stat: { ...StyleConstants.FontStyle.S }
 })
 
 export default AccountInformationStats
