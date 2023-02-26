@@ -16,11 +16,11 @@
       "exploring": {
         "heading": "Агляд",
         "trending": "Папулярныя",
-        "followRemote": "",
+        "followRemote": "Падпісацца на аддалены інстанс",
         "noTitle": "",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Вы ўжо падпісаныя на гэты аддалены інстанс.",
+          "notAvailable": "Стужка гэтага інстанса недаступная для ўсіх. Паспрабуйце іншы інстанс."
         }
       }
     },
@@ -376,11 +376,11 @@
         "heading": ""
       },
       "version": "",
-      "instanceVersion": ""
+      "instanceVersion": "Версія Mastodon: v{{version}}"
     },
     "switch": {
       "existing": "",
-      "new": ""
+      "new": "Увайсці ў інстанс"
     }
   },
   "shared": {
@@ -421,7 +421,7 @@
       "name": "",
       "report": "",
       "forward": {
-        "heading": ""
+        "heading": "Ананімна пераслаць на аддалены сервер {{instance}}"
       },
       "reasons": {
         "heading": "",
