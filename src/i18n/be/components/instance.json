@@ -1,9 +1,9 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Дамен інстанса"
     },
-    "whitelisted": "",
+    "whitelisted": "Гэта можа быць асобнік з белага спісу, з якога tooot не можа атрымаць даныя да ўваходу ў сістэму.",
     "button": "Увайсці",
     "information": {
       "name": "Назва",
