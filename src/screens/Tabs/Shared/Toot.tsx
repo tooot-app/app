@@ -82,10 +82,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     if (ancestorsCache.current?.length) {
       switch (Platform.OS) {
         case 'ios':
+          await new Promise<void>(promise => setTimeout(promise, 128))
           for (let [] of Array(
             Math.ceil(ancestorsCache.current.length / PREV_PER_BATCH)
           ).entries()) {
-            await new Promise<void>(promise => setTimeout(promise, 64))
+            await new Promise<void>(promise => setTimeout(promise, 8))
             queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
               queryKey.local,
               old => {
