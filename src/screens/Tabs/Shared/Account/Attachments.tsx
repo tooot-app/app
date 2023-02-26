@@ -34,9 +34,8 @@ const AccountAttachments: React.FC<Props> = ({ remote_id, remote_domain }) => {
 
   const { data } = useTimelineQuery({
     page: 'Account',
+    type: 'attachments',
     id: account?.id,
-    exclude_reblogs: false,
-    only_media: true,
     ...(remote_id && remote_domain && { remote_id, remote_domain }),
     options: { enabled: !!account?.id || (!!remote_id && !!remote_domain) }
   })
@@ -53,6 +52,7 @@ const AccountAttachments: React.FC<Props> = ({ remote_id, remote_domain }) => {
         flex: 1,
         height: width + StyleConstants.Spacing.Global.PagePadding * 2,
         paddingVertical: StyleConstants.Spacing.Global.PagePadding,
+        paddingRight: StyleConstants.Spacing.Global.PagePadding,
         borderTopWidth: 1,
         borderTopColor: colors.border
       }}
@@ -70,7 +70,7 @@ const AccountAttachments: React.FC<Props> = ({ remote_id, remote_domain }) => {
                 children={
                   <View
                     style={{
-                      marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+                      marginLeft: StyleConstants.Spacing.Global.PagePadding,
                       backgroundColor: colors.backgroundOverlayInvert,
                       width: width,
                       height: width,
@@ -110,7 +110,11 @@ const AccountAttachments: React.FC<Props> = ({ remote_id, remote_domain }) => {
                   blurhash: item.media_attachments[0]?.blurhash
                 }}
                 dimension={{ width, height: width }}
-                style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
+                style={{
+                  marginLeft: StyleConstants.Spacing.Global.PagePadding,
+                  borderRadius: StyleConstants.BorderRadius / 2,
+                  overflow: 'hidden'
+                }}
                 onPress={() => navigation.push('Tab-Shared-Toot', { toot: item })}
                 dim
               />
