@@ -19,8 +19,8 @@
         "followRemote": "Seguir instancia remota",
         "noTitle": "Sin título",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Ya estás siguiendo esta instancia remota.",
+          "notAvailable": "Esta cronología no es accesible públicamente. Por favor, prueba con otra instancia."
         }
       }
     },
