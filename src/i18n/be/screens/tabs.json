@@ -65,19 +65,19 @@
         "name": "Спіс: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Карыстальнікі ў спісе: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Стварыць спіс"
       },
       "listEdit": {
-        "name": ""
+        "name": "Рэдагаваць дэталі спісу"
       },
       "lists": {
-        "name": ""
+        "name": "Спісы"
       },
       "push": {
-        "name": ""
+        "name": "Push-апавяшчэнні"
       },
       "preferences": {
         "name": ""
