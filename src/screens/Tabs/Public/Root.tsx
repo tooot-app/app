@@ -146,7 +146,6 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
       flRef={flRef}
       queryKey={queryKey}
       disableRefresh={!remoteActive}
-      refreshAutoRefetch={false}
       customProps={{
         keyboardDismissMode: 'on-drag',
         keyboardShouldPersistTaps: 'always',
