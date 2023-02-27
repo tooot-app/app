@@ -103,7 +103,7 @@ const TimelineActions: React.FC = () => {
           cancelButtonIndex: 2,
           ...androidActionSheetStyles(colors)
         },
-        (selectedIndex: number) => {
+        selectedIndex => {
           switch (selectedIndex) {
             case 0:
               mutation.mutate({

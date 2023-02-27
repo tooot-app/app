@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Globaal",
         "local": "Lokaal",
-        "trending": "Trending"
+        "explore": "Ontdekken"
+      },
+      "exploring": {
+        "heading": "Ontdekken",
+        "trending": "Trending",
+        "followRemote": "Volg externe server",
+        "noTitle": "Geen Titel",
+        "errors": {
+          "existed": "Je volgt deze externe instantie al.",
+          "notAvailable": "De tijdlijn van deze instantie is niet publiek toegankelijk. Probeer een andere instantie."
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "Je kunt deze gebruiker dempen, blokkeren, rapporteren of delen"
       },
       "followed_by": " volgt jou",
+      "privateNote": "Privébericht toevoegen",
       "moved": "Gebruiker is verplaatst",
       "created_at": "Lid sinds {{date}}",
       "summary": {

@@ -26,15 +26,15 @@
   "shared": {
     "actioned": {
       "pinned": "Fixat",
-      "favourite": "{{name}} ha marcat la teva publicació com a favorita",
+      "favourite": "{{name}} ha marcat com a favorita",
       "status": "{{name}} ha publicat",
       "follow": "{{name}} et segueix",
       "follow_request": "{{name}} ha sol·licitat seguir-te",
-      "poll": "S'ha acabat una enquesta en què havies participat",
+      "poll": "S'ha acabat l'enquesta",
       "reblog": {
         "default": "{{name}} ha impulsat",
         "myself": "He impulsat",
-        "notification": "{{name}} ha impulsat la teva publicació"
+        "notification": "{{name}} ha impulsat"
       },
       "update": "L'impuls ha sigut editat",
       "admin.sign_up": "{{name}} s'ha unit a la instància",

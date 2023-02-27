@@ -209,4 +209,4 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   )
 }
 
-export default React.memo(TimelineNotifications, () => true)
+export default React.memo(TimelineNotifications)

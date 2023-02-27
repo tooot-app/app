@@ -2,13 +2,15 @@ import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { connectMedia } from '@utils/api/helpers/connect'
-import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import { Platform } from 'expo-modules-core'
 import * as ScreenOrientation from 'expo-screen-orientation'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
+import StatusContext from '../Context'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -27,13 +29,10 @@ const AttachmentVideo: React.FC<Props> = ({
   video,
   gifv = false
 }) => {
+  const { inThread } = useContext(StatusContext)
+  const { colors } = useTheme()
   const { reduceMotionEnabled } = useAccessibility()
-  const [autoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
-  const [preferences] = useAccountStorage.object('preferences')
-  const shouldAutoplayGifv =
-    preferences?.['reading:autoplay:gifs'] !== undefined
-      ? preferences['reading:autoplay:gifs']
-      : autoplayGifv
+  const [shouldAutoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
 
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
@@ -42,7 +41,11 @@ const AttachmentVideo: React.FC<Props> = ({
   const playOnPress = async () => {
     setVideoLoading(true)
     if (!videoLoaded) {
-      await videoPlayer.current?.loadAsync(connectMedia({ uri: video.url }) as { uri: string })
+      await videoPlayer.current?.loadAsync(
+        connectMedia({
+          uri: video.url.includes('/media_proxy/') ? video.remote_url : video.url
+        }) as any
+      )
     }
     setVideoLoading(false)
 
@@ -56,9 +59,12 @@ const AttachmentVideo: React.FC<Props> = ({
     <View
       style={{
         flex: 1,
-        flexBasis: '50%',
-        padding: StyleConstants.Spacing.XS / 2,
-        aspectRatio: aspectRatio({ total, index, ...video.meta?.original })
+        backgroundColor: colors.shimmerDefault,
+        aspectRatio: aspectRatio({ total, index, ...video.meta?.original }),
+        alignContent: 'center',
+        justifyContent: 'center',
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
       }}
     >
       <Video
@@ -123,6 +129,8 @@ const AttachmentVideo: React.FC<Props> = ({
             <GracefullyImage
               sources={{ blurhash: video.blurhash }}
               style={{ width: '100%', height: '100%' }}
+              dim
+              withoutTransition={inThread}
             />
           ) : null
         ) : !gifv || (gifv && (reduceMotionEnabled || !shouldAutoplayGifv)) ? (

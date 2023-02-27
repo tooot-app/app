@@ -5,8 +5,9 @@ import { connectMedia } from '@utils/api/helpers/connect'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { AppState, AppStateStatus, StyleSheet, View } from 'react-native'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { AppState, AppStateStatus, View } from 'react-native'
+import StatusContext from '../Context'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -18,6 +19,7 @@ export interface Props {
 }
 
 const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio }) => {
+  const { inThread } = useContext(StatusContext)
   const { colors } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
@@ -60,15 +62,25 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
   return (
     <View
       accessibilityLabel={audio.description}
-      style={[
-        styles.base,
-        {
-          backgroundColor: colors.disabled,
-          aspectRatio: aspectRatio({ total, index, ...audio.meta?.original })
-        }
-      ]}
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: colors.shimmerDefault,
+        aspectRatio: aspectRatio({ total, index, ...audio.meta?.original }),
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
+      }}
     >
-      <View style={styles.overlay}>
+      <View
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         {sensitiveShown ? (
           audio.blurhash ? (
             <GracefullyImage
@@ -78,6 +90,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
                 height: '100%'
               }}
               dim
+              withoutTransition={inThread}
             />
           ) : null
         ) : (
@@ -88,8 +101,9 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
                   default: { uri: audio.preview_url },
                   remote: { uri: audio.preview_remote_url }
                 }}
-                style={styles.background}
+                style={{ position: 'absolute', width: '100%', height: '100%' }}
                 dim
+                withoutTransition={inThread}
               />
             ) : null}
             <Button
@@ -109,9 +123,8 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
             alignSelf: 'flex-end',
             width: '100%',
             height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
-            backgroundColor: colors.backgroundOverlayInvert,
             paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-            borderRadius: 100,
+            borderRadius: 99,
             opacity: sensitiveShown ? 0.35 : undefined
           }}
         >
@@ -121,14 +134,14 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
             value={audioPosition}
             minimumTrackTintColor={colors.secondary}
             maximumTrackTintColor={colors.disabled}
-            // onSlidingStart={() => {
-            //   audioPlayer?.pauseAsync()
-            //   setAudioPlaying(false)
-            // }}
-            // onSlidingComplete={value => {
-            //   setAudioPosition(value)
-            // }}
-            enabled={false} // Bug in above sliding actions
+            onSlidingStart={() => {
+              audioPlayer?.pauseAsync()
+              setAudioPlaying(false)
+            }}
+            onSlidingComplete={value => {
+              setAudioPosition(value)
+            }}
+            enabled={true}
             thumbSize={StyleConstants.Spacing.M}
             thumbTintColor={colors.primaryOverlay}
           />
@@ -138,23 +151,5 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexBasis: '50%',
-    padding: StyleConstants.Spacing.XS / 2,
-    flexDirection: 'row'
-  },
-  background: { position: 'absolute', width: '100%', height: '100%' },
-  overlay: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
 
 export default AttachmentAudio

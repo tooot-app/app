@@ -29,13 +29,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const { colors } = useTheme()
   const { t } = useTranslation(['componentTimeline', 'screenTabs'])
 
-  const [hasRemoteContent, setHasRemoteContent] = useState<boolean>(false)
+  const [hasRemoteContent, setHasRemoteContent] = useState<boolean>(toot._remote || false)
   const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
     local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
     remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
   }
 
-  const flRef = useRef<FlatList<Mastodon.Status & { _level?: number; key?: string }>>(null)
+  const flRef = useRef<FlatList<Mastodon.Status & { _level?: number }>>(null)
 
   useEffect(() => {
     navigation.setOptions({
@@ -70,11 +70,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
       headerBackVisible: false
     })
-    navigation.setParams({ toot, queryKey: queryKey.local })
+    navigation.setParams({ queryKey: queryKey.local })
   }, [hasRemoteContent])
 
   const PREV_PER_BATCH = 1
-  const ancestorsCache = useRef<(Mastodon.Status & { _level?: number; key?: string })[]>()
+  const ancestorsCache = useRef<(Mastodon.Status & { _level?: number })[]>()
   const loaded = useRef<boolean>(false)
   const prependContent = async () => {
     loaded.current = true
@@ -82,10 +82,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     if (ancestorsCache.current?.length) {
       switch (Platform.OS) {
         case 'ios':
+          await new Promise<void>(promise => setTimeout(promise, 128))
           for (let [] of Array(
             Math.ceil(ancestorsCache.current.length / PREV_PER_BATCH)
           ).entries()) {
-            await new Promise(promise => setTimeout(promise, 64))
+            await new Promise<void>(promise => setTimeout(promise, 8))
             queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
               queryKey.local,
               old => {
@@ -126,7 +127,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     ['public', 'unlisted'].includes(toot.visibility) &&
     match?.domain !== getAccountStorage.string('auth.domain')
   const query = useQuery<{
-    pages: { body: (Mastodon.Status & { _level?: number; key?: string })[] }[]
+    pages: { body: (Mastodon.Status & { _level?: number })[] }[]
   }>(
     queryKey.local,
     async () => {
@@ -160,7 +161,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }
     },
     {
-      placeholderData: { pages: [{ body: [{ ...toot, _level: 0, key: `${toot.id}_cache` }] }] },
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
@@ -207,7 +207,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           if (localMatch) {
             return localMatch
           } else {
-            return appendRemote.status(ancestor)
+            return appendRemote.status(ancestor, domain)
           }
         })
       }
@@ -236,25 +236,28 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return
         }
 
-        if ((query.data?.pages[0].body.length || 0) < data.length) {
+        if ((query.data?.pages[0].body.length || 0) <= data.length) {
+          if (
+            !hasRemoteContent &&
+            (query.data?.pages[0].body.length || 0) <= data.length &&
+            data.length > 1
+          ) {
+            setHasRemoteContent(true)
+          }
+
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
             queryKey.local,
             old => {
-              setHasRemoteContent(true)
               return {
                 pages: [
                   {
                     body: data.map(remote => {
                       const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
                       if (localMatch) {
-                        return {
-                          ...localMatch,
-                          _level: remote._level,
-                          key: `${localMatch.id}_remote`
-                        }
+                        return { ...localMatch, _level: remote._level }
                       } else {
-                        return appendRemote.status(remote)
+                        return appendRemote.status(remote, match!.domain)
                       }
                     })
                   }
@@ -277,9 +280,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   return (
     <FlatList
       ref={flRef}
-      windowSize={5}
       data={query.data?.pages?.[0].body}
-      extraData={query.dataUpdatedAt}
+      keyExtractor={(item, index) => `${item.id}_${index}`}
       renderItem={({ item, index }) => {
         const prev = query.data?.pages[0].body[index - 1]?._level || 0
         const curr = item._level || 0
@@ -350,7 +352,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             ) : null}
             <TimelineDefault
               item={item}
-              queryKey={item._remote ? queryKey.remote : queryKey.local}
+              queryKey={queryKey.local}
               highlighted={toot.id === item.id}
               suppressSpoiler={
                 toot.id !== item.id &&

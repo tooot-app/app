@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Global",
         "local": "Local",
-        "trending": "Em alta"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": "",
+        "errors": {
+          "existed": "Você já está seguindo esta instância.",
+          "notAvailable": "A linha do tempo desta instância não é acessível ao público. Por favor, tente outra instância."
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "Você pode silenciar, bloquear, relatar ou compartilhar este usuário"
       },
       "followed_by": " está seguindo você",
+      "privateNote": "",
       "moved": "Usuário movido",
       "created_at": "Registrado em: {{date}}",
       "summary": {

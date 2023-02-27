@@ -1,3 +1,4 @@
+import { discardConfirmation } from '@components/discardConfirmation'
 import { ComponentEmojis } from '@components/Emojis'
 import { EmojisState } from '@components/Emojis/Context'
 import { HeaderLeft, HeaderRight } from '@components/Header'
@@ -7,8 +8,7 @@ import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView, TextInput } from 'react-native'
+import { ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 const TabMeProfileName: React.FC<
@@ -23,7 +23,6 @@ const TabMeProfileName: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t } = useTranslation(['common'])
   const { mutateAsync, status } = useProfileMutation()
 
   const [value, setValue] = useState(display_name)
@@ -46,21 +45,10 @@ const TabMeProfileName: React.FC<
         <HeaderLeft
           content='chevron-left'
           onPress={() => {
-            if (dirty) {
-              Alert.alert(t('common:discard.title'), t('common:discard.message'), [
-                {
-                  text: t('common:buttons.discard'),
-                  style: 'destructive',
-                  onPress: () => navigation.navigate('Tab-Me-Profile-Root')
-                },
-                {
-                  text: t('common:buttons.cancel'),
-                  style: 'default'
-                }
-              ])
-            } else {
-              navigation.navigate('Tab-Me-Profile-Root')
-            }
+            discardConfirmation({
+              condition: dirty,
+              action: () => navigation.navigate('Tab-Me-Profile-Root')
+            })
           }}
         />
       ),

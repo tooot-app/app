@@ -7,9 +7,7 @@
     "button": "Login",
     "information": {
       "name": "Name",
-      "accounts": "Users",
-      "statuses": "Toots",
-      "domains": "Universes"
+      "description": "Description"
     },
     "disclaimer": {
       "base": "Logging in process uses system browser that, your account information won't be visible to tooot app."

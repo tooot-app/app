@@ -1,0 +1,8 @@
+{
+  "HTML": {
+    "accessibilityHint": "Націсніце, каб разгарнуць або згарнуць змесціва",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " (яшчэ {{count}} радкоў)",
+    "defaultHint": "Доўгі допіс"
+  }
+}

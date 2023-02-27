@@ -11,7 +11,17 @@
       "segments": {
         "federated": "",
         "local": "",
-        "trending": ""
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": "",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": ""
       },
       "followed_by": "",
+      "privateNote": "",
       "moved": "",
       "created_at": "",
       "summary": {

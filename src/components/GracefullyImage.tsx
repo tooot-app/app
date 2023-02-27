@@ -21,14 +21,9 @@ export interface Props {
   onPress?: () => void
   style?: StyleProp<ViewStyle>
   imageStyle?: ImageStyle
-  // For image viewer when there is no image size available
-  setImageDimensions?: React.Dispatch<
-    React.SetStateAction<{
-      width: number
-      height: number
-    }>
-  >
+
   dim?: boolean
+  withoutTransition?: boolean
   enableLiveTextInteraction?: boolean
 }
 
@@ -41,8 +36,8 @@ const GracefullyImage = ({
   onPress,
   style,
   imageStyle,
-  setImageDimensions,
   dim,
+  withoutTransition = false,
   enableLiveTextInteraction = false
 }: Props) => {
   const { reduceMotionEnabled } = useAccessibility()
@@ -64,15 +59,10 @@ const GracefullyImage = ({
     >
       <Image
         placeholderContentFit='cover'
-        placeholder={sources.blurhash || connectMedia(sources.preview)}
-        source={hidden ? undefined : connectMedia(source)}
-        transition={{ duration: 80 }}
+        placeholder={hidden ? sources.blurhash : sources.blurhash || connectMedia(sources.preview)}
+        source={hidden ? sources.blurhash : connectMedia(source)}
+        {...(!withoutTransition && !reduceMotionEnabled && { transition: { duration: 120 } })}
         style={{ flex: 1, ...imageStyle }}
-        onLoad={event => {
-          if (setImageDimensions && event.source) {
-            setImageDimensions(event.source)
-          }
-        }}
         onError={() => {
           if (
             sources.default?.uri &&

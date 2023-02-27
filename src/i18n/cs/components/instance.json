@@ -7,9 +7,7 @@
     "button": "",
     "information": {
       "name": "",
-      "accounts": "",
-      "statuses": "",
-      "domains": ""
+      "description": ""
     },
     "disclaimer": {
       "base": ""

@@ -8,6 +8,7 @@ export default (): ExpoConfig => ({
   slug: 'tooot',
   scheme: 'tooot',
   version,
+  // @ts-ignore
   extra: { environment: process.env.ENVIRONMENT },
   privacy: 'hidden',
   ios: {

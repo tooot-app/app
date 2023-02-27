@@ -12,18 +12,18 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Image } from 'expo-image'
-import React, { RefObject, useContext, useEffect, useRef } from 'react'
+import React, { RefObject, useContext, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import chooseAndUploadAttachment from './addAttachment'
 
+export const DEFAULT_WIDTH = 150
+
 export interface Props {
   accessibleRefAttachments: RefObject<View>
 }
-
-const DEFAULT_HEIGHT = 200
 
 const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { showActionSheetWithOptions } = useActionSheet()
@@ -40,72 +40,22 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
       payload: { sensitive: !composeState.attachments.sensitive }
     })
 
-  const calculateWidth = (item: ExtendedAttachment) => {
-    if (item.local) {
-      return ((item.local.width || 100) / (item.local.height || 100)) * DEFAULT_HEIGHT
-    } else {
-      if (item.remote) {
-        if (item.remote.meta.original.aspect) {
-          return item.remote.meta.original.aspect * DEFAULT_HEIGHT
-        } else if (item.remote.meta.original.width && item.remote.meta.original.height) {
-          return (
-            (item.remote.meta.original.width / item.remote.meta.original.height) * DEFAULT_HEIGHT
-          )
-        } else {
-          return DEFAULT_HEIGHT
-        }
-      } else {
-        return DEFAULT_HEIGHT
-      }
-    }
-  }
-
-  const snapToOffsets = () => {
-    const attachmentsOffsets = composeState.attachments.uploads.map((_, index) => {
-      let currentOffset = 0
-      Array.from(Array(index).keys()).map(
-        i =>
-          (currentOffset =
-            currentOffset +
-            calculateWidth(composeState.attachments.uploads[i]) +
-            StyleConstants.Spacing.Global.PagePadding)
-      )
-      return currentOffset
-    })
-    return attachmentsOffsets.length < 4
-      ? [
-          ...attachmentsOffsets,
-          attachmentsOffsets.reduce((a, b) => a + b, 0) +
-            DEFAULT_HEIGHT +
-            StyleConstants.Spacing.Global.PagePadding
-        ]
-      : attachmentsOffsets
-  }
-  let prevOffsets = useRef<number[]>()
-  useEffect(() => {
-    const snap = snapToOffsets()
-    if (snap.length > (prevOffsets.current ? prevOffsets.current.length : 0)) {
-      flatListRef.current?.scrollToOffset({
-        offset: snap[snapToOffsets.length - 2] + snap[snapToOffsets.length - 1]
-      })
-    }
-    prevOffsets.current = snap
-  }, [snapToOffsets, prevOffsets.current])
-
   const renderAttachment = ({ item, index }: { item: ExtendedAttachment; index: number }) => {
     return (
       <View
         key={index}
         style={{
-          height: DEFAULT_HEIGHT,
           marginLeft: StyleConstants.Spacing.Global.PagePadding,
           marginTop: StyleConstants.Spacing.Global.PagePadding,
-          marginBottom: StyleConstants.Spacing.Global.PagePadding,
-          width: calculateWidth(item)
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
         }}
       >
         <Image
-          style={{ width: '100%', height: '100%' }}
+          style={{
+            width: DEFAULT_WIDTH,
+            height: DEFAULT_WIDTH,
+            borderRadius: StyleConstants.BorderRadius / 2
+          }}
           source={
             item.local?.thumbnail
               ? { uri: item.local?.thumbnail }
@@ -123,7 +73,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               paddingRight: StyleConstants.Spacing.S,
               paddingTop: StyleConstants.Spacing.XS,
               paddingBottom: StyleConstants.Spacing.XS,
-              color: colors.backgroundDefault,
+              color: colors.primaryOverlay,
               backgroundColor: colors.backgroundOverlayInvert
             }}
           >
@@ -157,7 +107,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               })}
               type='icon'
               content='x'
-              spacing='M'
+              size='L'
               round
               overlay
               onPress={() => {
@@ -175,11 +125,11 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
                   attachment: index + 1
                 })}
-                type='icon'
-                content='edit'
-                spacing='M'
-                round
                 overlay
+                size='S'
+                type='text'
+                content={!!item.remote?.description?.length ? 'ALT ✓' : '+ ALT'}
+                fontBold
                 onPress={() => navigation.navigate('Screen-Compose-EditAttachment', { index })}
               />
             ) : null}
@@ -230,23 +180,23 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         pagingEnabled={false}
         snapToAlignment='center'
         renderItem={renderAttachment}
-        snapToOffsets={snapToOffsets()}
+        snapToOffsets={new Array(composeState.attachments.uploads.length).fill(DEFAULT_WIDTH)}
         keyboardShouldPersistTaps='always'
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
         keyExtractor={item => item.local?.uri || item.remote?.url || Math.random().toString()}
         ListFooterComponent={
-          composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS ? (
+          composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS() ? (
             <Pressable
               accessible
               accessibilityLabel={t('content.root.footer.attachments.upload.accessibilityLabel')}
               style={{
-                height: DEFAULT_HEIGHT,
+                width: DEFAULT_WIDTH,
+                height: DEFAULT_WIDTH,
                 marginLeft: StyleConstants.Spacing.Global.PagePadding,
                 marginTop: StyleConstants.Spacing.Global.PagePadding,
                 marginBottom: StyleConstants.Spacing.Global.PagePadding,
-                width: DEFAULT_HEIGHT,
-                backgroundColor: colors.backgroundOverlayInvert
+                backgroundColor: colors.disabled
               }}
               onPress={async () => {
                 await chooseAndUploadAttachment({
@@ -258,9 +208,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               <Button
                 type='icon'
                 content='upload-cloud'
-                spacing='M'
-                round
-                overlay
+                size='L'
                 onPress={async () => {
                   await chooseAndUploadAttachment({
                     composeDispatch,
@@ -270,10 +218,11 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 style={{
                   position: 'absolute',
                   top:
-                    (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) /
-                    2,
+                    (DEFAULT_WIDTH - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2,
                   left:
-                    (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2
+                    (DEFAULT_WIDTH - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2,
+                  borderWidth: 0,
+                  backgroundColor: ''
                 }}
               />
             </Pressable>

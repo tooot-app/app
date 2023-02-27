@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Editatzeari utzi?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Gorde zirriborroa",
+          "delete": "Ezabatu zirriborroa"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Tut egin",
+        "conversation": "Mezu zuzena bidali",
+        "reply": "Erantzun",
+        "deleteEdit": "Berriro tut egin",
+        "edit": "Editatu",
+        "share": "Partekatu"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Akatsa tut egitean",
+          "button": "Berriro saiatu"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "confirm": ""
+          "title": "Erantzutako tuta ezin izan da aurkitu",
+          "description": "Erantzutako tuta ezabatua izan da agian. Zure aipamenetik kendu nahi al duzu?",
+          "confirm": "Kendu aipamena"
         }
       }
     }
@@ -34,138 +34,138 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "@{{acct}}@{{domain}} bezala tut egiten",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Spoilerraren abisu-mezua"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Zer duzu buruan?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": ""
+              "title": "Gehienezko eranskin kopurura iritsita"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Ezarri eranskinak hunkigarri gisa",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Ezabatu igotako eranskina, {{attachment}} zenbakia"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Editatu igotako eranskina, {{attachment}} zenbakia"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Igo eranskin gehiago"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Sakatu tutari emojiak gehitzeko"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Bozketa aukera {{index}}",
+              "single": "Erantzun bakarra",
+              "multiple": "Erantzun anitz"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Gutxiagotu bozketaren aukerak {{amount}}-(e)ra",
+              "accessibilityHint": "Bozketaren gutxieneko aukeretara iritsita, orain {{amount}} daude"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Areagotu bozketaren aukerak {{amount}}-(e)ra",
+              "accessibilityHint": "Bozketaren gehienezko aukeretara iritsita, orain {{amount}} daude"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Bozketa-mota",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Erantzun bakarra",
+              "multiple": "Erantzun anitz"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Iraungipena",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 minutu",
+              "1800": "30 minutu",
+              "3600": "Ordu 1",
+              "21600": "6 ordu",
+              "86400": "Egun 1",
+              "259200": "3 egun",
+              "604800": "7 egun"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Igo eranskina",
+          "accessibilityHint": "Bozketa desgaituko da eranskinen bat badago",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Igoerak huts egin du",
+              "button": "Saiatu berriro"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Gehitu bozketa",
+          "accessibilityHint": "Eranskinak gehitzeko aukera desgaituko da bozketa gaituta badago"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Tutaren ikusgarritasuna {{visibility}} da",
+          "title": "Tutaren ikusgarritasuna",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Publiko",
+            "unlisted": "Zerrendatu gabea",
+            "private": "Jarraitzaileak soilik",
+            "direct": "Mezu zuzena"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Gehitu emojia",
+          "accessibilityHint": "Ireki emojiak hautatzeko panela, horizontalki irrist egin orriz aldatzeko"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Zirriborroa ({{count}})",
+      "drafts_other": "Zirriborroak ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Editatu eranskina",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Aldaketak gorde",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Editatzeak huts egin du",
+            "button": "Saiatu berriro"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Deskribatu edukia ikusmen arazoak dituztenentzat",
+          "placeholder": "Deskribapen bat gehi diezaiokezu zure edukiari, batzuetan, testu alternatibo bezala ezaguna. Horrela, jende gehiagora iritsiko da, bereziki, itsuak direnei edo ikusmen arazoak dituztenei.\n\nZehatza bada hobe, hala ere, aurkeztu zure edukian azaltzen dena zehazki, honen testuingurua uler ahal izateko."
         }
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Zirriborroa"
       },
-      "warning": "",
+      "warning": "Zirriborroak lokalki soilik gordetzen dira, eta gal daitezke. Ez da gomendagarria zirriborroak luzaro gordetzea.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Zirriborroa gordeta, sakatu zirriborro hau editatzeko",
+        "textEmpty": "Eduki hutsa"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Zerbitzariko eranskinak egiaztatzen..."
     }
   }
 }

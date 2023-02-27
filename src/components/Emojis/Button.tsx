@@ -35,7 +35,7 @@ const EmojisButton: React.FC = () => {
             borderWidth: 2,
             borderColor: colors.primaryDefault,
             padding: StyleConstants.Spacing.Global.PagePadding / 2,
-            borderRadius: 100
+            borderRadius: 99
           }}
         >
           <Icon

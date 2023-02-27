@@ -4,9 +4,10 @@ import openLink from '@components/openLink'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
+import StatusContext from '../Context'
 import AttachmentAltText from './AltText'
 import { aspectRatio } from './dimensions'
 
@@ -18,6 +19,7 @@ export interface Props {
 }
 
 const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, attachment }) => {
+  const { inThread } = useContext(StatusContext)
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
 
@@ -25,21 +27,19 @@ const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, 
     <View
       style={{
         flex: 1,
-        flexBasis: '50%',
-        padding: StyleConstants.Spacing.XS / 2,
+        aspectRatio: aspectRatio({ total, index, ...attachment.meta?.original }),
         justifyContent: 'center',
         alignItems: 'center',
-        aspectRatio: aspectRatio({ total, index, ...attachment.meta?.original })
+        borderRadius: StyleConstants.BorderRadius / 2,
+        overflow: 'hidden'
       }}
     >
       {attachment.blurhash ? (
         <GracefullyImage
           sources={{ blurhash: attachment.blurhash }}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%'
-          }}
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
+          dim
+          withoutTransition={inThread}
         />
       ) : null}
       {!sensitiveShown ? (

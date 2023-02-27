@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Federazione",
         "local": "Locale",
-        "trending": ""
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": "",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "Puoi mutare, bloccare, segnalare o condividere l'utente"
       },
       "followed_by": " ti segue",
+      "privateNote": "",
       "moved": "Profilo trasferito",
       "created_at": "Account creato il: {{date}}",
       "summary": {

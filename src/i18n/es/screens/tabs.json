@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Federado",
         "local": "Local",
-        "trending": "Tendencia"
+        "explore": "Explorar"
+      },
+      "exploring": {
+        "heading": "Explorando",
+        "trending": "Tendencia",
+        "followRemote": "Seguir instancia remota",
+        "noTitle": "Sin título",
+        "errors": {
+          "existed": "Ya estás siguiendo esta instancia remota.",
+          "notAvailable": "Esta cronología no es accesible públicamente. Por favor, prueba con otra instancia."
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "Puedes silenciar, bloquear, denunciar o compartir este usuario"
       },
       "followed_by": " te sigue",
+      "privateNote": "Establecer nota privada",
       "moved": "Se ha trasladado",
       "created_at": "Se unió el {{date}}",
       "summary": {

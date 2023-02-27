@@ -5,7 +5,7 @@ import i18next from 'i18next'
 import { Asset, launchImageLibrary } from 'react-native-image-picker'
 
 const queryKeyInstance: QueryKeyInstance = ['Instance']
-export const MAX_MEDIA_ATTACHMENTS: number =
+export const MAX_MEDIA_ATTACHMENTS = (): number =>
   queryClient.getQueryData<Mastodon.Instance<any>>(queryKeyInstance)?.configuration?.statuses
     .max_media_attachments || 4
 
@@ -27,7 +27,7 @@ const mediaSelector = async ({
   indicateMaximum = false,
   showActionSheetWithOptions
 }: Props): Promise<Asset[]> => {
-  const _maximum = maximum || MAX_MEDIA_ATTACHMENTS
+  const _maximum = maximum || MAX_MEDIA_ATTACHMENTS()
 
   const options = () => {
     switch (mediaType) {

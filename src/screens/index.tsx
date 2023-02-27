@@ -28,7 +28,6 @@ import { useTranslation } from 'react-i18next'
 import { IntlProvider } from 'react-intl'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
-import { routingInstrumentation } from '../utils/startup/sentry'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -221,14 +220,11 @@ const Screens: React.FC = () => {
     <IntlProvider locale={i18n.language}>
       <StatusBar
         backgroundColor={colors.backgroundDefault}
-        {...(Platform.OS === 'android' && {
-          barStyle: theme === 'light' ? 'dark-content' : 'light-content'
-        })}
+        barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
       />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[theme]}
-        onReady={() => routingInstrumentation.registerNavigationContainer(navigationRef)}
         onStateChange={navigationContainerOnStateChange}
       >
         <Stack.Navigator initialRouteName='Screen-Tabs'>

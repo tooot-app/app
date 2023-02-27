@@ -3,7 +3,7 @@ declare namespace App {
     | 'Following'
     | 'Local'
     | 'LocalPublic'
-    | 'Trending'
+    | 'Explore'
     | 'Notifications'
     | 'Hashtag'
     | 'List'

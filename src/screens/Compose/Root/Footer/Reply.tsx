@@ -17,7 +17,7 @@ const ComposeReply: React.FC = () => {
         flex: 1,
         flexDirection: 'row',
         borderWidth: 1,
-        borderRadius: StyleConstants.Spacing.S,
+        borderRadius: StyleConstants.BorderRadius,
         overflow: 'hidden',
         borderColor: colors.border,
         marginHorizontal: StyleConstants.Spacing.Global.PagePadding,

@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Federated",
         "local": "Local",
-        "trending": "Trending"
+        "explore": "Explore"
+      },
+      "exploring": {
+        "heading": "Exploring",
+        "trending": "Trending",
+        "followRemote": "Follow remote instance",
+        "noTitle": "No Title",
+        "errors": {
+          "existed": "You are already following this remote instance.",
+          "notAvailable": "This instance's timeline is not public accessible. Please try another instance."
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "You can mute, block, report or share this user"
       },
       "followed_by": " is following you",
+      "privateNote": "Set private note",
       "moved": "User moved",
       "created_at": "Joined: {{date}}",
       "summary": {

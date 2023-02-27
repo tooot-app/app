@@ -27,7 +27,7 @@ const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyStatus>)
         method: 'get',
         domain,
         url: `api/v1/statuses/${id}`
-      }).then(res => appendRemote.status(res.body))
+      }).then(res => appendRemote.status(res.body, domain))
     } catch {}
   }
 

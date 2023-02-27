@@ -1,19 +1,20 @@
 import menuAccount from '@components/contextMenu/account'
 import menuShare from '@components/contextMenu/share'
 import { HeaderLeft, HeaderRight } from '@components/Header'
+import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
-import SegmentedControl from '@react-native-community/segmented-control'
-import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
+import { queryClient } from '@utils/queryHooks'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Text, View } from 'react-native'
+import { Platform, Pressable, Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountAttachments from './Attachments'
@@ -28,57 +29,39 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     params: { account }
   }
 }) => {
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
   const { colors, mode } = useTheme()
 
-  const { data, dataUpdatedAt } = useAccountQuery({
+  const { data, dataUpdatedAt, isFetched } = useAccountQuery({
     account,
     _local: true,
     options: {
       placeholderData: (account._remote
         ? { ...account, id: undefined }
         : account) as Mastodon.Account,
-      onSuccess: a => {
-        if (account._remote) {
-          setQueryKey([
-            queryKey[0],
-            {
-              ...queryKey[1],
-              page: 'Account',
-              id: a.id,
-              exclude_reblogs: true,
-              only_media: false
-            }
-          ])
-        }
-      },
       onError: () => navigation.goBack()
     }
   })
   const { data: dataRelationship } = useRelationshipQuery({
-    id: account._remote ? data?.id : account.id,
-    options: { enabled: account._remote ? !!data?.id : true }
+    id: data?.id,
+    options: { enabled: account._remote ? isFetched : true }
   })
-
-  const queryClient = useQueryClient()
-  const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
+  const queryKeyDefault: QueryKeyTimeline = [
     'Timeline',
     {
       page: 'Account',
-      id: account._remote ? data?.id : account.id,
-      exclude_reblogs: true,
-      only_media: false
+      type: 'default',
+      id: data?.id,
+      ...(account._remote && { remote_id: account.id, remote_domain: account._remote })
     }
-  ])
+  ]
 
   const mShare = menuShare({ type: 'account', url: data?.url })
   const mAccount = menuAccount({ type: 'account', openChange: true, account: data })
   useEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
-      headerStyle: {
-        backgroundColor: `rgba(255, 255, 255, 0)`
-      },
+      headerStyle: { backgroundColor: `rgba(255, 255, 255, 0)` },
       title: '',
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} background />,
       headerRight: () => {
@@ -86,10 +69,10 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger>
               <HeaderRight
-                accessibilityLabel={t('shared.account.actions.accessibilityLabel', {
+                accessibilityLabel={t('screenTabs:shared.account.actions.accessibilityLabel', {
                   user: account.acct
                 })}
-                accessibilityHint={t('shared.account.actions.accessibilityHint')}
+                accessibilityHint={t('screenTabs:shared.account.actions.accessibilityHint')}
                 content='more-horizontal'
                 onPress={() => {}}
                 background
@@ -164,62 +147,112 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
       }
     })
   }, [mAccount])
-  useEffect(() => {
-    navigation.setParams({ queryKey })
-  }, [queryKey[1]])
 
   const scrollY = useSharedValue(0)
 
-  const page = queryKey[1]
-
-  const [segment, setSegment] = useState<number>(0)
+  const [timelineSettings, setTimelineSettings] = useAccountStorage.object('page_account_timeline')
   const ListHeaderComponent = useMemo(() => {
     return (
       <>
         <View style={{ borderBottomWidth: 1, borderBottomColor: colors.border }}>
           <AccountHeader />
           <AccountInformation />
-          <AccountAttachments />
+          <AccountAttachments
+            {...(account._remote && { remote_id: account.id, remote_domain: account._remote })}
+          />
         </View>
         {!data?.suspended ? (
-          <SegmentedControl
-            appearance={mode}
-            values={[t('shared.account.toots.default'), t('shared.account.toots.all')]}
-            selectedIndex={segment}
-            onChange={({ nativeEvent }) => {
-              setSegment(nativeEvent.selectedSegmentIndex)
-              switch (nativeEvent.selectedSegmentIndex) {
-                case 0:
-                  setQueryKey([
-                    queryKey[0],
-                    {
-                      ...page,
-                      page: 'Account',
-                      id: data?.id,
-                      exclude_reblogs: true,
-                      only_media: false
-                    }
-                  ])
-                  break
-                case 1:
-                  setQueryKey([
-                    queryKey[0],
-                    {
-                      ...page,
-                      page: 'Account',
-                      id: data?.id,
-                      exclude_reblogs: false,
-                      only_media: false
-                    }
-                  ])
-                  break
-              }
-            }}
-            style={{
-              marginTop: StyleConstants.Spacing.M,
-              marginHorizontal: StyleConstants.Spacing.Global.PagePadding
-            }}
-          />
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <Pressable
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: StyleConstants.Spacing.XS,
+                  paddingVertical: StyleConstants.Spacing.S,
+                  paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+                }}
+              >
+                <View style={{ flex: 1 }} />
+                <View
+                  style={{ flex: 1 }}
+                  children={
+                    <CustomText
+                      style={{ color: colors.secondary, alignSelf: 'center' }}
+                      children={t('screenTabs:shared.account.summary.statuses_count', {
+                        count: data?.statuses_count || 0
+                      })}
+                    />
+                  }
+                />
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end'
+                  }}
+                >
+                  <Icon name='filter' color={colors.secondary} size={StyleConstants.Font.Size.M} />
+                </View>
+              </Pressable>
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Content>
+              <DropdownMenu.Group>
+                <DropdownMenu.CheckboxItem
+                  key='showBoosts'
+                  value={
+                    (
+                      typeof timelineSettings?.excludeBoosts === 'boolean'
+                        ? timelineSettings.excludeBoosts
+                        : true
+                    )
+                      ? 'off'
+                      : 'on'
+                  }
+                  onValueChange={() => {
+                    setTimelineSettings({
+                      ...timelineSettings,
+                      excludeBoosts: !timelineSettings?.excludeBoosts
+                    })
+                    queryClient.refetchQueries(queryKeyDefault)
+                  }}
+                >
+                  <DropdownMenu.ItemIndicator />
+                  <DropdownMenu.ItemTitle
+                    children={t('screenTabs:tabs.local.options.showBoosts')}
+                  />
+                </DropdownMenu.CheckboxItem>
+                <DropdownMenu.CheckboxItem
+                  key='showReplies'
+                  value={
+                    (
+                      typeof timelineSettings?.excludeReplies === 'boolean'
+                        ? timelineSettings.excludeReplies
+                        : true
+                    )
+                      ? 'off'
+                      : 'on'
+                  }
+                  onValueChange={() => {
+                    setTimelineSettings({
+                      ...timelineSettings,
+                      excludeReplies: !timelineSettings?.excludeReplies
+                    })
+                    queryClient.refetchQueries(queryKeyDefault)
+                  }}
+                >
+                  <DropdownMenu.ItemTitle
+                    children={t('screenTabs:tabs.local.options.showReplies')}
+                  />
+                  <DropdownMenu.ItemIndicator />
+                </DropdownMenu.CheckboxItem>
+              </DropdownMenu.Group>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
         ) : null}
         {data?.suspended ? (
           <View
@@ -237,32 +270,40 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                 textAlign: 'center'
               }}
             >
-              {t('shared.account.suspended')}
+              {t('screenTabs:shared.account.suspended')}
             </Text>
           </View>
         ) : null}
       </>
     )
-  }, [segment, dataUpdatedAt, mode])
+  }, [timelineSettings, dataUpdatedAt, mode])
+
+  const [domain] = useAccountStorage.string('auth.account.domain')
 
   return (
-    <AccountContext.Provider value={{ account: data, relationship: dataRelationship }}>
+    <AccountContext.Provider
+      value={{
+        account: data,
+        relationship: dataRelationship,
+        localInstance: account?.acct?.includes('@')
+          ? account?.acct?.includes(`@${domain}`)
+          : !account?._remote
+      }}
+    >
       <AccountNav scrollY={scrollY} />
 
       {data?.suspended ? (
         ListHeaderComponent
       ) : (
         <Timeline
-          queryKey={queryKey}
+          queryKey={queryKeyDefault}
           disableRefresh
-          queryOptions={{ enabled: account._remote ? !!data?.id : true }}
           customProps={{
-            renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
+            keyboardShouldPersistTaps: 'always',
             onScroll: ({ nativeEvent }) => (scrollY.value = nativeEvent.contentOffset.y),
             ListHeaderComponent,
-            maintainVisibleContentPosition: undefined,
-            onRefresh: () => queryClient.refetchQueries(queryKey),
-            refreshing: false
+            refreshing: false,
+            onRefresh: () => queryClient.refetchQueries(queryKeyDefault)
           }}
         />
       )}

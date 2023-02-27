@@ -6,13 +6,19 @@ import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
+import { isLargeDevice } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Dimensions, Pressable, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import AccountContext from './Context'
 
-const AccountAttachments: React.FC = () => {
+export type Props = {
+  remote_id?: Mastodon.Status['id']
+  remote_domain?: string
+}
+
+const AccountAttachments: React.FC<Props> = ({ remote_id, remote_domain }) => {
   const { account } = useContext(AccountContext)
 
   if (account?.suspended) return null
@@ -20,16 +26,18 @@ const AccountAttachments: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { colors } = useTheme()
 
-  const DISPLAY_AMOUNT = 6
+  const DISPLAY_AMOUNT = isLargeDevice ? 8 : 6
 
-  const width = (Dimensions.get('window').width - StyleConstants.Spacing.Global.PagePadding * 2) / 4
+  const width =
+    (Dimensions.get('window').width - StyleConstants.Spacing.Global.PagePadding * 2) /
+    (DISPLAY_AMOUNT - 1)
 
   const { data } = useTimelineQuery({
     page: 'Account',
+    type: 'attachments',
     id: account?.id,
-    exclude_reblogs: false,
-    only_media: true,
-    options: { enabled: !!account?.id }
+    ...(remote_id && remote_domain && { remote_id, remote_domain }),
+    options: { enabled: !!account?.id || (!!remote_id && !!remote_domain) }
   })
 
   const flattenData = flattenPages(data)
@@ -44,6 +52,7 @@ const AccountAttachments: React.FC = () => {
         flex: 1,
         height: width + StyleConstants.Spacing.Global.PagePadding * 2,
         paddingVertical: StyleConstants.Spacing.Global.PagePadding,
+        paddingRight: StyleConstants.Spacing.Global.PagePadding,
         borderTopWidth: 1,
         borderTopColor: colors.border
       }}
@@ -52,7 +61,7 @@ const AccountAttachments: React.FC = () => {
         horizontal
         data={flattenData}
         renderItem={({ item, index }) => {
-          if (index === DISPLAY_AMOUNT - 1) {
+          if (index === DISPLAY_AMOUNT - 1 && (!remote_id || !remote_domain)) {
             return (
               <Pressable
                 onPress={() => {
@@ -61,7 +70,7 @@ const AccountAttachments: React.FC = () => {
                 children={
                   <View
                     style={{
-                      marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+                      marginLeft: StyleConstants.Spacing.Global.PagePadding,
                       backgroundColor: colors.backgroundOverlayInvert,
                       width: width,
                       height: width,
@@ -101,7 +110,11 @@ const AccountAttachments: React.FC = () => {
                   blurhash: item.media_attachments[0]?.blurhash
                 }}
                 dimension={{ width, height: width }}
-                style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
+                style={{
+                  marginLeft: StyleConstants.Spacing.Global.PagePadding,
+                  borderRadius: StyleConstants.BorderRadius / 2,
+                  overflow: 'hidden'
+                }}
                 onPress={() => navigation.push('Tab-Shared-Toot', { toot: item })}
                 dim
               />

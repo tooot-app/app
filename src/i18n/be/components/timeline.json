@@ -1,0 +1,168 @@
+{
+  "empty": {
+    "error": {
+      "message": "Памылка загрузкі",
+      "button": "Паўтарыць"
+    },
+    "success": {
+      "message": "Стужка пуста"
+    }
+  },
+  "end": {
+    "message": "Вось і канец, хочаце кубачак <0 />?"
+  },
+  "lookback": {
+    "message": "Апошні раз прачытана ў"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Навейшае",
+    "refetch": "Да новых",
+    "fetching": "Атрыманне новых допісаў ...",
+    "fetched": {
+      "none": "Няма новых допісаў",
+      "found": "Атрымана {{count}} допісаў"
+    }
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Замацавана",
+      "favourite": "{{name}} упадабаў ваш допіс",
+      "status": "{{name}} толькі што апублікаваў допіс",
+      "follow": "{{name}} падпісаўся на вас",
+      "follow_request": "{{name}} хоча падпісацца на вас",
+      "poll": "Апытанне, дзе вы прынялі ўдзел, скончылася",
+      "reblog": {
+        "default": "{{name}} пашырыў(-ла)",
+        "myself": "Я пашырыў",
+        "notification": "{{name}} пашырыў ваш допіс"
+      },
+      "update": "Пашырэнне было адрэдагавана",
+      "admin.sign_up": "{{name}} далучыўся да інстанса",
+      "admin.report": "{{name}} паскардзіўся на:"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Адказаць на допіс"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Пашырыць допіс",
+        "function": "Пашырыць допіс",
+        "options": {
+          "title": "Выберыце бачнасць пашырэння",
+          "public": "Публічнае пашырэнне",
+          "unlisted": "Прыватнае пашырэнне"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Дадаць гэта допіс у абранае",
+        "function": "Дадаць у абранае"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Дадаць гэты допіс у закладкі",
+        "function": "Дадаць допіс у закладкі"
+      },
+      "openReport": "Адкрыць скаргу"
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} карыстальнікаў пашырылі гэты допіс",
+        "accessibilityHint": "Націсніце, каб даведацца пра карыстальнікаў",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} карыстальнікаў дадалі гэты допіс у абранае",
+        "accessibilityHint": "Націсніце, каб даведацца пра карыстальнікаў",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Гэты допіс быў адрэдагаваны {{count}} разоў",
+        "accessibilityHint": "Націсніце, каб прагледзець поўную гісторыю рэдагавання",
+        "text_one": "{{count}} рэдагаванне",
+        "text_other": "{{count}} рэдагаванняў"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Паказаць далікатнае медыя"
+      },
+      "unsupported": {
+        "text": "Памылка загрузкі",
+        "button": "Паспрабуйце аддаленую спасылку"
+      },
+      "altText": "Альтэрнатыўны тэкст"
+    },
+    "avatar": {
+      "accessibilityLabel": "Аватар {{name}}",
+      "accessibilityHint": "Націсніце, каб перайсці на старонку {{name}}"
+    },
+    "content": {
+      "expandHint": "Схаваны змест"
+    },
+    "filtered": {
+      "reveal": "Усё роўна паказаць",
+      "match_v1": "Адфільтравана: {{phrase}}.",
+      "match_v2_one": "Адфільтравана па {{filters}}.",
+      "match_v2_other": "Адфільтравана {{count}} фільтрамі, {{filters}}."
+    },
+    "fullConversation": "Чытаць размовы",
+    "translate": {
+      "default": "Перакласці",
+      "succeed": "Перакладзена {{provider}} з {{source}}",
+      "failed": "Не ўдалося перакласці",
+      "source_not_supported": "Мова допісу не падтрымліваецца",
+      "target_not_supported": "Гэтая мова не падтрымліваецца"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Бачнае імя карыстальніка"
+          },
+          "account": {
+            "accessibilityHint": "Профіль карыстальніка"
+          }
+        },
+        "application": "праз {{application}}",
+        "edited": {
+          "accessibilityLabel": "Допіс адрэдагаваны"
+        },
+        "muted": {
+          "accessibilityLabel": "Допіс ігнаруецца"
+        },
+        "replies": "Адказы <0 />",
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Адправіць асабістае паведамленне"
+          },
+          "private": {
+            "accessibilityLabel": "Допіс бачны толькі падпісчыкам"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "З",
+        "delete": {
+          "function": "Выдаліць асабістае паведамленне"
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Галасаванне",
+          "refresh": "Абнавіць"
+        },
+        "count": {
+          "voters_one": "{{count}} карыстальнік прагаласаваў",
+          "voters_other": "{{count}} карыстальнікаў прагаласавала",
+          "votes_one": "{{count}} голас",
+          "votes_other": "{{count}} галасоў"
+        },
+        "expiration": {
+          "expired": "Галасаванне скончылася",
+          "until": "Заканчваецца <0 />"
+        }
+      }
+    }
+  }
+}

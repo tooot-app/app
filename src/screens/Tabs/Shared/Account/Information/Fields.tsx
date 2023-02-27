@@ -19,7 +19,8 @@ const AccountInformationFields: React.FC = () => {
       style={{
         borderTopWidth: StyleSheet.hairlineWidth,
         marginBottom: StyleConstants.Spacing.M,
-        borderTopColor: colors.border
+        borderTopColor: colors.border,
+        marginHorizontal: -StyleConstants.Spacing.Global.PagePadding
       }}
     >
       {account.fields.map((field, index) => (

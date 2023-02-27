@@ -16,7 +16,7 @@ import TimelineDefault from '../Default'
 import StatusContext from './Context'
 
 const TimelineCard: React.FC = () => {
-  const { status, spoilerHidden, disableDetails } = useContext(StatusContext)
+  const { status, spoilerHidden, disableDetails, inThread } = useContext(StatusContext)
   if (!status || !status.card) return null
 
   const { colors } = useTheme()
@@ -86,6 +86,7 @@ const TimelineCard: React.FC = () => {
             style={{ flexBasis: StyleConstants.Font.LineHeight.M * 5 }}
             imageStyle={{ borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }}
             dim
+            withoutTransition={inThread}
           />
         ) : null}
         <View style={{ flex: 1, padding: StyleConstants.Spacing.S }}>
@@ -137,7 +138,7 @@ const TimelineCard: React.FC = () => {
         flexDirection: 'row',
         marginTop: StyleConstants.Spacing.M,
         borderWidth: 1,
-        borderRadius: StyleConstants.Spacing.S,
+        borderRadius: StyleConstants.BorderRadius,
         overflow: 'hidden',
         borderColor: colors.border
       }}

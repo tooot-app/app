@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const TimelineAvatar: React.FC<Props> = ({ account }) => {
-  const { status, highlighted, disableDetails, disableOnPress, isConversation } =
+  const { status, highlighted, disableDetails, disableOnPress, isConversation, inThread } =
     useContext(StatusContext)
   const actualAccount = account || status?.account
   if (!actualAccount) return null
@@ -49,11 +49,12 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
             }
       }
       style={{
-        borderRadius: StyleConstants.Avatar.M,
+        borderRadius: 99,
         overflow: 'hidden',
         marginRight: StyleConstants.Spacing.S
       }}
       dim
+      withoutTransition={inThread}
     />
   )
 }

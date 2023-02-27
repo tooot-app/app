@@ -51,7 +51,7 @@ const HeaderLeft: React.FC<Props> = ({
         minWidth: 44,
         marginLeft: native ? -StyleConstants.Spacing.S : StyleConstants.Spacing.S,
         ...(type === undefined && {
-          borderRadius: 100
+          borderRadius: 99
         }),
         ...(type === 'text' && {
           paddingHorizontal: StyleConstants.Spacing.S

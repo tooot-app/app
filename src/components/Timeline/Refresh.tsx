@@ -156,10 +156,22 @@ const TimelineRefresh: React.FC<Props> = ({
         >(queryKey, old => {
           if (!old) return old
 
+          let count = 0
+          const keepPagesCount = Math.max(
+            1,
+            old.pages.findIndex(page => {
+              count = count + page.body.length
+              return count >= 20
+            })
+          )
+
           prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
           return {
             ...old,
-            pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages]
+            pages: [
+              { ...res, body: res.body.slice(-PREV_PER_BATCH) },
+              ...old.pages.slice(0, keepPagesCount)
+            ]
           }
         })
 
@@ -177,7 +189,7 @@ const TimelineRefresh: React.FC<Props> = ({
             flRef.current?.scrollToOffset({ offset: scrollY.value - 15, animated: true })
           }
 
-          await new Promise(promise => setTimeout(promise, 64))
+          await new Promise<void>(promise => setTimeout(promise, 8))
           queryClient.setQueryData<
             InfiniteData<
               PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
@@ -244,7 +256,7 @@ const TimelineRefresh: React.FC<Props> = ({
           return
       }
     },
-    []
+    [queryKey[1]]
   )
 
   if (!isFetched) return null

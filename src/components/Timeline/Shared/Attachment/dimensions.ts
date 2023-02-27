@@ -10,11 +10,13 @@ export const aspectRatio = ({
   height?: number
 }): number => {
   const defaultCrop =
-    (height || 1) / (width || 1) > 3 / 2
-      ? 2 / 3
-      : (width || 1) / (height || 1) > 4
-      ? 4
-      : (width || 1) / (height || 1)
+    height && width
+      ? height / width > 3 / 2
+        ? 2 / 3
+        : width / height > 4
+        ? 4
+        : width / height
+      : 16 / 9
 
   const isEven = total % 2 == 0
   if (total > 5) {

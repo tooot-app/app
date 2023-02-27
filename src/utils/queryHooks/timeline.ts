@@ -6,14 +6,15 @@ import {
   UseInfiniteQueryOptions,
   useMutation
 } from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
+import { appendRemote } from '@utils/helpers/appendRemote'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { useNavState } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
 import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
-import { uniqBy } from 'lodash'
 import { searchLocalStatus } from './search'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
@@ -24,7 +25,7 @@ export type QueryKeyTimeline = [
   'Timeline',
   (
     | {
-        page: Exclude<App.Pages, 'Following' | 'Hashtag' | 'List' | 'Toot' | 'Account'>
+        page: Exclude<App.Pages, 'Following' | 'Hashtag' | 'List' | 'Toot' | 'Account' | 'Explore'>
       }
     | {
         page: 'Following'
@@ -41,15 +42,18 @@ export type QueryKeyTimeline = [
       }
     | {
         page: 'Account'
+        type: 'default' | 'attachments'
         id?: Mastodon.Account['id']
-        exclude_reblogs: boolean
-        only_media: boolean
+        // remote
+        remote_id?: Mastodon.Account['id']
+        remote_domain?: string
       }
     | {
         page: 'Toot'
         toot: Mastodon.Status['id']
         remote: boolean
       }
+    | { page: 'Explore'; domain?: string }
   )
 ]
 
@@ -64,8 +68,8 @@ export const queryFunctionTimeline = async ({
     marker = getAccountStorage.string('read_marker_following')
   }
   const params: { [key: string]: string } = marker
-    ? { limit: 40, max_id: marker }
-    : { limit: 40, ...pageParam }
+    ? { limit: 20, max_id: marker }
+    : { limit: 20, ...pageParam }
 
   switch (page.page) {
     case 'Following':
@@ -104,10 +108,7 @@ export const queryFunctionTimeline = async ({
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/public',
-        params: {
-          ...params,
-          local: 'true'
-        }
+        params: { ...params, local: true }
       })
 
     case 'LocalPublic':
@@ -117,12 +118,24 @@ export const queryFunctionTimeline = async ({
         params
       })
 
-    case 'Trending':
-      return apiInstance<Mastodon.Status[]>({
-        method: 'get',
-        url: 'trends/statuses',
-        params
-      })
+    case 'Explore':
+      if (page.domain) {
+        return apiGeneral<Mastodon.Status[]>({
+          method: 'get',
+          domain: page.domain,
+          url: 'api/v1/timelines/public',
+          params: { ...params, local: true }
+        }).then(res => ({
+          ...res,
+          body: res.body.map(status => appendRemote.status(status, page.domain!))
+        }))
+      } else {
+        return apiInstance<Mastodon.Status[]>({
+          method: 'get',
+          url: 'trends/statuses',
+          params
+        })
+      }
 
     case 'Notifications':
       const notificationsFilter = getAccountStorage.object('notifications')
@@ -148,62 +161,81 @@ export const queryFunctionTimeline = async ({
       })
 
     case 'Account':
-      if (!page.id) return Promise.reject('Timeline query account id not provided')
+      if (!page.id) return Promise.reject('Timeline account missing id')
 
-      if (page.only_media) {
-        return apiInstance<Mastodon.Status[]>({
+      let typeParams
+      switch (page.type) {
+        case 'default':
+          const filters = getAccountStorage.object('page_account_timeline')
+          typeParams = {
+            exclude_reblogs:
+              typeof filters?.excludeBoosts === 'boolean' ? filters.excludeBoosts : true,
+            exclude_replies:
+              typeof filters?.excludeReplies === 'boolean' ? filters.excludeReplies : true
+          }
+          break
+        case 'attachments':
+          typeParams = { only_media: true, exclude_reblogs: true }
+          break
+      }
+
+      let pinned
+      if (page.type === 'default' && !params.hasOwnProperty('max_id')) {
+        if (page.remote_domain && page.remote_id) {
+          pinned = await apiGeneral<Mastodon.Status[]>({
+            method: 'get',
+            domain: page.remote_domain,
+            url: `api/v1/accounts/${page.remote_id}/statuses`,
+            params: { pinned: true }
+          })
+            .then(res => ({
+              ...res,
+              body: res.body.map(status => appendRemote.status(status, page.remote_domain!))
+            }))
+            .catch(() => {})
+        }
+        if (!pinned) {
+          pinned = await apiInstance<Mastodon.Status[]>({
+            method: 'get',
+            url: `accounts/${page.id}/statuses`,
+            params: { pinned: true }
+          })
+        }
+      }
+
+      let res
+      if (page.remote_domain && page.remote_id) {
+        res = await apiGeneral<Mastodon.Status[]>({
           method: 'get',
-          url: `accounts/${page.id}/statuses`,
+          domain: page.remote_domain,
+          url: `api/v1/accounts/${page.remote_id}/statuses`,
           params: {
-            only_media: 'true',
+            ...typeParams,
             ...params
           }
         })
-      } else if (page.exclude_reblogs) {
-        if (pageParam && pageParam.hasOwnProperty('max_id')) {
-          return apiInstance<Mastodon.Status[]>({
-            method: 'get',
-            url: `accounts/${page.id}/statuses`,
-            params: {
-              exclude_replies: 'true',
-              ...params
-            }
-          })
-        } else {
-          const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
-            method: 'get',
-            url: `accounts/${page.id}/statuses`,
-            params: {
-              pinned: 'true'
-            }
-          })
-          res1.body = res1.body.map(status => {
-            status._pinned = true
-            return status
-          })
-          const res2 = await apiInstance<Mastodon.Status[]>({
-            method: 'get',
-            url: `accounts/${page.id}/statuses`,
-            params: {
-              exclude_replies: 'true'
-            }
-          })
-          return {
-            body: uniqBy([...res1.body, ...res2.body], 'id'),
-            ...(res2.links?.next && { links: { next: res2.links.next } })
-          }
-        }
-      } else {
-        return apiInstance<Mastodon.Status[]>({
+          .then(res => ({
+            ...res,
+            body: res.body.map(status => appendRemote.status(status, page.remote_domain!))
+          }))
+          .catch(() => {})
+      }
+      if (!res) {
+        res = await apiInstance<Mastodon.Status[]>({
           method: 'get',
           url: `accounts/${page.id}/statuses`,
           params: {
-            ...params,
-            exclude_replies: false,
-            only_media: false
+            ...typeParams,
+            ...params
           }
         })
       }
+      return pinned
+        ? {
+            body: [...pinned.body.map(status => ({ ...status, _pinned: true })), ...res.body],
+            links: res.links
+          }
+        : res
 
     case 'Hashtag':
       return apiInstance<Mastodon.Status[]>({

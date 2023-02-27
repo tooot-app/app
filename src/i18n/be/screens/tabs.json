@@ -1,0 +1,486 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Падпіскі",
+      "options": {
+        "showBoosts": "Паказваць пашырэнні",
+        "showReplies": "Паказваць адказы"
+      }
+    },
+    "public": {
+      "segments": {
+        "federated": "Глабальнае",
+        "local": "Мясцовае",
+        "explore": "Агляд"
+      },
+      "exploring": {
+        "heading": "Агляд",
+        "trending": "Папулярныя",
+        "followRemote": "Падпісацца на аддалены інстанс",
+        "noTitle": "Няма загалоўка",
+        "errors": {
+          "existed": "Вы ўжо падпісаныя на гэты аддалены інстанс.",
+          "notAvailable": "Стужка гэтага інстанса недаступная для ўсіх. Паспрабуйце іншы інстанс."
+        }
+      }
+    },
+    "notifications": {
+      "name": "Апавяшчэнні"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Пошук",
+      "accessibilityHint": ""
+    }
+  },
+  "notifications": {
+    "filters": {
+      "accessibilityLabel": "Фільтр",
+      "accessibilityHint": "",
+      "title": "Паказваць апавяшчэнні"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Закладкі"
+      },
+      "conversations": {
+        "name": "Асабістыя паведамленні"
+      },
+      "favourites": {
+        "name": ""
+      },
+      "followedTags": {
+        "name": ""
+      },
+      "fontSize": {
+        "name": "Памер шрыфту"
+      },
+      "language": {
+        "name": "Мова"
+      },
+      "list": {
+        "name": "Спіс: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Карыстальнікі ў спісе: {{list}}"
+      },
+      "listAdd": {
+        "name": "Стварыць спіс"
+      },
+      "listEdit": {
+        "name": "Рэдагаваць дэталі спісу"
+      },
+      "lists": {
+        "name": "Спісы"
+      },
+      "push": {
+        "name": "Push-апавяшчэнні"
+      },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": "Рэдагаваць фільтр"
+      },
+      "profile": {
+        "name": "Рэдагаваць Профіль"
+      },
+      "profileName": {
+        "name": "Рэдагаваць бачнае імя"
+      },
+      "profileNote": {
+        "name": "Рэдагаваць апісанне"
+      },
+      "profileFields": {
+        "name": "Рэдагаваць метаданыя"
+      },
+      "settings": {
+        "name": ""
+      },
+      "switch": {
+        "name": ""
+      }
+    },
+    "fontSize": {
+      "demo": "",
+      "sizes": {
+        "S": "S",
+        "M": "M - Стандартны",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "listAccounts": {
+      "heading": "Кіраваць карыстальнікамі",
+      "error": "Выдаліць карыстальніка са спісу",
+      "empty": "У гэтым спісе няма карыстальнікаў"
+    },
+    "listEdit": {
+      "heading": "Рэдагаваць дэталі спісу",
+      "title": "Назва",
+      "repliesPolicy": {
+        "heading": "Адказы будуць бачныя для:",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
+        }
+      }
+    },
+    "listDelete": {
+      "heading": "Выдаліць спіс",
+      "confirm": {
+        "title": "Выдаліць спіс \"{{list}}\"?",
+        "message": ""
+      }
+    },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "Заканчэнне тэрміну дзеяння",
+      "expirationOptions": {
+        "0": "Ніколі",
+        "1800": "Праз 30 хвілін",
+        "3600": "Праз 1 гадзіну",
+        "43200": "Праз 12 гадзін",
+        "86400": "Праз 1 дзень",
+        "604800": "Праз 1 тыдзень",
+        "18144000": "Праз 1 месяц"
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "Апавяшчэнне",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": "",
+      "statuses": ""
+    },
+    "profile": {
+      "feedback": {
+        "succeed": "",
+        "failed": ""
+      },
+      "root": {
+        "name": {
+          "title": ""
+        },
+        "avatar": {
+          "title": "Аватар",
+          "description": "Будзе паменшана да 400x400 пікселяў"
+        },
+        "header": {
+          "title": "Відарыс банера",
+          "description": "Будзе паменшаны да 1500x500 пікселяў"
+        },
+        "note": {
+          "title": "Апісанне"
+        },
+        "fields": {
+          "title": "Метаданыя",
+          "total_one": "",
+          "total_other": ""
+        },
+        "lock": {
+          "title": "",
+          "description": ""
+        },
+        "bot": {
+          "title": "",
+          "description": ""
+        }
+      },
+      "fields": {
+        "group": "",
+        "label": "",
+        "content": ""
+      },
+      "mediaSelectionFailed": ""
+    },
+    "push": {
+      "notAvailable": "",
+      "enable": {
+        "direct": "",
+        "settings": ""
+      },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
+      "global": {
+        "heading": "",
+        "description": ""
+      },
+      "decode": {
+        "heading": "",
+        "description": ""
+      },
+      "default": {
+        "heading": ""
+      },
+      "follow": {
+        "heading": ""
+      },
+      "follow_request": {
+        "heading": ""
+      },
+      "favourite": {
+        "heading": ""
+      },
+      "reblog": {
+        "heading": ""
+      },
+      "mention": {
+        "heading": ""
+      },
+      "poll": {
+        "heading": ""
+      },
+      "status": {
+        "heading": ""
+      },
+      "update": {
+        "heading": ""
+      },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
+      "howitworks": ""
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "",
+          "read": "",
+          "empty": ""
+        }
+      },
+      "push": {
+        "content_true": "Уключана",
+        "content_false": "Адключана"
+      },
+      "logout": {
+        "button": "Выйсці",
+        "alert": {
+          "title": "Вы ўпэўнены, што хочаце выйсці?",
+          "message": "Пасля выхаду з сістэмы неабходна зноў увайсці ў яе",
+          "buttons": {
+            "logout": "Выйсці"
+          }
+        }
+      }
+    },
+    "settings": {
+      "theme": {
+        "heading": "Знешні выгляд",
+        "options": {
+          "auto": "",
+          "light": "Светлы рэжым",
+          "dark": "Цёмны рэжым"
+        }
+      },
+      "darkTheme": {
+        "heading": "Цёмная тэма",
+        "options": {
+          "lighter": "Прадвызначаная",
+          "darker": "Сапраўдны чорны"
+        }
+      },
+      "browser": {
+        "heading": "Адкрыццё спасылак",
+        "options": {
+          "internal": "Унутры праграмы",
+          "external": "Выкарыстоўваць сістэмны браўзер"
+        }
+      },
+      "autoplayGifv": {
+        "heading": ""
+      },
+      "feedback": {
+        "heading": ""
+      },
+      "support": {
+        "heading": ""
+      },
+      "contact": {
+        "heading": ""
+      },
+      "version": "",
+      "instanceVersion": "Версія Mastodon: v{{version}}"
+    },
+    "switch": {
+      "existing": "",
+      "new": "Увайсці ў інстанс"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "",
+        "accessibilityHint": ""
+      },
+      "followed_by": "",
+      "privateNote": "",
+      "moved": "",
+      "created_at": "",
+      "summary": {
+        "statuses_count": "{{count}} допісаў"
+      },
+      "toots": {
+        "default": "Допісы",
+        "all": "Допісы і адказы"
+      },
+      "suspended": ""
+    },
+    "accountInLists": {
+      "name": "Спісы @{{username}}",
+      "inLists": "У спісах",
+      "notInLists": "Іншыя спісы"
+    },
+    "attachments": {
+      "name": ""
+    },
+    "filter": {
+      "name": "",
+      "existed": ""
+    },
+    "history": {
+      "name": "Гісторыя рэдагавання"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": "Ананімна пераслаць на аддалены сервер {{instance}}"
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "Гэта спам",
+        "other": "Гэта нешта іншае",
+        "violation": "Гэта парушае правілы сервера"
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": "Парушэнне правіл сервера"
+      }
+    },
+    "search": {
+      "header": {
+        "prefix": "Пошук",
+        "placeholder": "..."
+      },
+      "empty": {
+        "general": "",
+        "advanced": {
+          "header": "",
+          "example": {
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
+          }
+        },
+        "trending": {
+          "tags": ""
+        }
+      },
+      "sections": {
+        "accounts": "",
+        "hashtags": "",
+        "statuses": ""
+      },
+      "notFound": "",
+      "noResult": ""
+    },
+    "toot": {
+      "name": "",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "users": {
+      "accounts": {
+        "following": "",
+        "followers": ""
+      },
+      "statuses": {
+        "reblogged_by": "",
+        "favourited_by": ""
+      },
+      "resultIncomplete": "Вынікі з аддаленага інстанса няпоўныя"
+    }
+  }
+}

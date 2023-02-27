@@ -7,9 +7,7 @@
     "button": "Đăng nhập",
     "information": {
       "name": "Tên máy chủ",
-      "accounts": "Người dùng",
-      "statuses": "Tút",
-      "domains": "Liên hợp"
+      "description": "Mô tả"
     },
     "disclaimer": {
       "base": "tooot sẽ không thấy được thông tin tài khoản của bạn."

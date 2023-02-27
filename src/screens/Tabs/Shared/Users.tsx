@@ -36,7 +36,6 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
 
   return (
     <FlatList
-      windowSize={7}
       data={flattenPages(data)}
       style={{
         minHeight: '100%',
@@ -79,7 +78,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
               padding: StyleConstants.Spacing.S,
               borderColor: colors.border,
               borderWidth: 1,
-              borderRadius: StyleConstants.Spacing.S
+              borderRadius: StyleConstants.BorderRadius
             }}
           >
             <Icon

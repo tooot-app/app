@@ -1,16 +1,16 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Ekintza gehiago irudi hontarako",
+      "accessibilityHint": "Irudi hau gorde edo partekatu dezakezu"
     },
     "options": {
-      "save": "",
-      "share": ""
+      "save": "Gorde irudia",
+      "share": "Partekatu irudia"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Irudia gordeta",
+      "failed": "Akatsa irudia gordetzean"
     }
   }
 }

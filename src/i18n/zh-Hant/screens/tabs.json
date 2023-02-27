@@ -11,7 +11,17 @@
       "segments": {
         "federated": "聯邦",
         "local": "本站",
-        "trending": "熱門"
+        "explore": "探索"
+      },
+      "exploring": {
+        "heading": "探索",
+        "trending": "熱門",
+        "followRemote": "跟隨遠端站點",
+        "noTitle": "無標題",
+        "errors": {
+          "existed": "你已經跟隨了這個遠端站台",
+          "notAvailable": "這個站台的時間軸無法直接訪問。請嘗試其它站台。"
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "您可以靜音、封鎖、檢舉或分享此使用者"
       },
       "followed_by": " 正在跟隨你",
+      "privateNote": "設定非公開備註",
       "moved": "使用者已轉移",
       "created_at": "加入於：{{date}}",
       "summary": {

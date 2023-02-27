@@ -46,7 +46,12 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<'Tab-Shared-Attac
 
   const queryKey: QueryKeyTimeline = [
     'Timeline',
-    { page: 'Account', id: account.id, exclude_reblogs: true, only_media: true }
+    {
+      page: 'Account',
+      type: 'attachments',
+      id: account.id,
+      ...(account._remote && { remote_id: account.id, remote_domain: account._remote })
+    }
   ]
 
   return <Timeline queryKey={queryKey} />

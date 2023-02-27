@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Føderert",
         "local": "Lokal",
-        "trending": "Populært"
+        "explore": "Utforsk"
+      },
+      "exploring": {
+        "heading": "Utforsk",
+        "trending": "Trender",
+        "followRemote": "Følg annen instans",
+        "noTitle": "Uten tittel",
+        "errors": {
+          "existed": "Du følger allerede denne eksterne instansen.",
+          "notAvailable": "Denne instansens tidslinje er ikke offentlig tilgjengelig. Prøv en annen instans."
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "Du kan dempe, blokkere, rapportere eller dele denne brukeren"
       },
       "followed_by": " følger deg",
+      "privateNote": "Legg til et privat notat",
       "moved": "Bruker flyttet",
       "created_at": "Ble med: {{date}}",
       "summary": {

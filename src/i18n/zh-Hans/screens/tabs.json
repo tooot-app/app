@@ -11,7 +11,17 @@
       "segments": {
         "federated": "跨站",
         "local": "本站",
-        "trending": "热门"
+        "explore": "探索"
+      },
+      "exploring": {
+        "heading": "探索",
+        "trending": "热门嘟文",
+        "followRemote": "关注远程实例",
+        "noTitle": "无标题",
+        "errors": {
+          "existed": "您已经关注此远程实例。",
+          "notAvailable": "此实例的公共时间线不可访问。请尝试其他实例。"
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "您可以静音、屏蔽、举报或分享此用户"
       },
       "followed_by": " 正在关注你",
+      "privateNote": "添加非公开备注",
       "moved": "账户已迁移",
       "created_at": "注册于：{{date}}",
       "summary": {

@@ -11,7 +11,17 @@
       "segments": {
         "federated": "Liên hợp",
         "local": "Máy chủ",
-        "trending": "Xu hướng"
+        "explore": ""
+      },
+      "exploring": {
+        "heading": "",
+        "trending": "",
+        "followRemote": "",
+        "noTitle": "",
+        "errors": {
+          "existed": "",
+          "notAvailable": ""
+        }
       }
     },
     "notifications": {
@@ -380,6 +390,7 @@
         "accessibilityHint": "Bạn có thể ẩn, chặn, báo cáo hoặc chia sẻ người này"
       },
       "followed_by": " đang theo dõi bạn",
+      "privateNote": "",
       "moved": "Đã chuyển đi",
       "created_at": "Đã tham gia {{date}}",
       "summary": {

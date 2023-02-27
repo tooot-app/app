@@ -9,19 +9,16 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useContext, useState } from 'react'
+import { isLargeDevice } from '@utils/styles/scaling'
+import { chunk } from 'lodash'
+import React, { Fragment, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import StatusContext from './Context'
+import StatusContext from '../Context'
 
 const TimelineAttachment = () => {
-  const { status, disableDetails } = useContext(StatusContext)
-  if (
-    !status ||
-    disableDetails ||
-    !Array.isArray(status.media_attachments) ||
-    !status.media_attachments.length
-  )
+  const { status, spoilerHidden, disableDetails } = useContext(StatusContext)
+  if (!status || !Array.isArray(status.media_attachments) || !status.media_attachments.length)
     return null
 
   const { t } = useTranslation('componentTimeline')
@@ -70,14 +67,9 @@ const TimelineAttachment = () => {
           }
         default:
           if (
-            attachment.preview_url?.endsWith('.jpg') ||
-            attachment.preview_url?.endsWith('.jpeg') ||
-            attachment.preview_url?.endsWith('.png') ||
-            attachment.preview_url?.endsWith('.gif') ||
-            attachment.remote_url?.endsWith('.jpg') ||
-            attachment.remote_url?.endsWith('.jpeg') ||
-            attachment.remote_url?.endsWith('.png') ||
-            attachment.remote_url?.endsWith('.gif')
+            // https://docs.expo.dev/versions/unversioned/sdk/image/#supported-image-formats
+            attachment.preview_url?.match(/.(?:a?png|jpe?g|webp|avif|heic|gif|svg|ico|icns)$/i) ||
+            attachment.remote_url?.match(/.(?:a?png|jpe?g|webp|avif|heic|gif|svg|ico|icns)$/i)
           ) {
             return {
               id: attachment.id,
@@ -96,97 +88,105 @@ const TimelineAttachment = () => {
     navigation.navigate('Screen-ImagesViewer', { imageUrls, id })
   }
 
+  const mapAttachmentType = (attachment: Mastodon.Attachment, index: number) => {
+    switch (attachment.type) {
+      case 'image':
+        return (
+          <AttachmentImage
+            total={status.media_attachments.length}
+            index={index}
+            sensitiveShown={sensitiveShown}
+            image={attachment}
+            navigateToImagesViewer={navigateToImagesViewer}
+          />
+        )
+      case 'video':
+        return (
+          <AttachmentVideo
+            total={status.media_attachments.length}
+            index={index}
+            sensitiveShown={sensitiveShown}
+            video={attachment}
+          />
+        )
+      case 'gifv':
+        return (
+          <AttachmentVideo
+            total={status.media_attachments.length}
+            index={index}
+            sensitiveShown={sensitiveShown}
+            video={attachment}
+            gifv
+          />
+        )
+      case 'audio':
+        return (
+          <AttachmentAudio
+            total={status.media_attachments.length}
+            index={index}
+            sensitiveShown={sensitiveShown}
+            audio={attachment}
+          />
+        )
+      default:
+        if (
+          // https://docs.expo.dev/versions/unversioned/sdk/image/#supported-image-formats
+          attachment.preview_url?.match(/.(?:a?png|jpe?g|webp|avif|heic|gif|svg|ico|icns)$/i) ||
+          attachment.remote_url?.match(/.(?:a?png|jpe?g|webp|avif|heic|gif|svg|ico|icns)$/i)
+        ) {
+          return (
+            <AttachmentImage
+              total={status.media_attachments.length}
+              index={index}
+              sensitiveShown={sensitiveShown}
+              image={attachment as unknown as Mastodon.AttachmentImage}
+              navigateToImagesViewer={navigateToImagesViewer}
+            />
+          )
+        } else if (attachment.remote_url?.match(/.(?:mp4|mkv)$/i)) {
+          return (
+            <AttachmentVideo
+              total={status.media_attachments.length}
+              index={index}
+              sensitiveShown={sensitiveShown}
+              video={attachment as unknown as Mastodon.AttachmentVideo}
+            />
+          )
+        } else {
+          return (
+            <AttachmentUnsupported
+              total={status.media_attachments.length}
+              index={index}
+              sensitiveShown={sensitiveShown}
+              attachment={attachment}
+            />
+          )
+        }
+    }
+  }
+
+  if (spoilerHidden || disableDetails) return null
+
   return (
-    <View>
-      <View
-        style={{
-          marginTop: StyleConstants.Spacing.S,
-          flex: 1,
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          alignContent: 'stretch'
-        }}
-      >
-        {status.media_attachments.map((attachment, index) => {
-          switch (attachment.type) {
-            case 'image':
-              return (
-                <AttachmentImage
-                  key={index}
-                  total={status.media_attachments.length}
-                  index={index}
-                  sensitiveShown={sensitiveShown}
-                  image={attachment}
-                  navigateToImagesViewer={navigateToImagesViewer}
-                />
-              )
-            case 'video':
-              return (
-                <AttachmentVideo
-                  key={index}
-                  total={status.media_attachments.length}
-                  index={index}
-                  sensitiveShown={sensitiveShown}
-                  video={attachment}
-                />
-              )
-            case 'gifv':
-              return (
-                <AttachmentVideo
-                  key={index}
-                  total={status.media_attachments.length}
-                  index={index}
-                  sensitiveShown={sensitiveShown}
-                  video={attachment}
-                  gifv
-                />
-              )
-            case 'audio':
-              return (
-                <AttachmentAudio
-                  key={index}
-                  total={status.media_attachments.length}
-                  index={index}
-                  sensitiveShown={sensitiveShown}
-                  audio={attachment}
-                />
-              )
-            default:
-              if (
-                attachment.preview_url?.endsWith('.jpg') ||
-                attachment.preview_url?.endsWith('.jpeg') ||
-                attachment.preview_url?.endsWith('.png') ||
-                attachment.preview_url?.endsWith('.gif') ||
-                attachment.remote_url?.endsWith('.jpg') ||
-                attachment.remote_url?.endsWith('.jpeg') ||
-                attachment.remote_url?.endsWith('.png') ||
-                attachment.remote_url?.endsWith('.gif')
-              ) {
-                return (
-                  <AttachmentImage
-                    key={index}
-                    total={status.media_attachments.length}
-                    index={index}
-                    sensitiveShown={sensitiveShown}
-                    // @ts-ignore
-                    image={attachment}
-                    navigateToImagesViewer={navigateToImagesViewer}
-                  />
-                )
-              } else {
-                return (
-                  <AttachmentUnsupported
-                    key={index}
-                    total={status.media_attachments.length}
-                    index={index}
-                    sensitiveShown={sensitiveShown}
-                    attachment={attachment}
-                  />
-                )
-              }
-          }
-        })}
+    <View style={{ marginTop: StyleConstants.Spacing.M, ...(isLargeDevice && { maxWidth: 375 }) }}>
+      <View style={{ gap: StyleConstants.Spacing.XS }}>
+        {chunk(status.media_attachments, 2).map((chunk, chunkIndex) => (
+          <View
+            key={chunkIndex}
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignContent: 'stretch',
+              gap: StyleConstants.Spacing.XS
+            }}
+          >
+            {chunk.map((a, aIndex) => (
+              <Fragment key={aIndex}>{mapAttachmentType(a, chunkIndex * 2 + aIndex)}</Fragment>
+            ))}
+          </View>
+        ))}
       </View>
 
       {defaultSensitive() &&
@@ -223,7 +223,7 @@ const TimelineAttachment = () => {
             }}
             style={{
               position: 'absolute',
-              top: StyleConstants.Spacing.S * 2,
+              top: StyleConstants.Spacing.S,
               left: StyleConstants.Spacing.S
             }}
           />

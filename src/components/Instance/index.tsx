@@ -173,6 +173,10 @@ const ComponentInstance: React.FC<Props> = ({
             lists: { shown: false },
             announcements: { shown: false, unread: 0 }
           },
+          page_account_timeline: {
+            excludeBoosts: true,
+            excludeReplies: true
+          },
           drafts: [],
           emojis_frequent: []
         }

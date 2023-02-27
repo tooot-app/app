@@ -164,12 +164,12 @@ const Timeline: React.FC<Props> = ({
     }
   )
 
-  const latestMarker = useRef<string>()
+  const latestMarker = useRef<string>('')
   const updateMarkers = useCallback(
     throttle(() => {
       if (readMarker) {
         const currentMarker = getAccountStorage.string(readMarker) || '0'
-        if ((latestMarker.current || '0') > currentMarker) {
+        if (latestMarker.current > currentMarker) {
           setAccountStorage([{ key: readMarker, value: latestMarker.current }])
         } else {
           // setAccountStorage([{ key: readMarker, value: '105250709762254246' }])
@@ -180,9 +180,12 @@ const Timeline: React.FC<Props> = ({
   )
   readMarker &&
     useEffect(() => {
-      const unsubscribe = navigation.addListener('blur', () =>
-        setAccountStorage([{ key: readMarker, value: latestMarker.current }])
-      )
+      const unsubscribe = navigation.addListener('blur', () => {
+        const currentMarker = getAccountStorage.string(readMarker) || '0'
+        if (latestMarker.current > currentMarker) {
+          setAccountStorage([{ key: readMarker, value: latestMarker.current }])
+        }
+      })
       return unsubscribe
     }, [])
   const viewabilityConfigCallbackPairs = useRef<
@@ -227,7 +230,14 @@ const Timeline: React.FC<Props> = ({
     }
   })
 
-  useScrollToTop(flRef)
+  useScrollToTop(
+    useRef({
+      scrollToTop: () => {
+        shouldAutoFetch.value = false
+        flRef.current?.scrollToOffset({ animated: true, offset: 0 })
+      }
+    })
+  )
   useGlobalStorageListener('account.active', () =>
     flRef.current?.scrollToOffset({ offset: 0, animated: false })
   )
@@ -248,13 +258,12 @@ const Timeline: React.FC<Props> = ({
         ref={customFLRef || flRef}
         scrollEventThrottle={16}
         onScroll={onScroll}
-        windowSize={5}
         data={flattenPages(data)}
         {...(customProps?.renderItem
           ? { renderItem: customProps.renderItem }
           : { renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} /> })}
         initialNumToRender={3}
-        maxToRenderPerBatch={3}
+        maxToRenderPerBatch={2}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
         onEndReachedThreshold={0.75}
         ListFooterComponent={
