@@ -16,38 +16,38 @@
       "exploring": {
         "heading": "Агляд",
         "trending": "Папулярныя",
-        "followRemote": "",
-        "noTitle": "",
+        "followRemote": "Падпісацца на аддалены інстанс",
+        "noTitle": "Няма загалоўка",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Вы ўжо падпісаныя на гэты аддалены інстанс.",
+          "notAvailable": "Стужка гэтага інстанса недаступная для ўсіх. Паспрабуйце іншы інстанс."
         }
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Апавяшчэнні"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
+      "accessibilityLabel": "Пошук",
       "accessibilityHint": ""
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
+      "accessibilityLabel": "Фільтр",
       "accessibilityHint": "",
-      "title": ""
+      "title": "Паказваць апавяшчэнні"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Закладкі"
       },
       "conversations": {
-        "name": ""
+        "name": "Асабістыя паведамленні"
       },
       "favourites": {
         "name": ""
@@ -56,28 +56,28 @@
         "name": ""
       },
       "fontSize": {
-        "name": ""
+        "name": "Памер шрыфту"
       },
       "language": {
-        "name": ""
+        "name": "Мова"
       },
       "list": {
-        "name": ""
+        "name": "Спіс: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Карыстальнікі ў спісе: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Стварыць спіс"
       },
       "listEdit": {
-        "name": ""
+        "name": "Рэдагаваць дэталі спісу"
       },
       "lists": {
-        "name": ""
+        "name": "Спісы"
       },
       "push": {
-        "name": ""
+        "name": "Push-апавяшчэнні"
       },
       "preferences": {
         "name": ""
@@ -89,19 +89,19 @@
         "name": ""
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Рэдагаваць фільтр"
       },
       "profile": {
-        "name": ""
+        "name": "Рэдагаваць Профіль"
       },
       "profileName": {
-        "name": ""
+        "name": "Рэдагаваць бачнае імя"
       },
       "profileNote": {
-        "name": ""
+        "name": "Рэдагаваць апісанне"
       },
       "profileFields": {
-        "name": ""
+        "name": "Рэдагаваць метаданыя"
       },
       "settings": {
         "name": ""
@@ -138,9 +138,9 @@
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Выдаліць спіс",
       "confirm": {
-        "title": "",
+        "title": "Выдаліць спіс \"{{list}}\"?",
         "message": ""
       }
     },
@@ -244,7 +244,7 @@
           "title": "Апісанне"
         },
         "fields": {
-          "title": "",
+          "title": "Метаданыя",
           "total_one": "",
           "total_other": ""
         },
@@ -345,22 +345,22 @@
         "heading": "Знешні выгляд",
         "options": {
           "auto": "",
-          "light": "",
-          "dark": ""
+          "light": "Светлы рэжым",
+          "dark": "Цёмны рэжым"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Цёмная тэма",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Прадвызначаная",
+          "darker": "Сапраўдны чорны"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Адкрыццё спасылак",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "Унутры праграмы",
+          "external": "Выкарыстоўваць сістэмны браўзер"
         }
       },
       "autoplayGifv": {
@@ -376,11 +376,11 @@
         "heading": ""
       },
       "version": "",
-      "instanceVersion": ""
+      "instanceVersion": "Версія Mastodon: v{{version}}"
     },
     "switch": {
       "existing": "",
-      "new": ""
+      "new": "Увайсці ў інстанс"
     }
   },
   "shared": {
@@ -394,18 +394,18 @@
       "moved": "",
       "created_at": "",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} допісаў"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Допісы",
+        "all": "Допісы і адказы"
       },
       "suspended": ""
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Спісы @{{username}}",
+      "inLists": "У спісах",
+      "notInLists": "Іншыя спісы"
     },
     "attachments": {
       "name": ""
@@ -421,7 +421,7 @@
       "name": "",
       "report": "",
       "forward": {
-        "heading": ""
+        "heading": "Ананімна пераслаць на аддалены сервер {{instance}}"
       },
       "reasons": {
         "heading": "",
@@ -480,7 +480,7 @@
         "reblogged_by": "",
         "favourited_by": ""
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Вынікі з аддаленага інстанса няпоўныя"
     }
   }
 }

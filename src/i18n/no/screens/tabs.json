@@ -19,8 +19,8 @@
         "followRemote": "Følg annen instans",
         "noTitle": "Uten tittel",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Du følger allerede denne eksterne instansen.",
+          "notAvailable": "Denne instansens tidslinje er ikke offentlig tilgjengelig. Prøv en annen instans."
         }
       }
     },

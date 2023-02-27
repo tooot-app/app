@@ -38,7 +38,7 @@
       },
       "update": "Пашырэнне было адрэдагавана",
       "admin.sign_up": "{{name}} далучыўся да інстанса",
-      "admin.report": ""
+      "admin.report": "{{name}} паскардзіўся на:"
     },
     "actions": {
       "reply": {
@@ -100,9 +100,9 @@
     },
     "filtered": {
       "reveal": "Усё роўна паказаць",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "match_v1": "Адфільтравана: {{phrase}}.",
+      "match_v2_one": "Адфільтравана па {{filters}}.",
+      "match_v2_other": "Адфільтравана {{count}} фільтрамі, {{filters}}."
     },
     "fullConversation": "Чытаць размовы",
     "translate": {
@@ -116,7 +116,7 @@
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Бачнае імя карыстальніка"
           },
           "account": {
             "accessibilityHint": "Профіль карыстальніка"
@@ -127,22 +127,22 @@
           "accessibilityLabel": "Допіс адрэдагаваны"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Допіс ігнаруецца"
         },
-        "replies": "",
+        "replies": "Адказы <0 />",
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Адправіць асабістае паведамленне"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Допіс бачны толькі падпісчыкам"
           }
         }
       },
       "conversation": {
         "withAccounts": "З",
         "delete": {
-          "function": ""
+          "function": "Выдаліць асабістае паведамленне"
         }
       }
     },

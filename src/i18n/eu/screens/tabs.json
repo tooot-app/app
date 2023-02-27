@@ -19,8 +19,8 @@
         "followRemote": "Jarraitu urrutiko instantzia",
         "noTitle": "Izenbururik ez",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Jada jarraitzen duzu urrutiko instantzia hau.",
+          "notAvailable": "Instantzia honetako denbora-lerroa ez da publikoki eskuragarria. Mesedez, saia zaitez beste batekin."
         }
       }
     },
@@ -121,70 +121,70 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Kudeatu erabiltzaileak",
+      "error": "Ezabatu erabiltzailea zerrendatik",
+      "empty": "Erabiltzailerik ez zerrenda honetan"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Editatu zerrendaren xehetasunak",
+      "title": "Izenburua",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Erakutsi hauei erantzunak:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Inori",
+          "list": "Zerrendako kideei",
+          "followed": "Jarraitutako edozeini"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Ezabatu zerrenda",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "{{list}} zerrenda ezabatu?",
+        "message": "Ekintza honen ondoren ezin da atzera egin."
       }
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Bidalketaren ikusgarritasun lehenetsia",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Publiko",
+          "unlisted": "Zerrendatu gabea",
+          "private": "Jarraitzaileak soilik"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Ezarri edukia hunkigarri gisa lehenespenez"
       },
       "media": {
-        "title": "",
+        "title": "Edukien bistaratzea",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Ezkutatu hunkigarri gisa ezarritako edukiak",
+          "show_all": "Erakutsi beti edukia",
+          "hide_all": "Ezkutatu beti edukia"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Automatikoki zabaldu edukiaren abisua duten tutak"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Automatikoki erreproduzitu tutetako GIFak"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Edukien iragazkiak",
+        "content": "{{count}} aktibo"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Eguneratu ezarpenak",
+        "description": "Hurrengo ezarpenak soilik web-interfaze bitartez egunera daitezke"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
+      "expired": "Iraungita",
+      "keywords_one": "Gako-hitz {{count}}",
+      "keywords_other": "{{count}} gako-hitz",
+      "statuses_one": "Tut {{count}}",
+      "statuses_other": "{{count}} tut",
       "context": "",
       "contexts": {
         "home": "",
