@@ -185,17 +185,17 @@
       "keywords_other": "{{count}} gako-hitz",
       "statuses_one": "Tut {{count}}",
       "statuses_other": "{{count}} tut",
-      "context": "",
+      "context": "<0 />-(e)tarako aplikatzen da",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "jarraitutakoak eta zerrendak",
+        "notifications": "jakinarazpenak",
+        "public": "federatua",
+        "thread": "elkarrizketa",
+        "account": "profila"
       }
     },
     "preferencesFilter": {
-      "name": "",
+      "name": "Izena",
       "expiration": "",
       "expirationOptions": {
         "0": "",
@@ -289,28 +289,28 @@
         "heading": ""
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Jarraitzeko eskaera"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Gogokoak"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Bultzada"
       },
       "mention": {
-        "heading": ""
+        "heading": "Zuri eginiko aipamena"
       },
       "poll": {
-        "heading": ""
+        "heading": "Bozketen eguneraketak"
       },
       "status": {
-        "heading": ""
+        "heading": "Harpidetutako erabiltzaileen tutak"
       },
       "update": {
-        "heading": ""
+        "heading": "Bultzada editatua izan da"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Administrazioa: izen-emateak"
       },
       "admin.report": {
         "heading": ""
