@@ -353,59 +353,59 @@
         "heading": "Gai iluna",
         "options": {
           "lighter": "Lehenetsia",
-          "darker": ""
+          "darker": "Beltz-beltza"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Estekak ireki",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "Aplikazio barruan",
+          "external": "Sistemako nabigatzailearekin"
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Automatikoki erreproduzitu GIFak"
       },
       "feedback": {
-        "heading": ""
+        "heading": "Proposamenak"
       },
       "support": {
-        "heading": ""
+        "heading": "tooot lagundu"
       },
       "contact": {
-        "heading": ""
+        "heading": "tooot-ekin harremanetan jarri"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "v{{version}} bertsioa",
+      "instanceVersion": "Mastodonen v{{version}} bertsioa"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Aukeratu saioa hasita dutenetatik",
+      "new": "Saioa hasi instantzian"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "{{user}} erabiltzailearekiko ekintzak",
+        "accessibilityHint": "Erabiltzaile hau mututu, blokeatu, salatu edo partekatu dezakezu"
       },
-      "followed_by": "",
-      "privateNote": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " jarraitzen zaitu",
+      "privateNote": "Ezarri ohar pribatua",
+      "moved": "Erabiltzailea mugitu da",
+      "created_at": "Bateratze-data: {{date}}",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} tut"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Tutak",
+        "all": "Tutak eta erantzunak"
       },
-      "suspended": ""
+      "suspended": "Kontu hau bertan behera utzi dute zure zerbitzariko moderatzaileek"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "@{{username}}-(r)en zerrendak",
+      "inLists": "Zerrenda hauetan",
+      "notInLists": "Beste zerrendak"
     },
     "attachments": {
       "name": ""
