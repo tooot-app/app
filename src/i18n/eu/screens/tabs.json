@@ -1,16 +1,16 @@
 {
   "tabs": {
     "local": {
-      "name": "",
+      "name": "Jarraitutakoak",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Erakutsi bultzadak",
+        "showReplies": "Erakutsi erantzunak"
       }
     },
     "public": {
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "Federatua",
+        "local": "Bertakoa",
         "explore": "Arakatu"
       },
       "exploring": {
@@ -25,99 +25,99 @@
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Jakinarazpenak"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Bilatu",
+      "accessibilityHint": "Bilatu traolak, erabiltzaileak edo tutak"
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
-      "title": ""
+      "accessibilityLabel": "Iragazi",
+      "accessibilityHint": "Iragazi erakutsitako jakinarazpenen motak",
+      "title": "Erakutsi jakinarazpenak"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Laster-markak"
       },
       "conversations": {
-        "name": ""
+        "name": "Mezu zuzenak"
       },
       "favourites": {
-        "name": ""
+        "name": "Gogokoak"
       },
       "followedTags": {
-        "name": ""
+        "name": "Jarraitutako traolak"
       },
       "fontSize": {
-        "name": ""
+        "name": "Tuten letra-tamaina"
       },
       "language": {
-        "name": ""
+        "name": "Hizkuntza"
       },
       "list": {
-        "name": ""
+        "name": "Zerrenda: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Zerrendako erabiltzaileak: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Sortu zerrenda"
       },
       "listEdit": {
-        "name": ""
+        "name": "Editatu zerrendaren xehetasunak"
       },
       "lists": {
-        "name": ""
+        "name": "Zerrendak"
       },
       "push": {
-        "name": ""
+        "name": "Push jakinarazpenak"
       },
       "preferences": {
-        "name": ""
+        "name": "Ezarpenak"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Edukien iragazi guztiak"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Sortu iragazkia"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Editatu iragazkia"
       },
       "profile": {
-        "name": ""
+        "name": "Editatu profila"
       },
       "profileName": {
-        "name": ""
+        "name": "Editatu bistaratutako izena"
       },
       "profileNote": {
-        "name": ""
+        "name": "Editatu deskribapena"
       },
       "profileFields": {
-        "name": ""
+        "name": "Editatu metadatuak"
       },
       "settings": {
-        "name": ""
+        "name": "Aplikazioaren ezarpenak"
       },
       "switch": {
-        "name": ""
+        "name": "Aldatu kontuz"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Tut hau proba bat da 😊. Azpiko aukera ugari erabil ditzakezu.<br /><br />Ezarpen honek soilik tuten eduki nagusian eragiten du, ez bestelakoen testu-tamainan.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Lehenetsia",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
