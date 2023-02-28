@@ -313,46 +313,46 @@
         "heading": "Administrazioa: izen-emateak"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Administrazioa: salaketak"
       },
-      "howitworks": ""
+      "howitworks": "Informazio gehiago push jakinarazpenen inguruan"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} irakurri gabe",
+          "read": "Dena irakurria",
+          "empty": "Bat ere ez"
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Gaituta",
+        "content_false": "Desgaituta"
       },
       "logout": {
-        "button": "",
+        "button": "Saioa amaitu",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Saioa amaitu?",
+          "message": "Saioa amaitu ondoren, berriro hasi behar duzu saioa",
           "buttons": {
-            "logout": ""
+            "logout": "Saioa amaitu"
           }
         }
       }
     },
     "settings": {
       "theme": {
-        "heading": "",
+        "heading": "Itxura",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "Sistemakoa",
+          "light": "Modu argia",
+          "dark": "Modu iluna"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Gai iluna",
         "options": {
-          "lighter": "",
+          "lighter": "Lehenetsia",
           "darker": ""
         }
       },
