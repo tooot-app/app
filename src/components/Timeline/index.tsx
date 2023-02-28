@@ -265,7 +265,7 @@ const Timeline: React.FC<Props> = ({
         initialNumToRender={3}
         maxToRenderPerBatch={2}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
-        onEndReachedThreshold={0.75}
+        onEndReachedThreshold={0.8}
         ListFooterComponent={
           <TimelineFooter queryKey={queryKey} disableInfinity={disableInfinity} />
         }
