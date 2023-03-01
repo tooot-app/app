@@ -86,7 +86,7 @@
         "name": ""
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Стварыць фільтр"
       },
       "preferencesFilterEdit": {
         "name": "Рэдагаваць фільтр"
@@ -104,14 +104,14 @@
         "name": "Рэдагаваць метаданыя"
       },
       "settings": {
-        "name": ""
+        "name": "Налады праграмы"
       },
       "switch": {
-        "name": ""
+        "name": "Змяніць уліковы запіс"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Гэта дэма допіс😊. Вы можаце выбраць адзін з некалькіх варыянтаў, прыведзеных ніжэй.<br /><br />Гэты параметр уплывае толькі на асноўны змест допісаў, але не на іншыя памеры шрыфтоў.</p>",
       "sizes": {
         "S": "S",
         "M": "M - Стандартны",
@@ -129,11 +129,11 @@
       "heading": "Рэдагаваць дэталі спісу",
       "title": "Назва",
       "repliesPolicy": {
-        "heading": "Адказы будуць бачныя для:",
+        "heading": "Паказваць адказы:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Нікому",
+          "list": "Удзельнікам спіса",
+          "followed": "Любому карыстальніку, на якога вы падпісаліся"
         }
       }
     },
@@ -267,12 +267,12 @@
     "push": {
       "notAvailable": "",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Уключыць push-апавяшчэнні",
+        "settings": "Уключыць у наладах"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Сервер няправільна наладжаны для push",
+        "description": "Звярніцеся да адміністратара вашага сервера, каб наладзіць падтрымку push"
       },
       "global": {
         "heading": "",
@@ -446,26 +446,26 @@
         "advanced": {
           "header": "",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Папулярныя тэгі"
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Карыстальнік",
+        "hashtags": "Хэштэг",
+        "statuses": "Допіс"
       },
       "notFound": "",
       "noResult": ""
     },
     "toot": {
-      "name": "",
+      "name": "Абмеркаванні",
       "remoteFetch": {
         "title": "",
         "message": ""
