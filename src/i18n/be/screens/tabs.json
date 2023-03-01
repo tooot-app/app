@@ -31,7 +31,7 @@
   "common": {
     "search": {
       "accessibilityLabel": "Пошук",
-      "accessibilityHint": ""
+      "accessibilityHint": "Шукаць па хэштэгах, карыстальніках ці допісах"
     }
   },
   "notifications": {
@@ -148,24 +148,24 @@
       "visibility": {
         "title": "",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Публічны",
+          "unlisted": "Прыватны",
+          "private": "Толькі для падпісчыкаў"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Прадвызначана пазначаць медыя як далікатныя"
       },
       "media": {
         "title": "",
         "options": {
           "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "show_all": "Заўсёды паказваць медыя",
+          "hide_all": "Заўсёды хаваць медыя"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Аўтаматычна разгортваць допісы з папярэджаннем аб змесце"
       },
       "autoplay_gifs": {
         "title": ""
