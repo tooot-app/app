@@ -83,7 +83,7 @@
         "name": "Параметры"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Усе фільтры змесціва"
       },
       "preferencesFilterAdd": {
         "name": "Стварыць фільтр"
@@ -171,11 +171,11 @@
         "title": ""
       },
       "filters": {
-        "title": "",
+        "title": "Фільтры змесціва",
         "content": ""
       },
       "web_only": {
-        "title": "",
+        "title": "Абнавіць налады",
         "description": ""
       }
     },
@@ -183,19 +183,19 @@
       "expired": "",
       "keywords_one": "",
       "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
+      "statuses_one": "{{count}} допіс",
+      "statuses_other": "{{count}} допісаў",
       "context": "",
       "contexts": {
         "home": "",
         "notifications": "",
         "public": "",
         "thread": "",
-        "account": ""
+        "account": "профіль"
       }
     },
     "preferencesFilter": {
-      "name": "",
+      "name": "Імя",
       "expiration": "Заканчэнне тэрміну дзеяння",
       "expirationOptions": {
         "0": "Ніколі",
@@ -249,18 +249,18 @@
           "total_other": ""
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Зрабіце ўліковы запіс прыватным",
+          "description": "Вам трэба будзе ўручную зацвярджаць новых падпісчыкаў"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Уліковы запіс бота",
+          "description": "Гэты ўліковы запіс у асноўным выконвае аўтаматызаваныя дзеянні і можа не кантралявацца"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Група {{index}}",
+        "label": "Назва",
+        "content": "Змесціва"
       },
       "mediaSelectionFailed": ""
     },
@@ -283,13 +283,13 @@
         "description": ""
       },
       "default": {
-        "heading": ""
+        "heading": "Прадвызначана"
       },
       "follow": {
-        "heading": ""
+        "heading": "Новыя падпісчыкі"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Запыты на падпіску"
       },
       "favourite": {
         "heading": ""
@@ -411,7 +411,7 @@
       "name": ""
     },
     "filter": {
-      "name": "",
+      "name": "Дадаць у фільтр",
       "existed": ""
     },
     "history": {
@@ -424,13 +424,13 @@
         "heading": "Ананімна пераслаць на аддалены сервер {{instance}}"
       },
       "reasons": {
-        "heading": "",
+        "heading": "Што не так з гэтым уліковым запісам?",
         "spam": "Гэта спам",
         "other": "Гэта нешта іншае",
         "violation": "Гэта парушае правілы сервера"
       },
       "comment": {
-        "heading": ""
+        "heading": "Вы хочаце яшчэ што-небудзь дадаць?"
       },
       "violatedRules": {
         "heading": "Парушэнне правіл сервера"
@@ -442,9 +442,9 @@
         "placeholder": "..."
       },
       "empty": {
-        "general": "",
+        "general": "Увядзіце ключавое слова для пошуку <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> або <bold> $t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Пашыраны пошук",
           "example": {
             "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
             "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
@@ -461,8 +461,8 @@
         "hashtags": "Хэштэг",
         "statuses": "Допіс"
       },
-      "notFound": "",
-      "noResult": ""
+      "notFound": "Немагчыма знайсці <bold>{{searchTerm}}</bold>, звязаны з {{type}}",
+      "noResult": "Нічога не знойдзена, паспрабуйце іншы тэрмін"
     },
     "toot": {
       "name": "Абмеркаванні",
