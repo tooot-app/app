@@ -11,16 +11,24 @@ export const updateExpoToken = async (): Promise<string> => {
     await setChannels()
   }
 
-  if (isDevelopment) {
-    setGlobalStorage('app.expo_token', 'ExponentPushToken[DEVELOPMENT_1]')
-    return 'ExponentPushToken[DEVELOPMENT_1]'
-  }
+  const getAndSetToken = () =>
+    Notifications.getExpoPushTokenAsync({
+      projectId: '3288313f-3ff0-496a-a5a9-d8985e7cad5f',
+      applicationId: 'com.xmflsct.app.tooot'
+    }).then(({ data }) => {
+      setGlobalStorage('app.expo_token', data)
+      return data
+    })
 
-  return await Notifications.getExpoPushTokenAsync({
-    experienceId: '@xmflsct/tooot',
-    applicationId: 'com.xmflsct.app.tooot'
-  }).then(({ data }) => {
-    setGlobalStorage('app.expo_token', data)
-    return data
-  })
+  if (expoToken?.length) {
+    getAndSetToken()
+    return Promise.resolve(expoToken)
+  } else {
+    if (isDevelopment) {
+      setGlobalStorage('app.expo_token', 'ExponentPushToken[DEVELOPMENT_1]')
+      return Promise.resolve('ExponentPushToken[DEVELOPMENT_1]')
+    }
+
+    return await getAndSetToken()
+  }
 }

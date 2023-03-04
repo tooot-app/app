@@ -454,11 +454,11 @@ PODS:
     - React-perflogger (= 0.71.3)
   - RNCAsyncStorage (1.17.11):
     - React-Core
-  - RNCClipboard (1.11.1):
+  - RNCClipboard (1.11.2):
     - React-Core
   - RNGestureHandler (2.9.0):
     - React-Core
-  - RNReanimated (3.0.0-rc.10):
+  - RNReanimated (3.0.1):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -488,16 +488,16 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (5.0.0):
+  - RNSentry (5.1.0):
     - React-Core
-    - Sentry/HybridSDK (= 8.0.0)
+    - Sentry/HybridSDK (= 8.2.0)
   - RNShareMenu (6.0.0):
     - React
   - RNSVG (13.8.0):
     - React-Core
-  - SDWebImage (5.15.4):
-    - SDWebImage/Core (= 5.15.4)
-  - SDWebImage/Core (5.15.4)
+  - SDWebImage (5.15.5):
+    - SDWebImage/Core (= 5.15.5)
+  - SDWebImage/Core (5.15.5)
   - SDWebImageAVIFCoder (0.9.5):
     - libavif (>= 0.9.1)
     - SDWebImage (~> 5.10)
@@ -506,9 +506,9 @@ PODS:
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
-  - Sentry/HybridSDK (8.0.0):
-    - SentryPrivate (= 8.0.0)
-  - SentryPrivate (8.0.0)
+  - Sentry/HybridSDK (8.2.0):
+    - SentryPrivate (= 8.2.0)
+  - SentryPrivate (8.2.0)
   - Swime (3.0.6)
   - Yoga (1.14.0)
 
@@ -837,19 +837,19 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7bf0dafc7b727d93c8cb94eb00a9d3753c446c3e
   ReactCommon: 6f65ea5b7d84deb9e386f670dd11ce499ded7b40
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
-  RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
+  RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
-  RNReanimated: fbc356493970e3acddc15586b1bccb5eab3ff1ec
+  RNReanimated: 42295301c43f974340a510ba18d5a2031c191c30
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: eff1f32fe84682feb09a36c5e5f513d6ef964b70
+  RNSentry: bf01c99057573813a9b965d213801bac4c6a661b
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
-  SDWebImage: 1c39de67663e5eebb2f41324d5d580eeea12dd4c
+  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SDWebImageAVIFCoder: d759e21cf4efb640cc97250566aa556ad8bb877c
   SDWebImageSVGCoder: 6fc109f9c2a82ab44510fff410b88b1a6c271ee8
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
-  Sentry: 2158a4621096dcd0a3a4f7c80b84b04dde261035
-  SentryPrivate: 1e3acf96ee818a8d0d95b8e922d39ab6be338ea0
+  Sentry: cf1d35c866266da58964fe7b62526bda93ffcb38
+  SentryPrivate: 2909bcc7b19a827b49e9bde0e56116b08d40dfdf
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   Yoga: 5ed1699acbba8863755998a4245daa200ff3817b
 
