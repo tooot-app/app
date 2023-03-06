@@ -146,7 +146,7 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Прадвызначаная бачнасць допісаў",
         "options": {
           "public": "Публічны",
           "unlisted": "Прыватны",
@@ -157,9 +157,9 @@
         "title": "Прадвызначана пазначаць медыя як далікатныя"
       },
       "media": {
-        "title": "",
+        "title": "Паказ медыя",
         "options": {
-          "default": "",
+          "default": "Схаваць медыя, пазначаныя як далікатныя",
           "show_all": "Заўсёды паказваць медыя",
           "hide_all": "Заўсёды хаваць медыя"
         }
@@ -168,24 +168,24 @@
         "title": "Аўтаматычна разгортваць допісы з папярэджаннем аб змесце"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Аўтапрайграванне GIF у допісах"
       },
       "filters": {
         "title": "Фільтры змесціва",
-        "content": ""
+        "content": "{{count}} актыўны"
       },
       "web_only": {
         "title": "Абнавіць налады",
-        "description": ""
+        "description": "Наступныя налады можна абнавіць толькі праз вэб-інтэрфейс"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
+      "expired": "Тэрмін дзеяння скончыўся",
+      "keywords_one": "{{count}} ключавое слова",
+      "keywords_other": "{{count}} ключавых слоў",
       "statuses_one": "{{count}} допіс",
       "statuses_other": "{{count}} допісаў",
-      "context": "",
+      "context": "Ужываецца ў <0 />",
       "contexts": {
         "home": "",
         "notifications": "",
@@ -210,7 +210,7 @@
       "contexts": {
         "home": "",
         "notifications": "Апавяшчэнне",
-        "public": "",
+        "public": "Глабальная стужка",
         "thread": "",
         "account": ""
       },
@@ -400,7 +400,7 @@
         "default": "Допісы",
         "all": "Допісы і адказы"
       },
-      "suspended": ""
+      "suspended": "Уліковы запіс прыпынены мадэратарамі вашага сервера"
     },
     "accountInLists": {
       "name": "Спісы @{{username}}",
@@ -408,7 +408,7 @@
       "notInLists": "Іншыя спісы"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1> медыя</1>"
     },
     "filter": {
       "name": "Дадаць у фільтр",
