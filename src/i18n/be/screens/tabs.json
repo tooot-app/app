@@ -37,7 +37,7 @@
   "notifications": {
     "filters": {
       "accessibilityLabel": "Фільтр",
-      "accessibilityHint": "",
+      "accessibilityHint": "Адфільтраваць тыпы апавяшчэнняў, якія паказваюцца",
       "title": "Паказваць апавяшчэнні"
     }
   },
@@ -141,7 +141,7 @@
       "heading": "Выдаліць спіс",
       "confirm": {
         "title": "Выдаліць спіс \"{{list}}\"?",
-        "message": ""
+        "message": "Гэта дзеянне нельга будзе адмяніць."
       }
     },
     "preferences": {
