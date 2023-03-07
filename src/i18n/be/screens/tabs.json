@@ -187,10 +187,10 @@
       "statuses_other": "{{count}} допісаў",
       "context": "Ужываецца ў <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
+        "home": "падпіскі і спісы",
+        "notifications": "апавяшчэнне",
+        "public": "глабальнае",
+        "thread": "размова",
         "account": "профіль"
       }
     },
@@ -206,31 +206,31 @@
         "604800": "Праз 1 тыдзень",
         "18144000": "Праз 1 месяц"
       },
-      "context": "",
+      "context": "Ужываецца ў",
       "contexts": {
-        "home": "",
+        "home": "Падпіскі і спісы",
         "notifications": "Апавяшчэнне",
         "public": "Глабальная стужка",
-        "thread": "",
-        "account": ""
+        "thread": "Выгляд размовы",
+        "account": "Выгляд профілю"
       },
-      "action": "",
+      "action": "Пры супадзенні",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Згорнуты, але можа быць раскрыты",
+        "hide": "Цалкам схаваны"
       },
       "keywords": "",
-      "keyword": "",
+      "keyword": "Ключавое слова",
       "statuses": ""
     },
     "profile": {
       "feedback": {
-        "succeed": "",
+        "succeed": "{{type}} абноўлена",
         "failed": ""
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Бачная назва"
         },
         "avatar": {
           "title": "Аватар",
@@ -245,8 +245,8 @@
         },
         "fields": {
           "title": "Метаданыя",
-          "total_one": "",
-          "total_other": ""
+          "total_one": "{{count}} поле",
+          "total_other": "{{count}} палей"
         },
         "lock": {
           "title": "Зрабіце ўліковы запіс прыватным",
@@ -265,7 +265,7 @@
       "mediaSelectionFailed": ""
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Ваш тэлефон не падтрымлівае push-апавяшчэнні",
       "enable": {
         "direct": "Уключыць push-апавяшчэнні",
         "settings": "Уключыць у наладах"
