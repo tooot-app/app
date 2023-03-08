@@ -2,6 +2,7 @@ import * as Localization from 'expo-localization'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+import be from './be'
 import ca from './ca'
 import de from './de'
 import en from './en'
@@ -23,6 +24,7 @@ import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'
 
 import '@formatjs/intl-pluralrules/polyfill'
+import '@formatjs/intl-pluralrules/locale-data/be'
 import '@formatjs/intl-pluralrules/locale-data/ca'
 import '@formatjs/intl-pluralrules/locale-data/de'
 import '@formatjs/intl-pluralrules/locale-data/en'
@@ -40,6 +42,7 @@ import '@formatjs/intl-pluralrules/locale-data/vi'
 import '@formatjs/intl-pluralrules/locale-data/zh'
 
 import '@formatjs/intl-numberformat/polyfill'
+import '@formatjs/intl-numberformat/locale-data/be'
 import '@formatjs/intl-numberformat/locale-data/ca'
 import '@formatjs/intl-numberformat/locale-data/de'
 import '@formatjs/intl-numberformat/locale-data/en'
@@ -59,6 +62,7 @@ import '@formatjs/intl-numberformat/locale-data/zh-Hant'
 
 import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/add-all-tz'
+import '@formatjs/intl-datetimeformat/locale-data/be'
 import '@formatjs/intl-datetimeformat/locale-data/ca'
 import '@formatjs/intl-datetimeformat/locale-data/de'
 import '@formatjs/intl-datetimeformat/locale-data/en'
@@ -77,6 +81,7 @@ import '@formatjs/intl-datetimeformat/locale-data/zh-Hans'
 import '@formatjs/intl-datetimeformat/locale-data/zh-Hant'
 
 import '@formatjs/intl-relativetimeformat/polyfill'
+import '@formatjs/intl-relativetimeformat/locale-data/be'
 import '@formatjs/intl-relativetimeformat/locale-data/ca'
 import '@formatjs/intl-relativetimeformat/locale-data/de'
 import '@formatjs/intl-relativetimeformat/locale-data/en'
@@ -102,6 +107,7 @@ i18n.use(initReactI18next).init({
   defaultNS: 'common',
 
   resources: {
+    be,
     ca,
     de,
     en,

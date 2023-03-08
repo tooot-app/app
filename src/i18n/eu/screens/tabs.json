@@ -1,16 +1,16 @@
 {
   "tabs": {
     "local": {
-      "name": "",
+      "name": "Jarraitutakoak",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Erakutsi bultzadak",
+        "showReplies": "Erakutsi erantzunak"
       }
     },
     "public": {
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "Federatua",
+        "local": "Bertakoa",
         "explore": "Arakatu"
       },
       "exploring": {
@@ -25,99 +25,99 @@
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Jakinarazpenak"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Bilatu",
+      "accessibilityHint": "Bilatu traolak, erabiltzaileak edo tutak"
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
-      "title": ""
+      "accessibilityLabel": "Iragazi",
+      "accessibilityHint": "Iragazi erakutsitako jakinarazpenen motak",
+      "title": "Erakutsi jakinarazpenak"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Laster-markak"
       },
       "conversations": {
-        "name": ""
+        "name": "Mezu zuzenak"
       },
       "favourites": {
-        "name": ""
+        "name": "Gogokoak"
       },
       "followedTags": {
-        "name": ""
+        "name": "Jarraitutako traolak"
       },
       "fontSize": {
-        "name": ""
+        "name": "Tuten letra-tamaina"
       },
       "language": {
-        "name": ""
+        "name": "Hizkuntza"
       },
       "list": {
-        "name": ""
+        "name": "Zerrenda: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Zerrendako erabiltzaileak: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Sortu zerrenda"
       },
       "listEdit": {
-        "name": ""
+        "name": "Editatu zerrendaren xehetasunak"
       },
       "lists": {
-        "name": ""
+        "name": "Zerrendak"
       },
       "push": {
-        "name": ""
+        "name": "Push jakinarazpenak"
       },
       "preferences": {
-        "name": ""
+        "name": "Ezarpenak"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Edukien iragazi guztiak"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Sortu iragazkia"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Editatu iragazkia"
       },
       "profile": {
-        "name": ""
+        "name": "Editatu profila"
       },
       "profileName": {
-        "name": ""
+        "name": "Editatu bistaratutako izena"
       },
       "profileNote": {
-        "name": ""
+        "name": "Editatu deskribapena"
       },
       "profileFields": {
-        "name": ""
+        "name": "Editatu metadatuak"
       },
       "settings": {
-        "name": ""
+        "name": "Aplikazioaren ezarpenak"
       },
       "switch": {
-        "name": ""
+        "name": "Aldatu kontuz"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Tut hau proba bat da 😊. Azpiko aukera ugari erabil ditzakezu.<br /><br />Ezarpen honek soilik tuten eduki nagusian eragiten du, ez bestelakoen testu-tamainan.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Lehenetsia",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
@@ -185,17 +185,17 @@
       "keywords_other": "{{count}} gako-hitz",
       "statuses_one": "Tut {{count}}",
       "statuses_other": "{{count}} tut",
-      "context": "",
+      "context": "<0 />-(e)tarako aplikatzen da",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "jarraitutakoak eta zerrendak",
+        "notifications": "jakinarazpenak",
+        "public": "federatua",
+        "thread": "elkarrizketa",
+        "account": "profila"
       }
     },
     "preferencesFilter": {
-      "name": "",
+      "name": "Izena",
       "expiration": "",
       "expirationOptions": {
         "0": "",
@@ -289,123 +289,123 @@
         "heading": ""
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Jarraitzeko eskaera"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Gogokoak"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Bultzada"
       },
       "mention": {
-        "heading": ""
+        "heading": "Zuri eginiko aipamena"
       },
       "poll": {
-        "heading": ""
+        "heading": "Bozketen eguneraketak"
       },
       "status": {
-        "heading": ""
+        "heading": "Harpidetutako erabiltzaileen tutak"
       },
       "update": {
-        "heading": ""
+        "heading": "Bultzada editatua izan da"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Administrazioa: izen-emateak"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Administrazioa: salaketak"
       },
-      "howitworks": ""
+      "howitworks": "Informazio gehiago push jakinarazpenen inguruan"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} irakurri gabe",
+          "read": "Dena irakurria",
+          "empty": "Bat ere ez"
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Gaituta",
+        "content_false": "Desgaituta"
       },
       "logout": {
-        "button": "",
+        "button": "Saioa amaitu",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Saioa amaitu?",
+          "message": "Saioa amaitu ondoren, berriro hasi behar duzu saioa",
           "buttons": {
-            "logout": ""
+            "logout": "Saioa amaitu"
           }
         }
       }
     },
     "settings": {
       "theme": {
-        "heading": "",
+        "heading": "Itxura",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "Sistemakoa",
+          "light": "Modu argia",
+          "dark": "Modu iluna"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Gai iluna",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Lehenetsia",
+          "darker": "Beltz-beltza"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Estekak ireki",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "Aplikazio barruan",
+          "external": "Sistemako nabigatzailearekin"
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Automatikoki erreproduzitu GIFak"
       },
       "feedback": {
-        "heading": ""
+        "heading": "Proposamenak"
       },
       "support": {
-        "heading": ""
+        "heading": "tooot lagundu"
       },
       "contact": {
-        "heading": ""
+        "heading": "tooot-ekin harremanetan jarri"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "v{{version}} bertsioa",
+      "instanceVersion": "Mastodonen v{{version}} bertsioa"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Aukeratu saioa hasita dutenetatik",
+      "new": "Saioa hasi instantzian"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "{{user}} erabiltzailearekiko ekintzak",
+        "accessibilityHint": "Erabiltzaile hau mututu, blokeatu, salatu edo partekatu dezakezu"
       },
-      "followed_by": "",
-      "privateNote": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " jarraitzen zaitu",
+      "privateNote": "Ezarri ohar pribatua",
+      "moved": "Erabiltzailea mugitu da",
+      "created_at": "Bateratze-data: {{date}}",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} tut"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Tutak",
+        "all": "Tutak eta erantzunak"
       },
-      "suspended": ""
+      "suspended": "Kontu hau bertan behera utzi dute zure zerbitzariko moderatzaileek"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "@{{username}}-(r)en zerrendak",
+      "inLists": "Zerrenda hauetan",
+      "notInLists": "Beste zerrendak"
     },
     "attachments": {
       "name": ""
