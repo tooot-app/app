@@ -70,6 +70,7 @@
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = tooot/SplashScreen.storyboard; sourceTree = "<group>"; };
 		DF8133F098604A10B0D94952 /* boop.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = boop.mp3; path = tooot/boop.mp3; sourceTree = "<group>"; };
 		E613A80A28282A01003C97D6 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = tooot/AppDelegate.mm; sourceTree = "<group>"; };
+		E6179D6E29B94551001930D5 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6217B7E293C1EBF00B1755E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E633A420281EAEAB000E540F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E633A427281EAEAB000E540F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -302,6 +303,7 @@
 				ca,
 				uk,
 				nb,
+				be,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -536,6 +538,7 @@
 				E6A4895D293C1F740047951A /* ca */,
 				E6D64C7A294A90840098F3AC /* uk */,
 				E6FD3AA7299EE8A900774C18 /* nb */,
+				E6179D6E29B94551001930D5 /* be */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
