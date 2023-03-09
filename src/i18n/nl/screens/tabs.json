@@ -19,8 +19,8 @@
         "followRemote": "Volg externe server",
         "noTitle": "Geen Titel",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Je volgt deze externe instantie al.",
+          "notAvailable": "De tijdlijn van deze instantie is niet publiek toegankelijk. Probeer een andere instantie."
         }
       }
     },

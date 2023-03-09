@@ -17,40 +17,40 @@
     },
     "followAs": {
       "trigger": "Honela jarraitu...",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "succeed_default": "Orain @{{target}} jarraitzen duzu @{{source}} bezala",
+      "succeed_locked": "@{{target}}-(r)i jarraitzeko eskaera bidali diozu {{source}} bezala, onarpena itxaroten",
+      "failed": "Jarraitu honela"
     },
     "blockReport": "Blokeatu eta salatu",
     "block": {
-      "action_false": "",
-      "action_true": "",
+      "action_false": "Blokeatu erabiltzailea",
+      "action_true": "Desblokeatu erabiltzailea",
       "alert": {
-        "title": ""
+        "title": "@{{username}} erabiltzailea blokeatzea berresten duzu?"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Salatu eta blokeatu erabiltzailea",
       "alert": {
-        "title": ""
+        "title": "@{{username}} erabiltzailea salatzea eta blokeatzea berresten duzu?"
       }
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Mezu zuzena",
+    "public": "Mezu publikoa"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Kopiatu tuta",
+    "succeed": "Kopiatuta"
   },
   "instance": {
-    "title": "",
+    "title": "Instantziarekiko ekintza",
     "block": {
-      "action": "",
+      "action": "Blokeatu {{instance}} instantzia",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "{{instance}} instantzia blokeatzea berresten duzu?",
+        "message": "Erabiltzaile konkretu bat mututu edo blokeatu dezakezu.\n\nInstantzia blokeatu ondoren, horren eduki osoa, baita instantzia horretan dituzun jarraitzaileak ere ezabatuak izango dira!"
       }
     }
   },
@@ -65,21 +65,21 @@
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Partekatu tuta"
     },
     "account": {
-      "action": ""
+      "action": "Partekatu erabiltzailea"
     }
   },
   "status": {
-    "title": "",
+    "title": "Tutarekiko ekintzak",
     "edit": {
-      "action": ""
+      "action": "Editatu tuta"
     },
     "delete": {
-      "action": "",
+      "action": "Ezabatu tuta",
       "alert": {
-        "title": "",
+        "title": "Ezabaketa berretsi?",
         "message": ""
       }
     },

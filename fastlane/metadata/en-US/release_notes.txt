@@ -1,4 +1,2 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Added following remote instance
-- Added set note of followed users
-- Best effort load remote user's toots
+- Added Belarusian language

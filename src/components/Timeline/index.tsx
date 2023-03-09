@@ -42,7 +42,6 @@ export interface Props {
     'notifyOnChangeProps' | 'getNextPageParam' | 'getPreviousPageParam' | 'select' | 'onSuccess'
   >
   disableRefresh?: boolean
-  refreshAutoRefetch?: boolean
   disableInfinity?: boolean
   readMarker?: 'read_marker_following'
   customProps?: Partial<FlatListProps<any>>
@@ -53,7 +52,6 @@ const Timeline: React.FC<Props> = ({
   queryKey,
   queryOptions,
   disableRefresh = false,
-  refreshAutoRefetch = true,
   disableInfinity = false,
   readMarker = undefined,
   customProps
@@ -156,7 +154,6 @@ const Timeline: React.FC<Props> = ({
       if (
         curr === true &&
         prev === false &&
-        refreshAutoRefetch &&
         !isFetchingPrev.value &&
         fetchingType.value === 0 &&
         shouldAutoFetch.value &&
@@ -268,7 +265,7 @@ const Timeline: React.FC<Props> = ({
         initialNumToRender={3}
         maxToRenderPerBatch={2}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
-        onEndReachedThreshold={0.75}
+        onEndReachedThreshold={0.8}
         ListFooterComponent={
           <TimelineFooter queryKey={queryKey} disableInfinity={disableInfinity} />
         }

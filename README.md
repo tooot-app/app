@@ -11,6 +11,7 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 ## Special thanks
 
+- [@dzmitry.zubialevich](https://crowdin.com/profile/dzmitry.zubialevich) for Belarusian translation
 - [@amrtf](https://crowdin.com/profile/amrtf) for Catalan and Spanish translation
 - [@forenta](https://github.com/forenta) for German translation
 - [@pat](https://piaille.fr/@pat) for French translation

@@ -1,17 +1,17 @@
 {
   "screenshot": {
-    "title": "",
-    "message": ""
+    "title": "Pribatutasun-babesa",
+    "message": "Mesedez, ez ezagutarazi besteen identitatea, adibidez: erabiltzailea, abatarra, etab. Eskerrik asko!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Saioa iraungita, mesedez, hasi saioa berriro"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Push zerbitzuaren errorea",
+    "description": "Mesedez, gaitu berriro push jakinarazpenak ezarpenetan"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "{{type}} irudi-mota ez da bateragarria",
+    "videoNotSupported": "{{type}} bideo-mota ez da bateragarria"
   }
 }

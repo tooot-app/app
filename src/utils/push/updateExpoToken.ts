@@ -11,7 +11,18 @@ export const updateExpoToken = async (): Promise<string> => {
     await setChannels()
   }
 
+  const getAndSetToken = () =>
+    Notifications.getExpoPushTokenAsync({
+      projectId: '3288313f-3ff0-496a-a5a9-d8985e7cad5f',
+      applicationId: 'com.xmflsct.app.tooot',
+      devicePushToken: { type: Platform.OS === 'android' ? 'android' : 'ios', data: 'unknown' }
+    }).then(({ data }) => {
+      setGlobalStorage('app.expo_token', data)
+      return data
+    })
+
   if (expoToken?.length) {
+    getAndSetToken()
     return Promise.resolve(expoToken)
   } else {
     if (isDevelopment) {
@@ -19,12 +30,6 @@ export const updateExpoToken = async (): Promise<string> => {
       return Promise.resolve('ExponentPushToken[DEVELOPMENT_1]')
     }
 
-    return await Notifications.getExpoPushTokenAsync({
-      experienceId: '@xmflsct/tooot',
-      applicationId: 'com.xmflsct.app.tooot'
-    }).then(({ data }) => {
-      setGlobalStorage('app.expo_token', data)
-      return data
-    })
+    return await getAndSetToken()
   }
 }
