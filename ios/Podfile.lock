@@ -340,7 +340,7 @@ PODS:
     - glog
   - react-native-blur (4.3.0):
     - React-Core
-  - react-native-cameraroll (5.2.4):
+  - react-native-cameraroll (5.3.0):
     - React-Core
   - react-native-image-picker (5.1.0):
     - React-Core
@@ -812,7 +812,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 1f51e775819199d3fe9410e69ee8d4c4161c7b06
   React-logger: 0d58569ec51d30d1792c5e86a8e3b78d24b582c6
   react-native-blur: 50c9feabacbc5f49b61337ebc32192c6be7ec3c3
-  react-native-cameraroll: cb752fda6d5268f1646b4390bd5be1f27706b9a0
+  react-native-cameraroll: a05136a5e648c35f2e8cced939ba85966e3bba8e
   react-native-image-picker: c33d4e79f0a14a2b66e5065e14946ae63749660b
   react-native-ios-context-menu: e529171ba760a1af7f2ef0729f5a7f4d226171c5
   react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0

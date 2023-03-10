@@ -105,7 +105,7 @@ const TimelineHeaderDefault: React.FC = () => {
                           case 'sub':
                             return (
                               // @ts-ignore
-                              <DropdownMenu.Sub key={item}>
+                              <DropdownMenu.Sub key={item.key}>
                                 <DropdownMenu.SubTrigger
                                   key={item.trigger.key}
                                   {...item.trigger.props}
