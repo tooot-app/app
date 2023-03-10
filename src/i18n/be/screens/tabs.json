@@ -262,7 +262,7 @@
         "label": "Назва",
         "content": "Змесціва"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Збой апрацоўкі відарыса. Паспрабуйце яшчэ раз."
     },
     "push": {
       "notAvailable": "Ваш тэлефон не падтрымлівае push-апавяшчэнні",
@@ -275,11 +275,11 @@
         "description": "Звярніцеся да адміністратара вашага сервера, каб наладзіць падтрымку push"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Уключыць для {{acct}}",
+        "description": "Паведамленні накіроўваюцца праз сервер tooot"
       },
       "decode": {
-        "heading": "",
+        "heading": "Паказаць дэталі паведамлення",
         "description": ""
       },
       "default": {
@@ -292,37 +292,37 @@
         "heading": "Запыты на падпіску"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Дадаў у абранае"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Пашырыў"
       },
       "mention": {
-        "heading": ""
+        "heading": "Згадаў вас"
       },
       "poll": {
-        "heading": ""
+        "heading": "Абнаўленні апытання"
       },
       "status": {
-        "heading": ""
+        "heading": "Допіс ад падпісаных карыстальнікаў"
       },
       "update": {
-        "heading": ""
+        "heading": "Пашырэнне было адрэдагавана"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Адміністраванне: рэгістрацыя"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Адміністраванне: скаргі"
       },
-      "howitworks": ""
+      "howitworks": "Даведацца, як працуе маршрутызацыя"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} непрачытаных",
+          "read": "Усё прачытана",
+          "empty": "Няма"
         }
       },
       "push": {
@@ -344,7 +344,7 @@
       "theme": {
         "heading": "Знешні выгляд",
         "options": {
-          "auto": "",
+          "auto": "Як у сістэме",
           "light": "Светлы рэжым",
           "dark": "Цёмны рэжым"
         }
@@ -364,18 +364,18 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Аўтапрайграванне GIF у стужцы"
       },
       "feedback": {
-        "heading": ""
+        "heading": "Прапанаваць ідэю"
       },
       "support": {
-        "heading": ""
+        "heading": "Падтрымаць tooot"
       },
       "contact": {
-        "heading": ""
+        "heading": "Звязацца з tooot"
       },
-      "version": "",
+      "version": "Версія: {{version}}",
       "instanceVersion": "Версія Mastodon: v{{version}}"
     },
     "switch": {
@@ -419,7 +419,7 @@
     },
     "report": {
       "name": "",
-      "report": "",
+      "report": "Скарга",
       "forward": {
         "heading": "Ананімна пераслаць на аддалены сервер {{instance}}"
       },
