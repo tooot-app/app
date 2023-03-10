@@ -392,7 +392,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                       StyleConstants.Spacing.S
               }
             />
-            {leadingItem._level > 1
+            {Platform.OS !== 'android' && leadingItem._level > 1
               ? [...new Array(leadingItem._level - 1)].map((_, i) => (
                   <Svg key={i} style={{ position: 'absolute', top: -1 }}>
                     <Path
