@@ -33,7 +33,7 @@ type ContextMenuItem = {
     hidden: boolean
   }
   title: string
-  icon?: string
+  icon?: any
 }
 
 type ContextMenuSub = {
@@ -47,7 +47,7 @@ type ContextMenuSub = {
       hidden: boolean
     }
     title: string
-    icon?: string
+    icon?: any
   }
   items: Omit<ContextMenuItem, 'type'>[]
 }

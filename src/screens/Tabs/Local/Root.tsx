@@ -152,7 +152,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                         hidden: false
                       },
                       title: list.title,
-                      icon: 'list.bullet'
+                      icon: 'list.bullet' as any
                     }))
                   ].map(menu => (
                     <DropdownMenu.Item key={menu.key} {...menu.item}>

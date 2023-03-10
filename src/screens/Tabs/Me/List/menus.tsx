@@ -7,7 +7,7 @@ export const menuListAccounts = ({ list }: { list: Mastodon.List }) => ({
   key: 'list-accounts',
   onSelect: () => navigationRef.navigate<any>('Tab-Me-List-Accounts', list),
   title: i18next.t('screenTabs:me.listAccounts.heading'),
-  icon: 'person.crop.circle.fill.badge.checkmark'
+  icon: 'person.crop.circle.fill.badge.checkmark' as any
 })
 
 export const menuListEdit = ({ list, key }: { list: Mastodon.List; key: string }) => ({
@@ -19,7 +19,7 @@ export const menuListEdit = ({ list, key }: { list: Mastodon.List; key: string }
       key
     }),
   title: i18next.t('screenTabs:me.listEdit.heading'),
-  icon: 'square.and.pencil'
+  icon: 'square.and.pencil' as any
 })
 
 export const menuListDelete = ({
@@ -44,5 +44,5 @@ export const menuListDelete = ({
       ]
     ),
   title: i18next.t('screenTabs:me.listDelete.heading'),
-  icon: 'trash'
+  icon: 'trash' as any
 })

@@ -37,6 +37,9 @@ const TabMePush: React.FC = () => {
 
   const appsQuery = useAppsQuery()
 
+  const [pushEnabled, setPushEnabled] = useState<boolean>()
+  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
+
   const checkPush = async () => {
     const permissions = await Notifications.getPermissionsAsync()
     setPushEnabled(permissions.granted)
@@ -48,14 +51,14 @@ const TabMePush: React.FC = () => {
     checkPush()
   }, [])
   useEffect(() => {
+    checkPush()
+  }, [pushEnabled])
+  useEffect(() => {
     const subscription = AppState.addEventListener('change', checkPush)
     return () => {
       subscription.remove()
     }
   }, [])
-
-  const [pushEnabled, setPushEnabled] = useState<boolean>()
-  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
 
   const alerts = () =>
     push?.alerts
@@ -121,7 +124,7 @@ const TabMePush: React.FC = () => {
     <ScrollView>
       {!!appsQuery.data?.vapid_key ? (
         <>
-          {!!expoToken?.length ? (
+          {!!expoToken?.length || (!expoToken?.length && !pushEnabled) ? (
             <>
               {pushEnabled === false ? (
                 <MenuContainer>
