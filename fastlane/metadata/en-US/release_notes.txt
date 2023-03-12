@@ -1,2 +1,1 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Added Belarusian language
