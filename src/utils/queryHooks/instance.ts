@@ -9,13 +9,22 @@ export type QueryKeyInstance = ['Instance'] | ['Instance', { domain?: string }]
 
 const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyInstance>) => {
   const domain = queryKey[1]?.domain
+
+  const checkV2Format = (body: Mastodon.Instance_V2) => {
+    if (body.version) {
+      return body
+    } else {
+      throw new Error('Instance v2 format error')
+    }
+  }
+
   if (domain) {
     return await apiGeneral<Mastodon.Instance<'v2'>>({
       method: 'get',
       domain,
       url: 'api/v2/instance'
     })
-      .then(res => res.body)
+      .then(res => checkV2Format(res.body))
       .catch(
         async () =>
           await apiGeneral<Mastodon.Instance<'v1'>>({
@@ -32,7 +41,7 @@ const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyInstance
           version: 'v2',
           url: 'instance'
         })
-          .then(res => res.body)
+          .then(res => checkV2Format(res.body))
           .catch(
             async () =>
               await apiInstance<Mastodon.Instance<'v1'>>({
