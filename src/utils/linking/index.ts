@@ -7,7 +7,9 @@ import { useEffect } from 'react'
 // /compose OR /compose/@username@example.com
 
 export const useLinking = () => {
-  const parseLink = async (link: string) => {
+  const parseLink = async (link: string | null) => {
+    if (!link) return
+
     const parsed = Linking.parse(link)
 
     switch (parsed.scheme) {
