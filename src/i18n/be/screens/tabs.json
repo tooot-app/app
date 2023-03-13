@@ -226,7 +226,7 @@
     "profile": {
       "feedback": {
         "succeed": "{{type}} абноўлена",
-        "failed": ""
+        "failed": "Збой абнаўлення {{type}}, паспрабуйце яшчэ раз"
       },
       "root": {
         "name": {
@@ -386,10 +386,10 @@
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
+        "accessibilityLabel": "Дзеянні для карыстальніка {{user}}",
         "accessibilityHint": ""
       },
-      "followed_by": "",
+      "followed_by": " падпісаны на вас",
       "privateNote": "",
       "moved": "",
       "created_at": "",
@@ -418,7 +418,7 @@
       "name": "Гісторыя рэдагавання"
     },
     "report": {
-      "name": "",
+      "name": "Паскардзіцца на {{acct}}",
       "report": "Скарга",
       "forward": {
         "heading": "Ананімна пераслаць на аддалены сервер {{instance}}"
@@ -473,12 +473,12 @@
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "Падпіскі {{count}}",
+        "followers": "{{count}} падпісчыкаў"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} пашырэнняў",
+        "favourited_by": "{{count}} дадалі ў абранае"
       },
       "resultIncomplete": "Вынікі з аддаленага інстанса няпоўныя"
     }
