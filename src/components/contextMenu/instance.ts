@@ -2,9 +2,9 @@ import { displayMessage } from '@components/Message'
 import { useQueryClient } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { getAccountStorage } from '@utils/storage/actions'
+import * as Linking from 'expo-linking'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import parse from 'url-parse'
 
 const menuInstance = ({
   status,
@@ -32,9 +32,9 @@ const menuInstance = ({
 
   const menus: ContextMenu = []
 
-  const instance = parse(status.uri).hostname
+  const instance = Linking.parse(status.uri).hostname
 
-  if (instance !== getAccountStorage.string('auth.domain')) {
+  if (instance && instance !== getAccountStorage.string('auth.domain')) {
     menus.push([
       {
         type: 'item',

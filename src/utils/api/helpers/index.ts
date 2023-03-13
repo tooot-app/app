@@ -3,8 +3,8 @@ import { GLOBAL } from '@utils/storage'
 import { setGlobalStorage } from '@utils/storage/actions'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
+import * as Linking from 'expo-linking'
 import { Platform } from 'react-native'
-import parse from 'url-parse'
 
 const userAgent = {
   'User-Agent': `tooot/${Constants.expoConfig?.version} ${Platform.OS}/${Platform.Version}`
@@ -80,17 +80,22 @@ export const parseHeaderLinks = (headerLink?: string): PagedResponse['links'] =>
 
   const linkParsed = [...headerLink.matchAll(/<(\S+?)>; *rel="(next|prev)"/gi)]
   for (const link of linkParsed) {
-    const queries = parse(link[1], true).query
+    const queries = Linking.parse(link[1]).queryParams
+    if (!queries) return
+
     const isOffset = !!queries.offset?.length
+    const unwrapArray = (value: any | any[]) => (Array.isArray(value) ? value[0] : value)
 
     switch (link[2]) {
       case 'prev':
         const prevId = isOffset ? queries.offset : queries.min_id
-        if (prevId) links.prev = isOffset ? { offset: prevId } : { min_id: prevId }
+        if (prevId)
+          links.prev = isOffset ? { offset: unwrapArray(prevId) } : { min_id: unwrapArray(prevId) }
         break
       case 'next':
         const nextId = isOffset ? queries.offset : queries.max_id
-        if (nextId) links.next = isOffset ? { offset: nextId } : { max_id: nextId }
+        if (nextId)
+          links.next = isOffset ? { offset: unwrapArray(nextId) } : { max_id: unwrapArray(nextId) }
         break
     }
   }

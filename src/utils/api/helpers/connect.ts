@@ -2,7 +2,7 @@ import { mapEnvironment } from '@utils/helpers/checkEnvironment'
 import { GLOBAL } from '@utils/storage'
 import { setGlobalStorage } from '@utils/storage/actions'
 import axios from 'axios'
-import parse from 'url-parse'
+import * as Linking from 'expo-linking'
 import { userAgent } from '.'
 
 const list = [
@@ -86,21 +86,23 @@ export const connectMedia = (args?: {
 }): { uri?: string; headers?: { 'x-tooot-domain': string } } => {
   if (GLOBAL.connect) {
     if (args?.uri) {
-      const host = parse(args.uri).host
-      return {
-        ...args,
-        uri: args.uri.replace(
-          host,
-          CONNECT_DOMAIN(
-            args.uri
-              .split('')
-              .map(i => i.charCodeAt(0))
-              .reduce((a, b) => a + b, 0) %
-              (list.length + 1)
-          )
-        ),
-        headers: { 'x-tooot-domain': host }
-      }
+      const host = Linking.parse(args.uri).hostname
+      return host
+        ? {
+            ...args,
+            uri: args.uri.replace(
+              host,
+              CONNECT_DOMAIN(
+                args.uri
+                  .split('')
+                  .map(i => i.charCodeAt(0))
+                  .reduce((a, b) => a + b, 0) %
+                  (list.length + 1)
+              )
+            ),
+            headers: { 'x-tooot-domain': host }
+          }
+        : { ...args }
     } else {
       return { ...args }
     }
