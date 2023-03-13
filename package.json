@@ -1,6 +1,6 @@
 {
   "name": "tooot",
-  "version": "4.9.1",
+  "version": "4.9.2",
   "description": "tooot for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
   "license": "GPL-3.0-or-later",
@@ -88,7 +88,6 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.5.1",
     "rn-placeholder": "^3.0.3",
-    "url-parse": "^1.5.10",
     "zeego": "^1.3.1"
   },
   "devDependencies": {
@@ -102,7 +101,6 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/react-native-share-menu": "^5.0.2",
-    "@types/url-parse": "^1.4.8",
     "babel-plugin-module-resolver": "^5.0.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chalk": "^4.1.2",

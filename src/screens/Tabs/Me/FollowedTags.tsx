@@ -60,8 +60,8 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
             <Button
               type='text'
               content={t('componentContextMenu:hashtag.follow.action', {
-                defaultValue: 'fase',
-                context: 'false'
+                defaultValue: 'true',
+                context: 'true'
               })}
               onPress={() => mutation.mutate({ tag_name: item.name, to: !item.following })}
             />

@@ -7,6 +7,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImageViewer'
 import ScreenTabs from '@screens/Tabs'
+import { useLinking } from '@utils/linking'
 import navigationRef from '@utils/navigation/navigationRef'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
@@ -78,32 +79,8 @@ const Screens: React.FC = () => {
     }
   }
 
-  // Deep linking for compose
-  const [deeplinked, setDeeplinked] = useState(false)
-  useEffect(() => {
-    const getUrlAsync = async () => {
-      setDeeplinked(true)
-
-      const initialUrl = await Linking.parseInitialURLAsync()
-
-      if (initialUrl.path) {
-        const paths = initialUrl.path.split('/')
-
-        if (paths.length) {
-          if (accountActive && !accounts?.includes(accountActive)) {
-            setAccount(accountActive)
-          }
-        }
-      }
-
-      if (initialUrl.hostname === 'compose') {
-        navigationRef.navigate('Screen-Compose')
-      }
-    }
-    if (!deeplinked) {
-      getUrlAsync()
-    }
-  }, [accounts, accountActive, deeplinked])
+  // Deep linking
+  useLinking()
 
   // Share Extension
   const handleShare = (
