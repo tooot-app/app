@@ -5,6 +5,7 @@ import { useNeodbQuery } from '@utils/queryHooks/neodb'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Linking from 'expo-linking'
+import { useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Rating } from './Rating'
 
@@ -23,9 +24,9 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
 
   if (!data) return null
 
-  const pressableDefaults = {
+  const pressableProps = {
     style: {
-      marginTop: StyleConstants.Spacing.S,
+      marginTop: StyleConstants.Spacing.M,
       backgroundColor: colors.shimmerDefault,
       borderRadius: StyleConstants.BorderRadius,
       padding: StyleConstants.Spacing.S,
@@ -33,6 +34,9 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
     },
     onPress: () => openLink(card.url)
   }
+  const contentProps = { style: { flex: 1, gap: StyleConstants.Spacing.S } }
+
+  const [headingLines, setHeadingLines] = useState(3)
 
   const itemImage = data.cover_image_url ? (
     <GracefullyImage
@@ -53,13 +57,14 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
       style={{ color: colors.primaryDefault }}
       numberOfLines={3}
       children={value}
+      onTextLayout={({ nativeEvent }) => setHeadingLines(nativeEvent.lines.length)}
     />
   )
   const itemDetails = (value: string) => (
     <CustomText
       fontStyle='S'
       style={{ color: colors.secondary }}
-      numberOfLines={1}
+      numberOfLines={4 - headingLines}
       children={value}
     />
   )
@@ -67,9 +72,9 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
   switch (segments[0]) {
     case 'movie':
       return (
-        <Pressable {...pressableDefaults}>
+        <Pressable {...pressableProps}>
           {itemImage}
-          <View style={{ flex: 1, gap: StyleConstants.Spacing.S }}>
+          <View {...contentProps}>
             {itemHeading(
               [data.title, data.orig_title, data.year ? `(${data.year})` : null]
                 .filter(d => d)
@@ -78,7 +83,11 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
             <Rating rating={data.rating / 2} />
             {itemDetails(
               [
-                data.duration ? `${data.duration}分钟` : null,
+                data.duration
+                  ? parseInt(data.duration).toString() === data.duration
+                    ? `${data.duration}分钟`
+                    : data.duration
+                  : null,
                 data.area?.join(' '),
                 data.genre?.join(' '),
                 data.director?.join(' ')
@@ -91,23 +100,16 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
       )
     case 'book':
       return (
-        <Pressable {...pressableDefaults}>
+        <Pressable {...pressableProps}>
           {itemImage}
-          <View style={{ flex: 1, gap: StyleConstants.Spacing.S }}>
-            {itemHeading(
-              [
-                data.title,
-                data.pub_year && data.pub_month ? `(${data.pub_year}年${data.pub_month}月)` : null
-              ]
-                .filter(d => d)
-                .join(' ')
-            )}
+          <View {...contentProps}>
+            {itemHeading(data.title)}
             <Rating rating={data.rating / 2} />
             {itemDetails(
               [
                 data.author?.join(' '),
-                data.language,
                 data.pages ? `${data.pages}页` : null,
+                data.language,
                 data.pub_house
               ]
                 .filter(d => d)
@@ -118,9 +120,9 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
       )
     case 'tv':
       return (
-        <Pressable {...pressableDefaults}>
+        <Pressable {...pressableProps}>
           {itemImage}
-          <View style={{ flex: 1, gap: StyleConstants.Spacing.S }}>
+          <View {...contentProps}>
             {itemHeading(
               [data.title, data.orig_title, data.year ? `(${data.year})` : null]
                 .filter(d => d)

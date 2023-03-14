@@ -1,1 +1,2 @@
 toooting愉快！此版本包括以下改进和修复：
+- 添加neodb.social书影音展示卡片
