@@ -159,8 +159,8 @@ const ScreenImagesViewer = ({
           }) => {
             const screenRatio = WINDOW_WIDTH / WINDOW_HEIGHT
             const imageRatio = item.width && item.height ? item.width / item.height : 1
-            const imageWidth = item.width || 100
-            const imageHeight = item.height || 100
+            const imageWidth = item.width
+            const imageHeight = item.height
 
             const maxWidthScale = item.width
               ? (item.width / WINDOW_WIDTH / PixelRatio.get()) * 4
@@ -198,16 +198,21 @@ const ScreenImagesViewer = ({
                         default: { uri: item.url },
                         remote: { uri: item.remote_url }
                       }}
-                      dimension={{
-                        width:
-                          screenRatio > imageRatio
-                            ? (WINDOW_HEIGHT / imageHeight) * imageWidth
-                            : WINDOW_WIDTH,
-                        height:
-                          screenRatio > imageRatio
-                            ? WINDOW_HEIGHT
-                            : (WINDOW_WIDTH / imageWidth) * imageHeight
-                      }}
+                      style={{ flex: 1 }}
+                      contentFit='contain'
+                      {...(imageWidth &&
+                        imageHeight && {
+                          dimension: {
+                            width:
+                              screenRatio > imageRatio
+                                ? (WINDOW_HEIGHT / imageHeight) * imageWidth
+                                : WINDOW_WIDTH,
+                            height:
+                              screenRatio > imageRatio
+                                ? WINDOW_HEIGHT
+                                : (WINDOW_WIDTH / imageWidth) * imageHeight
+                          }
+                        })}
                       enableLiveTextInteraction
                     />
                   </View>
