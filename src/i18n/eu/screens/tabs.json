@@ -214,79 +214,79 @@
         "thread": "Elkarrizketaren bista",
         "account": "Profilaren bista"
       },
-      "action": "",
+      "action": "Bat etortzean",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Ezkutuan baina erakuts daiteke",
+        "hide": "Guztiz ezkutatua"
       },
-      "keywords": "",
-      "keyword": "",
-      "statuses": ""
+      "keywords": "Hitz-gako hauekin bat etortzean",
+      "keyword": "Hitz-gako",
+      "statuses": "Tut hauekin bat etortzean"
     },
     "profile": {
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} eguneratua",
+        "failed": "{{type}}(r)en eguneraketak huts egin du, saia zaitez berriro"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Bistaratutako izena"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Abatarra",
+          "description": "400x400px-etara eskalatuko da"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Goiburu-irudia",
+          "description": "1500x1500px-etara eskalatuko da"
         },
         "note": {
-          "title": ""
+          "title": "Deskribapena"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadatuak",
+          "total_one": "Eremu {{count}}",
+          "total_other": "{{count}} eremu"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Kontua babestu",
+          "description": "Jarraitzaileak eskuz onartu beharko dituzu"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Bot kontua",
+          "description": "Kontu hau, oro har, ekintza automatizatuak egiten ditu eta monitorizatu gabe egon liteke"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "{{index}} taldea",
+        "label": "Etiketa",
+        "content": "Edukia"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Irudi-prozesatzeak huts egin du. Mesedez, saia zaitez berriro."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Zure telefonoa ez da toooten push jakinarazpenekin bateragarria",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Gaitu push jakinarazpenak",
+        "settings": "Gaitu ezarpenetan"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Zerbitzaria oker konfiguratua push jakinarazpenetarako",
+        "description": "Mesedez, jar zaitez zerbitzariko administratzailearekin harremanetan push jakinarazpenen bateragarritasuna konfiguratzeko"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Gaitu {{acct}}-(e)rako",
+        "description": "Mezuak toooten zerbitzariaren bidez bidaltzen dira"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Erakutsi mezuaren xehetasunak",
+        "description": "toooten zerbitzariaren bidez bidalitako mezuak enkriptatuak daude, baina, zerbitzarian desenkripta daitezen aukera dezakezu. Gure zerbitzariko iturburu-kodea irekia da, eta erregistro gabeko politika du."
       },
       "default": {
-        "heading": ""
+        "heading": "Lehenetsia"
       },
       "follow": {
-        "heading": ""
+        "heading": "Jarraitzaile berria"
       },
       "follow_request": {
         "heading": "Jarraitzeko eskaera"
