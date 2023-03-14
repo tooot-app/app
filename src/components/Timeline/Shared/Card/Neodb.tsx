@@ -20,6 +20,8 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
   if (!segments || !(segments[0] === 'movie' || segments[0] === 'book' || segments[0] === 'tv'))
     return null
 
+  const [headingLines, setHeadingLines] = useState(3)
+
   const { data } = useNeodbQuery({ path: `${segments[0]}/${segments[1]}` })
 
   if (!data) return null
@@ -35,8 +37,6 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
     onPress: () => openLink(card.url)
   }
   const contentProps = { style: { flex: 1, gap: StyleConstants.Spacing.S } }
-
-  const [headingLines, setHeadingLines] = useState(3)
 
   const itemImage = data.cover_image_url ? (
     <GracefullyImage
