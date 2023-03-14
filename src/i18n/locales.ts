@@ -4,6 +4,7 @@ const LOCALES = {
   de: 'Deutsch',
   en: 'English',
   es: 'Español',
+  eu: 'Euskara',
   fr: 'Français',
   it: 'Italiano',
   ja: '日本語',
