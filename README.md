@@ -21,6 +21,7 @@ Please **do not** create a pull request to update translation. tooot's translati
 - [@hellojaccc](https://github.com/hellojaccc) for Korean translation
 - [@jan-vandenberg](https://crowdin.com/profile/jan-vandenberg) for Dutch translation
 - [@gaute](https://gauteweb.net/) for Norwegian translation
+- [@MStankiewiczOfficial](https://crowdin.com/profile/MStankiewiczOfficial) for Polish translation
 - [@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
 - [@janlindblom](https://github.com/janlindblom) for Swedish
 - [@ihoryan](https://crowdin.com/profile/ihoryan) for Ukrainian
