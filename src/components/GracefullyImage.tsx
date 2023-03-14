@@ -1,7 +1,7 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { connectMedia } from '@utils/api/helpers/connect'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { Image, ImageSource, ImageStyle } from 'expo-image'
+import { Image, ImageContentFit, ImageSource, ImageStyle } from 'expo-image'
 import React, { useState } from 'react'
 import { AccessibilityProps, Pressable, StyleProp, View, ViewStyle } from 'react-native'
 
@@ -21,6 +21,7 @@ export interface Props {
   onPress?: () => void
   style?: StyleProp<ViewStyle>
   imageStyle?: ImageStyle
+  contentFit?: ImageContentFit
 
   dim?: boolean
   withoutTransition?: boolean
@@ -36,6 +37,7 @@ const GracefullyImage = ({
   onPress,
   style,
   imageStyle,
+  contentFit,
   dim,
   withoutTransition = false,
   enableLiveTextInteraction = false
@@ -63,6 +65,7 @@ const GracefullyImage = ({
         source={hidden ? sources.blurhash : connectMedia(source)}
         {...(!withoutTransition && !reduceMotionEnabled && { transition: { duration: 120 } })}
         style={{ flex: 1, ...imageStyle }}
+        contentFit={contentFit}
         onError={() => {
           if (
             sources.default?.uri &&

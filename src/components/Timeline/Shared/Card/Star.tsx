@@ -1,6 +1,5 @@
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqueId } from 'lodash'
-import { useEffect, useState } from 'react'
 import { Defs, LinearGradient, Path, Stop, Svg } from 'react-native-svg'
 
 interface StarProps {
@@ -17,10 +16,7 @@ export const Star: React.FC<StarProps> = ({ size, strokeLinejoin, strokeLinecap,
   const innerRadius = 25
   const outerRadius = 50
 
-  const [id, setId] = useState<string>('')
-  useEffect(() => {
-    setId(uniqueId())
-  }, [])
+  const id = uniqueId()
 
   const center = Math.max(innerRadius, outerRadius)
   const angle = Math.PI / NUM_POINT

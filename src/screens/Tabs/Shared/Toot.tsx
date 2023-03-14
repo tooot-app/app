@@ -111,12 +111,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             }
           )
 
-         flRef.current?.props.data?.length && setTimeout(() => {
-            flRef.current?.scrollToIndex({
-              index: ancestorsCache.current?.length || 0,
-              viewOffset: 50
-            })
-          }, 50)
+          flRef.current?.props.data?.length &&
+            setTimeout(() => {
+              flRef.current?.scrollToIndex({
+                index: ancestorsCache.current?.length || 0,
+                viewOffset: 50
+              })
+            }, 50)
           break
       }
     }
@@ -236,14 +237,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return
         }
 
-        if ((query.data?.pages[0].body.length || 0) <= data.length) {
-          if (
-            !hasRemoteContent &&
-            (query.data?.pages[0].body.length || 0) <= data.length &&
-            data.length > 1
-          ) {
-            setHasRemoteContent(true)
-          }
+        if ((query.data?.pages[0].body.length || 0) < data.length) {
+          setHasRemoteContent(true)
 
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
