@@ -22,7 +22,7 @@ const TimelineCard: React.FC = () => {
   if (!status || !status.card) return null
 
   const { i18n } = useTranslation()
-  if (status.card.url.includes('://neodb.social/') && i18n.language === 'zh-hans') {
+  if (status.card.url.includes('://neodb.social/') && i18n.language.toLowerCase() === 'zh-hans') {
     return <CardNeodb card={status.card} />
   }
 
