@@ -1,5 +1,5 @@
 import { getAccountStorage } from '@utils/storage/actions'
-import parse from 'url-parse'
+import * as Linking from 'expo-linking'
 
 // Would mess with the /@username format
 const BLACK_LIST = ['matters.news', 'medium.com']
@@ -13,8 +13,8 @@ export const urlMatcher = (
       status?: Partial<Pick<Mastodon.Status, 'id' | '_remote'>>
     }
   | undefined => {
-  const parsed = parse(url)
-  if (!parsed.hostname.length || !parsed.pathname.length) return undefined
+  const parsed = Linking.parse(url)
+  if (!parsed.hostname?.length || !parsed.path?.length) return undefined
 
   const domain = parsed.hostname
   if (BLACK_LIST.includes(domain)) {
@@ -26,8 +26,8 @@ export const urlMatcher = (
   let statusId: string | undefined
   let accountAcct: string | undefined
 
-  const segments = parsed.pathname.split('/')
-  const last = segments[segments.length - 1]
+  const segments = parsed.path.split('/')
+  const last = segments.at(-1)
   const length = segments.length // there is a starting slash
 
   const testAndAssignStatusId = (id: string) => {
@@ -38,7 +38,7 @@ export const urlMatcher = (
 
   switch (last?.startsWith('@')) {
     case true:
-      if (length === 2 || (length === 3 && segments[length - 2] === 'web')) {
+      if (length === 1 || (length === 2 && segments.at(-2) === 'web')) {
         // https://social.xmflsct.com/@tooot <- Mastodon v4.0 and above
         // https://social.xmflsct.com/web/@tooot <- Mastodon v3.5 and below ! cannot be searched on the same instance
         accountAcct = `${last}@${domain}`
@@ -48,13 +48,13 @@ export const urlMatcher = (
       const nextToLast = segments[length - 2]
       if (nextToLast) {
         if (nextToLast === 'statuses') {
-          if (length === 4 && segments[length - 3] === 'web') {
+          if (length === 3 && segments.at(-3) === 'web') {
             // https://social.xmflsct.com/web/statuses/105590085754428765 <- old
             testAndAssignStatusId(last)
           } else if (
-            length === 5 &&
-            segments[length - 2] === 'statuses' &&
-            segments[length - 4] === 'users'
+            length === 4 &&
+            segments.at(-2) === 'statuses' &&
+            segments.at(-4) === 'users'
           ) {
             // https://social.xmflsct.com/users/tooot/statuses/105590085754428765 <- default Mastodon
             testAndAssignStatusId(last)
@@ -62,7 +62,7 @@ export const urlMatcher = (
           }
         } else if (
           nextToLast.startsWith('@') &&
-          (length === 3 || (length === 4 && segments[length - 3] === 'web'))
+          (length === 2 || (length === 3 && segments.at(-3) === 'web'))
         ) {
           // https://social.xmflsct.com/web/@tooot/105590085754428765 <- pretty Mastodon v3.5 and below
           // https://social.xmflsct.com/@tooot/105590085754428765 <- pretty Mastodon v4.0 and above

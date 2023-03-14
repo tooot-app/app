@@ -80,23 +80,23 @@
       "action": "Ezabatu tuta",
       "alert": {
         "title": "Ezabaketa berretsi?",
-        "message": ""
+        "message": "Bultzada eta gogoko guztiak ezabatuko dira, erantzun guztiak barne."
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Ezabatu tuta eta berrargitaratu",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Ezabatu eta berrargitaratzea nahi duzu?",
+        "message": "Bultzada eta gogoko guztiak ezabatuko dira, erantzun guztiak barne."
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Mututu tuta eta erantzunak",
+      "action_true": "Desmututu tuta eta erantzunak"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Finkatu tuta",
+      "action_true": "Desfinkatu tuta"
     },
     "filter": {
       "action_false": "Tuta iragazi...",

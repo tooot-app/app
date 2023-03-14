@@ -11,13 +11,23 @@ import { useStatusQuery } from '@utils/queryHooks/status'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import TimelineDefault from '../Default'
-import StatusContext from './Context'
+import TimelineDefault from '../../Default'
+import StatusContext from '../Context'
+import { CardNeodb } from './Neodb'
 
 const TimelineCard: React.FC = () => {
   const { status, spoilerHidden, disableDetails, inThread } = useContext(StatusContext)
   if (!status || !status.card) return null
+
+  const { i18n } = useTranslation()
+  if (
+    status.card.url.includes('://neodb.social/') &&
+    i18n.language.toLowerCase().startsWith('zh-hans')
+  ) {
+    return <CardNeodb card={status.card} />
+  }
 
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()

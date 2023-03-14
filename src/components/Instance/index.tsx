@@ -21,6 +21,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
 import * as Crypto from 'expo-crypto'
 import { Image } from 'expo-image'
+import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
@@ -28,7 +29,6 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { fromByteArray } from 'react-native-quick-base64'
-import parse from 'url-parse'
 import CustomText from '../Text'
 
 export interface Props {
@@ -51,7 +51,7 @@ const ComponentInstance: React.FC<Props> = ({
   const whitelisted: boolean =
     !!domain.length &&
     !!errorCode &&
-    !!(parse(`https://${domain}/`).hostname === domain) &&
+    !!(Linking.parse(`https://${domain}/`).hostname === domain) &&
     errorCode === 401
 
   const instanceQuery = useInstanceQuery({
@@ -129,7 +129,7 @@ const ComponentInstance: React.FC<Props> = ({
             (instanceQuery.data as Mastodon.Instance_V2)?.domain ||
             instanceQuery.data?.account_domain ||
             ((instanceQuery.data as Mastodon.Instance_V1)?.uri
-              ? parse((instanceQuery.data as Mastodon.Instance_V1).uri).hostname
+              ? Linking.parse((instanceQuery.data as Mastodon.Instance_V1).uri).hostname
               : undefined) ||
             (instanceQuery.data as Mastodon.Instance_V1)?.uri,
           'auth.account.avatar_static': avatar_static,
