@@ -17,9 +17,13 @@ import TimelineDefault from '../../Default'
 import StatusContext from '../Context'
 import { CardNeodb } from './Neodb'
 
+const CARD_URL_BLACKLISTS = ['weibo.com', 'weibo.cn']
+
 const TimelineCard: React.FC = () => {
   const { status, spoilerHidden, disableDetails, inThread } = useContext(StatusContext)
   if (!status || !status.card) return null
+
+  if (CARD_URL_BLACKLISTS.find(domain => status.card?.url.includes(`${domain}/`))) return null
 
   const { i18n } = useTranslation()
   if (
