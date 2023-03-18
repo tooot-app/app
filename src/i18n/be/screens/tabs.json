@@ -387,12 +387,12 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Дзеянні для карыстальніка {{user}}",
-        "accessibilityHint": ""
+        "accessibilityHint": "Вы можаце ігнараваць, блакіраваць або абагуліць гэтага карыстальніка"
       },
       "followed_by": " падпісаны на вас",
       "privateNote": "",
       "moved": "",
-      "created_at": "",
+      "created_at": "Далучыўся: {{date}}",
       "summary": {
         "statuses_count": "{{count}} допісаў"
       },
@@ -467,7 +467,7 @@
     "toot": {
       "name": "Абмеркаванні",
       "remoteFetch": {
-        "title": "",
+        "title": "Змяшчае аддаленае змесціва",
         "message": ""
       }
     },
