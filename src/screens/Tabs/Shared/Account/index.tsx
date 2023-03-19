@@ -55,6 +55,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
       ...(account._remote && { remote_id: account.id, remote_domain: account._remote })
     }
   ]
+  useEffect(() => {
+    navigation.setParams({ queryKey: queryKeyDefault })
+  }, [dataUpdatedAt])
 
   const mShare = menuShare({ type: 'account', url: data?.url })
   const mAccount = menuAccount({ type: 'account', openChange: true, account: data })

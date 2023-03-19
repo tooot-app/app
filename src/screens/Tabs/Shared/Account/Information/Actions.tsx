@@ -37,9 +37,10 @@ const AccountInformationActions: React.FC = () => {
     return (
       <View style={styles.base}>
         <Button
-          type='text'
+          round
+          type='icon'
           disabled={account === undefined}
-          content={t('me.stacks.profile.name')}
+          content='edit-3'
           onPress={() => navigation.navigate('Tab-Me-Profile')}
         />
         <Button
@@ -47,7 +48,7 @@ const AccountInformationActions: React.FC = () => {
           type='icon'
           disabled={account === undefined}
           content='sliders'
-          style={{ marginLeft: StyleConstants.Spacing.S }}
+          style={{ marginLeft: StyleConstants.Spacing.M }}
           onPress={() =>
             navigation.navigate('Tab-Me-Preferences', { screen: 'Tab-Me-Preferences-Root' })
           }

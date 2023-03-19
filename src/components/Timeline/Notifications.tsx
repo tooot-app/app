@@ -1,6 +1,3 @@
-import menuInstance from '@components/contextMenu/instance'
-import menuShare from '@components/contextMenu/share'
-import menuStatus from '@components/contextMenu/status'
 import TimelineActioned from '@components/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
@@ -18,9 +15,8 @@ import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { Pressable, View } from 'react-native'
-import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
 import TimelineFiltered, { FilteredProps, shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
@@ -100,14 +96,6 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
     )
   }
 
-  const mShare = menuShare({
-    visibility: notification.status?.visibility,
-    type: 'status',
-    url: notification.status?.url || notification.status?.uri
-  })
-  const mStatus = menuStatus({ status: notification.status, queryKey })
-  const mInstance = menuInstance({ status: notification.status, queryKey })
-
   if (!isMyAccount) {
     let filterResults: FilteredProps['filterResults'] = []
     const [filterRevealed, setFilterRevealed] = useState(false)
@@ -143,67 +131,18 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
         spoilerHidden
       }}
     >
-      <ContextMenu.Root>
-        <ContextMenu.Trigger>
-          <Pressable
-            style={{
-              padding: StyleConstants.Spacing.Global.PagePadding,
-              backgroundColor: colors.backgroundDefault,
-              paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
-            }}
-            onPress={() =>
-              notification.status &&
-              navigation.push('Tab-Shared-Toot', { toot: notification.status })
-            }
-            onLongPress={() => {}}
-            children={main()}
-          />
-        </ContextMenu.Trigger>
-
-        <ContextMenu.Content>
-          {[mShare, mStatus, mInstance].map((menu, i) => (
-            <Fragment key={i}>
-              {menu.map((group, index) => (
-                <ContextMenu.Group key={index}>
-                  {group.map(item => {
-                    switch (item.type) {
-                      case 'item':
-                        return (
-                          <ContextMenu.Item key={item.key} {...item.props}>
-                            <ContextMenu.ItemTitle children={item.title} />
-                            {item.icon ? <ContextMenu.ItemIcon ios={{ name: item.icon }} /> : null}
-                          </ContextMenu.Item>
-                        )
-                      case 'sub':
-                        return (
-                          // @ts-ignore
-                          <ContextMenu.Sub key={item.key}>
-                            <ContextMenu.SubTrigger key={item.trigger.key} {...item.trigger.props}>
-                              <ContextMenu.ItemTitle children={item.trigger.title} />
-                              {item.trigger.icon ? (
-                                <ContextMenu.ItemIcon ios={{ name: item.trigger.icon }} />
-                              ) : null}
-                            </ContextMenu.SubTrigger>
-                            <ContextMenu.SubContent>
-                              {item.items.map(sub => (
-                                <ContextMenu.Item key={sub.key} {...sub.props}>
-                                  <ContextMenu.ItemTitle children={sub.title} />
-                                  {sub.icon ? (
-                                    <ContextMenu.ItemIcon ios={{ name: sub.icon }} />
-                                  ) : null}
-                                </ContextMenu.Item>
-                              ))}
-                            </ContextMenu.SubContent>
-                          </ContextMenu.Sub>
-                        )
-                    }
-                  })}
-                </ContextMenu.Group>
-              ))}
-            </Fragment>
-          ))}
-        </ContextMenu.Content>
-      </ContextMenu.Root>
+      <Pressable
+        style={{
+          padding: StyleConstants.Spacing.Global.PagePadding,
+          backgroundColor: colors.backgroundDefault,
+          paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
+        }}
+        onPress={() =>
+          notification.status && navigation.push('Tab-Shared-Toot', { toot: notification.status })
+        }
+        onLongPress={() => {}}
+        children={main()}
+      />
       <TimelineHeaderAndroid />
     </StatusContext.Provider>
   )

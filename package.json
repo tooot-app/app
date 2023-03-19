@@ -1,6 +1,6 @@
 {
   "name": "tooot",
-  "version": "4.9.2",
+  "version": "4.9.3",
   "description": "tooot for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
   "license": "GPL-3.0-or-later",
@@ -114,6 +114,7 @@
     "expo-av@^13.0.2": "patch:expo-av@npm%3A13.0.2#./.yarn/patches/expo-av-npm-13.0.2-7a651776f1.patch",
     "react-native-share-menu@^6.0.0": "patch:react-native-share-menu@npm%3A6.0.0#./.yarn/patches/react-native-share-menu-npm-6.0.0-f1094c3204.patch",
     "@types/react-native-share-menu@^5.0.2": "patch:@types/react-native-share-menu@npm%3A5.0.2#./.yarn/patches/@types-react-native-share-menu-npm-5.0.2-373df17ecc.patch",
-    "react-native-ios-context-menu@^1.15.1": "patch:react-native-ios-context-menu@npm%3A1.15.1#./.yarn/patches/react-native-ios-context-menu-npm-1.15.1-0034bfa5ba.patch"
+    "react-native-ios-context-menu@^1.15.1": "patch:react-native-ios-context-menu@npm%3A1.15.1#./.yarn/patches/react-native-ios-context-menu-npm-1.15.1-0034bfa5ba.patch",
+    "react-native-reanimated-zoom@^0.3.3": "patch:react-native-reanimated-zoom@npm%3A0.3.3#./.yarn/patches/react-native-reanimated-zoom-npm-0.3.3-bbb8d84109.patch"
   }
 }

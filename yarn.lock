@@ -9950,7 +9950,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated-zoom@npm:^0.3.3":
+"react-native-reanimated-zoom@npm:0.3.3":
   version: 0.3.3
   resolution: "react-native-reanimated-zoom@npm:0.3.3"
   peerDependencies:
@@ -9959,6 +9959,18 @@ __metadata:
     react-native-gesture-handler: "*"
     react-native-reanimated: "*"
   checksum: 9ade8702148b5421baa788c6ec79c3faadf8c83cd349b3776a84d3def97fc48e7c3414f4ddc93c9c76d041fdd0166e4440c49f3dfaaaf3f6f8d6be96987d3251
+  languageName: node
+  linkType: hard
+
+"react-native-reanimated-zoom@patch:react-native-reanimated-zoom@npm%3A0.3.3#./.yarn/patches/react-native-reanimated-zoom-npm-0.3.3-bbb8d84109.patch::locator=tooot%40workspace%3A.":
+  version: 0.3.3
+  resolution: "react-native-reanimated-zoom@patch:react-native-reanimated-zoom@npm%3A0.3.3#./.yarn/patches/react-native-reanimated-zoom-npm-0.3.3-bbb8d84109.patch::version=0.3.3&hash=187ed4&locator=tooot%40workspace%3A."
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: "*"
+    react-native-reanimated: "*"
+  checksum: b43e7db64ad15cdb964da44b313205164ae74ebcde6baf01f3852b8cd733078b90d4ada140c78fad33ac2ba70f4db5b1d8644018f6ff885bbb998d2dd0211b05
   languageName: node
   linkType: hard
 
