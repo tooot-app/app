@@ -1,4 +1,5 @@
 import menuAccount from '@components/contextMenu/account'
+import menuInstance from '@components/contextMenu/instance'
 import menuShare from '@components/contextMenu/share'
 import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
@@ -17,7 +18,8 @@ import HeaderSharedReplies from './HeaderShared/Replies'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
-  const { queryKey, status, disableDetails, rawContent, isRemote } = useContext(StatusContext)
+  const { queryKey, status, disableDetails, rawContent, isRemote, highlighted } =
+    useContext(StatusContext)
   if (!status) return null
 
   const { colors } = useTheme()
@@ -37,6 +39,7 @@ const TimelineHeaderDefault: React.FC = () => {
     ...(status && { status })
   })
   const mStatus = menuStatus({ status, queryKey })
+  const mInstance = highlighted ? menuInstance({ status, queryKey }) : []
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -87,7 +90,7 @@ const TimelineHeaderDefault: React.FC = () => {
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {[mShare, mAccount, mStatus].map((menu, i) => (
+              {[mShare, mAccount, mStatus, mInstance].map((menu, i) => (
                 <Fragment key={i}>
                   {menu.map((group, index) => (
                     <DropdownMenu.Group key={index}>
