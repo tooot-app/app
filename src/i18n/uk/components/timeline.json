@@ -129,7 +129,7 @@
         "muted": {
           "accessibilityLabel": "Дмух приглушений"
         },
-        "replies": "",
+        "replies": "Відповіді <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Дмухнути особистим повідомленням"
