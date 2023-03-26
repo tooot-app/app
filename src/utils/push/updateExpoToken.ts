@@ -14,7 +14,8 @@ export const updateExpoToken = async (): Promise<string> => {
   const getAndSetToken = () =>
     Notifications.getExpoPushTokenAsync({
       projectId: '3288313f-3ff0-496a-a5a9-d8985e7cad5f',
-      applicationId: 'com.xmflsct.app.tooot'
+      applicationId: 'com.xmflsct.app.tooot',
+      devicePushToken: { type: Platform.OS === 'android' ? 'android' : 'ios', data: 'unknown' }
     }).then(({ data }) => {
       setGlobalStorage('app.expo_token', data)
       return data
