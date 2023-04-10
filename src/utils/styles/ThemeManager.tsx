@@ -60,6 +60,7 @@ const determineTheme = (
   const determineDarkTheme = DarkTheme[darkTheme || 'lighter']
   switch (userTheme) {
     case 'auto':
+    default:
       switch (osTheme) {
         case 'dark':
           return determineDarkTheme
@@ -69,8 +70,6 @@ const determineTheme = (
     case 'light':
       return 'light'
     case 'dark':
-      return determineDarkTheme
-    default:
       return determineDarkTheme
   }
 }
