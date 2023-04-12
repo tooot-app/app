@@ -123,13 +123,19 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   }
 
+  const updateCounts = (
+    remote: Mastodon.Status
+  ): Pick<Mastodon.Status, 'reblogs_count' | 'replies_count' | 'favourites_count'> => ({
+    reblogs_count: remote.reblogs_count,
+    replies_count: remote.replies_count,
+    favourites_count: remote.favourites_count
+  })
+
   const match = urlMatcher(toot.url || toot.uri)
   const remoteQueryEnabled =
     ['public', 'unlisted'].includes(toot.visibility) &&
     match?.domain !== getAccountStorage.string('auth.domain')
-  const query = useQuery<{
-    pages: { body: (Mastodon.Status & { _level?: number })[] }[]
-  }>(
+  const query = useQuery<Mastodon.Status[]>(
     queryKey.local,
     async () => {
       const context = await apiInstance<{
@@ -143,30 +149,24 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       ancestorsCache.current = [...context.ancestors]
       const statuses = [{ ...toot }, ...context.descendants]
 
-      return {
-        pages: [
-          {
-            body: statuses.map((status, index) => {
-              if (index === 0) {
-                status._level = 0
-                return status
-              } else {
-                const repliedLevel: number =
-                  statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-                status._level = repliedLevel + 1
-                return status
-              }
-            })
-          }
-        ]
-      }
+      return statuses.map((status, index) => {
+        if (index === 0) {
+          status._level = 0
+          return status
+        } else {
+          const repliedLevel: number =
+            statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
+          status._level = repliedLevel + 1
+          return status
+        }
+      })
     },
     {
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
       onSuccess: async data => {
-        if (data.pages[0].body.length < 1) {
+        if (data.length < 1) {
           navigation.goBack()
           return
         }
@@ -189,17 +189,24 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         return Promise.reject('Cannot parse remote toot id')
       }
 
-      const context = await apiGeneral<{
-        ancestors: Mastodon.Status[]
-        descendants: Mastodon.Status[]
-      }>({
-        method: 'get',
-        domain,
-        url: `api/v1/statuses/${id}/context`
-      }).then(res => res.body)
+      const [remote, context] = await Promise.all([
+        apiGeneral<Mastodon.Status>({
+          method: 'get',
+          domain,
+          url: `api/v1/statuses/${id}`
+        }).then(res => res.body),
+        apiGeneral<{
+          ancestors: Mastodon.Status[]
+          descendants: Mastodon.Status[]
+        }>({
+          method: 'get',
+          domain,
+          url: `api/v1/statuses/${id}/context`
+        }).then(res => res.body)
+      ])
 
       if (!context?.ancestors.length && !context?.descendants.length) {
-        return Promise.resolve([{ ...toot }])
+        return Promise.resolve([{ ...toot, ...updateCounts(remote) }])
       }
 
       if ((ancestorsCache.current?.length || 0) < context.ancestors.length) {
@@ -213,7 +220,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         })
       }
 
-      const statuses = [{ ...toot }, ...context.descendants]
+      const statuses = [{ ...toot, ...updateCounts(remote) }, ...context.descendants]
       return statuses.map((status, index) => {
         if (index === 0) {
           status._level = 0
@@ -232,34 +239,25 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       refetchOnMount: true,
       retry: false,
       onSuccess: async data => {
-        if ((query.data?.pages[0].body.length || 0) < 1 && data.length < 1) {
+        if ((query.data?.length || 0) < 1 && data.length < 1) {
           navigation.goBack()
           return
         }
 
-        if ((query.data?.pages[0].body.length || 0) < data.length) {
+        if ((query.data?.length || 0) < data.length) {
           setHasRemoteContent(true)
 
           queryClient.cancelQueries(queryKey.local)
-          queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
-            queryKey.local,
-            old => {
-              return {
-                pages: [
-                  {
-                    body: data.map(remote => {
-                      const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
-                      if (localMatch) {
-                        return { ...localMatch, _level: remote._level }
-                      } else {
-                        return appendRemote.status(remote, match!.domain)
-                      }
-                    })
-                  }
-                ]
+          queryClient.setQueryData<Mastodon.Status[]>(queryKey.local, old => {
+            return data.map(remote => {
+              const localMatch = old?.find(local => local.uri === remote.uri)
+              if (localMatch) {
+                return { ...localMatch, _level: remote._level, ...updateCounts(remote) }
+              } else {
+                return appendRemote.status(remote, match!.domain)
               }
-            }
-          )
+            })
+          })
         }
       },
       onSettled: async () => {
@@ -275,12 +273,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   return (
     <FlatList
       ref={flRef}
-      data={query.data?.pages?.[0].body}
+      data={query.data}
       keyExtractor={(item, index) => `${item.id}_${index}`}
       renderItem={({ item, index }) => {
-        const prev = query.data?.pages[0].body[index - 1]?._level || 0
+        const prev = query.data?.[index - 1]?._level || 0
         const curr = item._level || 0
-        const next = query.data?.pages[0].body[index + 1]?._level || 0
+        const next = query.data?.[index + 1]?._level || 0
 
         const height = heights[index] || 300
         let path = ''
