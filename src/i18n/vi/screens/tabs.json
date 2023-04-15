@@ -165,10 +165,10 @@
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Luôn hiển thị đầy đủ nội dung tút"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Tự động phát GIF"
       },
       "filters": {
         "title": "",
@@ -221,7 +221,7 @@
       },
       "keywords": "",
       "keyword": "",
-      "statuses": ""
+      "statuses": "Tút trùng khớp"
     },
     "profile": {
       "feedback": {
