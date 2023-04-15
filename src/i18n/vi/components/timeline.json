@@ -19,7 +19,7 @@
     "refetch": "Trang cuối",
     "fetching": "Đang tải những tút mới...",
     "fetched": {
-      "none": "",
+      "none": "Đã đọc hết",
       "found": "Đã tải {{count}} tút"
     }
   },
@@ -33,7 +33,7 @@
       "poll": "Cuộc bình chọn đã kết thúc",
       "reblog": {
         "default": "{{name}} đăng lại",
-        "myself": "",
+        "myself": "Bạn đăng lại",
         "notification": "{{name}} đăng lại tút của bạn"
       },
       "update": "Đăng lại đã được sửa",
