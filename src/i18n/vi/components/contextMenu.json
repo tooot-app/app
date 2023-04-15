@@ -6,7 +6,7 @@
       "action_false": "Theo dõi người này",
       "action_true": "Ngưng theo dõi người này"
     },
-    "inLists": "",
+    "inLists": "Danh sách người ...",
     "showBoosts": {
       "action_false": "Hiển lượt đăng lại",
       "action_true": "Ẩn lượt đăng lại"
@@ -16,12 +16,12 @@
       "action_true": "Bỏ ẩn người dùng"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Theo dõi như...",
+      "succeed_default": "Đang theo dõi @{{target}} bằng @{{source}}",
+      "succeed_locked": "Đã gửi yêu cầu theo dõi tới @{{target}} bằng {{source}}, đang chờ duyệt",
+      "failed": "Theo dõi như"
     },
-    "blockReport": "",
+    "blockReport": "Chặn & Báo cáo",
     "block": {
       "action_false": "Chặn người này",
       "action_true": "Bỏ chặn người dùng",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Theo dõi",
+      "action_true": "Ngưng theo dõi"
     },
     "filter": {
-      "action": ""
+      "action": "Lọc hashtag..."
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "Bỏ ghim tút"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Lọc tút...",
+      "action_true": "Quản lý bộ lọc..."
     }
   }
 }
