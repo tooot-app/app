@@ -8,7 +8,7 @@ const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyNeodb>) 
   apiGeneral({
     method: 'get',
     domain: 'neodb.social',
-    url: `/api/${queryKey[1].path}`
+    url: `api/${queryKey[1].path}`
   }).then(res => res.body)
 
 export const useNeodbQuery = (

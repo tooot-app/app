@@ -11,7 +11,6 @@ import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { searchLocalStatus } from '@utils/queryHooks/search'
-import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import {
   getAccountStorage,
   getGlobalStorage,
@@ -220,7 +219,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     }
     return false
   }
-  const mutateTimeline = useTimelineMutation({ onMutate: true })
 
   const inputProps: EmojisState['inputProps'] = [
     {

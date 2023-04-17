@@ -22,7 +22,6 @@ import * as AuthSession from 'expo-auth-session'
 import * as Crypto from 'expo-crypto'
 import { Image } from 'expo-image'
 import * as Linking from 'expo-linking'
-import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -30,6 +29,7 @@ import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from 'react-na
 import { ScrollView } from 'react-native-gesture-handler'
 import { fromByteArray } from 'react-native-quick-base64'
 import CustomText from '../Text'
+import openLink from '@components/openLink'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -80,7 +80,7 @@ const ComponentInstance: React.FC<Props> = ({
         clientSecret,
         scopes: variables.scopes,
         redirectUri,
-        usePKCE: !['pawoo.net'].includes(domain)
+        usePKCE: !['pawoo.net', 'mao.mastodonhub.com'].includes(domain)
       })
       await request.makeAuthUrlAsync(discovery)
 
@@ -386,20 +386,12 @@ const ComponentInstance: React.FC<Props> = ({
                   <CustomText
                     accessible
                     style={{ color: colors.blue }}
-                    onPress={async () =>
-                      WebBrowser.openBrowserAsync('https://tooot.app/privacy-policy', {
-                        ...(await browserPackage())
-                      })
-                    }
+                    onPress={async () => openLink('https://tooot.app/privacy-policy')}
                   />,
                   <CustomText
                     accessible
                     style={{ color: colors.blue }}
-                    onPress={async () =>
-                      WebBrowser.openBrowserAsync('https://tooot.app/terms-of-service', {
-                        ...(await browserPackage())
-                      })
-                    }
+                    onPress={async () => openLink('https://tooot.app/terms-of-service')}
                   />
                 ]}
               />

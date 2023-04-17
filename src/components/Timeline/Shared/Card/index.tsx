@@ -4,6 +4,7 @@ import openLink from '@components/openLink'
 import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { isDevelopment } from '@utils/helpers/checkEnvironment'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
@@ -17,14 +18,19 @@ import TimelineDefault from '../../Default'
 import StatusContext from '../Context'
 import { CardNeodb } from './Neodb'
 
+const CARD_URL_BLACKLISTS = ['weibo.com', 'weibo.cn']
+
 const TimelineCard: React.FC = () => {
   const { status, spoilerHidden, disableDetails, inThread } = useContext(StatusContext)
   if (!status || !status.card) return null
 
+  if (CARD_URL_BLACKLISTS.find(domain => status.card?.url.includes(`${domain}/`))) return null
+
   const { i18n } = useTranslation()
   if (
-    status.card.url.includes('://neodb.social/') &&
-    i18n.language.toLowerCase().startsWith('zh-hans')
+    (status.card.url.includes('://neodb.social/') &&
+      i18n.language.toLowerCase().startsWith('zh-hans')) ||
+    isDevelopment
   ) {
     return <CardNeodb card={status.card} />
   }

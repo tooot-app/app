@@ -176,18 +176,14 @@ const TabMePreferencesFilter: React.FC<
                     ...(parseInt(expiration) && {
                       expires_in: parseInt(expiration)
                     }),
-                    ...(keywords.filter(keyword => keyword.length).length
-                      ? {
-                          keywords_attributes: keywords
-                            .filter(keyword => keyword.length)
-                            .map(keyword => ({ keyword, whole_word: true }))
-                        }
-                      : params.filter.keywords.length && {
-                          keywords_attributes: params.filter.keywords.map(keyword => ({
-                            ...keyword,
-                            _destroy: true
-                          }))
-                        })
+                    keywords_attributes: keywords.map((keyword, index) =>
+                      !!params.filter.keywords[index]
+                        ? {
+                            id: params.filter.keywords[index].id,
+                            ...(keyword.length ? { keyword, whole_word: true } : { _destroy: true })
+                          }
+                        : { keyword, whole_word: true }
+                    )
                   }
                 })
                   .then(() => {

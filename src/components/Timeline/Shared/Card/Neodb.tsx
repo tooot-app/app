@@ -17,130 +17,121 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
   const { colors } = useTheme()
 
   const segments = Linking.parse(card.url).path?.split('/')
-  if (!segments || !(segments[0] === 'movie' || segments[0] === 'book' || segments[0] === 'tv'))
+  if (
+    !segments ||
+    !(
+      segments[0] === 'movie' ||
+      segments[0] === 'book' ||
+      (segments[0] === 'tv' && segments[1] !== 'season') ||
+      segments[0] === 'game'
+    )
+  )
     return null
+
+  const [headingLines, setHeadingLines] = useState(3)
 
   const { data } = useNeodbQuery({ path: `${segments[0]}/${segments[1]}` })
 
   if (!data) return null
 
-  const pressableProps = {
-    style: {
-      marginTop: StyleConstants.Spacing.M,
-      backgroundColor: colors.shimmerDefault,
-      borderRadius: StyleConstants.BorderRadius,
-      padding: StyleConstants.Spacing.S,
-      flexDirection: 'row' as 'row'
-    },
-    onPress: () => openLink(card.url)
-  }
-  const contentProps = { style: { flex: 1, gap: StyleConstants.Spacing.S } }
-
-  const [headingLines, setHeadingLines] = useState(3)
-
-  const itemImage = data.cover_image_url ? (
-    <GracefullyImage
-      sources={{ default: { uri: data.cover_image_url } }}
-      dimension={{
-        width: StyleConstants.Font.LineHeight.M * 4,
-        height: StyleConstants.Font.LineHeight.M * 5
+  const Content = ({ heading, details }: { heading: string[]; details: string[] }) => (
+    <Pressable
+      style={{
+        marginTop: StyleConstants.Spacing.M,
+        backgroundColor: colors.shimmerDefault,
+        borderRadius: StyleConstants.BorderRadius,
+        padding: StyleConstants.Spacing.S,
+        flexDirection: 'row'
       }}
-      style={{ marginRight: StyleConstants.Spacing.S }}
-      imageStyle={{ borderRadius: StyleConstants.BorderRadius / 2 }}
-      dim
-    />
-  ) : null
-  const itemHeading = (value: string) => (
-    <CustomText
-      fontStyle='S'
-      fontWeight='Bold'
-      style={{ color: colors.primaryDefault }}
-      numberOfLines={3}
-      children={value}
-      onTextLayout={({ nativeEvent }) => setHeadingLines(nativeEvent.lines.length)}
-    />
-  )
-  const itemDetails = (value: string) => (
-    <CustomText
-      fontStyle='S'
-      style={{ color: colors.secondary }}
-      numberOfLines={4 - headingLines}
-      children={value}
-    />
+      onPress={() => openLink(card.url)}
+    >
+      {data.cover_image_url ? (
+        <GracefullyImage
+          sources={{ default: { uri: data.cover_image_url } }}
+          dimension={{
+            width: StyleConstants.Font.LineHeight.M * 4,
+            height: StyleConstants.Font.LineHeight.M * 5
+          }}
+          style={{ marginRight: StyleConstants.Spacing.S }}
+          imageStyle={{ borderRadius: StyleConstants.BorderRadius / 2 }}
+          dim
+        />
+      ) : null}
+      <View style={{ flex: 1, gap: StyleConstants.Spacing.S, justifyContent: 'space-between' }}>
+        <View style={{ gap: StyleConstants.Spacing.S }}>
+          <CustomText
+            fontStyle='S'
+            fontWeight='Bold'
+            style={{ color: colors.primaryDefault }}
+            numberOfLines={3}
+            onTextLayout={({ nativeEvent }) => setHeadingLines(nativeEvent.lines.length)}
+            children={heading.filter(d => d).join(' ')}
+          />
+          <Rating rating={data.rating / 2} />
+        </View>
+
+        <CustomText
+          fontStyle='S'
+          style={{ color: colors.secondary }}
+          numberOfLines={4 - headingLines}
+          children={details.filter(d => d).join(' / ')}
+        />
+      </View>
+    </Pressable>
   )
 
   switch (segments[0]) {
     case 'movie':
       return (
-        <Pressable {...pressableProps}>
-          {itemImage}
-          <View {...contentProps}>
-            {itemHeading(
-              [data.title, data.orig_title, data.year ? `(${data.year})` : null]
-                .filter(d => d)
-                .join(' ')
-            )}
-            <Rating rating={data.rating / 2} />
-            {itemDetails(
-              [
-                data.duration
-                  ? parseInt(data.duration).toString() === data.duration
-                    ? `${data.duration}分钟`
-                    : data.duration
-                  : null,
-                data.area?.join(' '),
-                data.genre?.join(' '),
-                data.director?.join(' ')
-              ]
-                .filter(d => d)
-                .join(' / ')
-            )}
-          </View>
-        </Pressable>
+        <Content
+          heading={[data.title, data.orig_title, data.year ? `(${data.year})` : null]}
+          details={[
+            data.duration
+              ? parseInt(data.duration).toString() === data.duration
+                ? `${data.duration}分钟`
+                : data.duration
+              : null,
+            data.area?.join(' '),
+            data.genre?.join(' '),
+            data.director?.join(' ')
+          ]}
+        />
       )
     case 'book':
       return (
-        <Pressable {...pressableProps}>
-          {itemImage}
-          <View {...contentProps}>
-            {itemHeading(data.title)}
-            <Rating rating={data.rating / 2} />
-            {itemDetails(
-              [
-                data.author?.join(' '),
-                data.pages ? `${data.pages}页` : null,
-                data.language,
-                data.pub_house
-              ]
-                .filter(d => d)
-                .join(' / ')
-            )}
-          </View>
-        </Pressable>
+        <Content
+          heading={[data.title]}
+          details={[
+            data.author?.join(' '),
+            data.pages ? `${data.pages}页` : null,
+            data.language,
+            data.pub_house
+          ]}
+        />
       )
     case 'tv':
       return (
-        <Pressable {...pressableProps}>
-          {itemImage}
-          <View {...contentProps}>
-            {itemHeading(
-              [data.title, data.orig_title, data.year ? `(${data.year})` : null]
-                .filter(d => d)
-                .join(' ')
-            )}
-            <Rating rating={data.rating / 2} />
-            {itemDetails(
-              [
-                data.season_count ? `共${data.season_count}季` : null,
-                data.area?.join(' '),
-                data.genre?.join(' '),
-                data.director?.join(' ')
-              ]
-                .filter(d => d)
-                .join(' / ')
-            )}
-          </View>
-        </Pressable>
+        <Content
+          heading={[data.title, data.orig_title, data.year ? `(${data.year})` : null]}
+          details={[
+            data.season_count ? `共${data.season_count}季` : null,
+            data.area?.join(' '),
+            data.genre?.join(' '),
+            data.director?.join(' ')
+          ]}
+        />
+      )
+    case 'game':
+      return (
+        <Content
+          heading={[data.title]}
+          details={[
+            data.genre?.join(' '),
+            data.developer?.join(' '),
+            data.platform?.join(' '),
+            data.release_date
+          ]}
+        />
       )
     default:
       return null

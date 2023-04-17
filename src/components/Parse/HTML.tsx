@@ -223,7 +223,7 @@ const ParseHTML: React.FC<Props> = ({
                 key={index}
                 style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
               >
-                {'\n'}
+                {'\n\n'}
               </Text>
             )
           case 'p':

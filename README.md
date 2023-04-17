@@ -8,14 +8,14 @@
 
 Please **do not** create a pull request to update translation. tooot's translation is managed through [https://crowdin.tooot.app/](https://crowdin.tooot.app/) and Crowdin struggles to properly sync two ways. If there is a minor update and you do not want to register an account on Crowdin, please open an issue.
 
-
 ## Special thanks
 
 - [@a_mento](https://crowdin.com/profile/a_mento) for Basques translation
 - [@dzmitry.zubialevich](https://crowdin.com/profile/dzmitry.zubialevich) for Belarusian translation
 - [@amrtf](https://crowdin.com/profile/amrtf) for Catalan and Spanish translation
-- [@forenta](https://github.com/forenta) for German translation
 - [@pat](https://piaille.fr/@pat) for French translation
+- [@forenta](https://github.com/forenta) for German translation
+- [@heracl.es](https://heracl.es/) for Greek translation
 - [@andrigamerita](https://github.com/andrigamerita) for Italian translation
 - [@Hikaru](https://github.com/Hikali-47041) and [@la_la](https://mstdn.jp/@la_la_la) for Japanese translation
 - [@hellojaccc](https://github.com/hellojaccc) for Korean translation

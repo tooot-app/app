@@ -1,13 +1,12 @@
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import openLink from '@components/openLink'
 import { useNavigation } from '@react-navigation/native'
-import browserPackage from '@utils/helpers/browserPackage'
 import { getAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import Constants from 'expo-constants'
 import * as Linking from 'expo-linking'
-import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -60,9 +59,7 @@ const SettingsTooot: React.FC = () => {
                 ']'
             })
           } else {
-            WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot', {
-              ...(await browserPackage())
-            })
+            openLink('https://social.xmflsct.com/@tooot')
           }
         }}
       />
