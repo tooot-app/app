@@ -11,16 +11,16 @@
       "segments": {
         "federated": "Liên hợp",
         "local": "Máy chủ",
-        "explore": ""
+        "explore": "Khám phá"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": "",
+        "heading": "Khám phá",
+        "trending": "Xu hướng",
+        "followRemote": "Theo dõi máy chủ từ xa",
+        "noTitle": "Không tiêu đề",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Bạn đang theo dõi máy chủ này.",
+          "notAvailable": "Bảng tin máy chủ này không công khai. Thử máy chủ khác."
         }
       }
     },
@@ -80,16 +80,16 @@
         "name": "Thông báo đẩy"
       },
       "preferences": {
-        "name": ""
+        "name": "Tùy chọn"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Tất cả bộ lọc nội dung"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Tạo bộ lọc"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Sửa bộ lọc"
       },
       "profile": {
         "name": "Sửa hồ sơ"
@@ -146,48 +146,48 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Kiểu đăng mặc định",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Công khai",
+          "unlisted": "Hạn chế",
+          "private": "Chỉ người theo dõi"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Luôn đánh dấu ảnh/video là nội dung nhạy cảm"
       },
       "media": {
-        "title": "",
+        "title": "Hiển thị media",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Làm mờ nội dung nhạy cảm",
+          "show_all": "Luôn hiển thị",
+          "hide_all": "Ẩn"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Luôn hiển thị đầy đủ nội dung tút"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Tự động phát GIF"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Lọc nội dung",
+        "content": "{{count}} đang dùng"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Cài đặt cập nhật",
+        "description": "Những cài đặt bên dưới chỉ cập nhật khi dùng web UI"
       }
     },
     "preferencesFilters": {
-      "expired": "",
+      "expired": "Đã hết hạn",
       "keywords_one": "{{count}} từ khóa",
       "keywords_other": "{{count}} từ khóa",
       "statuses_one": "{{count}} tút",
       "statuses_other": "{{count}} tút",
-      "context": "",
+      "context": "Áp dụng sau <0 />",
       "contexts": {
-        "home": "",
+        "home": "đang theo dõi và danh sách",
         "notifications": "thông báo",
         "public": "liên hợp",
         "thread": "thảo luận",
@@ -195,33 +195,33 @@
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Tên",
+      "expiration": "Hết hiệu lực",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Không bao giờ",
+        "1800": "Sau 30 phút",
+        "3600": "Sau 1 giờ",
+        "43200": "Sau 12 giờ",
+        "86400": "Sau 1 ngày",
+        "604800": "Sau 1 tuần",
+        "18144000": "Sau 1 tháng"
       },
-      "context": "",
+      "context": "Áp dụng trong",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Đang theo dõi và danh sách",
+        "notifications": "Thông báo",
+        "public": "Liên hợp",
+        "thread": "Hội thoại",
+        "account": "Xem hồ sơ"
       },
-      "action": "",
+      "action": "Khi trùng khớp",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Thu gọn nhưng có thể mở rộng",
+        "hide": "Ẩn hoàn toàn"
       },
-      "keywords": "",
-      "keyword": "",
-      "statuses": ""
+      "keywords": "Khớp từ khóa",
+      "keyword": "Từ khóa",
+      "statuses": "Tút trùng khớp"
     },
     "profile": {
       "feedback": {
@@ -390,7 +390,7 @@
         "accessibilityHint": "Bạn có thể ẩn, chặn, báo cáo hoặc chia sẻ người này"
       },
       "followed_by": " đang theo dõi bạn",
-      "privateNote": "",
+      "privateNote": "Cài ghi chú riêng",
       "moved": "Đã chuyển đi",
       "created_at": "Đã tham gia {{date}}",
       "summary": {
@@ -411,8 +411,8 @@
       "name": "<0 /><1>'s media</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Thêm vào bộ lọc",
+      "existed": "Đã tồn tại trong bộ lọc"
     },
     "history": {
       "name": "Lịch sử chỉnh sửa"
@@ -462,7 +462,7 @@
         "statuses": "Tút"
       },
       "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>",
-      "noResult": ""
+      "noResult": "Không tìm thấy, vui lòng thử cái khác"
     },
     "toot": {
       "name": "Nội dung tút",

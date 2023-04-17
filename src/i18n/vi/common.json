@@ -9,7 +9,7 @@
     "delete": "Xóa",
     "done": "Xong",
     "confirm": "Xác nhận",
-    "add": ""
+    "add": "Thêm"
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
