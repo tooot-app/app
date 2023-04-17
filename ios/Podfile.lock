@@ -14,13 +14,13 @@ PODS:
     - ExpoModulesCore
   - EXNotifications (0.18.1):
     - ExpoModulesCore
-  - Expo (48.0.10):
+  - Expo (48.0.11):
     - ExpoModulesCore
   - ExpoCrypto (12.2.2):
     - ExpoModulesCore
   - ExpoHaptics (12.2.1):
     - ExpoModulesCore
-  - ExpoImage (1.1.0):
+  - ExpoImage (1.2.1):
     - ExpoModulesCore
     - SDWebImage (~> 5.15.0)
     - SDWebImageAVIFCoder (~> 0.9.4)
@@ -486,9 +486,9 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (5.3.0):
+  - RNSentry (5.3.1):
     - React-Core
-    - Sentry/HybridSDK (= 8.3.3)
+    - Sentry/HybridSDK (= 8.4.0)
   - RNShareMenu (6.0.0):
     - React
   - RNSVG (13.9.0):
@@ -504,9 +504,9 @@ PODS:
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
-  - Sentry/HybridSDK (8.3.3):
-    - SentryPrivate (= 8.3.3)
-  - SentryPrivate (8.3.3)
+  - Sentry/HybridSDK (8.4.0):
+    - SentryPrivate (= 8.4.0)
+  - SentryPrivate (8.4.0)
   - Swime (3.0.6)
   - Yoga (1.14.0)
 
@@ -765,10 +765,10 @@ SPEC CHECKSUMS:
   EXFileSystem: 844e86ca9b5375486ecc4ef06d3838d5597d895d
   EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
   EXNotifications: dd628737af60fc8cc62dccebacd326b0fbbc0dcb
-  Expo: b04d142a2b477a391b47c62d179c1a9e1140e6ad
+  Expo: 81418098ffb16914b2e190f54e06db923248e4a1
   ExpoCrypto: 9105610a09cd6290b900bd82fc5d190e489125a3
   ExpoHaptics: 5156bc5160d8e04c170dd6e645a71154951a2ad9
-  ExpoImage: 80221ee353e8e7f1afee71fdbc8099ae61f394f2
+  ExpoImage: 09d394e082cdd18d946f10a522d566dfca019fb8
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
   ExpoModulesCore: 6e0259511f4c4341b6b8357db393624df2280828
@@ -835,15 +835,15 @@ SPEC CHECKSUMS:
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNReanimated: f0dd6b881808e635ef0673f89642937d6c141314
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: 8363f1eff1c685a502e15080b5e2f447969897c5
+  RNSentry: 68d5b2339fc7cd864e8076279345cc90174fa583
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SDWebImageAVIFCoder: d759e21cf4efb640cc97250566aa556ad8bb877c
   SDWebImageSVGCoder: 6fc109f9c2a82ab44510fff410b88b1a6c271ee8
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
-  Sentry: 8ffc397d98fe58d693e73959b26ed0eaee55646a
-  SentryPrivate: bf776a47a131648f5023097215987b40fbd47025
+  Sentry: 16d46dd5ca10e7f4469a2611805a3de123188add
+  SentryPrivate: 2bb4f8d9ff558b25ac70b66c1dedc58a7c43630b
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
 
