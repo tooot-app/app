@@ -258,6 +258,18 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               }
             })
           })
+        } else {
+          queryClient.cancelQueries(queryKey.local)
+          queryClient.setQueryData<Mastodon.Status[]>(queryKey.local, old => {
+            return old?.map(local => {
+              const remoteMatch = data.find(remote => remote.uri === local.uri)
+              if (remoteMatch) {
+                return { ...local, ...updateCounts(remoteMatch) }
+              } else {
+                return local
+              }
+            })
+          })
         }
       },
       onSettled: async () => {
