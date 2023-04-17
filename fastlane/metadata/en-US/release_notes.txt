@@ -1,3 +1,2 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Added Basque language
-- Added Polish language
+- Added Greek translation

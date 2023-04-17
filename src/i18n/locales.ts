@@ -2,6 +2,7 @@ const LOCALES = {
   be: 'Беларуская',
   ca: 'Català',
   de: 'Deutsch',
+  el: 'Ελληνικά',
   en: 'English',
   es: 'Español',
   eu: 'Euskara',
