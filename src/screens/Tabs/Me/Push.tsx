@@ -3,11 +3,11 @@ import Icon from '@components/Icon'
 import { Loading } from '@components/Loading'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
+import openLink from '@components/openLink'
 import CustomText from '@components/Text'
 import * as Sentry from '@sentry/react-native'
 import apiInstance from '@utils/api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@utils/api/tooot'
-import browserPackage from '@utils/helpers/browserPackage'
 import { PUSH_ADMIN, PUSH_DEFAULT, setChannels } from '@utils/push/constants'
 import { updateExpoToken } from '@utils/push/updateExpoToken'
 import { useAppsQuery } from '@utils/queryHooks/apps'
@@ -18,7 +18,6 @@ import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Crypto from 'expo-crypto'
 import * as Notifications from 'expo-notifications'
-import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, Linking, Platform, ScrollView, View } from 'react-native'
@@ -271,11 +270,7 @@ const TabMePush: React.FC = () => {
                 <MenuRow
                   title={t('me.push.howitworks')}
                   iconBack='external-link'
-                  onPress={async () =>
-                    WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
-                      ...(await browserPackage())
-                    })
-                  }
+                  onPress={async () => openLink('https://tooot.app/how-push-works')}
                 />
               </MenuContainer>
               <MenuContainer children={alerts()} />

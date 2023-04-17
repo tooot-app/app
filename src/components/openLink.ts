@@ -8,6 +8,7 @@ import { QueryKeyStatus } from '@utils/queryHooks/status'
 import { getGlobalStorage } from '@utils/storage/actions'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
+import { WebBrowserPresentationStyle } from 'expo-web-browser'
 
 const openLink = async (url: string, navigation?: any) => {
   const handleNavigation = (page: 'Tab-Shared-Toot' | 'Tab-Shared-Account', options: any) => {
@@ -74,6 +75,7 @@ const openLink = async (url: string, navigation?: any) => {
     default:
       await WebBrowser.openBrowserAsync(url.trim(), {
         dismissButtonStyle: 'close',
+        presentationStyle: WebBrowserPresentationStyle.AUTOMATIC,
         enableBarCollapsing: true,
         ...(await browserPackage())
       }).catch(() => Linking.openURL(url.trim()))
