@@ -60,7 +60,7 @@ export const searchLocalStatus = async (
       staleTime: 3600,
       cacheTime: 3600,
       retry: false,
-      ...(timeout && { meta: { timeout: 1000 } })
+      ...(timeout && { meta: { timeout: 1500 } })
     })
     .then(res =>
       res.statuses[0]?.uri === uri || res.statuses[0]?.url === uri
@@ -79,7 +79,7 @@ export const searchLocalAccount = async (
       staleTime: 3600,
       cacheTime: 3600,
       retry: false,
-      ...(timeout && { meta: { timeout: 1000 } })
+      ...(timeout && { meta: { timeout: 1500 } })
     })
     .then(res => (res.accounts[0].url === url ? res.accounts[0] : Promise.reject()))
 }
