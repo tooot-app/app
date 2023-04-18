@@ -77,6 +77,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const ancestorsCache = useRef<(Mastodon.Status & { _level?: number })[]>()
   const loaded = useRef<boolean>(false)
   const prependContent = async () => {
+    await new Promise<void>(promise => setTimeout(promise, 128))
+
     loaded.current = true
 
     if (ancestorsCache.current?.length) {
@@ -173,14 +175,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
-      onSuccess: async data => {
+      onSuccess: data => {
         if (data.pages[0].body.length < 1) {
           navigation.goBack()
           return
         }
 
         if (!remoteQueryEnabled) {
-          await prependContent()
+          prependContent()
         }
       }
     }
@@ -295,9 +297,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           )
         }
       },
-      onSettled: async () => {
-        await prependContent()
-      }
+      onSettled: () => prependContent()
     }
   )
 
