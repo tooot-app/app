@@ -17,20 +17,17 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
   const { colors } = useTheme()
 
   const segments = Linking.parse(card.url).path?.split('/')
-  if (
-    !segments ||
-    !(
-      segments[0] === 'movie' ||
-      segments[0] === 'book' ||
-      (segments[0] === 'tv' && segments[1] !== 'season') ||
-      segments[0] === 'game'
-    )
-  )
+  if (!segments || !['movie', 'book', 'tv', 'game', 'album', 'podcast'].includes(segments[0]))
     return null
 
   const [headingLines, setHeadingLines] = useState(3)
 
-  const { data } = useNeodbQuery({ path: `${segments[0]}/${segments[1]}` })
+  const { data } = useNeodbQuery({
+    path:
+      segments[0] === 'tv' && segments[1] === 'season'
+        ? `${segments[0]}${segments[1]}/${segments[2]}`
+        : `${segments[0]}/${segments[1]}`
+  })
 
   if (!data) return null
 
@@ -110,17 +107,32 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
         />
       )
     case 'tv':
-      return (
-        <Content
-          heading={[data.title, data.orig_title, data.year ? `(${data.year})` : null]}
-          details={[
-            data.season_count ? `共${data.season_count}季` : null,
-            data.area?.join(' '),
-            data.genre?.join(' '),
-            data.director?.join(' ')
-          ]}
-        />
-      )
+      if (segments[1] === 'season') {
+        return (
+          <Content
+            heading={[data.title, data.orig_title, data.year ? `(${data.year})` : null]}
+            details={[
+              data.season_number ? `第${data.season_number}季` : null,
+              data.episode_count ? `共${data.episode_count}集` : null,
+              data.area?.join(' '),
+              data.genre?.join(' '),
+              data.director?.join(' ')
+            ]}
+          />
+        )
+      } else {
+        return (
+          <Content
+            heading={[data.title, data.orig_title, data.year ? `(${data.year})` : null]}
+            details={[
+              data.season_count ? `共${data.season_count}季` : null,
+              data.area?.join(' '),
+              data.genre?.join(' '),
+              data.director?.join(' ')
+            ]}
+          />
+        )
+      }
     case 'game':
       return (
         <Content
@@ -132,6 +144,23 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
             data.release_date
           ]}
         />
+      )
+    case 'album':
+      return (
+        <Content
+          heading={[data.title]}
+          details={[
+            data.artist.join(' '),
+            data.release_date,
+            data.duration,
+            data.genre.join(' '),
+            data.company.join(' ')
+          ]}
+        />
+      )
+    case 'podcast':
+      return (
+        <Content heading={[data.title]} details={[data.hosts.join(' '), data.genre.join(' ')]} />
       )
     default:
       return null
