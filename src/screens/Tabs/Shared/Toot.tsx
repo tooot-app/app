@@ -135,7 +135,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const remoteQueryEnabled =
     ['public', 'unlisted'].includes(toot.visibility) &&
     match?.domain !== getAccountStorage.string('auth.domain')
-  const query = useQuery<Mastodon.Status[]>(
+  const query = useQuery<{
+    pages: { body: (Mastodon.Status & { _level?: number })[] }[]
+  }>(
     queryKey.local,
     async () => {
       const context = await apiInstance<{
@@ -149,24 +151,30 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       ancestorsCache.current = [...context.ancestors]
       const statuses = [{ ...toot }, ...context.descendants]
 
-      return statuses.map((status, index) => {
-        if (index === 0) {
-          status._level = 0
-          return status
-        } else {
-          const repliedLevel: number =
-            statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-          status._level = repliedLevel + 1
-          return status
-        }
-      })
+      return {
+        pages: [
+          {
+            body: statuses.map((status, index) => {
+              if (index === 0) {
+                status._level = 0
+                return status
+              } else {
+                const repliedLevel: number =
+                  statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
+                status._level = repliedLevel + 1
+                return status
+              }
+            })
+          }
+        ]
+      }
     },
     {
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
       onSuccess: async data => {
-        if (data.length < 1) {
+        if (data.pages[0].body.length < 1) {
           navigation.goBack()
           return
         }
@@ -239,37 +247,52 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       refetchOnMount: true,
       retry: false,
       onSuccess: async data => {
-        if ((query.data?.length || 0) < 1 && data.length < 1) {
+        if ((query.data?.pages[0].body.length || 0) < 1 && data.length < 1) {
           navigation.goBack()
           return
         }
 
-        if ((query.data?.length || 0) < data.length) {
+        if ((query.data?.pages[0].body.length || 0) < data.length) {
           setHasRemoteContent(true)
 
           queryClient.cancelQueries(queryKey.local)
-          queryClient.setQueryData<Mastodon.Status[]>(queryKey.local, old => {
-            return data.map(remote => {
-              const localMatch = old?.find(local => local.uri === remote.uri)
-              if (localMatch) {
-                return { ...localMatch, _level: remote._level, ...updateCounts(remote) }
-              } else {
-                return appendRemote.status(remote, match!.domain)
-              }
+          queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+            queryKey.local,
+            old => ({
+              pages: [
+                {
+                  body: data.map(remote => {
+                    const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
+                    if (localMatch) {
+                      return { ...localMatch, _level: remote._level, ...updateCounts(remote) }
+                    } else {
+                      return appendRemote.status(remote, match!.domain)
+                    }
+                  })
+                }
+              ]
             })
-          })
+          )
         } else {
           queryClient.cancelQueries(queryKey.local)
-          queryClient.setQueryData<Mastodon.Status[]>(queryKey.local, old => {
-            return old?.map(local => {
-              const remoteMatch = data.find(remote => remote.uri === local.uri)
-              if (remoteMatch) {
-                return { ...local, ...updateCounts(remoteMatch) }
-              } else {
-                return local
-              }
+          queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+            queryKey.local,
+            old => ({
+              pages: [
+                {
+                  body:
+                    old?.pages[0].body.map(local => {
+                      const remoteMatch = data.find(remote => remote.uri === local.uri)
+                      if (remoteMatch) {
+                        return { ...local, ...updateCounts(remoteMatch) }
+                      } else {
+                        return local
+                      }
+                    }) || []
+                }
+              ]
             })
-          })
+          )
         }
       },
       onSettled: async () => {
@@ -285,12 +308,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   return (
     <FlatList
       ref={flRef}
-      data={query.data}
+      data={query.data?.pages?.[0].body}
       keyExtractor={(item, index) => `${item.id}_${index}`}
       renderItem={({ item, index }) => {
-        const prev = query.data?.[index - 1]?._level || 0
+        const prev = query.data?.pages[0].body[index - 1]?._level || 0
         const curr = item._level || 0
-        const next = query.data?.[index + 1]?._level || 0
+        const next = query.data?.pages[0].body[index + 1]?._level || 0
 
         const height = heights[index] || 300
         let path = ''
