@@ -36,14 +36,11 @@ const SettingsApp: React.FC = () => {
       .catch(() => {
         if (connect) {
           GLOBAL.connect = false
-          setConnect(false)
         } else {
           setShowConnect(false)
         }
       })
   }, [])
-
-  const [clearingCache, setClearingCache] = useState(false)
 
   return (
     <MenuContainer>
@@ -175,7 +172,7 @@ const SettingsApp: React.FC = () => {
       />
       {showConnect ? (
         <MenuRow
-          title='使用代理'
+          title='使用免费🪜'
           switchValue={connect || false}
           switchOnValueChange={() => {
             GLOBAL.connect = !connect
