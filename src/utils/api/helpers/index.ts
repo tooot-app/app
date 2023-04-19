@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/react-native'
 import { GLOBAL } from '@utils/storage'
-import { setGlobalStorage } from '@utils/storage/actions'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
 import * as Linking from 'expo-linking'
@@ -23,7 +22,6 @@ const handleError =
     if (GLOBAL.connect) {
       if (error?.response?.status == 403 && error?.response?.data == 'connect_blocked') {
         GLOBAL.connect = false
-        setGlobalStorage('app.connect', false)
       }
     }
     const shouldReportToSentry = config && (config.captureRequest || config.captureResponse)

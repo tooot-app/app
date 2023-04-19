@@ -8,9 +8,10 @@ export interface Props {
   width: number
   height: number
   margin?: number
+  color?: string
 }
 
-const Sparkline: React.FC<Props> = ({ data, width, height, margin = 0 }) => {
+const Sparkline: React.FC<Props> = ({ data, width, height, margin = 0, color }) => {
   const { colors } = useTheme()
 
   const dataToPoints = ({
@@ -70,10 +71,10 @@ const Sparkline: React.FC<Props> = ({ data, width, height, margin = 0 }) => {
   return (
     <Svg height={height} width={width} style={{ marginRight: margin }} fill='none'>
       <G>
-        <Path d={'M' + fillPoints.join(' ')} fill={colors.blue} fillOpacity={0.1} />
+        <Path d={'M' + fillPoints.join(' ')} fill={color || colors.blue} fillOpacity={0.1} />
         <Path
           d={'M' + linePoints.join(' ')}
-          stroke={colors.blue}
+          stroke={color || colors.blue}
           strokeWidth={1}
           strokeLinejoin='round'
           strokeLinecap='round'

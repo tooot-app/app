@@ -218,6 +218,7 @@ const TimelineRefresh: React.FC<Props> = ({
         }
         isFetchingPrev.value = false
       })
+      .catch(() => (isFetchingPrev.value = false))
   }
 
   const runFetchLatest = async () => {

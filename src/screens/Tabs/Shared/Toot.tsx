@@ -77,6 +77,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const ancestorsCache = useRef<(Mastodon.Status & { _level?: number })[]>()
   const loaded = useRef<boolean>(false)
   const prependContent = async () => {
+    await new Promise<void>(promise => setTimeout(promise, 128))
+
     loaded.current = true
 
     if (ancestorsCache.current?.length) {
@@ -123,6 +125,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   }
 
+  const updateCounts = (
+    remote: Mastodon.Status
+  ): Pick<Mastodon.Status, 'reblogs_count' | 'replies_count' | 'favourites_count'> => ({
+    reblogs_count: remote.reblogs_count,
+    replies_count: remote.replies_count,
+    favourites_count: remote.favourites_count
+  })
+
   const match = urlMatcher(toot.url || toot.uri)
   const remoteQueryEnabled =
     ['public', 'unlisted'].includes(toot.visibility) &&
@@ -165,14 +175,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
-      onSuccess: async data => {
+      onSuccess: data => {
         if (data.pages[0].body.length < 1) {
           navigation.goBack()
           return
         }
 
         if (!remoteQueryEnabled) {
-          await prependContent()
+          prependContent()
         }
       }
     }
@@ -189,17 +199,24 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         return Promise.reject('Cannot parse remote toot id')
       }
 
-      const context = await apiGeneral<{
-        ancestors: Mastodon.Status[]
-        descendants: Mastodon.Status[]
-      }>({
-        method: 'get',
-        domain,
-        url: `api/v1/statuses/${id}/context`
-      }).then(res => res.body)
+      const [remote, context] = await Promise.all([
+        apiGeneral<Mastodon.Status>({
+          method: 'get',
+          domain,
+          url: `api/v1/statuses/${id}`
+        }).then(res => res.body),
+        apiGeneral<{
+          ancestors: Mastodon.Status[]
+          descendants: Mastodon.Status[]
+        }>({
+          method: 'get',
+          domain,
+          url: `api/v1/statuses/${id}/context`
+        }).then(res => res.body)
+      ])
 
       if (!context?.ancestors.length && !context?.descendants.length) {
-        return Promise.resolve([{ ...toot }])
+        return Promise.resolve([{ ...toot, ...updateCounts(remote) }])
       }
 
       if ((ancestorsCache.current?.length || 0) < context.ancestors.length) {
@@ -213,7 +230,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         })
       }
 
-      const statuses = [{ ...toot }, ...context.descendants]
+      const statuses = [{ ...toot, ...updateCounts(remote) }, ...context.descendants]
       return statuses.map((status, index) => {
         if (index === 0) {
           status._level = 0
@@ -243,28 +260,44 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
             queryKey.local,
-            old => {
-              return {
-                pages: [
-                  {
-                    body: data.map(remote => {
-                      const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
-                      if (localMatch) {
-                        return { ...localMatch, _level: remote._level }
+            old => ({
+              pages: [
+                {
+                  body: data.map(remote => {
+                    const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
+                    if (localMatch) {
+                      return { ...localMatch, _level: remote._level, ...updateCounts(remote) }
+                    } else {
+                      return appendRemote.status(remote, match!.domain)
+                    }
+                  })
+                }
+              ]
+            })
+          )
+        } else {
+          queryClient.cancelQueries(queryKey.local)
+          queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+            queryKey.local,
+            old => ({
+              pages: [
+                {
+                  body:
+                    old?.pages[0].body.map(local => {
+                      const remoteMatch = data.find(remote => remote.uri === local.uri)
+                      if (remoteMatch) {
+                        return { ...local, ...updateCounts(remoteMatch) }
                       } else {
-                        return appendRemote.status(remote, match!.domain)
+                        return local
                       }
-                    })
-                  }
-                ]
-              }
-            }
+                    }) || []
+                }
+              ]
+            })
           )
         }
       },
-      onSettled: async () => {
-        await prependContent()
-      }
+      onSettled: () => prependContent()
     }
   )
 
