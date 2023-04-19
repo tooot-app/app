@@ -1,6 +1,5 @@
 import { mapEnvironment } from '@utils/helpers/checkEnvironment'
 import { GLOBAL } from '@utils/storage'
-import { setGlobalStorage } from '@utils/storage/actions'
 import axios from 'axios'
 import * as Linking from 'expo-linking'
 import { userAgent } from '.'
@@ -119,6 +118,5 @@ export const connectVerify = () =>
     headers: { ...userAgent }
   }).catch(err => {
     GLOBAL.connect = false
-    setGlobalStorage('app.connect', false)
     return Promise.reject(err)
   })

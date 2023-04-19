@@ -11,6 +11,7 @@ import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, TextInput, View } from 'react-native'
 import AccountContext from '../Context'
+import haptics from '@components/haptics'
 
 const AccountInformationPrivateNote: React.FC = () => {
   const { relationship, pageMe } = useContext(AccountContext)
@@ -24,6 +25,7 @@ const AccountInformationPrivateNote: React.FC = () => {
   const queryKey: QueryKeyRelationship = ['Relationship', { id: relationship?.id }]
   const mutation = useRelationshipMutation({
     onMutate: async vars => {
+      haptics('Light')
       await queryClient.cancelQueries({ queryKey })
       queryClient.setQueryData<Mastodon.Relationship[]>(queryKey, old => {
         return old
