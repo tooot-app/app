@@ -248,7 +248,6 @@ export const setAccount = async (account: string) => {
   storage.account = temp
   setGlobalStorage('account.active', account)
   await queryClient.resetQueries()
-  queryClient.clear()
 
   await apiGeneral<Mastodon.Account>({
     method: 'get',

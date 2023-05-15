@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - uses: tj-actions/branch-names@v6
         id: branch
@@ -20,7 +20,7 @@ jobs:
       - run: bundle install
       - run: yarn app:build ios
         env:
-          DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
+          DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           LC_ALL: en_US.UTF-8
@@ -38,7 +38,7 @@ jobs:
           GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
 
   build-android:
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - uses: tj-actions/branch-names@v6
         id: branch
@@ -67,7 +67,7 @@ jobs:
           GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:
-    runs-on: macos-12
+    runs-on: macos-13
     needs: [build-ios, build-android]
     steps:
       - uses: tj-actions/branch-names@v6
