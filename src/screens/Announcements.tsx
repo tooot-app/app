@@ -17,7 +17,6 @@ import {
   Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Platform,
   Pressable,
   StyleSheet,
   View
@@ -198,7 +197,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
     )
   }
 
-  return Platform.OS === 'ios' ? (
+  return (
     <BlurView
       blurType={mode}
       blurAmount={20}
@@ -244,45 +243,6 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
         </View>
       </SafeAreaView>
     </BlurView>
-  ) : (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.backgroundDefault }}>
-      <FlatList
-        horizontal
-        data={query.data}
-        pagingEnabled
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        ListEmptyComponent={ListEmptyComponent}
-      />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: 49
-        }}
-      >
-        {query.data && query.data.length > 1 ? (
-          <>
-            {query.data.map((d, i) => (
-              <View
-                key={i}
-                style={{
-                  width: StyleConstants.Spacing.S,
-                  height: StyleConstants.Spacing.S,
-                  borderRadius: StyleConstants.BorderRadius,
-                  borderWidth: 1,
-                  borderColor: colors.primaryDefault,
-                  backgroundColor: i === index ? colors.primaryDefault : undefined,
-                  marginLeft: i === query.data.length ? 0 : StyleConstants.Spacing.S
-                }}
-              />
-            ))}
-          </>
-        ) : null}
-      </View>
-    </SafeAreaView>
   )
 }
 
