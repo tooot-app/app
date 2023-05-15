@@ -9,7 +9,9 @@ import AccountContext from '@screens/Tabs/Shared/Account/Context'
 import AccountNav from '@screens/Tabs/Shared/Account/Nav'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { useGlobalStorage } from '@utils/storage/actions'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { useRef } from 'react'
+import { View } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 
 const TabMeRoot: React.FC = () => {
@@ -39,8 +41,20 @@ const TabMeRoot: React.FC = () => {
         {accountActive ? <MyInfo /> : <ComponentInstance />}
         {accountActive ? <Collections /> : null}
         <Settings />
-        {accountActive ? <AccountInformationSwitch /> : null}
-        {accountActive ? <Logout /> : null}
+        {accountActive ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+              marginTop: StyleConstants.Spacing.S,
+              marginBottom: StyleConstants.Spacing.XL,
+              gap: StyleConstants.Spacing.M
+            }}
+          >
+            <Logout />
+            <AccountInformationSwitch />
+          </View>
+        ) : null}
       </Animated.ScrollView>
     </AccountContext.Provider>
   )
