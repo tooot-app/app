@@ -153,13 +153,13 @@
           "refresh": "Actualizar"
         },
         "count": {
-          "voters_one": "{{count}} usuario ha votado",
-          "voters_other": "{{count}} usuarios han votado",
+          "voters_one": "{{count}} voto",
+          "voters_other": "{{count}} votos",
           "votes_one": "{{count}} voto",
           "votes_other": "{{count}} votos"
         },
         "expiration": {
-          "expired": "Votación expirada",
+          "expired": "Finalizado",
           "until": "Expira <0 />"
         }
       }
