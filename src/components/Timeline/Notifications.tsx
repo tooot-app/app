@@ -62,14 +62,16 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
 
         <View
           style={{
-            opacity:
-              notification.type === 'follow' ||
-              notification.type === 'follow_request' ||
-              notification.type === 'mention' ||
-              notification.type === 'status' ||
-              notification.type === 'admin.sign_up'
-                ? 1
-                : 0.5
+            opacity: [
+              'follow',
+              'follow_request',
+              'mention',
+              'status',
+              'poll',
+              'admin.sign_up'
+            ].includes(notification.type)
+              ? 1
+              : 0.5
           }}
         >
           <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
