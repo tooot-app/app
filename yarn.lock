@@ -1627,7 +1627,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/config-plugins@npm:6.0.1, @expo/config-plugins@npm:~6.0.0":
+"@expo/config-plugins@npm:6.0.2":
+  version: 6.0.2
+  resolution: "@expo/config-plugins@npm:6.0.2"
+  dependencies:
+    "@expo/config-types": ^48.0.0
+    "@expo/json-file": ~8.2.37
+    "@expo/plist": ^0.0.20
+    "@expo/sdk-runtime-versions": ^1.0.0
+    "@react-native/normalize-color": ^2.0.0
+    chalk: ^4.1.2
+    debug: ^4.3.1
+    find-up: ~5.0.0
+    getenv: ^1.0.0
+    glob: 7.1.6
+    resolve-from: ^5.0.0
+    semver: ^7.3.5
+    slash: ^3.0.0
+    xcode: ^3.0.1
+    xml2js: 0.4.23
+  checksum: 2c689f767d3fd6578535b90bae42f6559e7e53321d71e621d38975fdf49853f9c16b5bd7a5f8574a72133cb2b93490c28a46a8c5dcc1f999940b7fa742acfca9
+  languageName: node
+  linkType: hard
+
+"@expo/config-plugins@npm:~6.0.0":
   version: 6.0.1
   resolution: "@expo/config-plugins@npm:6.0.1"
   dependencies:
@@ -3235,29 +3258,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/tracing@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry-internal/tracing@npm:7.51.1"
+"@sentry-internal/tracing@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry-internal/tracing@npm:7.52.0"
   dependencies:
-    "@sentry/core": 7.51.1
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry/core": 7.52.0
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
     tslib: ^1.9.3
-  checksum: 267b1e04e68cbf117070bd58dd759319752f328b086623d098b0abf0cf75d67a1f741a10d50db4e5f0a06e8f5cd58d43bb7df63a70f9e66fd3c84eda2b2f7e14
+  checksum: 5c3834a6e7be839f1d4f5196c32e31cba06dfcdd25c7c43635273fb8dbf2c4f924aacdfb4ab6a21c281743a1dcfca565cb62956224c16ebaee9b23a69a408293
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/browser@npm:7.51.1"
+"@sentry/browser@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/browser@npm:7.52.0"
   dependencies:
-    "@sentry-internal/tracing": 7.51.1
-    "@sentry/core": 7.51.1
-    "@sentry/replay": 7.51.1
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry-internal/tracing": 7.52.0
+    "@sentry/core": 7.52.0
+    "@sentry/replay": 7.52.0
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
     tslib: ^1.9.3
-  checksum: c7c00dce2d463328abc274a66c880d72ab5133e7577d4ab7a68f5f64571246efde0f0968fbc0f3105050d45c14b0ce91247d334917e6d921781c53d909fc2691
+  checksum: 6b8189a86f84278d5572f4599b3deaa9c0ea2f0dae6e15361c2dfb24b6af4891e26ffa07b80cdcec7ced24d96f9abcdb63c72718169b385236d5c81d7af2085a
   languageName: node
   linkType: hard
 
@@ -3276,100 +3299,100 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/core@npm:7.51.1"
+"@sentry/core@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/core@npm:7.52.0"
   dependencies:
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
     tslib: ^1.9.3
-  checksum: 0e538f03169a2409cd821571d4477c26a3f23324153e66440eae2f2b632df09e9d745fda3fa60bcae409320a2d589f5903ee9d63f4ce62e20d477eb1ea907533
+  checksum: 3afcc2b137c14b405a35833d997d72f943f7195cd607ec172b910a09e624d099228cc9f7d61b393efbc235e0a50fe7e37286b60e92dba1c5d608522098a01099
   languageName: node
   linkType: hard
 
-"@sentry/hub@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/hub@npm:7.51.1"
+"@sentry/hub@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/hub@npm:7.52.0"
   dependencies:
-    "@sentry/core": 7.51.1
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry/core": 7.52.0
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
     tslib: ^1.9.3
-  checksum: 49ec08e865af87d520c40203af150c1306545657348307a9533a5c71654866850481ec56ee4e3cee7b859059630525d0f2291066b4d05463d8f37a7fb4d7f472
+  checksum: 55a6b7cf10b47b141e68ab3cebbec86bbae1905cd249e98ab62b1ff0b3a4d176f4fadd878caee2d981a4ec2d999e706933d80770b73d758683d4eb89927e00c4
   languageName: node
   linkType: hard
 
-"@sentry/integrations@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/integrations@npm:7.51.1"
+"@sentry/integrations@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/integrations@npm:7.52.0"
   dependencies:
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
     localforage: ^1.8.1
     tslib: ^1.9.3
-  checksum: 5179b39f519d495590a0961b6641c5c1eeb5f1de8a3092c28bc0568392340ba70e5a0051cf19dcec5fa5ae6c82033247f19146de292e68fd1e5a8232a740ecac
+  checksum: 8018b6cfeb4faee97c482bccb21ecea276a9be3d46dd42f8ace40b34b81955b8af650dba02ca29f649ba94a347023a6d0ed32ddace0138ea195bc08bbe6f983b
   languageName: node
   linkType: hard
 
-"@sentry/react-native@npm:5.4.2":
-  version: 5.4.2
-  resolution: "@sentry/react-native@npm:5.4.2"
+"@sentry/react-native@npm:5.5.0":
+  version: 5.5.0
+  resolution: "@sentry/react-native@npm:5.5.0"
   dependencies:
-    "@sentry/browser": 7.51.1
+    "@sentry/browser": 7.52.0
     "@sentry/cli": 2.17.5
-    "@sentry/core": 7.51.1
-    "@sentry/hub": 7.51.1
-    "@sentry/integrations": 7.51.1
-    "@sentry/react": 7.51.1
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry/core": 7.52.0
+    "@sentry/hub": 7.52.0
+    "@sentry/integrations": 7.52.0
+    "@sentry/react": 7.52.0
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
   peerDependencies:
     react: ">=17.0.0"
     react-native: ">=0.65.0"
-  checksum: e50f718b93911f4e7e576c2a83ffaa57c9049853f295648aeefc9da605f4da3373a9d8ee92996a30494157506393c1f2e8c24a1486b47f1a634451fb9c35626d
+  checksum: 6f790193b14e9e57e40d2b38e3b6addf2fcd35d3a9bdbe09e1d7c552a0b4971e00f6adbbb58010223ac59f012279234b6fe22db2189b155f42da637fea59795f
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/react@npm:7.51.1"
+"@sentry/react@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/react@npm:7.52.0"
   dependencies:
-    "@sentry/browser": 7.51.1
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
+    "@sentry/browser": 7.52.0
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
     hoist-non-react-statics: ^3.3.2
     tslib: ^1.9.3
   peerDependencies:
     react: 15.x || 16.x || 17.x || 18.x
-  checksum: 32e4166aa0b8623c0fccce43d52f8d48b2a6921b30381115d188fb8708e151ab9a12c56b16ead08712de5e66cc25dc640eed6eaa57d5d27b3ff901e4577a3379
+  checksum: 559188dae39f8deb242705a6aff8daa7de5d6398080a7e1e5ca469dd92b3aef55d364998ee62b123dd3c801588dd8851b9eb37d5adddbef482f7e33f53dd8f85
   languageName: node
   linkType: hard
 
-"@sentry/replay@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/replay@npm:7.51.1"
+"@sentry/replay@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/replay@npm:7.52.0"
   dependencies:
-    "@sentry/core": 7.51.1
-    "@sentry/types": 7.51.1
-    "@sentry/utils": 7.51.1
-  checksum: 0e1719cd2204ff0ebeb83b55116d699ef5c1361b532c840faaef932eb83efb9a70463c5e39f0250b94643ea0cc148c7c8561dd264a9d9ea905cfa7c340f7e258
+    "@sentry/core": 7.52.0
+    "@sentry/types": 7.52.0
+    "@sentry/utils": 7.52.0
+  checksum: e4c2a5fa4e520a598eab0ccc3a4afb2286239e8b3216368d4e167cfcc9fa21341e1cfc2ceeaff4ea9b98099f4f2e20d46aedd5f9a64bc9975f4195ed8a154ef0
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/types@npm:7.51.1"
-  checksum: 5d99119c320e249b443dbf91bad103394922ee03ffbe2f9809a5d319a0538d7de45195404da3482e7ab91ec764b6a0b72e0c9d8613042bec15485d02bf874e8c
+"@sentry/types@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/types@npm:7.52.0"
+  checksum: 36c471383daaea22349c166ace708f969689a87944ed0707f0b2b4b2a2fc17342f5179a87049be200ffdf33fb47d1df16d2066f8bb5113780b62262a1c46f9b3
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:7.51.1":
-  version: 7.51.1
-  resolution: "@sentry/utils@npm:7.51.1"
+"@sentry/utils@npm:7.52.0":
+  version: 7.52.0
+  resolution: "@sentry/utils@npm:7.52.0"
   dependencies:
-    "@sentry/types": 7.51.1
+    "@sentry/types": 7.52.0
     tslib: ^1.9.3
-  checksum: 59ff49718d6107745383086aa25c11bb13e40274fb98530133236cce40907815697e2bc4e81aac161a9f0ddfb22de65415318b93eecc71e2e24b60e87eb25ecb
+  checksum: 25b245c2125822aca80cba0796997f7d2abcfa702f97d8d485a5b24566cb9cf5b73f96a17f587108fb81f793bb915f73d49dc9ac35e996d5b9d4d8755a676db6
   languageName: node
   linkType: hard
 
@@ -5703,12 +5726,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-image@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "expo-image@npm:1.2.2"
+"expo-image@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "expo-image@npm:1.2.3"
   peerDependencies:
     expo: "*"
-  checksum: f04d5527c5d6145c67a238e191d415873933be8038d64741ae596769956ee5bbd5b48508de1b17fc368952e8463e83ea7ce76ee8069a35aa48a16005959358dd
+  checksum: 458a2d581da21c6196efe2395e30473e0af50c86f76b72c7d49a55fe8bfc7fde10c1b3012b21dc860ee09ba302ba65aff9eb8e771040f22d4f2063c0425a89d9
   languageName: node
   linkType: hard
 
@@ -5870,14 +5893,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo@npm:48.0.16":
-  version: 48.0.16
-  resolution: "expo@npm:48.0.16"
+"expo@npm:48.0.17":
+  version: 48.0.17
+  resolution: "expo@npm:48.0.17"
   dependencies:
     "@babel/runtime": ^7.20.0
     "@expo/cli": 0.7.1
     "@expo/config": 8.0.2
-    "@expo/config-plugins": 6.0.1
+    "@expo/config-plugins": 6.0.2
     "@expo/vector-icons": ^13.0.0
     babel-preset-expo: ~9.3.2
     cross-spawn: ^6.0.5
@@ -5898,7 +5921,7 @@ __metadata:
     uuid: ^3.4.0
   bin:
     expo: bin/cli.js
-  checksum: e1d2f68501c8870449fd9c993859d32f37ed1695f6c18a4ad43785805e25fd600d5d1e267a851c961a7f83dea7c140bf62333b34832eed433131e50aaa00149b
+  checksum: 560aaa0da139560d84fea92bce9bc3aa0c32e157b7676f1c80ee3bece43226fe1f44fe41837b91d00a4107a0cf5291f0e042d5f9ca1591d723dbf5a96a168df3
   languageName: node
   linkType: hard
 
@@ -9703,13 +9726,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^4.5.2":
-  version: 4.5.2
-  resolution: "react-native-safe-area-context@npm:4.5.2"
+"react-native-safe-area-context@npm:^4.5.3":
+  version: 4.5.3
+  resolution: "react-native-safe-area-context@npm:4.5.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 05916a99015b25ef0cb04ae429b17cda18aa73d8f25e4ad51a9ef253b445c335bb9d0f90dc45859fa23be520c32b723334166475ac47888d4ee67d301885d5a5
+  checksum: 0390e81db6926febaf1186dcad4fede95dfcb0eb3db84dcefc25b9016c8c831b65a9116f605b617440e7dcbc8bb02a17e86cdaf82be3ff26e5a68c5936064a68
   languageName: node
   linkType: hard
 
@@ -11242,7 +11265,7 @@ __metadata:
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
     "@react-navigation/stack": ^6.3.16
-    "@sentry/react-native": 5.4.2
+    "@sentry/react-native": 5.5.0
     "@sharcoux/slider": ^6.1.2
     "@tanstack/react-query": ^4.29.7
     "@types/diff": ^5.0.3
@@ -11258,14 +11281,14 @@ __metadata:
     deprecated-react-native-prop-types: ^4.1.0
     diff: ^5.1.0
     dotenv: ^16.0.3
-    expo: 48.0.16
+    expo: 48.0.17
     expo-auth-session: ^4.1.0
     expo-av: ^13.3.0
     expo-constants: ^14.3.0
     expo-crypto: ^12.3.0
     expo-file-system: ^15.3.0
     expo-haptics: ^12.3.0
-    expo-image: ^1.2.2
+    expo-image: ^1.2.3
     expo-linking: ^4.1.0
     expo-localization: ^14.2.0
     expo-notifications: ^0.18.1
@@ -11296,7 +11319,7 @@ __metadata:
     react-native-quick-base64: ^2.0.6
     react-native-reanimated: ^3.1.0
     react-native-reanimated-zoom: ^0.3.3
-    react-native-safe-area-context: ^4.5.2
+    react-native-safe-area-context: ^4.5.3
     react-native-screens: ^3.20.0
     react-native-share-menu: ^6.0.0
     react-native-svg: ^13.9.0
