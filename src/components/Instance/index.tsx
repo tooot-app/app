@@ -52,7 +52,7 @@ const ComponentInstance: React.FC<Props> = ({
     !!domain.length &&
     !!errorCode &&
     !!(Linking.parse(`https://${domain}/`).hostname === domain) &&
-    errorCode === 401
+    (errorCode === 401 || errorCode === 500)
 
   const instanceQuery = useInstanceQuery({
     domain,
@@ -80,7 +80,7 @@ const ComponentInstance: React.FC<Props> = ({
         clientSecret,
         scopes: variables.scopes,
         redirectUri,
-        usePKCE: !['pawoo.net', 'mao.mastodonhub.com'].includes(domain)
+        usePKCE: !['pawoo.net'].includes(domain)
       })
       await request.makeAuthUrlAsync(discovery)
 
@@ -131,7 +131,8 @@ const ComponentInstance: React.FC<Props> = ({
             ((instanceQuery.data as Mastodon.Instance_V1)?.uri
               ? Linking.parse((instanceQuery.data as Mastodon.Instance_V1).uri).hostname
               : undefined) ||
-            (instanceQuery.data as Mastodon.Instance_V1)?.uri,
+            (instanceQuery.data as Mastodon.Instance_V1)?.uri ||
+            domain,
           'auth.account.avatar_static': avatar_static,
           version: instanceQuery.data?.version || '0',
           preferences: undefined,
