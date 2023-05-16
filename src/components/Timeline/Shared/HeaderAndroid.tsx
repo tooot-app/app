@@ -39,6 +39,7 @@ const TimelineHeaderAndroid: React.FC = () => {
             <View
               style={{
                 padding: StyleConstants.Spacing.L,
+                paddingBottom: StyleConstants.Spacing.S,
                 backgroundColor: colors.backgroundDefault
               }}
             >

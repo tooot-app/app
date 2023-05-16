@@ -11,11 +11,11 @@
     },
     "right": {
       "button": {
-        "default": "Допіс",
+        "default": "Апублікаваць",
         "conversation": "Асабістае паведамленне",
         "reply": "Адказаць",
-        "deleteEdit": "Допіс",
-        "edit": "Допіс",
+        "deleteEdit": "Апублікаваць",
+        "edit": "Апублікаваць",
         "share": "Допіс"
       },
       "alert": {

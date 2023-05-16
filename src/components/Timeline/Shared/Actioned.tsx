@@ -10,6 +10,7 @@ import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import StatusContext from './Context'
+import GracefullyImage from '@components/GracefullyImage'
 
 export interface Props {
   action: Mastodon.Notification['type'] | 'reblog' | 'pinned'
@@ -39,6 +40,25 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
   )
 
   const onPress = () => navigation.push('Tab-Shared-Account', { account })
+  const miniAvatar = (
+    <GracefullyImage
+      sources={{
+        default: { uri: account.avatar },
+        static: { uri: account.avatar_static }
+      }}
+      dimension={{
+        width: StyleConstants.Avatar.XS / 1.5,
+        height: StyleConstants.Avatar.XS / 1.5
+      }}
+      style={{
+        borderRadius: 99,
+        overflow: 'hidden',
+        marginRight: StyleConstants.Spacing.S
+      }}
+      dim
+      withoutTransition
+    />
+  )
 
   const children = () => {
     switch (action) {
@@ -63,7 +83,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               color={iconColor}
               style={styles.icon}
             />
-            <Pressable onPress={onPress}>
+            <Pressable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {miniAvatar}
               {content(t('shared.actioned.favourite', { name }))}
             </Pressable>
           </>
@@ -77,7 +98,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               color={iconColor}
               style={styles.icon}
             />
-            <Pressable onPress={onPress}>
+            <Pressable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {miniAvatar}
               {content(t('shared.actioned.follow', { name }))}
             </Pressable>
           </>
@@ -91,7 +113,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               color={iconColor}
               style={styles.icon}
             />
-            <Pressable onPress={onPress}>
+            <Pressable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {miniAvatar}
               {content(t('shared.actioned.follow_request', { name }))}
             </Pressable>
           </>
@@ -118,7 +141,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               color={iconColor}
               style={styles.icon}
             />
-            <Pressable onPress={onPress}>
+            <Pressable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {!myself ? miniAvatar : null}
               {content(
                 isNotification
                   ? t('shared.actioned.reblog.notification', { name })
@@ -138,7 +162,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               color={iconColor}
               style={styles.icon}
             />
-            <Pressable onPress={onPress}>
+            <Pressable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {miniAvatar}
               {content(t('shared.actioned.status', { name }))}
             </Pressable>
           </>

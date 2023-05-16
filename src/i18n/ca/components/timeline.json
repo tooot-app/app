@@ -153,13 +153,13 @@
           "refresh": "Actualitza"
         },
         "count": {
-          "voters_one": "{{count}} usuari ha votat",
-          "voters_other": "{{count}} usuaris han votat",
+          "voters_one": "{{count}} vot",
+          "voters_other": "{{count}} vots",
           "votes_one": "{{count}} vot",
           "votes_other": "{{count}} vots"
         },
         "expiration": {
-          "expired": "Votació finalitzada",
+          "expired": "Finalitzada",
           "until": "Finalitza <0 />"
         }
       }
