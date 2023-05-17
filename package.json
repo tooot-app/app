@@ -88,7 +88,7 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.5.1",
     "rn-placeholder": "^3.0.3",
-    "zeego": "^1.6.0"
+    "zeego": "^1.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
