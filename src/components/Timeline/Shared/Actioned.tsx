@@ -35,7 +35,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
       content={content}
       emojis={account.emojis}
       size='S'
-      style={{ color: action === 'admin.report' ? colors.red : colors.primaryDefault }}
+      style={{ flex: 1, color: action === 'admin.report' ? colors.red : colors.primaryDefault }}
     />
   )
 

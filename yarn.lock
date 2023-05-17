@@ -11327,7 +11327,7 @@ __metadata:
     react-native-tab-view: ^3.5.1
     rn-placeholder: ^3.0.3
     typescript: ^5.0.4
-    zeego: ^1.6.0
+    zeego: ^1.6.1
   languageName: unknown
   linkType: soft
 
@@ -12145,9 +12145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zeego@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "zeego@npm:1.6.0"
+"zeego@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "zeego@npm:1.6.1"
   dependencies:
     "@radix-ui/react-context-menu": ^2.0.1
     "@radix-ui/react-dropdown-menu": ^2.0.1
@@ -12157,6 +12157,6 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-ios-context-menu: ^1.15.1
-  checksum: c943a97135ba1eba7097eb671fe006b1b47c9d4a1ada05fbc18d8c00b48e2f74b41ae15181d9950c8011dc004041d402fcf6b35c6d0e2b86b6f564401c802826
+  checksum: 1244edd2f5257934c2e09a6f30cd30a90f2bd56d9c66c60df3950820b204fd0ae46010ec547b4c902696f4917985b649bcf19a679bebdcd0470032ec96ae0519
   languageName: node
   linkType: hard
