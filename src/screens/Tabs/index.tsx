@@ -59,7 +59,7 @@ const ScreenTabs = () => {
             case 'Tab-Me':
               return (
                 <>
-                  <ContextMenu.Root onOpenChange={() => haptics('Light')}>
+                  <ContextMenu.Root>
                     <ContextMenu.Trigger>
                       <View
                         key={avatarStatic}
@@ -112,7 +112,6 @@ const ScreenTabs = () => {
                           onValueChange={async () => {
                             if (!account.active) {
                               await setAccount(account.key)
-                              haptics('Light')
                             }
                           }}
                         >
@@ -144,17 +143,7 @@ const ScreenTabs = () => {
         {() => null}
       </Tab.Screen>
       <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
-      <Tab.Screen
-        name='Tab-Me'
-        component={TabMe}
-        // listeners={({ navigation }) => ({
-        //   tabLongPress: () => {
-        //     haptics('Light')
-        //     navigation.navigate('Tab-Me', { screen: 'Tab-Me-Root' })
-        //     navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
-        //   }
-        // })}
-      />
+      <Tab.Screen name='Tab-Me' component={TabMe} />
     </Tab.Navigator>
   )
 }
