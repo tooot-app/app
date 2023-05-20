@@ -34,7 +34,7 @@ const features: { feature: Features; version: number }[] = [
 ]
 
 export const featureCheck = (feature: Features, v?: string): boolean =>
-  v
+  v || getAccountStorage.string('version')
     ? (features.find(f => f.feature === feature)?.version || 999) <=
       parseFloat(v || getAccountStorage.string('version'))
     : false
