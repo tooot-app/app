@@ -1,3 +1,1 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Long press avatar in tab bar to quickly switch to another account
-- Fix poll notifications wrongly greyed out

@@ -4,7 +4,7 @@
     "title": "Hành động người dùng",
     "following": {
       "action_false": "Theo dõi người này",
-      "action_true": "Ngưng theo dõi người này"
+      "action_true": "Bỏ theo dõi người này"
     },
     "inLists": "Danh sách người ...",
     "showBoosts": {
@@ -57,7 +57,7 @@
   "hashtag": {
     "follow": {
       "action_false": "Theo dõi",
-      "action_true": "Ngưng theo dõi"
+      "action_true": "Bỏ theo dõi"
     },
     "filter": {
       "action": "Lọc hashtag..."
