@@ -5,11 +5,11 @@
     "cancel": "Annulla",
     "discard": "Scarta",
     "continue": "Continua",
-    "create": "",
-    "delete": "",
-    "done": "",
+    "create": "Crea",
+    "delete": "Elimina",
+    "done": "Fatto",
     "confirm": "Ho capito",
-    "add": ""
+    "add": "Aggiungi"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizzata {{emoji}}"

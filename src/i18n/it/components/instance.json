@@ -1,13 +1,13 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Dominio dell'istanza"
     },
-    "whitelisted": "",
+    "whitelisted": "Questa potrebbe essere un'istanza nella whitelist nella quale tooot non può accedere ai dati di essa prima di fare il log-in.",
     "button": "Accedi",
     "information": {
       "name": "Nome",
-      "description": ""
+      "description": "Descrizione"
     },
     "disclaimer": {
       "base": "Per accedere, verrà aperta una pagina del browser di sistema. I dati di accesso del tuo account sono protetti."
