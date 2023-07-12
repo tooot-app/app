@@ -20,7 +20,7 @@ jobs:
       - run: bundle install
       - run: yarn app:build ios
         env:
-          DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
+          DEVELOPER_DIR: /Applications/Xcode_14.3.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           LC_ALL: en_US.UTF-8
