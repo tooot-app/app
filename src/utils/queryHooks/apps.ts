@@ -25,10 +25,7 @@ const useAppsQuery = (
 
 type MutationVarsApps = { domain: string; scopes: string[] }
 
-export const redirectUri = AuthSession.makeRedirectUri({
-  native: 'tooot://instance-auth',
-  useProxy: false
-})
+export const redirectUri = AuthSession.makeRedirectUri({ native: 'tooot://instance-auth' })
 const mutationFunctionApps = async ({ domain, scopes }: MutationVarsApps) => {
   return apiGeneral<Mastodon.Apps>({
     method: 'post',
@@ -49,4 +46,5 @@ const useAppsMutation = (
   return useMutation(mutationFunctionApps, options)
 }
 
-export { useAppsQuery, useAppsMutation }
+export { useAppsMutation, useAppsQuery }
+
