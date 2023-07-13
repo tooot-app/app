@@ -418,17 +418,17 @@
       "name": "Edita l'historial"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "Silencia {{acct}}",
+      "mute": "Silencia",
+      "description": "Amaga publicacions i mencions d'aquest usuari, però encara podrà veure les teves publicacions i seguir-te.",
+      "notification": "També amaga notificacions d'aquest usuari",
       "duration": {
-        "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "heading": "D'una durada",
+        "0": "Indefinida",
+        "1800": "30 minuts",
+        "3600": "1 hora",
+        "86400": "1 dia",
+        "604800": "1 setmana"
       }
     },
     "report": {
