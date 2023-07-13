@@ -417,6 +417,20 @@
     "history": {
       "name": "Histórico de Edição"
     },
+    "mute": {
+      "name": "",
+      "mute": "",
+      "description": "",
+      "notification": "",
+      "duration": {
+        "heading": "",
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "86400": "",
+        "604800": ""
+      }
+    },
     "report": {
       "name": "Denuncia {{acct}}",
       "report": "Denunciar",
