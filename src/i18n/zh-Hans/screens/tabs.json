@@ -417,6 +417,20 @@
     "history": {
       "name": "编辑历史"
     },
+    "mute": {
+      "name": "",
+      "mute": "",
+      "description": "",
+      "notification": "",
+      "duration": {
+        "heading": "",
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "86400": "",
+        "604800": ""
+      }
+    },
     "report": {
       "name": "举报 {{acct}}",
       "report": "举报",
