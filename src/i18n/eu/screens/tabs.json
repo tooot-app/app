@@ -418,17 +418,17 @@
       "name": ""
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "Mututu {{acct}}",
+      "mute": "Mututu",
+      "description": "Ezkutatu erabiltzaile honen argitalpenak berari aipatzen dieten argitalpenak, hala ere, berak zure argitalpenak irakurri ahal izango ditu eta zuri jarraitu ere.",
+      "notification": "Baita ere, ezkutatu erabiltzaile honen jakinarazpenak",
       "duration": {
-        "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "heading": "Iraupena",
+        "0": "Mugagabe",
+        "1800": "30 minutu",
+        "3600": "Ordu 1",
+        "86400": "Egun 1",
+        "604800": "Aste 1"
       }
     },
     "report": {
