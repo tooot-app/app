@@ -417,6 +417,20 @@
     "history": {
       "name": "Edita l'historial"
     },
+    "mute": {
+      "name": "",
+      "mute": "",
+      "description": "",
+      "notification": "",
+      "duration": {
+        "heading": "",
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "86400": "",
+        "604800": ""
+      }
+    },
     "report": {
       "name": "Denúncia a {{acct}}",
       "report": "Denúncia",
