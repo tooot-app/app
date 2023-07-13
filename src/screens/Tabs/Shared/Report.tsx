@@ -21,7 +21,6 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
     params: { account, status }
   }
 }) => {
-  console.log('account', account.id)
   const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
 

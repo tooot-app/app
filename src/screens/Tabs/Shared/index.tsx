@@ -9,6 +9,7 @@ import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
 import React from 'react'
 import TabSharedFilter from './Filter'
+import TabSharedMute from './Mute'
 
 const TabShared = ({ Stack }: { Stack: any }) => {
   return (
@@ -43,6 +44,12 @@ const TabShared = ({ Stack }: { Stack: any }) => {
         key='Tab-Shared-History'
         name='Tab-Shared-History'
         component={TabSharedHistory}
+      />
+      <Stack.Screen
+        key='Tab-Shared-Mute'
+        name='Tab-Shared-Mute'
+        component={TabSharedMute}
+        options={{ presentation: 'modal' }}
       />
       <Stack.Screen
         key='Tab-Shared-Report'
