@@ -36,6 +36,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             adaptiveSize
             numberOfLines={999}
             color={suppressSpoiler ? colors.disabled : undefined}
+            selectable
           />
           {inThread ? (
             <CustomText
@@ -62,6 +63,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             }
             expandHint={t('shared.content.expandHint')}
             setSpoilerExpanded={setSpoilerExpanded}
+            selectable
           />
         </>
       ) : (
@@ -70,6 +72,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
           size={highlighted ? 'L' : 'M'}
           adaptiveSize
           numberOfLines={highlighted || inThread ? 999 : notificationOwnToot ? 2 : undefined}
+          selectable
         />
       )}
     </View>

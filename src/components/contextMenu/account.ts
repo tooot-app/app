@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import { checkIsMyAccount } from '@utils/helpers/isMyAccount'
 import { TabSharedStackParamList, useNavState } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
@@ -203,13 +204,21 @@ const menuAccount = ({
       type: 'item',
       key: 'account-mute',
       props: {
-        onSelect: () =>
-          actualAccount &&
-          timelineMutation.mutate({
-            type: 'updateAccountProperty',
-            id: actualAccount.id,
-            payload: { property: 'mute', currentValue: data?.muting }
-          }),
+        onSelect: () => {
+          if (actualAccount) {
+            if (data?.muting !== true) {
+              if (featureCheck('mute_duration')) {
+                navigation.navigate('Tab-Shared-Mute', { account: actualAccount })
+              }
+            }
+
+            timelineMutation.mutate({
+              type: 'updateAccountProperty',
+              id: actualAccount.id,
+              payload: { property: 'mute', currentValue: data?.muting }
+            })
+          }
+        },
         disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
         destructive: false,
         hidden: false

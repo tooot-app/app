@@ -4,6 +4,7 @@ type Features =
   | 'account_follow_notify'
   | 'notification_type_status'
   | 'account_return_suspended'
+  | 'mute_duration'
   | 'edit_post'
   | 'deprecate_auth_follow'
   | 'notification_type_update'
@@ -20,6 +21,7 @@ const features: { feature: Features; version: number }[] = [
   { feature: 'account_follow_notify', version: 3.3 },
   { feature: 'notification_type_status', version: 3.3 },
   { feature: 'account_return_suspended', version: 3.3 },
+  { feature: 'mute_duration', version: 3.3 },
   { feature: 'edit_post', version: 3.5 },
   { feature: 'deprecate_auth_follow', version: 3.5 },
   { feature: 'notification_type_update', version: 3.5 },
