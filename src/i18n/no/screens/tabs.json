@@ -418,17 +418,17 @@
       "name": "Rediger historikk"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "Demp {{acct}}",
+      "mute": "Demp",
+      "description": "Skjul innlegg fra denne brukeren og innleggene som nevner brukeren, men det vil fortsatt la brukeren se dine innlegg og følge deg.",
+      "notification": "Skjul varsler også for denne brukeren",
       "duration": {
-        "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "heading": "For varighet",
+        "0": "På ubestemt tid",
+        "1800": "30 minutter",
+        "3600": "Én time",
+        "86400": "Én dag",
+        "604800": "én uke"
       }
     },
     "report": {
