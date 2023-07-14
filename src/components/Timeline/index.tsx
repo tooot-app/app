@@ -136,16 +136,23 @@ const Timeline: React.FC<Props> = ({
     transform: [{ translateY: fetchedNoticeTop.value }]
   }))
 
+  const refetchedNoticeBottom = useDerivedValue(() => {
+    if (firstLoad.value) {
+      return withSequence(
+        withTiming(0),
+        withDelay(
+          3000,
+          withTiming(fetchedNoticeHeight.value + 32, { easing: Easing.out(Easing.ease) })
+        )
+      )
+    } else {
+      return fetchedNoticeHeight.value + 32
+    }
+  }, [])
   const refetchedNoticeAnimate = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY: withSequence(
-          withTiming(0),
-          withDelay(
-            3000,
-            withTiming(fetchedNoticeHeight.value + 32, { easing: Easing.out(Easing.ease) })
-          )
-        )
+        translateY: refetchedNoticeBottom.value
       }
     ]
   }))
