@@ -417,6 +417,20 @@
     "history": {
       "name": "編輯歷史"
     },
+    "mute": {
+      "name": "",
+      "mute": "",
+      "description": "",
+      "notification": "",
+      "duration": {
+        "heading": "時限",
+        "0": "無限期",
+        "1800": "30分鐘",
+        "3600": "一小時",
+        "86400": "一天",
+        "604800": "一週"
+      }
+    },
     "report": {
       "name": "檢舉 {{acct}}",
       "report": "檢舉",

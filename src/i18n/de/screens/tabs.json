@@ -417,6 +417,20 @@
     "history": {
       "name": "Bearbeitungsverlauf"
     },
+    "mute": {
+      "name": "",
+      "mute": "",
+      "description": "",
+      "notification": "",
+      "duration": {
+        "heading": "",
+        "0": "",
+        "1800": "30 Minuten",
+        "3600": "1 Stunde",
+        "86400": "1 Tag",
+        "604800": "1 Woche"
+      }
+    },
     "report": {
       "name": "{{acct}} melden",
       "report": "Melden",
