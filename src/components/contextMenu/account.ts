@@ -209,6 +209,7 @@ const menuAccount = ({
             if (data?.muting !== true) {
               if (featureCheck('mute_duration')) {
                 navigation.navigate('Tab-Shared-Mute', { account: actualAccount })
+                return
               }
             }
 
