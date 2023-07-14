@@ -417,6 +417,20 @@
     "history": {
       "name": "Historial de ediciones"
     },
+    "mute": {
+      "name": "Silenciar a {{acct}}",
+      "mute": "Silenciar",
+      "description": "Oculta publicaciones y menciones a este usuario, pero podrá ver tus publicaciones y seguirte.",
+      "notification": "También oculta notificaciones de este usuario",
+      "duration": {
+        "heading": "Durante",
+        "0": "Indefinidamente",
+        "1800": "30 minutos",
+        "3600": "1 hora",
+        "86400": "1 día",
+        "604800": "1 semana"
+      }
+    },
     "report": {
       "name": "Denuncia {{acct}}",
       "report": "Denuncia",
