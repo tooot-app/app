@@ -418,10 +418,10 @@
       "name": "編輯歷史"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "禁音{{acct}}",
+      "mute": "禁音",
+      "description": "該使用者的嘟文及提到該使用者的嘟文都會被隱藏，但他們仍然可以看到你的嘟文，也可以關注你。",
+      "notification": "同時隱藏來自該使用者的通知",
       "duration": {
         "heading": "時限",
         "0": "無限期",
