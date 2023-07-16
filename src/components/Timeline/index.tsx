@@ -380,8 +380,8 @@ const Timeline: React.FC<Props> = ({
                   if (readMarker) {
                     setAccountStorage([{ key: readMarker, value: undefined }])
                   }
+                  flRef.current?.scrollToOffset({ offset: 0 })
                   await refetch()
-                  setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
                 }}
               >
                 <CustomText
