@@ -1,3 +1,4 @@
+import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
@@ -10,12 +11,20 @@ import {
   setAccountStorage,
   useGlobalStorageListener
 } from '@utils/storage/actions'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import { throttle } from 'lodash'
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
+import {
+  FlatList,
+  FlatListProps,
+  Platform,
+  Pressable,
+  RefreshControl,
+  StyleProp,
+  ViewStyle
+} from 'react-native'
 import Animated, {
   Easing,
   runOnJS,
@@ -127,6 +136,27 @@ const Timeline: React.FC<Props> = ({
     transform: [{ translateY: fetchedNoticeTop.value }]
   }))
 
+  const refetchedNoticeBottom = useDerivedValue(() => {
+    if (firstLoad.value) {
+      return withSequence(
+        withTiming(0),
+        withDelay(
+          3000,
+          withTiming(fetchedNoticeHeight.value + 32, { easing: Easing.out(Easing.ease) })
+        )
+      )
+    } else {
+      return fetchedNoticeHeight.value + 32
+    }
+  }, [])
+  const refetchedNoticeAnimate = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: refetchedNoticeBottom.value
+      }
+    ]
+  }))
+
   const scrollY = useSharedValue(0)
   const fetchingType = useSharedValue<0 | 1 | 2>(0)
 
@@ -169,10 +199,9 @@ const Timeline: React.FC<Props> = ({
     throttle(() => {
       if (readMarker) {
         const currentMarker = getAccountStorage.string(readMarker) || '0'
+        // setAccountStorage([{ key: readMarker, value: '108425743226508521' }])
         if (latestMarker.current > currentMarker) {
           setAccountStorage([{ key: readMarker, value: latestMarker.current }])
-        } else {
-          // setAccountStorage([{ key: readMarker, value: '105250709762254246' }])
         }
       }
     }, 1000 * 15),
@@ -242,6 +271,18 @@ const Timeline: React.FC<Props> = ({
     flRef.current?.scrollToOffset({ offset: 0, animated: false })
   )
 
+  const noticeDefaults: StyleProp<Animated.AnimateStyle<StyleProp<ViewStyle>>> = {
+    position: 'absolute',
+    alignSelf: 'center',
+    borderRadius: 99,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.backgroundDefault,
+    shadowColor: colors.primaryDefault,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: theme === 'light' ? 0.16 : 0.24
+  }
+
   return (
     <>
       <TimelineRefresh
@@ -286,42 +327,78 @@ const Timeline: React.FC<Props> = ({
         {...customProps}
       />
       {!disableRefresh ? (
-        <Animated.View
-          style={[
-            {
-              position: 'absolute',
-              alignSelf: 'center',
-              top: -fetchedNoticeHeight.value - 16,
-              paddingVertical: StyleConstants.Spacing.S,
-              paddingHorizontal: StyleConstants.Spacing.M,
-              backgroundColor: colors.backgroundDefault,
-              shadowColor: colors.primaryDefault,
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: theme === 'light' ? 0.16 : 0.24,
-              borderRadius: 99,
-              justifyContent: 'center',
-              alignItems: 'center'
-            },
-            fetchedNoticeAnimate
-          ]}
-          onLayout={({
-            nativeEvent: {
-              layout: { height }
-            }
-          }) => (fetchedNoticeHeight.value = height)}
-        >
-          <CustomText
-            fontStyle='S'
-            style={{ color: colors.primaryDefault }}
-            children={
-              fetchedCount !== null
-                ? fetchedCount > 0
-                  ? t('refresh.fetched.found', { count: fetchedCount })
-                  : t('refresh.fetched.none')
-                : t('refresh.fetching')
-            }
-          />
-        </Animated.View>
+        <>
+          <Animated.View
+            style={[
+              {
+                top: -fetchedNoticeHeight.value - 16,
+                paddingVertical: StyleConstants.Spacing.S,
+                paddingHorizontal: StyleConstants.Spacing.M,
+                ...noticeDefaults
+              },
+              fetchedNoticeAnimate
+            ]}
+            onLayout={({
+              nativeEvent: {
+                layout: { height }
+              }
+            }) => (fetchedNoticeHeight.value = height)}
+          >
+            <CustomText
+              fontStyle='S'
+              style={{ color: colors.primaryDefault }}
+              children={
+                fetchedCount !== null
+                  ? fetchedCount > 0
+                    ? t('refresh.fetched.found', { count: fetchedCount })
+                    : t('refresh.fetched.none')
+                  : t('refresh.fetching')
+              }
+            />
+          </Animated.View>
+          {readMarker ? (
+            <Animated.View
+              style={[
+                {
+                  bottom: 16,
+                  borderColor: colors.primaryDefault,
+                  borderWidth: 0.5,
+                  ...noticeDefaults
+                },
+                refetchedNoticeAnimate
+              ]}
+            >
+              <Pressable
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: StyleConstants.Spacing.S,
+                  paddingVertical: StyleConstants.Spacing.S,
+                  paddingHorizontal: StyleConstants.Spacing.M
+                }}
+                onPress={async () => {
+                  if (readMarker) {
+                    setAccountStorage([{ key: readMarker, value: undefined }])
+                  }
+                  flRef.current?.scrollToOffset({ offset: 0 })
+                  await refetch()
+                }}
+              >
+                <CustomText
+                  fontStyle='M'
+                  style={{ color: colors.primaryDefault }}
+                  children={t('refresh.refetch')}
+                />
+                <Icon
+                  name='log-in'
+                  color={colors.primaryDefault}
+                  size={StyleConstants.Font.Size.M}
+                  style={{ transform: [{ rotate: '-90deg' }] }}
+                />
+              </Pressable>
+            </Animated.View>
+          ) : null}
+        </>
       ) : null}
     </>
   )

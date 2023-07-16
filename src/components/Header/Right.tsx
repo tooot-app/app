@@ -17,6 +17,7 @@ export type Props = {
   loading?: boolean
   disabled?: boolean
   destructive?: boolean
+  destructiveColor?: string
 
   onPress: () => void
 } & ({ type?: undefined; content: IconName } | { type: 'text'; content: string })
@@ -34,6 +35,7 @@ const HeaderRight: React.FC<Props> = ({
   loading,
   disabled,
   destructive = false,
+  destructiveColor,
   onPress
 }) => {
   const { colors } = useTheme()
@@ -57,7 +59,7 @@ const HeaderRight: React.FC<Props> = ({
                 color: disabled
                   ? colors.secondary
                   : destructive
-                  ? colors.red
+                  ? destructiveColor || colors.red
                   : colors.primaryDefault,
                 opacity: loading ? 0 : 1
               }}

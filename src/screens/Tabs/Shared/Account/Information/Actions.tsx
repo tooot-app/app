@@ -71,7 +71,7 @@ const AccountInformationActions: React.FC = () => {
                 round
                 type='icon'
                 content='at-sign'
-                style={{ flex: 1, marginRight: StyleConstants.Spacing.S }}
+                style={{ marginRight: StyleConstants.Spacing.S }}
                 onPress={() => {}}
               />
             </DropdownMenu.Trigger>
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   base: {
     alignSelf: 'flex-end',
     flexDirection: 'row',
-    alignItems: 'stretch'
+    alignItems: 'center'
   }
 })
 

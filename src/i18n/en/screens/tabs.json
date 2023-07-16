@@ -417,6 +417,20 @@
     "history": {
       "name": "Edit History"
     },
+    "mute": {
+      "name": "Mute {{acct}}",
+      "mute": "Mute",
+      "description": "Hide posts from this user and posts mentioning them, but it will still allow them to see your posts and follow you.",
+      "notification": "Also hide notifications from this user",
+      "duration": {
+        "heading": "For duration",
+        "0": "Indefinitely",
+        "1800": "30 minutes",
+        "3600": "1 hour",
+        "86400": "1 day",
+        "604800": "1 week"
+      }
+    },
     "report": {
       "name": "Report {{acct}}",
       "report": "Report",

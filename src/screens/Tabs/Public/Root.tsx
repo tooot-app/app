@@ -374,7 +374,10 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                           <DropdownMenu.ItemTitle children={item.title} />
                           <DropdownMenu.ItemSubtitle children={item.domain} />
                           {index === remotes?.findIndex(r => r.domain === remoteActive) ? (
-                            <DropdownMenu.ItemIcon ios={{ name: 'trash' }} />
+                            <DropdownMenu.ItemIcon
+                              ios={{ name: 'trash' }}
+                              androidIconName='ic_menu_delete'
+                            />
                           ) : null}
                         </DropdownMenu.CheckboxItem>
                       ))}
@@ -391,7 +394,7 @@ const Explore = ({ route: { key: page } }: { route: { key: 'Explore' } }) => {
                         <DropdownMenu.ItemTitle
                           children={t('screenTabs:tabs.public.exploring.followRemote')}
                         />
-                        <DropdownMenu.ItemIcon ios={{ name: 'plus' }} />
+                        <DropdownMenu.ItemIcon ios={{ name: 'plus' }} androidIconName='ic_menu_add' />
                       </DropdownMenu.Item>
                     </DropdownMenu.Group>
                   </DropdownMenu.Content>

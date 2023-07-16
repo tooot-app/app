@@ -104,6 +104,9 @@ export type TabSharedStackParamList = {
     | { source: 'hashtag'; tag_name: Mastodon.Tag['name'] }
   'Tab-Shared-Hashtag': { tag_name: Mastodon.Tag['name']; queryKey?: QueryKeyTimeline }
   'Tab-Shared-History': { status: Mastodon.Status; detectedLanguage: string }
+  'Tab-Shared-Mute': {
+    account: Pick<Mastodon.Account, 'id' | 'acct' | 'username' | 'url'>
+  }
   'Tab-Shared-Report': {
     account: Pick<Mastodon.Account, 'id' | 'acct' | 'username' | 'url'>
     status?: Pick<Mastodon.Status, 'id' | '_remote' | 'uri'>

@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Più recenti da qui",
     "refetch": "Al più recente",
-    "fetching": "",
+    "fetching": "Recupero nuovi toot ...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Nessun nuovo toot",
+      "found": "{{count}} toot recuperati"
     }
   },
   "shared": {
