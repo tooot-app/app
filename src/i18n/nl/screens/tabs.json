@@ -418,8 +418,8 @@
       "name": "Geschiedenis bewerken"
     },
     "mute": {
-      "name": "",
-      "mute": "",
+      "name": "Demp {{acct}}",
+      "mute": "Dempen",
       "description": "",
       "notification": "",
       "duration": {
