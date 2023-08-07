@@ -37,7 +37,7 @@
         "notification": "{{name}} deu boost no teu toot"
       },
       "update": "Toot foi editado",
-      "admin.sign_up": "",
+      "admin.sign_up": "{{name}} entrou na instância",
       "admin.report": ""
     },
     "actions": {
