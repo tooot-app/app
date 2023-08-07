@@ -2,7 +2,7 @@
   "HTML": {
     "accessibilityHint": "Toque para expandir ou recolher conteúdo",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": "",
+    "moreLines": " ({{count}} mais linhas)",
     "defaultHint": "Toot longo"
   }
 }
