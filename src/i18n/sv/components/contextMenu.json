@@ -16,7 +16,7 @@
       "action_true": "Sluta tysta användare"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "Följ som ...",
       "succeed_default": "Följer nu @{{target}} med @{{source}}",
       "succeed_locked": "Följförfrågan skickades till @{{target}} med {{source}}, väntar på godkännande",
       "failed": "Följ som"
@@ -56,7 +56,7 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
+      "action_false": "Följ",
       "action_true": ""
     },
     "filter": {
@@ -100,7 +100,7 @@
     },
     "filter": {
       "action_false": "",
-      "action_true": ""
+      "action_true": "Hantera filter ..."
     }
   }
 }
