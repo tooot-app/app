@@ -9,7 +9,7 @@
     "delete": "Radera",
     "done": "Klar",
     "confirm": "Bekräfta",
-    "add": ""
+    "add": "Lägg till"
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"
