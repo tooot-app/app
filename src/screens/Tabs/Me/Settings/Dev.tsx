@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { storage } from '@utils/storage'
-import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
+import { getGlobalStorage, setGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -61,6 +61,17 @@ const SettingsDev: React.FC = () => {
       />
       <Button
         type='text'
+        content={'Set ExpoToken wrapped'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
+        }}
+        onPress={() => {
+          setGlobalStorage('app.expo_token', 'ExponentPushToken[DEVELOPMENT_1]')
+        }}
+      />
+      <Button
+        type='text'
         content={'Purge MMKV'}
         style={{
           marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
@@ -87,7 +98,7 @@ const SettingsDev: React.FC = () => {
         content={'Crash test'}
         style={{
           marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
-          marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
         }}
         destructive
         onPress={() => {

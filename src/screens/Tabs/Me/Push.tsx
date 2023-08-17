@@ -23,6 +23,20 @@ import { useTranslation } from 'react-i18next'
 import { AppState, Linking, Platform, ScrollView, View } from 'react-native'
 import { fromByteArray } from 'react-native-quick-base64'
 
+export const getPushPath = ({
+  expoToken,
+  domain,
+  accountId
+}: {
+  expoToken?: string
+  domain: string
+  accountId: string | number
+}) => `${expoToken}/${domain}/${accountId}`
+export const getPushendpoint = (pushPath: string) =>
+  `https://${TOOOT_API_DOMAIN}/push/send/${pushPath}/${(Math.random() + 1)
+    .toString(36)
+    .substring(2)}`
+
 const TabMePush: React.FC = () => {
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
@@ -116,7 +130,7 @@ const TabMePush: React.FC = () => {
         ))
       : null
 
-  const pushPath = `${expoToken}/${domain}/${accountId}`
+  const pushPath = getPushPath({ expoToken, domain, accountId })
   const accountFull = `@${accountAcct}@${accountDomain}`
 
   return appsQuery.isFetched ? (
@@ -176,17 +190,13 @@ const TabMePush: React.FC = () => {
                       if (push.key?.length <= 10) {
                         authKey = fromByteArray(Crypto.getRandomBytes(16))
                       }
-                      // Turning on
-                      const randomPath = (Math.random() + 1).toString(36).substring(2)
-
-                      const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${pushPath}/${randomPath}`
 
                       const body: {
                         subscription: any
                         data: { alerts: Mastodon.PushSubscription['alerts'] }
                       } = {
                         subscription: {
-                          endpoint,
+                          endpoint: getPushendpoint(pushPath),
                           keys: {
                             p256dh:
                               'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo=',

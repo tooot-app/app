@@ -418,13 +418,13 @@
       "name": "Bearbeitungsverlauf"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "@{{acct}} stummschalten",
+      "mute": "Stummschalten",
+      "description": "Verstecke Tröts des Users und solche, in denen das Konto erwähnt wird. Die Person wird weiterhin deine Beiträge lesen und dir folgen können.",
+      "notification": "Benachrichtigungen dieses Profils ebenfalls ausblenden",
       "duration": {
-        "heading": "",
-        "0": "",
+        "heading": "Für die Dauer",
+        "0": "Dauerhaft",
         "1800": "30 Minuten",
         "3600": "1 Stunde",
         "86400": "1 Tag",

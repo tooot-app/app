@@ -89,7 +89,7 @@
         "name": ""
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Redigera filter"
       },
       "profile": {
         "name": "Redigera profil"
@@ -195,16 +195,16 @@
       }
     },
     "preferencesFilter": {
-      "name": "",
+      "name": "Namn",
       "expiration": "",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Aldrig",
+        "1800": "Efter 30 minuter",
+        "3600": "Efter 1 timme",
+        "43200": "Efter 12 timmar",
+        "86400": "Efter 1 dag",
+        "604800": "Efter 1 vecka",
+        "18144000": "Efter 1 månad"
       },
       "context": "",
       "contexts": {
@@ -425,10 +425,10 @@
       "duration": {
         "heading": "",
         "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "1800": "30 minuter",
+        "3600": "1 timme",
+        "86400": "1 dag",
+        "604800": "1 vecka"
       }
     },
     "report": {

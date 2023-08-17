@@ -1,4 +1,1 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Supports mute duration
-- Long press to copy toot
-- Button to fetch latest on load

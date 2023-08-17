@@ -9,7 +9,7 @@
     "delete": "Excluir",
     "done": "Concluído",
     "confirm": "Confirmar",
-    "add": ""
+    "add": "Adicionar"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizado {{emoji}}"

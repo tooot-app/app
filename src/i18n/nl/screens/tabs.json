@@ -418,10 +418,10 @@
       "name": "Geschiedenis bewerken"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "Demp {{acct}}",
+      "mute": "Dempen",
+      "description": "Verberg berichten van deze gebruiker en berichten die hen vermelden, maar het geeft hen nog steeds de mogelijkheid om je posts te zien en je te volgen.",
+      "notification": "Verberg ook meldingen van deze gebruiker",
       "duration": {
         "heading": "Voor duur",
         "0": "Onbepaalde tijd",

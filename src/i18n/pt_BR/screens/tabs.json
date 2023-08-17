@@ -11,13 +11,13 @@
       "segments": {
         "federated": "Global",
         "local": "Local",
-        "explore": ""
+        "explore": "Explorar"
       },
       "exploring": {
-        "heading": "",
+        "heading": "Explorando",
         "trending": "",
         "followRemote": "",
-        "noTitle": "",
+        "noTitle": "Sem título",
         "errors": {
           "existed": "Você já está seguindo esta instância.",
           "notAvailable": "A linha do tempo desta instância não é acessível ao público. Por favor, tente outra instância."
