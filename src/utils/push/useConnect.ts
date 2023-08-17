@@ -1,7 +1,9 @@
 import { displayMessage } from '@components/Message'
+import { getPushPath, getPushendpoint } from '@screens/Tabs/Me/Push'
 import * as Sentry from '@sentry/react-native'
 import { useQuery } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
+import apiInstance from '@utils/api/instance'
 import apiTooot from '@utils/api/tooot'
 import navigationRef from '@utils/navigation/navigationRef'
 import {
@@ -9,6 +11,7 @@ import {
   getAccountDetails,
   getGlobalStorage,
   setAccountStorage,
+  setGlobalStorage,
   useGlobalStorage
 } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
@@ -16,7 +19,7 @@ import * as Notifications from 'expo-notifications'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
-import { updateExpoToken } from './updateExpoToken'
+import { toRawExpoToken, updateExpoToken } from './updateExpoToken'
 
 const pushUseConnect = () => {
   const { t } = useTranslation('screens')
@@ -34,7 +37,9 @@ const pushUseConnect = () => {
             domain: details['auth.domain'],
             id: details['auth.account.id']
           }),
-          push: details.push
+          push: details.push,
+          domain: details['auth.domain'],
+          accountId: details['auth.account.id']
         }
       }
     })
@@ -120,8 +125,57 @@ const pushUseConnect = () => {
   useEffect(() => {
     updateExpoToken().then(async token => {
       const badgeCount = await Notifications.getBadgeCountAsync()
-      if (token && (pushEnabled?.length || badgeCount)) {
+      if (token && !token.startsWith('ExponentPushToken') && (pushEnabled?.length || badgeCount)) {
         connectQuery.refetch()
+      }
+
+      if (expoToken?.startsWith('ExponentPushToken')) {
+        const newToken = toRawExpoToken(expoToken)
+
+        if (pushEnabled) {
+          for (const account of pushEnabled) {
+            if (account) {
+              const oldSub = await apiInstance<Mastodon.PushSubscription>({
+                account: account.accountKey,
+                method: 'get',
+                url: 'push/subscription'
+              })
+              if (oldSub.body.id) {
+                const body: {
+                  subscription: any
+                  data: { alerts: Mastodon.PushSubscription['alerts'] }
+                } = {
+                  subscription: {
+                    endpoint: getPushendpoint(
+                      getPushPath({
+                        expoToken: newToken,
+                        domain: account.domain,
+                        accountId: account.accountId
+                      })
+                    ),
+                    keys: {
+                      p256dh:
+                        'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo=',
+                      auth: account.push.key
+                    }
+                  },
+                  data: { alerts: account.push.alerts }
+                }
+                console.log(body)
+                await apiInstance({
+                  account: account?.accountKey,
+                  method: 'post',
+                  url: 'push/subscription',
+                  body
+                })
+              }
+            }
+          }
+        } else {
+          setGlobalStorage('app.expo_token', newToken)
+        }
+
+        await apiTooot({ method: 'post', url: `push/migrate/${expoToken}` })
       }
     })
   }, [])
