@@ -1,4 +1,5 @@
 import { DarkTheme, DefaultTheme } from '@react-navigation/native'
+import { OpaqueColorValue, Platform, PlatformColor } from 'react-native'
 
 export type Theme = 'light' | 'dark_lighter' | 'dark_darker'
 
@@ -16,12 +17,20 @@ export type ColorDefinitions =
   | 'backgroundOverlayDefault'
   | 'backgroundOverlayInvert'
   | 'border'
+  | 'separator'
   | 'shimmerDefault'
   | 'shimmerHighlight'
 
+
+const separatorColor = Platform.select({
+  ios: 'separator',
+  android: '?android:attr/dividerVertical',
+  default: 'rgb(180, 180, 180)'
+})
+
 const themeColors: {
   [key in ColorDefinitions]: {
-    light: string
+    light: string | OpaqueColorValue
     dark_lighter: string
     dark_darker: string
   }
@@ -94,6 +103,12 @@ const themeColors: {
     dark_darker: 'rgb(90, 90, 90)'
   },
 
+  separator: {
+    light: PlatformColor(separatorColor, 'rgb(180, 180, 180)'),
+    dark_lighter: 'rgb(90, 90, 90)',
+    dark_darker: 'rgb(90, 90, 90)'
+  },
+
   shimmerDefault: {
     light: 'rgba(25, 25, 25, 0.05)',
     dark_lighter: 'rgba(250, 250, 250, 0.05)',
@@ -106,9 +121,9 @@ const themeColors: {
   }
 }
 
-const getColors = (theme: Theme): { [key in ColorDefinitions]: string } => {
+const getColors = (theme: Theme): { [key in ColorDefinitions]: string | OpaqueColorValue } => {
   let colors = {} as {
-    [key in ColorDefinitions]: string
+    [key in ColorDefinitions]: string | OpaqueColorValue
   }
   const keys = Object.keys(themeColors) as ColorDefinitions[]
   keys.forEach(key => (colors[key] = themeColors[key][theme]))
