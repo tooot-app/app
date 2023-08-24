@@ -1,4 +1,5 @@
 import { DarkTheme, DefaultTheme } from '@react-navigation/native'
+import { Platform, PlatformColor } from 'react-native'
 
 export type Theme = 'light' | 'dark_lighter' | 'dark_darker'
 
@@ -16,6 +17,7 @@ export type ColorDefinitions =
   | 'backgroundOverlayDefault'
   | 'backgroundOverlayInvert'
   | 'border'
+  | 'separator'
   | 'shimmerDefault'
   | 'shimmerHighlight'
 
@@ -92,6 +94,33 @@ const themeColors: {
     light: 'rgb(180, 180, 180)',
     dark_lighter: 'rgb(90, 90, 90)',
     dark_darker: 'rgb(90, 90, 90)'
+  },
+
+  separator: {
+    light: PlatformColor(
+      Platform.select({
+        ios: 'separator',
+        android: '?android:attr/dividerVertical',
+        default: 'rgb(180, 180, 180)'
+      }),
+      'rgb(180, 180, 180)'
+    ) as unknown as string,
+    dark_lighter: PlatformColor(
+      Platform.select({
+        ios: 'separator',
+        android: '?android:attr/dividerVertical',
+        default: 'rgb(90, 90, 90)'
+      }),
+      'rgb(90, 90, 90)'
+    ) as unknown as string,
+    dark_darker: PlatformColor(
+      Platform.select({
+        ios: 'separator',
+        android: '?android:attr/dividerVertical',
+        default: 'rgb(90, 90, 90)'
+      }),
+      'rgb(90, 90, 90)'
+    ) as unknown as string
   },
 
   shimmerDefault: {
