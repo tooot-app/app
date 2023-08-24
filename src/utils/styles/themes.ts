@@ -1,5 +1,5 @@
 import { DarkTheme, DefaultTheme } from '@react-navigation/native'
-import { OpaqueColorValue, Platform, PlatformColor } from 'react-native'
+import { Platform, PlatformColor } from 'react-native'
 
 export type Theme = 'light' | 'dark_lighter' | 'dark_darker'
 
@@ -21,16 +21,9 @@ export type ColorDefinitions =
   | 'shimmerDefault'
   | 'shimmerHighlight'
 
-
-const separatorColor = Platform.select({
-  ios: 'separator',
-  android: '?android:attr/dividerVertical',
-  default: 'rgb(180, 180, 180)'
-})
-
 const themeColors: {
   [key in ColorDefinitions]: {
-    light: string | OpaqueColorValue
+    light: string
     dark_lighter: string
     dark_darker: string
   }
@@ -104,9 +97,30 @@ const themeColors: {
   },
 
   separator: {
-    light: PlatformColor(separatorColor, 'rgb(180, 180, 180)'),
-    dark_lighter: 'rgb(90, 90, 90)',
-    dark_darker: 'rgb(90, 90, 90)'
+    light: PlatformColor(
+      Platform.select({
+        ios: 'separator',
+        android: '?android:attr/dividerVertical',
+        default: 'rgb(180, 180, 180)'
+      }),
+      'rgb(180, 180, 180)'
+    ) as unknown as string,
+    dark_lighter: PlatformColor(
+      Platform.select({
+        ios: 'separator',
+        android: '?android:attr/dividerVertical',
+        default: 'rgb(90, 90, 90)'
+      }),
+      'rgb(90, 90, 90)'
+    ) as unknown as string,
+    dark_darker: PlatformColor(
+      Platform.select({
+        ios: 'separator',
+        android: '?android:attr/dividerVertical',
+        default: 'rgb(90, 90, 90)'
+      }),
+      'rgb(90, 90, 90)'
+    ) as unknown as string
   },
 
   shimmerDefault: {
@@ -121,9 +135,9 @@ const themeColors: {
   }
 }
 
-const getColors = (theme: Theme): { [key in ColorDefinitions]: string | OpaqueColorValue } => {
+const getColors = (theme: Theme): { [key in ColorDefinitions]: string } => {
   let colors = {} as {
-    [key in ColorDefinitions]: string | OpaqueColorValue
+    [key in ColorDefinitions]: string
   }
   const keys = Object.keys(themeColors) as ColorDefinitions[]
   keys.forEach(key => (colors[key] = themeColors[key][theme]))
