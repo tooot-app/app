@@ -1,22 +1,20 @@
 import GracefullyImage from '@components/GracefullyImage'
-import openLink from '@components/openLink'
 import CustomText from '@components/Text'
+import openLink from '@components/openLink'
 import { useNeodbQuery } from '@utils/queryHooks/neodb'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import * as Linking from 'expo-linking'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Pressable, View } from 'react-native'
+import StatusContext from '../Context'
 import { Rating } from './Rating'
 
-export type Props = {
-  card: Mastodon.Card
-}
-
-export const CardNeodb: React.FC<Props> = ({ card }) => {
+export const CardNeodb: React.FC = () => {
+  const { status } = useContext(StatusContext)
   const { colors } = useTheme()
 
-  const path = Linking.parse(card.url).path
+  const path = Linking.parse(status?.card?.url || '').path
   if (!path) return null
 
   const segments = path?.split('/')
@@ -26,7 +24,7 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
   )
     return null
 
-  const [headingLines, setHeadingLines] = useState(3)
+  const [headingLines, setHeadingLines] = useState<number>()
 
   const { data } = useNeodbQuery({ path })
 
@@ -41,7 +39,7 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
         padding: StyleConstants.Spacing.S,
         flexDirection: 'row'
       }}
-      onPress={() => openLink(card.url)}
+      onPress={() => status?.card?.url && openLink(status.card.url)}
     >
       {data.cover_image_url ? (
         <GracefullyImage
@@ -68,7 +66,9 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
             fontWeight='Bold'
             style={{ color: colors.primaryDefault }}
             numberOfLines={3}
-            onTextLayout={({ nativeEvent }) => setHeadingLines(nativeEvent.lines.length)}
+            onTextLayout={({ nativeEvent }) =>
+              !headingLines && setHeadingLines(nativeEvent.lines.length)
+            }
             children={heading.filter(d => d).join(' ')}
           />
           <Rating rating={data.rating / 2} />
@@ -77,7 +77,7 @@ export const CardNeodb: React.FC<Props> = ({ card }) => {
         <CustomText
           fontStyle='S'
           style={{ color: colors.secondary }}
-          numberOfLines={4 - headingLines}
+          numberOfLines={4 - (headingLines || 3)}
           children={details.filter(d => d).join(' / ')}
         />
       </View>
