@@ -97,30 +97,18 @@ const themeColors: {
   },
 
   separator: {
-    light: PlatformColor(
-      Platform.select({
-        ios: 'separator',
-        android: '?android:attr/dividerVertical',
-        default: 'rgb(180, 180, 180)'
-      }),
-      'rgb(180, 180, 180)'
-    ) as unknown as string,
-    dark_lighter: PlatformColor(
-      Platform.select({
-        ios: 'separator',
-        android: '?android:attr/dividerVertical',
-        default: 'rgb(90, 90, 90)'
-      }),
-      'rgb(90, 90, 90)'
-    ) as unknown as string,
-    dark_darker: PlatformColor(
-      Platform.select({
-        ios: 'separator',
-        android: '?android:attr/dividerVertical',
-        default: 'rgb(90, 90, 90)'
-      }),
-      'rgb(90, 90, 90)'
-    ) as unknown as string
+    light: Platform.select({
+      ios: PlatformColor('separator') as unknown as string,
+      default: 'rgb(180, 180, 180)'
+    }),
+    dark_lighter: Platform.select({
+      ios: PlatformColor('separator') as unknown as string,
+      default: 'rgb(90, 90, 90)'
+    }),
+    dark_darker: Platform.select({
+      ios: PlatformColor('separator') as unknown as string,
+      default: 'rgb(90, 90, 90)'
+    })
   },
 
   shimmerDefault: {
