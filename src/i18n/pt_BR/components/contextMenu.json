@@ -18,8 +18,8 @@
     "followAs": {
       "trigger": "",
       "succeed_default": "Agora seguindo @{{target}} com @{{source}}",
-      "succeed_locked": "",
-      "failed": ""
+      "succeed_locked": "Enviado o pedido para seguir @{{target}} com {{source}}, aguardando aprovação",
+      "failed": "Seguir como"
     },
     "blockReport": "Bloquear e denunciar",
     "block": {
