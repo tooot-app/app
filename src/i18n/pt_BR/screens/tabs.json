@@ -172,15 +172,15 @@
       },
       "filters": {
         "title": "Filtros de conteúdo",
-        "content": ""
+        "content": "{{count}} ativo"
       },
       "web_only": {
-        "title": "",
+        "title": "Atualizar configurações",
         "description": "As configurações abaixo só podem ser atualizadas usando a interface web"
       }
     },
     "preferencesFilters": {
-      "expired": "",
+      "expired": "Expirado",
       "keywords_one": "{{count}} palavra-chave",
       "keywords_other": "{{count}} palavras-chave",
       "statuses_one": "{{count}} toot",
@@ -390,7 +390,7 @@
         "accessibilityHint": "Você pode silenciar, bloquear, relatar ou compartilhar este usuário"
       },
       "followed_by": " está seguindo você",
-      "privateNote": "",
+      "privateNote": "Adicionar nota privada",
       "moved": "Usuário movido",
       "created_at": "Registrado em: {{date}}",
       "summary": {
@@ -404,7 +404,7 @@
     },
     "accountInLists": {
       "name": "Listas de @{{username}}",
-      "inLists": "",
+      "inLists": "Nas listas",
       "notInLists": "Outras listas"
     },
     "attachments": {
