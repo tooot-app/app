@@ -83,7 +83,7 @@
         "name": ""
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Alla innehållsfilter"
       },
       "preferencesFilterAdd": {
         "name": "Skapa ett filter"
@@ -150,7 +150,7 @@
         "options": {
           "public": "",
           "unlisted": "",
-          "private": ""
+          "private": "Endast följare"
         }
       },
       "sensitive": {
