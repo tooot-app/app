@@ -1,15 +1,15 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Ошибка загрузки",
+      "button": "Повторить"
     },
     "success": {
-      "message": ""
+      "message": "Лента пуста"
     }
   },
   "end": {
-    "message": ""
+    "message": "Конец, как насчет чашки <0 />"
   },
   "lookback": {
     "message": ""
