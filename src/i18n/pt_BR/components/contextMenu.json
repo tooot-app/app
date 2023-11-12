@@ -9,14 +9,14 @@
     "inLists": "Listas contendo usuário ...",
     "showBoosts": {
       "action_false": "Mostrar boosts do usuário",
-      "action_true": ""
+      "action_true": "Ocultar boosts dos usuários"
     },
     "mute": {
       "action_false": "Silenciar usuário",
       "action_true": "Desativar o silêncio do usuário"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "Seguir como ...",
       "succeed_default": "Agora seguindo @{{target}} com @{{source}}",
       "succeed_locked": "Enviado o pedido para seguir @{{target}} com {{source}}, aguardando aprovação",
       "failed": "Seguir como"
@@ -38,7 +38,7 @@
   },
   "at": {
     "direct": "Mensagem Direta",
-    "public": ""
+    "public": "Mensagem pública"
   },
   "copy": {
     "action": "Copiar toot",

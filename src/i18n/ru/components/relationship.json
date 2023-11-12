@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Подписаться на пользователя"
   },
   "block": {
-    "function": ""
+    "function": "Заблокировать пользователя"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Ошибка загрузки",
+    "blocked_by": "Заблокирован пользователем",
+    "blocking": "Разблокировать",
+    "following": "Отписаться",
+    "requested": "Отменить запрос",
+    "default": "Подписаться"
   }
 }
