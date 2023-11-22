@@ -15,7 +15,7 @@
       },
       "exploring": {
         "heading": "",
-        "trending": "",
+        "trending": "トレンド",
         "followRemote": "",
         "noTitle": "",
         "errors": {
@@ -419,16 +419,16 @@
     },
     "mute": {
       "name": "",
-      "mute": "",
+      "mute": "ミュート",
       "description": "",
       "notification": "",
       "duration": {
         "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "0": "無期限",
+        "1800": "30分",
+        "3600": "1時間",
+        "86400": "1日",
+        "604800": "1週間"
       }
     },
     "report": {
