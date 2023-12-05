@@ -9,7 +9,7 @@ jobs:
   build-ios:
     runs-on: macos-13
     steps:
-      - uses: tj-actions/branch-names@v6
+      - uses: tj-actions/branch-names@v7.0.7
         id: branch
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -40,7 +40,7 @@ jobs:
   build-android:
     runs-on: macos-13
     steps:
-      - uses: tj-actions/branch-names@v6
+      - uses: tj-actions/branch-names@v7.0.7
         id: branch
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -70,7 +70,7 @@ jobs:
     runs-on: macos-13
     needs: [build-ios, build-android]
     steps:
-      - uses: tj-actions/branch-names@v6
+      - uses: tj-actions/branch-names@v7.0.7
         id: branch
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
