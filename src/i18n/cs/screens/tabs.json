@@ -113,26 +113,26 @@
     "fontSize": {
       "demo": "",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Výchozí",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Správa uživatelů",
+      "error": "Odebrat uživatele ze seznamu",
+      "empty": "Do seznamu nebyl přidán žádný uživatel"
     },
     "listEdit": {
       "heading": "",
-      "title": "",
+      "title": "Název",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Odpovědi od:",
         "options": {
-          "none": "",
-          "list": "",
+          "none": "Nikdo",
+          "list": "Členové seznamu",
           "followed": ""
         }
       }
