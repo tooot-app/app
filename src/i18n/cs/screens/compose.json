@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Zrušit úpravy?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Uložit koncept",
+          "delete": "Odstranit koncept"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Toot",
+        "conversation": "Toot DM",
+        "reply": "Odpověď na Toot",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Tootování selhalo",
+          "button": "Zkusit znovu"
         },
         "removeReply": {
           "title": "",
-          "description": "",
-          "confirm": ""
+          "description": "Odpovězený toot mohl být odstraněn. Chcete jej odebrat z vašeho odkazu?",
+          "confirm": "Odebrat reference"
         }
       }
     }
@@ -34,7 +34,7 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Tootovat jako @{{acct}}@{{domain}}",
         "spoilerInput": {
           "placeholder": ""
         },
