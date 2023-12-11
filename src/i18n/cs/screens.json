@@ -1,17 +1,17 @@
 {
   "screenshot": {
-    "title": "",
-    "message": ""
+    "title": "Ochrana soukromí",
+    "message": "Prosím, nezveřejňujte identitu jiného uživatele, jako je uživatelské jméno, avatar atd. Děkujeme!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Přihlášení vypršelo, prosím přihlaste se znovu"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Chyba Push serveru",
+    "description": "Prosím znovu povolte push oznámení v nastavení"
   },
   "shareError": {
-    "imageNotSupported": "",
+    "imageNotSupported": "Obrázek typu {{type}} není podporován",
     "videoNotSupported": ""
   }
 }
