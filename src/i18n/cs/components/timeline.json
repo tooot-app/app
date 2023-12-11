@@ -1,25 +1,25 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Chyba při načítání",
+      "button": "Zkusit znovu"
     },
     "success": {
-      "message": ""
+      "message": "Časová osa prázdná"
     }
   },
   "end": {
-    "message": ""
+    "message": "Konec, co takhle šálek <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "Poslední přečtení v"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": "",
-    "fetching": "",
+    "fetchPreviousPage": "Novější odsud",
+    "refetch": "Nejnovější",
+    "fetching": "Načítání nových tootů ...",
     "fetched": {
-      "none": "",
+      "none": "Žádné nové tooty",
       "found": ""
     }
   },
