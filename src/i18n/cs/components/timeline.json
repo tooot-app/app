@@ -25,84 +25,84 @@
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
+      "pinned": "Připnuto",
+      "favourite": "{{name}} si oblíbil váš toot",
+      "status": "{{name}} právě zveřejnil",
+      "follow": "{{name}} vás sleduje",
+      "follow_request": "{{name}} vás požádal o sledování",
       "poll": "",
       "reblog": {
         "default": "",
-        "myself": "",
-        "notification": ""
+        "myself": "Boostnul jsem",
+        "notification": "{{name}} boostnul váš toot"
       },
-      "update": "",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "update": "Reblog byl upraven",
+      "admin.sign_up": "{{name}} se připojil do instance",
+      "admin.report": "{{name}} nahlásil:"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Odpovědět na tento toot"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Boostnout tento toot",
+        "function": "Boostnout toot",
         "options": {
-          "title": "",
-          "public": "",
+          "title": "Zvolte viditelnost boostu",
+          "public": "Veřejný boost",
           "unlisted": ""
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Přidat tento toot mezi oblíbené",
+        "function": "Oblíbený toot"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Přidat tento toot do záložek",
+        "function": "Záložky toot"
       },
-      "openReport": ""
+      "openReport": "Otevřít hlášení"
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
+        "accessibilityLabel": "{{count}} uživatelů boostlo tento toot",
+        "accessibilityHint": "Klepnutím zjistíte uživatele",
         "text": ""
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
+        "accessibilityLabel": "{{count}} uživatelů oblíbilo tento toot",
+        "accessibilityHint": "Klepnutím zjistíte uživatele",
         "text": ""
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Tento toot byl upraven {{count}} krát",
+        "accessibilityHint": "Klepnutím zobrazíte historii úprav",
+        "text_one": "{{count}} upravit",
+        "text_other": "{{count}} úpravy"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Zobrazit citlivá média"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Chyba načítání",
+        "button": "Vyzkoušet vzdálený odkaz"
       },
-      "altText": ""
+      "altText": "Alternativní text"
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Avatar {{name}}",
+      "accessibilityHint": "Klepnutím přejděte na stránku {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Skrytý obsah"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Přesto zobrazit",
+      "match_v1": "Filtrované: {{phrase}}.",
+      "match_v2_one": "Filtrováno {{filters}}.",
+      "match_v2_other": "Filtrováno {{count}} filtry, {{filters}}."
     },
     "fullConversation": "",
     "translate": {
