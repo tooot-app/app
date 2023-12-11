@@ -36,44 +36,44 @@
       "header": {
         "postingAs": "Tootovat jako @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Upozornění na Spoiler"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Co se vám honí hlavou",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": ""
+              "title": "Dosáhli jste maximálního počtu příloh"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Označit přílohy za citlivé",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Odebrat nahranou přílohu, číslo {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Upravit nahranou přílohu, číslo {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Nahrát více příloh"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Klepnutím přidáte emoji pro toot"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
+              "accessibilityLabel": "Možnost ankety {{index}}",
+              "single": "Jediná správná odpověď",
               "multiple": ""
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
+              "accessibilityLabel": "Snížit možnosti hlasování na {{amount}}",
               "accessibilityHint": ""
             },
             "increase": {
@@ -82,34 +82,34 @@
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Volba typu",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Jediná správná odpověď",
+              "multiple": "Výběr z více možností"
             }
           },
           "expiration": {
             "heading": "",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 minut",
+              "1800": "30 minut",
+              "3600": "1 hodina",
+              "21600": "6 hodin",
+              "86400": "1 den",
+              "259200": "3 dny",
+              "604800": "7 dní"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Nahrát přílohu",
           "accessibilityHint": "",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Nahrávání se nezdařilo",
+              "button": "Zkusit znovu"
             }
           }
         },
@@ -119,33 +119,33 @@
         },
         "visibility": {
           "accessibilityLabel": "",
-          "title": "",
+          "title": "Viditelnost tootu",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Veřejný",
+            "unlisted": "Neveřejný",
+            "private": "Pouze sledující",
+            "direct": "Přímá zpráva"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Přidat emoji",
+          "accessibilityHint": "Otevřete panel výběru emoji, posunutím vodorovně změníte stránku"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Koncept ({{count}})",
+      "drafts_other": "Koncepty ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Upravit přílohu",
         "right": {
           "accessibilityLabel": "",
           "failed": {
             "title": "",
-            "button": ""
+            "button": "Zkusit znovu"
           }
         }
       },
@@ -158,14 +158,14 @@
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Koncept"
       },
-      "warning": "",
+      "warning": "Koncepty jsou ukládány pouze lokálně a mohou být ztraceny při nešťastných událostech. Doporučeně nepoužívat koncepty pro dlouhodobé ukládání.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Uložený koncept, klepnutím upravíte tento koncept",
+        "textEmpty": "Obsah je prázdný"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Kontrola příloh na serveru..."
     }
   }
 }
