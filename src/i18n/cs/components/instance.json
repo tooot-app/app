@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Doména instance"
     },
-    "whitelisted": "",
+    "whitelisted": "Toto může být instance, ze které tooot nemůže načíst data před přihlášením.",
     "button": "Přihlásit se",
     "information": {
       "name": "Název",
