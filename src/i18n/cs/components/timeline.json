@@ -106,60 +106,60 @@
     },
     "fullConversation": "",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Přeložit",
+      "succeed": "Přeloženo {{provider}} z {{source}}",
+      "failed": "Překlad selhal",
+      "source_not_supported": "jazyk tootu není podporován",
+      "target_not_supported": "Cílový jazyk není podporován"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Jjméno uživatele"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Uživatelský účet"
           }
         },
-        "application": "",
+        "application": "přes {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot upraven"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot ztlumený"
         },
-        "replies": "",
+        "replies": "Odpovědi <0 />",
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot je přímá zpráva"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot je viditelný pouze pro sledující"
           }
         }
       },
       "conversation": {
         "withAccounts": "",
         "delete": {
-          "function": ""
+          "function": "Odstranit přímou zprávu"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Hlasovat",
+          "refresh": "Obnovit"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} uživatel hlasoval",
+          "voters_other": "{{count}} uživatelů hlasovalo",
+          "votes_one": "{{count}} hlas",
+          "votes_other": "{{count}} hlasů"
         },
         "expiration": {
-          "expired": "",
+          "expired": "Hlasování skončilo",
           "until": ""
         }
       }
