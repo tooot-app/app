@@ -1,25 +1,25 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Doména instance"
     },
     "whitelisted": "",
-    "button": "",
+    "button": "Přihlásit se",
     "information": {
-      "name": "",
-      "description": ""
+      "name": "Název",
+      "description": "Popis"
     },
     "disclaimer": {
-      "base": ""
+      "base": "Přihlášení používá systémový prohlížeč, takže informace o vašem účtu nebudou viditelné pro aplikaci tooot."
     },
     "terms": {
-      "base": ""
+      "base": "Přihlášením souhlasíte se <0>zásadami ochrany osobních údajů</0> a <1>podmínkami služby</1>."
     }
   },
   "update": {
     "alert": {
-      "title": "",
-      "message": ""
+      "title": "Přihlášen do této instance",
+      "message": "Můžete se přihlásit i k jinému účtu a uchovat tak přihlášený existující účet"
     }
   }
 }
