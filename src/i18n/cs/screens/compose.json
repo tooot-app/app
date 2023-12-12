@@ -24,7 +24,7 @@
           "button": "Zkusit znovu"
         },
         "removeReply": {
-          "title": "",
+          "title": "Odpověď tootu nebyla nalezena",
           "description": "Odpovězený toot mohl být odstraněn. Chcete jej odebrat z vašeho odkazu?",
           "confirm": "Odebrat reference"
         }
@@ -74,11 +74,11 @@
           "quantity": {
             "reduce": {
               "accessibilityLabel": "Snížit možnosti hlasování na {{amount}}",
-              "accessibilityHint": ""
+              "accessibilityHint": "Bylo dosaženo minimálního množství možností průzkumu, v současné době má {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Zvýšit možnosti hlasování na {{amount}}",
+              "accessibilityHint": "Bylo dosaženo maximálního množství možností průzkumu, v současné době má {{amount}}"
             }
           },
           "multiple": {
@@ -105,7 +105,7 @@
       "actions": {
         "attachment": {
           "accessibilityLabel": "Nahrát přílohu",
-          "accessibilityHint": "",
+          "accessibilityHint": "Když existuje nějaká příloha, funkce ankety bude vypnuta",
           "failed": {
             "alert": {
               "title": "Nahrávání se nezdařilo",
@@ -115,10 +115,10 @@
         },
         "poll": {
           "accessibilityLabel": "Přidat anketu",
-          "accessibilityHint": ""
+          "accessibilityHint": "Když je anketa aktivní, funkce přílohy bude vypnuta"
         },
         "visibility": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Viditelnost tootu je {{visibility}}",
           "title": "Viditelnost tootu",
           "options": {
             "public": "Veřejný",
@@ -142,17 +142,17 @@
       "header": {
         "title": "Upravit přílohu",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Uložit editaci přílohy",
           "failed": {
-            "title": "",
+            "title": "Úprava selhala",
             "button": "Zkusit znovu"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Popis pro zrakově postižené",
+          "placeholder": "Můžete přidat popis, někdy nazvaný alt-text, na vaše sdělovací prostředky, aby byly přístupné ještě většímu počtu lidí, včetně těch, kteří jsou slepí nebo zrakově postižení.\n\nDobré popisy jsou stručné, ale představte to, co je ve vašich médiích dostatečně přesně, aby bylo možné pochopit jejich kontext."
         }
       }
     },
