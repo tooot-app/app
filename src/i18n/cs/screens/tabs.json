@@ -25,89 +25,89 @@
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Notifikace"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Hledat",
+      "accessibilityHint": "Hledat hashtagy, uživatele nebo tooty"
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
+      "accessibilityLabel": "Filtr",
       "accessibilityHint": "",
-      "title": ""
+      "title": "Zobrazit notifikace"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Záložky"
       },
       "conversations": {
-        "name": ""
+        "name": "Přímé zprávy"
       },
       "favourites": {
-        "name": ""
+        "name": "Oblíbené"
       },
       "followedTags": {
-        "name": ""
+        "name": "Sledované hashtagy"
       },
       "fontSize": {
-        "name": ""
+        "name": "Velikost písma"
       },
       "language": {
-        "name": ""
+        "name": "Jazyk"
       },
       "list": {
-        "name": ""
+        "name": "Seznam: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Uživatelé v seznamu: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Vytvořit seznam"
       },
       "listEdit": {
-        "name": ""
+        "name": "Upravit podrobnosti seznamu"
       },
       "lists": {
-        "name": ""
+        "name": "Seznamy"
       },
       "push": {
-        "name": ""
+        "name": "Push notifikace"
       },
       "preferences": {
-        "name": ""
+        "name": "Předvolby"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Všechny filtry obsahu"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Vytvořit Filtr"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Upravit filtr"
       },
       "profile": {
-        "name": ""
+        "name": "Upravit profil"
       },
       "profileName": {
-        "name": ""
+        "name": "Upravit zobrazované jméno"
       },
       "profileNote": {
-        "name": ""
+        "name": "Upravit popis"
       },
       "profileFields": {
-        "name": ""
+        "name": "Upravit metadata"
       },
       "settings": {
-        "name": ""
+        "name": "Nastavení aplikace"
       },
       "switch": {
-        "name": ""
+        "name": "Změnit účet"
       }
     },
     "fontSize": {
@@ -133,86 +133,86 @@
         "options": {
           "none": "Nikdo",
           "list": "Členové seznamu",
-          "followed": ""
+          "followed": "Sledovaných uživatelů"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Smazat seznam",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Smazat seznam \"{{list}}\"?",
+        "message": "Tato akce není obnovitelná."
       }
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Výchozí viditelnost příspěvku",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Veřejný",
+          "unlisted": "Neveřejný",
+          "private": "Pouze sledující"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Vždy označovat média jako citlivá"
       },
       "media": {
-        "title": "",
+        "title": "Zobrazování médií",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Skrýt média označená jako citlivá",
+          "show_all": "Vždy zobrazovat média",
+          "hide_all": "Vždy skrývat média"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Automaticky rozbalit tooty s varováním obsahu"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Automaticky přehrávat GIF v tootech"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Filtry obsahu",
+        "content": "{{count}} aktivní"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Aktualizovat nastavení",
+        "description": "Nastavení níže mohou být aktualizována pouze pomocí webového rozhraní"
       }
     },
     "preferencesFilters": {
       "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "keywords_one": "{{count}} klíčové slovo",
+      "keywords_other": "{{count}} klíčová slova",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} tootů",
+      "context": "Použije se v <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "sledování a seznamy",
+        "notifications": "notifikace",
+        "public": "federované",
+        "thread": "konverzace",
+        "account": "profil"
       }
     },
     "preferencesFilter": {
-      "name": "",
+      "name": "Název",
       "expiration": "",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Nikdy",
+        "1800": "Po 30 minutách",
+        "3600": "Po 1 hodině",
+        "43200": "Po 12 hodinách",
+        "86400": "Po 1 dni",
+        "604800": "Po 1 týdnu",
+        "18144000": "Po 1 měsíci"
       },
       "context": "",
       "contexts": {
         "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "notifications": "Notifikace",
+        "public": "Federovaná časová osa",
+        "thread": "Zobrazení konverzace",
+        "account": "Zobrazení profilu"
       },
       "action": "",
       "actions": {
