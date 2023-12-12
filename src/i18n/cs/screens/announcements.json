@@ -1,7 +1,7 @@
 {
   "heading": "Oznámení",
   "content": {
-    "published": "",
+    "published": "Zveřejněno <0 />",
     "button": {
       "read": "Číst",
       "unread": "Označit jako přečtené"
