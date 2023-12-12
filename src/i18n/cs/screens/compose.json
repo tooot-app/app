@@ -68,7 +68,7 @@
             "placeholder": {
               "accessibilityLabel": "Možnost ankety {{index}}",
               "single": "Jediná správná odpověď",
-              "multiple": ""
+              "multiple": "Výběr z více možností"
             }
           },
           "quantity": {
@@ -89,7 +89,7 @@
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Platnost",
             "options": {
               "300": "5 minut",
               "1800": "30 minut",
@@ -114,7 +114,7 @@
           }
         },
         "poll": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Přidat anketu",
           "accessibilityHint": ""
         },
         "visibility": {
