@@ -12,6 +12,6 @@
   },
   "shareError": {
     "imageNotSupported": "Obrázek typu {{type}} není podporován",
-    "videoNotSupported": ""
+    "videoNotSupported": "Video typu {{type}} není podporováno"
   }
 }
