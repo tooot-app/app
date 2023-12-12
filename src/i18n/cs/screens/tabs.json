@@ -1,25 +1,25 @@
 {
   "tabs": {
     "local": {
-      "name": "",
+      "name": "Sleduji",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Zobrazit boosty",
+        "showReplies": "Zobrazit odpovědi"
       }
     },
     "public": {
       "segments": {
-        "federated": "",
-        "local": "",
-        "explore": ""
+        "federated": "Federované",
+        "local": "Místní",
+        "explore": "Prozkoumat"
       },
       "exploring": {
         "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": "",
+        "trending": "Trendy",
+        "followRemote": "Sledovat vzdálenou instanci",
+        "noTitle": "Bez názvu",
         "errors": {
-          "existed": "",
+          "existed": "Tuto vzdálenou instanci již sledujete.",
           "notAvailable": ""
         }
       }
