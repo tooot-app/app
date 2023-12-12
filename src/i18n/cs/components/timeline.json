@@ -30,9 +30,9 @@
       "status": "{{name}} právě zveřejnil",
       "follow": "{{name}} vás sleduje",
       "follow_request": "{{name}} vás požádal o sledování",
-      "poll": "",
+      "poll": "Anketa, ve které jste hlasoval/a, skončila",
       "reblog": {
-        "default": "",
+        "default": "{{name}} boostnul/a",
         "myself": "Boostnul jsem",
         "notification": "{{name}} boostnul váš toot"
       },
@@ -50,7 +50,7 @@
         "options": {
           "title": "Zvolte viditelnost boostu",
           "public": "Veřejný boost",
-          "unlisted": ""
+          "unlisted": "Nezobrazovat boost"
         }
       },
       "favourited": {
@@ -67,12 +67,12 @@
       "reblogged_by": {
         "accessibilityLabel": "{{count}} uživatelů boostlo tento toot",
         "accessibilityHint": "Klepnutím zjistíte uživatele",
-        "text": ""
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
         "accessibilityLabel": "{{count}} uživatelů oblíbilo tento toot",
         "accessibilityHint": "Klepnutím zjistíte uživatele",
-        "text": ""
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
         "accessibilityLabel": "Tento toot byl upraven {{count}} krát",
@@ -104,7 +104,7 @@
       "match_v2_one": "Filtrováno {{filters}}.",
       "match_v2_other": "Filtrováno {{count}} filtry, {{filters}}."
     },
-    "fullConversation": "",
+    "fullConversation": "Přečíst konverzace",
     "translate": {
       "default": "Přeložit",
       "succeed": "Přeloženo {{provider}} z {{source}}",
@@ -140,7 +140,7 @@
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "S",
         "delete": {
           "function": "Odstranit přímou zprávu"
         }
@@ -160,7 +160,7 @@
         },
         "expiration": {
           "expired": "Hlasování skončilo",
-          "until": ""
+          "until": "Vyprší <0 />"
         }
       }
     }
