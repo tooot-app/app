@@ -20,7 +20,7 @@
         "noTitle": "Bez názvu",
         "errors": {
           "existed": "Tuto vzdálenou instanci již sledujete.",
-          "notAvailable": ""
+          "notAvailable": "Časová osa této instance není veřejná. Zkuste prosím jinou instanci."
         }
       }
     },
@@ -37,7 +37,7 @@
   "notifications": {
     "filters": {
       "accessibilityLabel": "Filtr",
-      "accessibilityHint": "",
+      "accessibilityHint": "Filtrovat typy oznámení",
       "title": "Zobrazit notifikace"
     }
   },
@@ -180,7 +180,7 @@
       }
     },
     "preferencesFilters": {
-      "expired": "",
+      "expired": "Vypršel",
       "keywords_one": "{{count}} klíčové slovo",
       "keywords_other": "{{count}} klíčová slova",
       "statuses_one": "{{count}} toot",
@@ -196,7 +196,7 @@
     },
     "preferencesFilter": {
       "name": "Název",
-      "expiration": "",
+      "expiration": "Vypršení platnosti",
       "expirationOptions": {
         "0": "Nikdy",
         "1800": "Po 30 minutách",
@@ -206,15 +206,15 @@
         "604800": "Po 1 týdnu",
         "18144000": "Po 1 měsíci"
       },
-      "context": "",
+      "context": "Použije se v",
       "contexts": {
-        "home": "",
+        "home": "Sledování a seznamy",
         "notifications": "Notifikace",
         "public": "Federovaná časová osa",
         "thread": "Zobrazení konverzace",
         "account": "Zobrazení profilu"
       },
-      "action": "",
+      "action": "Když se shoduje",
       "actions": {
         "warn": "",
         "hide": ""
@@ -286,22 +286,22 @@
         "heading": ""
       },
       "follow": {
-        "heading": ""
+        "heading": "Nový sledující"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Žádosti o sledování"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Oblíbené"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Boostováno"
       },
       "mention": {
-        "heading": ""
+        "heading": "Zmínil vás"
       },
       "poll": {
-        "heading": ""
+        "heading": "Anketa byla aktualizována"
       },
       "status": {
         "heading": ""
@@ -322,64 +322,64 @@
         "content": {
           "unread": "",
           "read": "",
-          "empty": ""
+          "empty": "Žádné"
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Povoleno",
+        "content_false": "Zakázáno"
       },
       "logout": {
-        "button": "",
+        "button": "Odhlásit se",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Odhlásit se?",
+          "message": "Po odhlášení se musíte znovu přihlásit",
           "buttons": {
-            "logout": ""
+            "logout": "Odhlásit se"
           }
         }
       }
     },
     "settings": {
       "theme": {
-        "heading": "",
+        "heading": "Vzhled",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "Jako systém",
+          "light": "Světlý režim",
+          "dark": "Tmavý režim"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Tmavý vzhled",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Výchozí",
+          "darker": "Skutečná černá"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Otevírání odkazů",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "V aplikaci",
+          "external": "Použít systémový prohlížeč"
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Automaticky přehrávat GIF"
       },
       "feedback": {
         "heading": ""
       },
       "support": {
-        "heading": ""
+        "heading": "Podpořte tooot"
       },
       "contact": {
-        "heading": ""
+        "heading": "Kontaktovat tooot"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Verze v{{version}}",
+      "instanceVersion": "Mastodon verze v{{version}}"
     },
     "switch": {
-      "existing": "",
+      "existing": "Vybrat z přihlášených",
       "new": ""
     }
   },
@@ -389,7 +389,7 @@
         "accessibilityLabel": "",
         "accessibilityHint": ""
       },
-      "followed_by": "",
+      "followed_by": " vás sleduje",
       "privateNote": "",
       "moved": "",
       "created_at": "",
@@ -405,55 +405,55 @@
     "accountInLists": {
       "name": "",
       "inLists": "",
-      "notInLists": ""
+      "notInLists": "Jiné seznamy"
     },
     "attachments": {
       "name": ""
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "Přidat do filtru",
+      "existed": "Existující v těchto filtrech"
     },
     "history": {
-      "name": ""
+      "name": "Historie úprav"
     },
     "mute": {
-      "name": "",
-      "mute": "",
+      "name": "Ztlumit {{acct}}",
+      "mute": "Ztlumit",
       "description": "",
       "notification": "",
       "duration": {
         "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "0": "Neomezeně",
+        "1800": "30 minut",
+        "3600": "1 hodina",
+        "86400": "1 den",
+        "604800": "1 týden"
       }
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Nahlásit {{acct}}",
+      "report": "Hlášení",
       "forward": {
-        "heading": ""
+        "heading": "Anonymně přeposílat na vzdálený server {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Co se děje s tímto účtem?",
+        "spam": "Je to spam",
+        "other": "Je to něco jiného",
+        "violation": "Porušuje to pravidla serveru"
       },
       "comment": {
-        "heading": ""
+        "heading": "Ještě něco, co bys chtěli dodat?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Porušená pravidla serveru"
       }
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Vyhledávám",
+        "placeholder": "..."
       },
       "empty": {
         "general": "",
@@ -471,9 +471,9 @@
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Uživatele",
+        "hashtags": "Hashtagu",
+        "statuses": "Tootů"
       },
       "notFound": "",
       "noResult": ""
@@ -487,8 +487,8 @@
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "Sleduji {{count}}",
+        "followers": "Sledující {{count}}"
       },
       "statuses": {
         "reblogged_by": "",
