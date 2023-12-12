@@ -16,13 +16,13 @@
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} byl úspěšný"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} se nezdařil, zkuste to prosím znovu"
     }
   },
   "separator": ", ",
