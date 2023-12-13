@@ -1,7 +1,7 @@
 {
   "accessibilityHint": "",
   "account": {
-    "title": "",
+    "title": "Uživatelské akce",
     "following": {
       "action_false": "Sledovat uživatele",
       "action_true": "Přestat sledovat uživatele"
