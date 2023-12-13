@@ -20,7 +20,7 @@
     "fetching": "Načítání nových tootů ...",
     "fetched": {
       "none": "Žádné nové tooty",
-      "found": ""
+      "found": "Načtené nové tooty ({{count}})"
     }
   },
   "shared": {
