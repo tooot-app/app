@@ -14,7 +14,7 @@
         "explore": "Prozkoumat"
       },
       "exploring": {
-        "heading": "",
+        "heading": "Prozkoumání",
         "trending": "Trendy",
         "followRemote": "Sledovat vzdálenou instanci",
         "noTitle": "Bez názvu",
@@ -111,7 +111,7 @@
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Toto je demo toot😊. Můžete si vybrat z několika možností níže.<br /><br />Toto nastavení ovlivní pouze hlavní obsah tootů, ale ne jiné velikosti písma.</p>",
       "sizes": {
         "S": "S",
         "M": "M - Výchozí",
@@ -126,7 +126,7 @@
       "empty": "Do seznamu nebyl přidán žádný uživatel"
     },
     "listEdit": {
-      "heading": "",
+      "heading": "Upravit podrobnosti seznamu",
       "title": "Název",
       "repliesPolicy": {
         "heading": "Odpovědi od:",
@@ -216,74 +216,74 @@
       },
       "action": "Když se shoduje",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Sbalený, ale může být zobrazen",
+        "hide": "Zcela skrytý"
       },
-      "keywords": "",
-      "keyword": "",
-      "statuses": ""
+      "keywords": "Shody pro tato klíčová slova",
+      "keyword": "Klíčové slovo",
+      "statuses": "Shoduje se s těmito tooty"
     },
     "profile": {
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} aktualizován",
+        "failed": "Aktualizace {{type}} se nezdařila, zkuste to prosím znovu"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Přezdívka"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Avatar",
+          "description": "Bude snížen na 400x400px"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Baner",
+          "description": "Bude snížen na 1500x500px"
         },
         "note": {
-          "title": ""
+          "title": "Popis"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadata",
+          "total_one": "{{count}} pole",
+          "total_other": "{{count}} polí"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Uzamknout účet",
+          "description": "Vyžaduje manuální schválení sledujících"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Účet bota",
+          "description": "Tento účet provádí v zásadě automatické akce a nemusí být monitorován"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Skupina {{index}}",
+        "label": "Štítek",
+        "content": "Obsah"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Zpracování obrázku se nezdařilo. Zkuste to prosím znovu."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Váš zařízení nepodporuje tooot push notifikace",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Povolit push notifikace",
+        "settings": "Povolit v nastavení"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Server pro push chybně nakonfigurován",
+        "description": "Obraťte se na správce serveru pro konfiguraci push notifikací"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Povolit pro {{acct}}",
+        "description": "Zprávy jsou směrovány přes tooot server"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Zobrazit podrobnosti zprávy",
+        "description": "Zprávy směrované přes tooot server jsou šifrované, ale můžete zvolit dekódování zprávy na serveru. Zdrojový kód našeho serveru je open source a nemá žádné zásady logu."
       },
       "default": {
-        "heading": ""
+        "heading": "Výchozí"
       },
       "follow": {
         "heading": "Nový sledující"
@@ -304,24 +304,24 @@
         "heading": "Anketa byla aktualizována"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot od sledovaných uživatelů"
       },
       "update": {
-        "heading": ""
+        "heading": "Boost byl upraven"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin: registrace"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin: nahlášení"
       },
-      "howitworks": ""
+      "howitworks": "Zjistěte, jak směrování funguje"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
+          "unread": "{{amount}} nepřečtených",
+          "read": "Všechny přečtené",
           "empty": "Žádné"
         }
       },
@@ -367,7 +367,7 @@
         "heading": "Automaticky přehrávat GIF"
       },
       "feedback": {
-        "heading": ""
+        "heading": "Požadavek na funkci"
       },
       "support": {
         "heading": "Podpořte tooot"
@@ -380,35 +380,35 @@
     },
     "switch": {
       "existing": "Vybrat z přihlášených",
-      "new": ""
+      "new": "Přihlásit se do instance"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Akce pro uživatele {{user}}",
+        "accessibilityHint": "Můžete ztlumit, blokovat, nahlásit nebo sdílet tohoto uživatele"
       },
       "followed_by": " vás sleduje",
-      "privateNote": "",
-      "moved": "",
-      "created_at": "",
+      "privateNote": "Nastavit soukromou poznámku",
+      "moved": "Uživatel byl přesunut",
+      "created_at": "Přidal/a se: {{date}}",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} tootů"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Tooty",
+        "all": "Tooty a odpovědi"
       },
-      "suspended": ""
+      "suspended": "Účet pozastaven moderátory serveru"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
+      "name": "Seznamy @{{username}}",
+      "inLists": "V seznamu",
       "notInLists": "Jiné seznamy"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>média</1>"
     },
     "filter": {
       "name": "Přidat do filtru",
@@ -420,10 +420,10 @@
     "mute": {
       "name": "Ztlumit {{acct}}",
       "mute": "Ztlumit",
-      "description": "",
-      "notification": "",
+      "description": "Tohle skryje příspěvky uživatele a ty které ho zmiňují, ale uživatel stále uvidí vaše příspěvky a může vás sledovat.",
+      "notification": "Také skrýt notifikace od tohoto uživatele",
       "duration": {
-        "heading": "",
+        "heading": "Po dobu trvání",
         "0": "Neomezeně",
         "1800": "30 minut",
         "3600": "1 hodina",
@@ -456,18 +456,18 @@
         "placeholder": "..."
       },
       "empty": {
-        "general": "",
+        "general": "Zadejte klíčové slovo pro hledání <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> nebo <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Pokročilé vyhledávání",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Populární hashtagy"
         }
       },
       "sections": {
@@ -475,14 +475,14 @@
         "hashtags": "Hashtagu",
         "statuses": "Tootů"
       },
-      "notFound": "",
-      "noResult": ""
+      "notFound": "Nelze najít <bold>{{searchTerm}}</bold> související {{type}}",
+      "noResult": "Nelze nic najít, zkuste jiný výraz"
     },
     "toot": {
-      "name": "",
+      "name": "Diskuze",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Obsahuje vzdálený obsah",
+        "message": "Fedovaný obsah není vždy k dispozici na místní instanci. Tento obsah je načten ze vzdálené instance a označen. Můžete s tímto obsahem pracovat jako obvykle."
       }
     },
     "users": {
@@ -491,10 +491,10 @@
         "followers": "Sledující {{count}}"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} boostnul/a",
+        "favourited_by": "{{count}} oblíbení"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Výsledky ze vzdálené instance jsou neúplné"
     }
   }
 }
