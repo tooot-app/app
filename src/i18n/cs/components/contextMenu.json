@@ -3,8 +3,8 @@
   "account": {
     "title": "",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Sledovat uživatele",
+      "action_true": "Přestat sledovat uživatele"
     },
     "inLists": "",
     "showBoosts": {
