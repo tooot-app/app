@@ -12,7 +12,7 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "phone": "react-native run-ios --device",
-    "iphone": "react-native run-ios --simulator 'iPhone 14 Pro'",
+    "iphone": "react-native run-ios --simulator 'iPhone 15 Pro'",
     "ipad": "react-native run-ios --simulator 'iPad Pro (11-inch) (4th generation)'",
     "app:build": "bundle exec fastlane",
     "clean": "react-native-clean-project"
@@ -109,7 +109,7 @@
     "react-native-clean-project": "^4.0.1",
     "typescript": "^5.1.6"
   },
-  "packageManager": "yarn@4.0.1",
+  "packageManager": "yarn@4.1.0",
   "resolutions": {
     "expo-av@^13.0.2": "patch:expo-av@npm%3A13.0.2#./.yarn/patches/expo-av-npm-13.0.2-7a651776f1.patch",
     "react-native-share-menu@^6.0.0": "patch:react-native-share-menu@npm%3A6.0.0#./.yarn/patches/react-native-share-menu-npm-6.0.0-f1094c3204.patch",
