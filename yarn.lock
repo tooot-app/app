@@ -9796,13 +9796,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-mmkv@npm:^2.10.1":
-  version: 2.10.1
-  resolution: "react-native-mmkv@npm:2.10.1"
+"react-native-mmkv@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "react-native-mmkv@npm:2.11.0"
   peerDependencies:
     react: "*"
     react-native: ">=0.71.0"
-  checksum: 10/8d6d2e4f2e1068c2d80b9204b06255ac64382b3016fe7c6799eadf98380f6eaaca797f8bde4b304e1b2c53bbbf1322cbceec558914da130d5e5cdbe162d79fb3
+  checksum: 10/bdf2622ae2b579b8dad7ecb5e43e9698db11a2a4248dd1f5ef696e9af1b753b83a23e1e4e0e0cdc04b052dbef53813046348eb2b74ae1aa032ae33122bf200f5
   languageName: node
   linkType: hard
 
@@ -11329,7 +11329,7 @@ __metadata:
     react-native-image-picker: "npm:^5.6.0"
     react-native-ios-context-menu: "npm:^1.15.3"
     react-native-language-detection: "npm:^0.2.2"
-    react-native-mmkv: "npm:^2.10.1"
+    react-native-mmkv: "npm:^2.11.0"
     react-native-pager-view: "npm:^6.2.2"
     react-native-quick-base64: "npm:^2.0.7"
     react-native-reanimated: "npm:^3.4.1"

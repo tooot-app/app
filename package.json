@@ -76,7 +76,7 @@
     "react-native-image-picker": "^5.6.0",
     "react-native-ios-context-menu": "^1.15.3",
     "react-native-language-detection": "^0.2.2",
-    "react-native-mmkv": "^2.10.1",
+    "react-native-mmkv": "^2.11.0",
     "react-native-pager-view": "^6.2.2",
     "react-native-quick-base64": "^2.0.7",
     "react-native-reanimated": "^3.4.1",
