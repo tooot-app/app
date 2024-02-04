@@ -20,7 +20,7 @@
     "fetching": "Buscando toots mais recentes...",
     "fetched": {
       "none": "Nenhum novo toot",
-      "found": ""
+      "found": "toots {{count}} obtidos"
     }
   },
   "shared": {
@@ -33,12 +33,12 @@
       "poll": "Uma enquete em que você votou terminou",
       "reblog": {
         "default": "{{name}} boostou",
-        "myself": "",
+        "myself": "Eu impulsionei",
         "notification": "{{name}} deu boost no teu toot"
       },
       "update": "Toot foi editado",
       "admin.sign_up": "{{name}} entrou na instância",
-      "admin.report": ""
+      "admin.report": "{{name}} relatou:"
     },
     "actions": {
       "reply": {

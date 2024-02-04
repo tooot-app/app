@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
-    "expanded": "",
-    "moreLines": "",
-    "defaultHint": ""
+    "accessibilityHint": "Нажмите, чтобы развернуть или свернуть содержимое",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} больше строк)",
+    "defaultHint": "Длинное сообщение"
   }
 }

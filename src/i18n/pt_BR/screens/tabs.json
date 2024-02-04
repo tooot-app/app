@@ -172,15 +172,15 @@
       },
       "filters": {
         "title": "Filtros de conteúdo",
-        "content": ""
+        "content": "{{count}} ativo"
       },
       "web_only": {
-        "title": "",
+        "title": "Atualizar configurações",
         "description": "As configurações abaixo só podem ser atualizadas usando a interface web"
       }
     },
     "preferencesFilters": {
-      "expired": "",
+      "expired": "Expirado",
       "keywords_one": "{{count}} palavra-chave",
       "keywords_other": "{{count}} palavras-chave",
       "statuses_one": "{{count}} toot",
@@ -271,8 +271,8 @@
         "settings": "Ativar em configurações"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Servidor configurado incorretamente para push",
+        "description": "Entre em contato com o administrador do servidor para configurar o suporte push"
       },
       "global": {
         "heading": "Habilitar para {{acct}}",
@@ -390,7 +390,7 @@
         "accessibilityHint": "Você pode silenciar, bloquear, relatar ou compartilhar este usuário"
       },
       "followed_by": " está seguindo você",
-      "privateNote": "",
+      "privateNote": "Adicionar nota privada",
       "moved": "Usuário movido",
       "created_at": "Registrado em: {{date}}",
       "summary": {
@@ -404,7 +404,7 @@
     },
     "accountInLists": {
       "name": "Listas de @{{username}}",
-      "inLists": "",
+      "inLists": "Nas listas",
       "notInLists": "Outras listas"
     },
     "attachments": {
@@ -418,17 +418,17 @@
       "name": "Histórico de Edição"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "Silenciar {{acct}}",
+      "mute": "Silenciar",
+      "description": "Oculte postagens e menções a este usuário, mas isso ainda permitirá que ele veja suas postagens e siga você.",
+      "notification": "Ocultar também notificações deste usuário",
       "duration": {
-        "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "heading": "Por duração",
+        "0": "Indefinidamente",
+        "1800": "30 minutos",
+        "3600": "1 hora",
+        "86400": "1 dia",
+        "604800": "1 semana"
       }
     },
     "report": {
@@ -481,7 +481,7 @@
     "toot": {
       "name": "Discussões",
       "remoteFetch": {
-        "title": "",
+        "title": "Contém conteúdo remoto",
         "message": "O conteúdo global nem sempre está disponível na instância local. Estes conteúdos são obtidos de instâncias remotas e marcados. Você pode interagir com esses conteúdos normalmente."
       }
     },

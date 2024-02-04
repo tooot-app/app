@@ -1,81 +1,81 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Ошибка загрузки",
+      "button": "Повторить"
     },
     "success": {
-      "message": ""
+      "message": "Лента пуста"
     }
   },
   "end": {
-    "message": ""
+    "message": "Конец, как насчет чашки <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "Последний просмотр в"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": "",
-    "fetching": "",
+    "fetchPreviousPage": "Новинки отсюда",
+    "refetch": "В конец",
+    "fetching": "Получение новых сообщений ...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Нет новых сообщений",
+      "found": "Получено {{count}} сообщений"
     }
   },
   "shared": {
     "actioned": {
       "pinned": "Закрепить",
-      "favourite": "",
+      "favourite": "{{name}} добавил(а) ваш пост в избранное",
       "status": "{{name}} только что запостил",
       "follow": "{{name}} подписался (-лась) на вас",
       "follow_request": "{{name}} хочет подписаться на вас",
-      "poll": "",
+      "poll": "Опрос, в котором вы участвовали, завершен",
       "reblog": {
-        "default": "",
-        "myself": "",
-        "notification": ""
+        "default": "{{name}} продвинул(а)",
+        "myself": "Я продвинул(а)",
+        "notification": "{{name}} продвинул(а) ваш пост"
       },
-      "update": "",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "update": "Репост был отредактирован",
+      "admin.sign_up": "{{name}} присоединился к серверу",
+      "admin.report": "{{name}} сообщил(а):"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Ответить на это сообщение"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Продвинуть это сообщение",
+        "function": "Продвинуть сообщение",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Выберите видимость продвижения",
+          "public": "Публичное продвижение",
+          "unlisted": "Убрать из списка"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Добавить этот пост в избранное",
+        "function": "Избранное"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Добавить этот пост в закладки",
+        "function": "Закладки"
       },
-      "openReport": ""
+      "openReport": "Открыть отчет"
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} пользователей продвинули этот пост",
+        "accessibilityHint": "Нажмите, чтобы узнать пользователей",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} пользователей добавили этот пост в избранное",
+        "accessibilityHint": "Нажмите, чтобы узнать пользователей",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
+        "accessibilityLabel": "Этот пост был отредактирован {{count}} раз",
         "accessibilityHint": "",
         "text_one": "",
         "text_other": ""

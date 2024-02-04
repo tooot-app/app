@@ -22,7 +22,7 @@ const ComponentSeparator: React.FC<Props> = ({
         style,
         {
           backgroundColor: colors.backgroundDefault,
-          borderTopColor: colors.border,
+          borderTopColor: colors.separator,
           borderTopWidth: 1,
           marginLeft: StyleConstants.Spacing.Global.PagePadding + extraMarginLeft,
           marginRight: StyleConstants.Spacing.Global.PagePadding + extraMarginRight

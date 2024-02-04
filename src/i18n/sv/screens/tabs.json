@@ -83,10 +83,10 @@
         "name": ""
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Alla innehållsfilter"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Skapa ett filter"
       },
       "preferencesFilterEdit": {
         "name": "Redigera filter"
@@ -150,7 +150,7 @@
         "options": {
           "public": "",
           "unlisted": "",
-          "private": ""
+          "private": "Endast följare"
         }
       },
       "sensitive": {
@@ -181,8 +181,8 @@
     },
     "preferencesFilters": {
       "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
+      "keywords_one": "{{count}} nyckelord",
+      "keywords_other": "{{count}} nyckelord",
       "statuses_one": "",
       "statuses_other": "",
       "context": "",
@@ -191,7 +191,7 @@
         "notifications": "",
         "public": "",
         "thread": "",
-        "account": ""
+        "account": "profil"
       }
     },
     "preferencesFilter": {

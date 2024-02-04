@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Domínio da instância"
     },
-    "whitelisted": "",
+    "whitelisted": "Esta pode ser uma instância na lista de permissões da qual o tooot não consegue recuperar dados antes de se conectar.",
     "button": "Entrar",
     "information": {
       "name": "Nome",

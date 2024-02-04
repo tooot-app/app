@@ -1,7 +1,7 @@
 import ComponentAccount from '@components/Account'
 import GracefullyImage from '@components/GracefullyImage'
-import openLink from '@components/openLink'
 import CustomText from '@components/Text'
+import openLink from '@components/openLink'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { isDevelopment } from '@utils/helpers/checkEnvironment'
@@ -9,8 +9,8 @@ import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { useStatusQuery } from '@utils/queryHooks/status'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
@@ -32,7 +32,7 @@ const TimelineCard: React.FC = () => {
       i18n.language.toLowerCase().startsWith('zh-hans')) ||
     isDevelopment
   ) {
-    return <CardNeodb card={status.card} />
+    return <CardNeodb />
   }
 
   const { colors } = useTheme()

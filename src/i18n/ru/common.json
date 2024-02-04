@@ -9,7 +9,7 @@
     "delete": "Удалить",
     "done": "Готово",
     "confirm": "Подтвердить",
-    "add": ""
+    "add": "Добавить"
   },
   "customEmoji": {
     "accessibilityLabel": "Пользовательские эмодзи {{emoji}}"
