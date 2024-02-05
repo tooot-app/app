@@ -6,7 +6,6 @@ import { ParseHTML } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useAnnouncementMutation, useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
@@ -30,7 +29,6 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
   },
   navigation
 }) => {
-  const { reduceMotionEnabled } = useAccessibility()
   const { colors, mode } = useTheme()
   const [index, setIndex] = useState(0)
   const { t } = useTranslation('screenAnnouncements')
