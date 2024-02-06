@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 
-const TabSharedMute: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> = ({
+const TabSharedMute: React.FC<TabSharedStackScreenProps<'Tab-Shared-Mute'>> = ({
   navigation,
   route: {
     params: { account }
@@ -47,14 +47,6 @@ const TabSharedMute: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> = 
 
   useEffect(() => {
     navigation.setOptions({
-      title: t('screenTabs:shared.mute.name', { acct: `@${account.acct}` }),
-      headerLeft: () => (
-        <HeaderLeft
-          type='text'
-          content={t('common:buttons.cancel')}
-          onPress={() => navigation.goBack()}
-        />
-      ),
       headerRight: () => (
         <HeaderRight
           type='text'

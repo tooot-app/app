@@ -1,6 +1,5 @@
 import Button from '@components/Button'
 import { Filter } from '@components/Filter'
-import { HeaderRight } from '@components/Header'
 import Hr from '@components/Hr'
 import CustomText from '@components/Text'
 import { featureCheck } from '@utils/helpers/featureCheck'
@@ -8,7 +7,7 @@ import { TabSharedStackScreenProps, useNavState } from '@utils/navigation/naviga
 import { useFilterMutation, useFiltersQuery } from '@utils/queryHooks/filters'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionList, View } from 'react-native'
 
@@ -23,19 +22,6 @@ const TabSharedFilter: React.FC<TabSharedStackScreenProps<'Tab-Shared-Filter'>> 
 
   const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
-
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('screenTabs:shared.filter.name'),
-      headerRight: () => (
-        <HeaderRight
-          type='text'
-          content={t('common:buttons.done')}
-          onPress={() => navigation.goBack()}
-        />
-      )
-    })
-  }, [])
 
   const { data, isFetching, refetch } = useFiltersQuery<'v2'>({ version: 'v2' })
   const sections = [

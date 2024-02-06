@@ -1,0 +1,64 @@
+diff --git a/ios/Sources/Common/AutoLayoutWrapperView.swift b/ios/Sources/Common/AutoLayoutWrapperView.swift
+index e2b9be9c129c66eed3eaebb4e33f5456ce98f5da..ef6a0087f524c8d228b7fee31e54fc3dba769ffa 100644
+--- a/ios/Sources/Common/AutoLayoutWrapperView.swift
++++ b/ios/Sources/Common/AutoLayoutWrapperView.swift
+@@ -18,7 +18,11 @@ class AutoLayoutWrapperView: UIView {
+ 
+   override func addSubview(_ view: UIView) {
+     if let detachedView = view as? RNIDetachedView {
+-      detachedView.updateBounds(newSize: self.bounds.size);
++      do {
++        try detachedView.updateBounds(newSize: self.bounds.size);
++      } catch {
++        print("Error: \(error)");
++      };
+     };
+     
+     super.addSubview(view);
+@@ -37,7 +41,11 @@ class AutoLayoutWrapperView: UIView {
+   func updateSizeOfSubviews(newSize: CGSize? = nil){
+     self.subviews.forEach {
+       guard let detachedView = $0 as? RNIDetachedView else { return };
+-      detachedView.updateBounds(newSize: newSize ?? self.bounds.size);
++      do {
++        try detachedView.updateBounds(newSize: newSize ?? self.bounds.size);
++      } catch {
++        print("Error: \(error)");
++      };
+     };
+   };
+ };
+diff --git a/ios/Sources/RNIContextMenuView/RNIContextMenuPreviewController.swift b/ios/Sources/RNIContextMenuView/RNIContextMenuPreviewController.swift
+index 2b4dc6287c68c88d6652b963ac2cc5f59251ffa9..7c8472e90dac8359f6b40ce2c096323fcf388249 100644
+--- a/ios/Sources/RNIContextMenuView/RNIContextMenuPreviewController.swift
++++ b/ios/Sources/RNIContextMenuView/RNIContextMenuPreviewController.swift
+@@ -63,7 +63,11 @@ class RNIContextMenuPreviewController: UIViewController {
+       case .STRETCH:
+         guard let menuCustomPreviewView = self.menuCustomPreviewView else { return };
+         
+-        menuCustomPreviewView.updateBounds(newSize: self.view.bounds.size);
++        do {
++          try menuCustomPreviewView.updateBounds(newSize: self.view.bounds.size);
++        } catch {
++          print("Error: \(error)");
++        };
+         self.preferredContentSize = .zero;
+         
+       case .INHERIT:
+diff --git a/ios/Sources/RNIContextMenuView/RNIContextMenuView.swift b/ios/Sources/RNIContextMenuView/RNIContextMenuView.swift
+index affabcdee8303681f1438c6cfdb9d90d6a105ba6..7c470229e06250f4bd80d3133e381b91ff4f61c5 100644
+--- a/ios/Sources/RNIContextMenuView/RNIContextMenuView.swift
++++ b/ios/Sources/RNIContextMenuView/RNIContextMenuView.swift
+@@ -307,7 +307,11 @@ public class RNIContextMenuView:
+       .init(with: detachedView)
+     );
+     
+-    detachedView.detach();
++    do {
++      try detachedView.detach();
++    } catch {
++      print("Error: \(error)");
++    };
+   };
+   
+   #if DEBUG

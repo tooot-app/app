@@ -1,5 +1,5 @@
 import ComponentAccount from '@components/Account'
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderRight } from '@components/Header'
 import { ModalScrollView } from '@components/ModalScrollView'
 import Selections from '@components/Selections'
 import CustomText from '@components/Text'
@@ -38,14 +38,6 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
   const [isReporting, setIsReporting] = useState(false)
   useEffect(() => {
     navigation.setOptions({
-      title: t('screenTabs:shared.report.name', { acct: `@${account.acct}` }),
-      headerLeft: () => (
-        <HeaderLeft
-          type='text'
-          content={t('common:buttons.cancel')}
-          onPress={() => navigation.goBack()}
-        />
-      ),
       headerRight: () => (
         <HeaderRight
           type='text'

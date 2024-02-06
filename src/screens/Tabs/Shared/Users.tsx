@@ -1,5 +1,4 @@
 import ComponentAccount from '@components/Account'
-import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import { Loading } from '@components/Loading'
 import ComponentSeparator from '@components/Separator'
@@ -9,7 +8,7 @@ import { QueryKeyUsers, useUsersQuery } from '@utils/queryHooks/users'
 import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
@@ -20,14 +19,6 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
 }) => {
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
-  useEffect(() => {
-    navigation.setOptions({
-      title: t(`shared.users.${params.reference}.${params.type}`, {
-        count: params.count
-      } as any) as any,
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
-    })
-  }, [])
 
   const queryKey: QueryKeyUsers = ['Users', params]
   const { data, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = useUsersQuery({

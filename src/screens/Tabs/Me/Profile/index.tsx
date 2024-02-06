@@ -12,7 +12,7 @@ import TabMeProfileRoot from './Root'
 
 const Stack = createNativeStackNavigator<TabMeProfileStackParamList>()
 
-const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({ navigation }) => {
+const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Profile'>> = ({ navigation }) => {
   const { t } = useTranslation('screenTabs')
   const messageRef = useRef<FlashMessage>(null)
 

@@ -1,13 +1,12 @@
 import ComponentAccount from '@components/Account'
 import ComponentHashtag from '@components/Hashtag'
-import { HeaderLeft } from '@components/Header'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useSearchQuery } from '@utils/queryHooks/search'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import { debounce } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -24,7 +23,6 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
   const [searchTerm, setSearchTerm] = useState<string>('')
   useEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
       headerTitle: () => {
         return (
           <View
@@ -73,8 +71,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
             />
           </View>
         )
-      },
-      headerBackVisible: false
+      }
     })
   }, [mode])
   useEffect(() => {

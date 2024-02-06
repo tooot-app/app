@@ -1,3 +1,5 @@
+import { HeaderLeft, HeaderRight } from '@components/Header'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
 import TabSharedAccountInLists from '@screens/Tabs/Shared/AccountInLists'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
@@ -8,58 +10,166 @@ import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
 import React from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import TabSharedFilter from './Filter'
 import TabSharedMute from './Mute'
+import {
+  TabLocalStackParamList,
+  TabMeStackParamList,
+  TabNotificationsStackParamList,
+  TabPublicStackParamList
+} from '@utils/navigation/navigators'
+import CustomText from '@components/Text'
+import { ParseEmojis } from '@components/Parse'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-const TabShared = ({ Stack }: { Stack: any }) => {
+const TabShared = (
+  Stack: ReturnType<
+    typeof createNativeStackNavigator<
+      | TabLocalStackParamList
+      | TabPublicStackParamList
+      | TabNotificationsStackParamList
+      | TabMeStackParamList
+    >
+  >
+) => {
+  const { colors } = useTheme()
+  const { t } = useTranslation(['common', 'screenTabs'])
+
   return (
     <Stack.Group>
       <Stack.Screen
-        key='Tab-Shared-Account'
         name='Tab-Shared-Account'
         component={TabSharedAccount}
+        options={{
+          title: '',
+          headerLeft: () => <HeaderLeft background />
+        }}
       />
       <Stack.Screen
-        key='Tab-Shared-Account-In-Lists'
         name='Tab-Shared-Account-In-Lists'
         component={TabSharedAccountInLists}
+        options={({
+          navigation,
+          route: {
+            params: {
+              account: { username }
+            }
+          }
+        }) => ({
+          presentation: 'modal',
+          title: t('screenTabs:shared.accountInLists.name', { username: username }),
+          headerRight: () => (
+            <HeaderRight
+              type='text'
+              content={t('common:buttons.done')}
+              onPress={() => navigation.pop(1)}
+            />
+          )
+        })}
       />
       <Stack.Screen
-        key='Tab-Shared-Attachments'
         name='Tab-Shared-Attachments'
         component={TabSharedAttachments}
+        options={({
+          route: {
+            params: { account }
+          }
+        }) => ({
+          headerTitle: () => (
+            <CustomText numberOfLines={1}>
+              <Trans
+                ns='screenTabs'
+                i18nKey='shared.attachments.name'
+                components={[
+                  <ParseEmojis
+                    content={account.display_name || account.username}
+                    emojis={account.emojis}
+                    fontBold
+                  />,
+                  <CustomText
+                    fontStyle='M'
+                    style={{ color: colors.primaryDefault }}
+                    fontWeight='Bold'
+                  />
+                ]}
+              />
+            </CustomText>
+          )
+        })}
       />
       <Stack.Screen
-        key='Tab-Shared-Filter'
         name='Tab-Shared-Filter'
         component={TabSharedFilter}
-        options={{ presentation: 'modal' }}
+        options={({ navigation }) => ({
+          presentation: 'modal',
+          title: t('screenTabs:shared.filter.name'),
+          headerRight: () => (
+            <HeaderRight
+              type='text'
+              content={t('common:buttons.done')}
+              onPress={() => navigation.goBack()}
+            />
+          )
+        })}
       />
       <Stack.Screen
-        key='Tab-Shared-Hashtag'
         name='Tab-Shared-Hashtag'
         component={TabSharedHashtag}
+        options={({
+          route: {
+            params: { tag_name }
+          }
+        }) => ({ title: `#${decodeURIComponent(tag_name)}` })}
       />
       <Stack.Screen
-        key='Tab-Shared-History'
         name='Tab-Shared-History'
         component={TabSharedHistory}
+        options={{ title: t('screenTabs:shared.history.name') }}
       />
       <Stack.Screen
-        key='Tab-Shared-Mute'
         name='Tab-Shared-Mute'
         component={TabSharedMute}
-        options={{ presentation: 'modal' }}
+        options={({
+          route: {
+            params: {
+              account: { acct }
+            }
+          }
+        }) => ({
+          presentation: 'modal',
+          headerLeft: () => <HeaderLeft type='text' content={t('common:buttons.cancel')} />,
+          title: t('screenTabs:shared.mute.name', { acct: `@${acct}` })
+        })}
       />
       <Stack.Screen
-        key='Tab-Shared-Report'
         name='Tab-Shared-Report'
         component={TabSharedReport}
-        options={{ presentation: 'modal' }}
+        options={({
+          route: {
+            params: { account }
+          }
+        }) => ({
+          presentation: 'modal',
+          headerLeft: () => <HeaderLeft type='text' content={t('common:buttons.cancel')} />,
+          title: t('screenTabs:shared.report.name', { acct: `@${account.acct}` })
+        })}
       />
       <Stack.Screen key='Tab-Shared-Search' name='Tab-Shared-Search' component={TabSharedSearch} />
-      <Stack.Screen key='Tab-Shared-Toot' name='Tab-Shared-Toot' component={TabSharedToot} />
-      <Stack.Screen key='Tab-Shared-Users' name='Tab-Shared-Users' component={TabSharedUsers} />
+      <Stack.Screen
+        name='Tab-Shared-Toot'
+        component={TabSharedToot}
+        options={{ title: t('screenTabs:shared.toot.name') }}
+      />
+      <Stack.Screen
+        name='Tab-Shared-Users'
+        component={TabSharedUsers}
+        options={({ route: { params } }) => ({
+          title: t(`shared.users.${params.reference}.${params.type}`, {
+            count: params.count
+          } as any) as any
+        })}
+      />
     </Stack.Group>
   )
 }

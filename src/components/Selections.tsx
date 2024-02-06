@@ -1,18 +1,18 @@
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { Pressable, View } from 'react-native'
-import haptics from './haptics'
 import Icon from './Icon'
 import { ParseEmojis } from './Parse'
 import CustomText from './Text'
+import haptics from './haptics'
 
 export interface Props {
   title?: string
 
   multiple?: boolean
   options: { selected: boolean; content: string }[]
-  setOptions: React.Dispatch<React.SetStateAction<{ selected: boolean; content: string }[]>>
+  setOptions: React.Dispatch<React.SetStateAction<any>>
   disabled?: boolean
   invalid?: boolean
 }

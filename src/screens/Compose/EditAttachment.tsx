@@ -38,7 +38,6 @@ const ComposeEditAttachment: React.FC<
 
   useEffect(() => {
     navigation.setOptions({
-      title: t('screenCompose:content.editAttachment.header.title'),
       headerLeft: () => (
         <HeaderLeft
           content='chevron-down'

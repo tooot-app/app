@@ -12,7 +12,7 @@ const TabPublic: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
       <Stack.Screen name='Tab-Public-Root' component={Root} />
-      {TabShared({ Stack })}
+      {TabShared(Stack)}
     </Stack.Navigator>
   )
 }
