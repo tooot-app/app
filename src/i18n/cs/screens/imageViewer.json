@@ -1,16 +1,16 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Více akcí tohoto obrázku",
+      "accessibilityHint": "Tento obrázek lze uložit nebo sdílet"
     },
     "options": {
-      "save": "",
-      "share": ""
+      "save": "Uložit obrázek",
+      "share": "Sdílet obrázek"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Obrázek byl uložený",
+      "failed": "Uložení obrázku se nezdařilo"
     }
   }
 }

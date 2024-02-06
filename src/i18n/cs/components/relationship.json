@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Sledovat uživatele"
   },
   "block": {
-    "function": ""
+    "function": "Zablokovat uživatele"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Chyba při načítání",
+    "blocked_by": "Blokováno uživatelem",
+    "blocking": "Odblokovat",
+    "following": "Přestat sledovat",
+    "requested": "Zrušit žádost",
+    "default": "Sledovat"
   }
 }
