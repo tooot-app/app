@@ -1,4 +1,3 @@
-import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import { SwipeToActions } from '@components/SwipeToActions'
 import CustomText from '@components/Text'
@@ -7,10 +6,10 @@ import { connectMedia } from '@utils/api/helpers/connect'
 import apiInstance from '@utils/api/instance'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import { getAccountStorage, setAccountStorage, useAccountStorage } from '@utils/storage/actions'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import { Image } from 'expo-image'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, Pressable, View } from 'react-native'
 import ComposeContext from './utils/createContext'
@@ -34,13 +33,6 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
 }) => {
   const { colors } = useTheme()
   const { t } = useTranslation('screenCompose')
-
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('content.draftsList.header.title'),
-      headerLeft: () => <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
-    })
-  }, [])
 
   const { composeDispatch } = useContext(ComposeContext)
   const [drafts] = useAccountStorage.object('drafts')

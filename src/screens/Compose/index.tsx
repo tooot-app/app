@@ -414,12 +414,21 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           <Stack.Screen
             name='Screen-Compose-DraftsList'
             component={ComposeDraftsList}
-            options={{ presentation: 'modal', headerShadowVisible: false }}
+            options={{
+              presentation: 'modal',
+              headerShadowVisible: false,
+              title: t('screenCompose:content.draftsList.header.title'),
+              headerLeft: () => <HeaderLeft content='chevron-down' />
+            }}
           />
           <Stack.Screen
             name='Screen-Compose-EditAttachment'
             component={ComposeEditAttachment}
-            options={{ presentation: 'modal', headerShadowVisible: false }}
+            options={{
+              presentation: 'modal',
+              headerShadowVisible: false,
+              title: t('screenCompose:content.editAttachment.header.title')
+            }}
           />
         </Stack.Navigator>
       </ComposeContext.Provider>

@@ -54,7 +54,7 @@ const TabNotifications: React.FC = () => {
         component={TabNotificationsFilters}
         options={{ presentation: 'modal', gestureEnabled: false }}
       />
-      {TabShared({ Stack })}
+      {TabShared(Stack)}
     </Stack.Navigator>
   )
 }

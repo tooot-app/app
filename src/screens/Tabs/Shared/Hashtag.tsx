@@ -1,5 +1,5 @@
 import menuHashtag from '@components/contextMenu/hashtag'
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
@@ -20,10 +20,6 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
   const mHashtag = menuHashtag({ tag_name, queryKey })
 
   useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
-      title: `#${decodeURIComponent(tag_name)}`
-    })
     navigation.setParams({ queryKey: queryKey })
   }, [])
 

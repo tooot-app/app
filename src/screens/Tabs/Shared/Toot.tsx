@@ -1,8 +1,6 @@
-import { HeaderLeft } from '@components/Header'
-import Icon from '@components/Icon'
+import { HeaderRight } from '@components/Header'
 import { Loading } from '@components/Loading'
 import ComponentSeparator from '@components/Separator'
-import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { useQuery } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
@@ -17,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, FlatList, Platform, Pressable, View } from 'react-native'
+import { Alert, FlatList, Platform, View } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
@@ -38,38 +36,20 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const flRef = useRef<FlatList<Mastodon.Status & { _level?: number }>>(null)
 
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => (
-        <Pressable
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-          disabled={!hasRemoteContent}
-          onPress={() =>
-            Alert.alert(
-              t('screenTabs:shared.toot.remoteFetch.title'),
-              t('screenTabs:shared.toot.remoteFetch.message')
-            )
-          }
-        >
-          {hasRemoteContent ? (
-            <Icon
-              name='wifi'
-              size={StyleConstants.Font.Size.M}
-              color={colors.primaryDefault}
-              style={{ marginRight: StyleConstants.Spacing.S }}
-            />
-          ) : null}
-          <CustomText
-            style={{ color: colors.primaryDefault }}
-            fontSize='L'
-            fontWeight='Bold'
-            numberOfLines={1}
-            children={t('screenTabs:shared.toot.name')}
+    hasRemoteContent &&
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderRight
+            content='wifi'
+            onPress={() =>
+              Alert.alert(
+                t('screenTabs:shared.toot.remoteFetch.title'),
+                t('screenTabs:shared.toot.remoteFetch.message')
+              )
+            }
           />
-        </Pressable>
-      ),
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
-      headerBackVisible: false
-    })
+        )
+      })
     navigation.setParams({ queryKey: queryKey.local })
   }, [hasRemoteContent])
 

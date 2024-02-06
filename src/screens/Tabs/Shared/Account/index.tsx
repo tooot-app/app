@@ -1,17 +1,17 @@
-import menuAccount from '@components/contextMenu/account'
-import menuShare from '@components/contextMenu/share'
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderRight } from '@components/Header'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
+import menuAccount from '@components/contextMenu/account'
+import menuShare from '@components/contextMenu/share'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useAccountStorage } from '@utils/storage/actions'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { Fragment, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, Text, View } from 'react-native'
@@ -65,8 +65,6 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     navigation.setOptions({
       headerTransparent: true,
       headerStyle: { backgroundColor: `rgba(255, 255, 255, 0)` },
-      title: '',
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} background />,
       headerRight: () => {
         return (
           <DropdownMenu.Root>

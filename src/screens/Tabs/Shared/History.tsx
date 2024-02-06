@@ -1,4 +1,3 @@
-import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
 import ComponentSeparator from '@components/Separator'
@@ -12,8 +11,7 @@ import { useStatusHistory } from '@utils/queryHooks/statusesHistory'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { diffChars, diffWords } from 'diff'
-import React, { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
 import { FlatList, View } from 'react-native'
 
 const SCRIPTS_WITHOUT_BOUNDARIES = [
@@ -136,20 +134,11 @@ const ContentView: React.FC<{
 }
 
 const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>> = ({
-  navigation,
   route: {
     params: { status, detectedLanguage }
   }
 }) => {
-  const { t } = useTranslation('screenTabs')
   const { data } = useStatusHistory({ status })
-
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('shared.history.name'),
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
-    })
-  }, [])
 
   const dataReversed = data ? [...data].reverse() : []
 

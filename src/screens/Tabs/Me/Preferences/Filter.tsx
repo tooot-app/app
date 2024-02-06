@@ -51,7 +51,7 @@ const TabMePreferencesFilter: React.FC<
   const titleState = useState(params.type === 'edit' ? params.filter.title : '')
 
   const expirations = ['0', '1800', '3600', '43200', '86400', '604800', '18144000'] as const
-  const [expiration, setExpiration] = useState<typeof expirations[number]>('0')
+  const [expiration, setExpiration] = useState<(typeof expirations)[number]>('0')
 
   const [contexts, setContexts] = useState<
     {
@@ -226,8 +226,10 @@ const TabMePreferencesFilter: React.FC<
               cancelButtonIndex: expirations.length,
               ...androidActionSheetStyles(colors)
             },
-            (selectedIndex: number) => {
-              selectedIndex < expirations.length && setExpiration(expirations[selectedIndex])
+            selectedIndex => {
+              selectedIndex &&
+                selectedIndex < expirations.length &&
+                setExpiration(expirations[selectedIndex])
             }
           )
         }

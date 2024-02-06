@@ -1,5 +1,6 @@
 import Icon, { IconName } from '@components/Icon'
 import CustomText from '@components/Text'
+import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -9,7 +10,7 @@ export type Props = {
   native?: boolean
   background?: boolean
 
-  onPress: () => void
+  onPress?: () => void
 } & ({ type?: undefined; content?: IconName } | { type: 'text'; content: string })
 
 const HeaderLeft: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const HeaderLeft: React.FC<Props> = ({
   background = false,
   onPress
 }) => {
+  const navigation = useNavigation()
   const { colors } = useTheme()
 
   const children = () => {
@@ -40,7 +42,7 @@ const HeaderLeft: React.FC<Props> = ({
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={onPress ? onPress : () => navigation.goBack()}
       children={children()}
       style={{
         flexDirection: 'row',
