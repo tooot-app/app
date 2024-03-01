@@ -39,7 +39,7 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
-    "@sentry/react-native": "^5.18.0",
+    "@sentry/react-native": "^5.19.1",
     "@sharcoux/slider": "^7.1.1",
     "@tanstack/react-query": "^4.36.1",
     "axios": "^1.6.7",
