@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
-    "expanded": "",
-    "moreLines": "",
-    "defaultHint": ""
+    "accessibilityHint": "Klepnutím rozbalíte nebo sbalíte obsah",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} více řádků)",
+    "defaultHint": "Dlouhý toot"
   }
 }

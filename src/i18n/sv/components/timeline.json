@@ -17,10 +17,10 @@
   "refresh": {
     "fetchPreviousPage": "Nyare härifrån",
     "refetch": "Till senaste",
-    "fetching": "",
+    "fetching": "Hämtar de senaste toots ...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Inga nyare toot",
+      "found": "Hämtade {{count}} toots"
     }
   },
   "shared": {

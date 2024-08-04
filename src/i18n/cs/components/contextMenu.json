@@ -1,106 +1,106 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Akce pro tento toot, jako zveřejněný uživatel, toot sám",
   "account": {
-    "title": "",
+    "title": "Uživatelské akce",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Sledovat uživatele",
+      "action_true": "Přestat sledovat uživatele"
     },
-    "inLists": "",
+    "inLists": "Seznamy obsahující uživatele ...",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Zobrazit boosty uživatele",
+      "action_true": "Skrýt boosty uživatele"
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Ztlumit uživatele",
+      "action_true": "Zrušit ztlumení uživatele"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Sledovat jako ...",
+      "succeed_default": "Nyní sledujte @{{target}} s @{{source}}",
+      "succeed_locked": "Žádost o sledování byla odeslána na @{{target}} s {{source}}, čeká na schválení",
+      "failed": "Sledovat jako"
     },
-    "blockReport": "",
+    "blockReport": "Blokovat a hlásit",
     "block": {
-      "action_false": "",
-      "action_true": "",
+      "action_false": "Blokovat uživatele",
+      "action_true": "Odblokovat uživatele",
       "alert": {
-        "title": ""
+        "title": "Potvrdit blokování uživatele @{{username}}?"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Nahlásit a blokovat uživatele",
       "alert": {
-        "title": ""
+        "title": "Potvrdit nahlášení a blokování uživatele @{{username}}?"
       }
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Přímá zpráva",
+    "public": "Veřejná zpráva"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Kopírovat toot",
+    "succeed": "Zkopírováno"
   },
   "instance": {
-    "title": "",
+    "title": "Akce Instance",
     "block": {
-      "action": "",
+      "action": "Blokovat instanci {{instance}}",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Potvrdit blokování instance {{instance}}?",
+        "message": "Většinou chcete ztlumit nebo blokovat určitého uživatele.\n\nPo blokování instance bude veškerý obsah včetně sledujících z této instance odstraněn!"
       }
     }
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Sledovat",
+      "action_true": "Přestat sledovat"
     },
     "filter": {
-      "action": ""
+      "action": "Filtrovat hashtag ..."
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Sdílet toot"
     },
     "account": {
-      "action": ""
+      "action": "Sdílet uživatele"
     }
   },
   "status": {
-    "title": "",
+    "title": "Akce tootu",
     "edit": {
-      "action": ""
+      "action": "Edit toot"
     },
     "delete": {
-      "action": "",
+      "action": "Smazat seznam",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Potvrdit smazání?",
+        "message": "Všechny boosty a oblíbené budou smazány, včetně všech odpovědí."
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Odstranit toot a repost",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Potvrdit odstranění a repost?",
+        "message": "Všechny boosty a oblíbené budou smazány, včetně všech odpovědí."
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Ztlumit toot a odpovědi",
+      "action_true": "Zrušit ztlumení tootu a odpovědí"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Připnout toot",
+      "action_true": "Odepnout toot"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Filtrovat toot ...",
+      "action_true": "Spravovat filtry ..."
     }
   }
 }

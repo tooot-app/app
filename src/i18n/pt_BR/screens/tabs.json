@@ -15,8 +15,8 @@
       },
       "exploring": {
         "heading": "Explorando",
-        "trending": "",
-        "followRemote": "",
+        "trending": "Em alta",
+        "followRemote": "Seguir instância remota",
         "noTitle": "Sem título",
         "errors": {
           "existed": "Você já está seguindo esta instância.",
@@ -157,7 +157,7 @@
         "title": "Marcar mídia como sensível por padrão"
       },
       "media": {
-        "title": "",
+        "title": "Exibição de mídia",
         "options": {
           "default": "Ocultar mídia marcada como sensível",
           "show_all": "Sempre mostrar mídias",
@@ -190,13 +190,13 @@
         "home": "seguindo e listas",
         "notifications": "notificação",
         "public": "global",
-        "thread": "",
+        "thread": "conversação",
         "account": "perfil"
       }
     },
     "preferencesFilter": {
       "name": "Nome",
-      "expiration": "",
+      "expiration": "Expiração",
       "expirationOptions": {
         "0": "Nunca",
         "1800": "Após 30 minutos",
@@ -211,15 +211,15 @@
         "home": "Seguindo e listas",
         "notifications": "Notificação",
         "public": "Linha do tempo global",
-        "thread": "",
-        "account": ""
+        "thread": "Visualização de conversa",
+        "account": "Visualização do perfil"
       },
-      "action": "",
+      "action": "Quando correspondido",
       "actions": {
         "warn": "Recolhido, mas pode ser revelado",
         "hide": "Esconder completamente"
       },
-      "keywords": "",
+      "keywords": "Correspondências para essas palavras-chave",
       "keyword": "Palavra-chave",
       "statuses": "Corresponde a estes toots"
     },
@@ -494,7 +494,7 @@
         "reblogged_by": "{{count}} boostou",
         "favourited_by": "{{count}} favoritados"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Os resultados de uma instância remota estão incompletos"
     }
   }
 }

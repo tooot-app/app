@@ -11,16 +11,16 @@
       "segments": {
         "federated": "連合",
         "local": "ローカル",
-        "explore": ""
+        "explore": "エクスプローラー"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": "",
+        "heading": "探索",
+        "trending": "トレンド",
+        "followRemote": "リモートインスタンスをフォロー",
+        "noTitle": "無題",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "既にこのリモートインスタンスをフォローしています。",
+          "notAvailable": "このインスタンスのタイムラインにはアクセスできません。他のインスタンスをお試しください。"
         }
       }
     },
@@ -216,7 +216,7 @@
       },
       "action": "一致した時",
       "actions": {
-        "warn": "",
+        "warn": "折りたたまれていますが、展開できます",
         "hide": "完全に非表示にする"
       },
       "keywords": "これらのキーワードと一致",
@@ -390,7 +390,7 @@
         "accessibilityHint": "このユーザーをミュート、ブロック、報告または共有できます"
       },
       "followed_by": "はあなたをフォローしています",
-      "privateNote": "",
+      "privateNote": "プライベートノートの設定",
       "moved": "ユーザーは引っ越ししました",
       "created_at": "登録日: {{date}}",
       "summary": {
@@ -418,17 +418,17 @@
       "name": "編集履歴"
     },
     "mute": {
-      "name": "",
-      "mute": "",
-      "description": "",
-      "notification": "",
+      "name": "{{acct}} をミュートする",
+      "mute": "ミュート",
+      "description": "これにより相手のトゥートとリプライは見えなくなりますが、相手はあなたをフォローし続けあなたのトゥートを見ることができます。",
+      "notification": "このユーザーからの通知を非表示にする",
       "duration": {
-        "heading": "",
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "86400": "",
-        "604800": ""
+        "heading": "期間",
+        "0": "無期限",
+        "1800": "30分",
+        "3600": "1時間",
+        "86400": "1日",
+        "604800": "1週間"
       }
     },
     "report": {

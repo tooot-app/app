@@ -1,33 +1,33 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": "",
-    "discard": "",
-    "continue": "",
-    "create": "",
-    "delete": "",
-    "done": "",
-    "confirm": "",
-    "add": ""
+    "OK": "OK",
+    "apply": "Použít",
+    "cancel": "Zrušit",
+    "discard": "Zrušit",
+    "continue": "Pokračovat",
+    "create": "Vytvořit",
+    "delete": "Odstranit",
+    "done": "Hotovo",
+    "confirm": "Potvrdit",
+    "add": "Přidat"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Vlastní emoji {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} byl úspěšný"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} se nezdařil, zkuste to prosím znovu"
     }
   },
-  "separator": "",
+  "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Změna nebyla uložena",
+    "message": "Vaše změna nebyla uložena. Chcete zrušit ukládání změn?"
   }
 }

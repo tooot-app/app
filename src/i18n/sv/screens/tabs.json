@@ -11,16 +11,16 @@
       "segments": {
         "federated": "Federerat",
         "local": "Lokalt",
-        "explore": ""
+        "explore": "Utforska"
       },
       "exploring": {
-        "heading": "",
-        "trending": "",
-        "followRemote": "",
-        "noTitle": "",
+        "heading": "Utforskar",
+        "trending": "Populärt",
+        "followRemote": "Följ annan instans",
+        "noTitle": "Ingen titel",
         "errors": {
-          "existed": "",
-          "notAvailable": ""
+          "existed": "Du följer redan denna fjärrinstans.",
+          "notAvailable": "Denna instans tidslinje är inte offentligt tillgänglig. Försök med en annan instans."
         }
       }
     },
@@ -80,7 +80,7 @@
         "name": "Pushnotiser"
       },
       "preferences": {
-        "name": ""
+        "name": "Inställningar"
       },
       "preferencesFilters": {
         "name": "Alla innehållsfilter"
@@ -146,15 +146,15 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Standardinställning för synlighet av inlägg",
         "options": {
-          "public": "",
-          "unlisted": "",
+          "public": "Offentlig",
+          "unlisted": "Ej listad",
           "private": "Endast följare"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Standardinställning för att markera media som känslig"
       },
       "media": {
         "title": "",

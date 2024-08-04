@@ -1,10 +1,10 @@
 {
-  "title": "",
-  "message": "",
+  "title": "Zvolte zdroj médií",
+  "message": "Mediální EXIF data nejsou nahrána",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Nahrát fotky",
+    "image_max": "Nahrát fotky (max. {{max}})",
+    "video": "Nahrát video",
+    "video_max": "Nahrát video (max {{max}})"
   }
 }

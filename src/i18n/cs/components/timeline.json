@@ -1,166 +1,166 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Chyba při načítání",
+      "button": "Zkusit znovu"
     },
     "success": {
-      "message": ""
+      "message": "Časová osa prázdná"
     }
   },
   "end": {
-    "message": ""
+    "message": "Konec, co takhle šálek <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "Poslední přečtení v"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": "",
-    "fetching": "",
+    "fetchPreviousPage": "Novější odsud",
+    "refetch": "Nejnovější",
+    "fetching": "Načítání nových tootů ...",
     "fetched": {
-      "none": "",
-      "found": ""
+      "none": "Žádné nové tooty",
+      "found": "Načtené nové tooty ({{count}})"
     }
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Připnuto",
+      "favourite": "{{name}} si oblíbil váš toot",
+      "status": "{{name}} právě zveřejnil",
+      "follow": "{{name}} vás sleduje",
+      "follow_request": "{{name}} vás požádal o sledování",
+      "poll": "Anketa, ve které jste hlasoval/a, skončila",
       "reblog": {
-        "default": "",
-        "myself": "",
-        "notification": ""
+        "default": "{{name}} boostnul/a",
+        "myself": "Boostnul jsem",
+        "notification": "{{name}} boostnul váš toot"
       },
-      "update": "",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "update": "Reblog byl upraven",
+      "admin.sign_up": "{{name}} se připojil do instance",
+      "admin.report": "{{name}} nahlásil:"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Odpovědět na tento toot"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Boostnout tento toot",
+        "function": "Boostnout toot",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Zvolte viditelnost boostu",
+          "public": "Veřejný boost",
+          "unlisted": "Nezobrazovat boost"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Přidat tento toot mezi oblíbené",
+        "function": "Oblíbený toot"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Přidat tento toot do záložek",
+        "function": "Záložky toot"
       },
-      "openReport": ""
+      "openReport": "Otevřít hlášení"
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} uživatelů boostlo tento toot",
+        "accessibilityHint": "Klepnutím zjistíte uživatele",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} uživatelů oblíbilo tento toot",
+        "accessibilityHint": "Klepnutím zjistíte uživatele",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Tento toot byl upraven {{count}} krát",
+        "accessibilityHint": "Klepnutím zobrazíte historii úprav",
+        "text_one": "{{count}} upravit",
+        "text_other": "{{count}} úpravy"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Zobrazit citlivá média"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Chyba načítání",
+        "button": "Vyzkoušet vzdálený odkaz"
       },
-      "altText": ""
+      "altText": "Alternativní text"
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Avatar {{name}}",
+      "accessibilityHint": "Klepnutím přejděte na stránku {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Skrytý obsah"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Přesto zobrazit",
+      "match_v1": "Filtrované: {{phrase}}.",
+      "match_v2_one": "Filtrováno {{filters}}.",
+      "match_v2_other": "Filtrováno {{count}} filtry, {{filters}}."
     },
-    "fullConversation": "",
+    "fullConversation": "Přečíst konverzace",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Přeložit",
+      "succeed": "Přeloženo {{provider}} z {{source}}",
+      "failed": "Překlad selhal",
+      "source_not_supported": "jazyk tootu není podporován",
+      "target_not_supported": "Cílový jazyk není podporován"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Jjméno uživatele"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Uživatelský účet"
           }
         },
-        "application": "",
+        "application": "přes {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot upraven"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot ztlumený"
         },
-        "replies": "",
+        "replies": "Odpovědi <0 />",
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot je přímá zpráva"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot je viditelný pouze pro sledující"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "S",
         "delete": {
-          "function": ""
+          "function": "Odstranit přímou zprávu"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Hlasovat",
+          "refresh": "Obnovit"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} uživatel hlasoval",
+          "voters_other": "{{count}} uživatelů hlasovalo",
+          "votes_one": "{{count}} hlas",
+          "votes_other": "{{count}} hlasů"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Hlasování skončilo",
+          "until": "Vyprší <0 />"
         }
       }
     }
